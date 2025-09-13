@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Adopción · PetStore{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="fw-bold m-0">Mascotas en Adopción</h3>
+  <form class="d-flex gap-2" method="get">
+    <select name="Especie" class="form-select form-select-sm" onchange="this.form.submit()">
+      <option value="">Todas las especies</option>
+      <option value="DOG"     {% if Especie == 'DOG' %}selected{% endif %}>Perros</option>
+      <option value="CAT"     {% if Especie == 'CAT' %}selected{% endif %}>Gatos</option>
+      <option value="HAMSTERS"{% if Especie == 'HAMSTERS' %}selected{% endif %}>Hamsters</option>
+      <option value="OTHER"   {% if Especie == 'OTHER' %}selected{% endif %}>Otros</option>
+    </select>
+    <select name="Estado" class="form-select form-select-sm" onchange="this.form.submit()">
+      <option value="AVAILABLE" {% if status == 'AVAILABLE' %}selected{% endif %}>Disponibles</option>
+      <option value="PENDING"   {% if status == 'PENDING' %}selected{% endif %}>En proceso</option>
+      <option value="ADOPTED"   {% if status == 'ADOPTED' %}selected{% endif %}>Adoptados</option>
+    </select>
+  </form>
+</div>
+
+<div class="row g-3">
+  {% for pet in Mascota %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100">
+        {% if pet.Imagen %}
+          <img src="{{ pet.Imagen.url }}" class="card-img-top" alt="{{ pet.Nombre }}">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ pet.Nombre }}</h5>
+          <p class="card-text text-muted mb-1">{{ pet.get_Especie_display }} · {{ pet.Raza }}</p>
+          <p class="card-text"><small class="text-muted">Edad: {{ pet.Edad_Años }} años</small></p>
+          <p class="badge bg-{% if pet.Estado == 'AVAILABLE' %}success{% elif pet.Estado == 'PENDING' %}warning{% else %}secondary{% endif %}">
+            {{ pet.get_Estado_display }}
+          </p>
+        </div>
+        <div class="card-footer text-end">
+          <a href="{% url 'adoption:detalle' pet.pk %}" class="btn btn-sm btn-primary">Ver detalle</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted">No hay mascotas que coincidan con el filtro.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

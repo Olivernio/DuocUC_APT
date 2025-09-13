@@ -9,7 +9,9 @@ urlpatterns = [
     path('', home, name="home"),
     path("accounts/", include("accounts.urls")),
     path("dashboard/", include("dashboard.urls")),
-    path("catalog/", include("catalog.urls")),
+    path("catalog/", include("catalog.urls")),  
+    path("adopcion/", include("adoption.urls")),
+
 
 ]
 

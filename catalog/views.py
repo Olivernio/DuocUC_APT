@@ -15,7 +15,7 @@ class ProductListView(StaffRequiredMixin, ListView):
 
 class ProductCreateView(StaffRequiredMixin, CreateView):
     model = Product
-    form_class = ProductForm
+    form_class = ProductForm              # 👈 IMPORTANTE
     template_name = "catalog/form.html"
     success_url = reverse_lazy("catalog:product_list")
 

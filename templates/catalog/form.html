@@ -1,11 +1,32 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
+
 {% block title %}Producto · PetStore{% endblock %}
 {% block content %}
-  <h1>{{ view.object|default_if_none:"Nuevo producto" }}</h1>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar</button>
-    <a href="{% url 'catalog:product_list' %}">Cancelar</a>
-  </form>
+<h3 class="fw-bold mb-3">{{ view.object|default_if_none:"Nuevo producto" }}</h3>
+
+<form method="post" enctype="multipart/form-data" class="card p-3">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+
+  {% for field in form %}
+    {% if field.field.widget.input_type == "checkbox" %}
+      <div class="form-check mb-3">
+        {{ field }} <label class="form-check-label">{{ field.label }}</label>
+        <div class="form-text text-danger">{{ field.errors }}</div>
+      </div>
+    {% else %}
+      <div class="mb-3">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+        <div class="form-text text-danger">{{ field.errors }}</div>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <div class="d-flex gap-2">
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <a class="btn btn-outline-secondary" href="{% url 'catalog:product_list' %}">Cancelar</a>
+  </div>
+</form>
 {% endblock %}

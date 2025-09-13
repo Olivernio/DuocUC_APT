@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ Mascota.Nombre }} · Adopción{% endblock %}
+{% block content %}
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card">
+      {% if Mascota.Imagen %}
+        <img src="{{ Mascota.Imagen.url }}" class="card-img-top" alt="{{ Mascota.Nombre }}">
+      {% else %}
+        <div class="bg-light d-flex align-items-center justify-content-center" style="height:360px">
+          <i class="bi bi-image text-secondary" style="font-size:2rem;"></i>
+        </div>
+      {% endif %}
+      <div class="card-body">
+        <h4 class="card-title">{{ Mascota.Nombre }}</h4>
+        <p class="text-muted">
+          {{ Mascota.get_Especie_display }}{% if Mascota.Raza %} · {{ Mascota.Raza }}{% endif %}
+        </p>
+        <ul class="list-group list-group-flush mb-3">
+          <li class="list-group-item">Edad: {{ Mascota.Edad_Años }} años</li>
+          <li class="list-group-item">Vacunado: {{ Mascota.is_Vacunado|yesno:"Sí,No" }}</li>
+          <li class="list-group-item">Esterilizado: {{ Mascota.is_castrado|yesno:"Sí,No" }}</li>
+          <li class="list-group-item">
+            Estado:
+            <span class="badge
+              {% if Mascota.Estado == 'AVAILABLE' %} text-bg-success
+              {% elif Mascota.Estado == 'PENDING' %} text-bg-warning
+              {% else %} text-bg-secondary {% endif %}">
+              {{ Mascota.get_Estado_display }}
+            </span>
+          </li>
+        </ul>
+        <p>{{ Mascota.description|default:"" }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card p-3">
+      <h5 class="fw-bold mb-3">Solicitud de Adopción</h5>
+      <form method="post" action="{% url 'adoption:solicitud' Mascota.pk %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+            <div class="form-text text-danger">{{ field.errors }}</div>
+          </div>
+        {% endfor %}
+        <button class="btn btn-success" type="submit">Enviar Solicitud</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

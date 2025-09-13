@@ -1,4 +1,16 @@
-body {font-family: system-ui, 
-    Arial, sans-serif;}
-h1 {font-size: 28px; 
-    margin: 8px 0 16px; }
+:root{
+  --brand: #2563eb;     /* azul suave */
+  --brand-2: #22c55e;   /* verde esperanza/adopción */
+  --brand-3: #f59e0b;   /* acentos cálidos */
+}
+.navbar .navbar-brand i{ color: var(--brand); }
+.btn-primary{ background: var(--brand); border-color: var(--brand); }
+.btn-outline-primary{ color: var(--brand); border-color: var(--brand); }
+.btn-outline-primary:hover{ background: var(--brand); border-color: var(--brand); }
+.badge-adopt{ background: var(--brand-2); }
+.hero{
+  background: linear-gradient(135deg, var(--brand), #0ea5e9);
+  color: #fff; border-radius: 1rem;
+}
+.hero .btn-light{ color: #0f172a; }
+.card-feature i{ font-size: 1.6rem; color: var(--brand); }
