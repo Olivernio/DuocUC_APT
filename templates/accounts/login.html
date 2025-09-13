@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %} entrar Petstore {% endblock %}
+{% block content %}
+<h1>Iniciar sesion</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }} {#con este comando el django como que te renderiza un usuario y contraseña y posibles errores}
+    <button type="submit">Entrar</button>
+</form>
+{% endblock %}

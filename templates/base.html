@@ -1,19 +1,17 @@
-{% load static %}
+<nav style="padding:12px;border-bottom:1px solid #ddd;display:flex;gap:12px;align-items:center">
+  <a href="{% url 'home' %}" style="font-weight:700">PetStore</a>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}PetStore POS{ endblock }</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <nav style="padding: 12px; border-bottom: 1px solid #ddd;">
-        <a href="{% url 'home' %}" style="font-weight: 700;"> PetStore </a>
-    </nav>
-    <main style="max-width: 960px;margin:20px auto; padding: 0 12px;">
-            {% block content %}{% endblock %}
-    </main>
-</body>
-</html>
+  <a href="{% url 'catalog:product_list' %}">Catálogo</a>
+
+  <div style="margin-left:auto; display:flex; gap:8px">
+    {% if request.user.is_authenticated %}
+      {% if request.user.is_staff %}
+        <a href="{% url 'dashboard:index' %}">Dashboard</a>
+      {% endif %}
+      <span>Hola, {{ request.user.username }}</span>
+      <a href="{% url 'accounts:logout' %}">Salir</a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Entrar</a>
+    {% endif %}
+  </div>
+</nav>
