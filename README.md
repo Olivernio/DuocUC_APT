@@ -9,5 +9,5 @@ Este es el repositorio en donde estarán alojado las evidencias por unidad y el 
 **Profesor**:
  - Ceferino Sotelo
 
-**Unidad**:
+**Sección**:
  - 004D
