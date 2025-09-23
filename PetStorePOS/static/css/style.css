@@ -1,16 +1,82 @@
-:root{
-  --brand: #2563eb;     /* azul suave */
-  --brand-2: #22c55e;   /* verde esperanza/adopción */
-  --brand-3: #f59e0b;   /* acentos cálidos */
+:root {
+  --brand: #2563eb; /* azul suave */
+  --brand-2: #22c55e; /* verde esperanza/adopción */
+  --brand-3: #f59e0b; /* acentos cálidos */
 }
-.navbar .navbar-brand i{ color: var(--brand); }
-.btn-primary{ background: var(--brand); border-color: var(--brand); }
-.btn-outline-primary{ color: var(--brand); border-color: var(--brand); }
-.btn-outline-primary:hover{ background: var(--brand); border-color: var(--brand); }
-.badge-adopt{ background: var(--brand-2); }
-.hero{
+.navbar .navbar-brand i {
+  color: var(--brand);
+}
+.btn-primary {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+.btn-outline-primary {
+  color: var(--brand);
+  border-color: var(--brand);
+}
+.btn-outline-primary:hover {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+.badge-adopt {
+  background: var(--brand-2);
+}
+.hero {
   background: linear-gradient(135deg, var(--brand), #0ea5e9);
-  color: #fff; border-radius: 1rem;
+  color: #fff;
+  border-radius: 1rem;
 }
-.hero .btn-light{ color: #0f172a; }
-.card-feature i{ font-size: 1.6rem; color: var(--brand); }
+.hero .btn-light {
+  color: #0f172a;
+}
+.card-feature i {
+  font-size: 1.6rem;
+  color: var(--brand);
+}
+
+.nav {
+  display: flex;
+  align-content: space-between;
+  justify-content: space-evenly;
+  background-color: #ffffff;
+  padding: 1rem 1rem;
+  * {
+    text-decoration: none;
+  }
+}
+
+.nav ul {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
+  }
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: var(--brand);
+}
+
+.logo-div {
+  /* Permalink - use to edit and share this gradient. Enlace permanente - úsalo para editar y compartir este gradiente: https://colorzilla.com/gradient-editor/#3559fb+0,892efb+100 */
+  background: linear-gradient(135deg,  #3559fb 0%,#892efb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  border-radius: 30%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  .logo {
+    stroke: white;
+  }
+}
+
+li {
+  list-style: none;
+  text-decoration: none;
+}

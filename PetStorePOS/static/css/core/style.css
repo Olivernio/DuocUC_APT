@@ -1,0 +1,23 @@
+.nav {
+    display: flex;
+    align-content: space-between;
+    justify-content: space-around;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-background {
+    background-color: red;
+}
+
+.logo {
+  stroke: white;
+  fill: none;
+  width: 60%;
+  height: auto;
+}
+
