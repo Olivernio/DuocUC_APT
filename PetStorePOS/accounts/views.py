@@ -5,31 +5,20 @@ from django.db import IntegrityError
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 
+from .forms import CustomUserCreationForm
+
 def signup(request):
-    
-    if request.method == "GET":
-        return render(request, "accounts/signup.html", {
-        "form": UserCreationForm
-    })
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:login')
+        else:
+            return render(request, "accounts/signup.html", {"form": form})
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                # Create the user
-                user = User.objects.create_user(
-                    username=request.POST['username'],
-                    password=request.POST['password1']
-                )
-                user.save()
-                return redirect('accounts:login')
-            except IntegrityError:
-                return render(request, "accounts/signup.html", {
-                    "form": UserCreationForm,
-                    "error": "El usuario ya existe"}
-                )
-        return render(request, "accounts/signup.html", {
-            "form": UserCreationForm,
-            "error": "Las contraseñas no coinciden"}
-        )
+        form = CustomUserCreationForm()
+    return render(request, "accounts/signup.html", {"form": form})
+
 
 def login_view(request):
     # Si el usuario ya está autenticado, lo redirigimos

@@ -1,82 +1,75 @@
-:root {
-  --brand: #2563eb; /* azul suave */
-  --brand-2: #22c55e; /* verde esperanza/adopción */
-  --brand-3: #f59e0b; /* acentos cálidos */
-}
-.navbar .navbar-brand i {
-  color: var(--brand);
-}
-.btn-primary {
-  background: var(--brand);
-  border-color: var(--brand);
-}
-.btn-outline-primary {
-  color: var(--brand);
-  border-color: var(--brand);
-}
-.btn-outline-primary:hover {
-  background: var(--brand);
-  border-color: var(--brand);
-}
-.badge-adopt {
-  background: var(--brand-2);
-}
-.hero {
-  background: linear-gradient(135deg, var(--brand), #0ea5e9);
-  color: #fff;
-  border-radius: 1rem;
-}
-.hero .btn-light {
-  color: #0f172a;
-}
-.card-feature i {
-  font-size: 1.6rem;
-  color: var(--brand);
-}
-
-.nav {
-  display: flex;
-  align-content: space-between;
-  justify-content: space-evenly;
-  background-color: #ffffff;
-  padding: 1rem 1rem;
-  * {
-    text-decoration: none;
-  }
-}
-
-.nav ul {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0;
-  margin: 0;
-  }
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  font-size: 1.25rem;
-  color: var(--brand);
-}
-
-.logo-div {
-  /* Permalink - use to edit and share this gradient. Enlace permanente - úsalo para editar y compartir este gradiente: https://colorzilla.com/gradient-editor/#3559fb+0,892efb+100 */
-  background: linear-gradient(135deg,  #3559fb 0%,#892efb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  border-radius: 30%;
-  width: 2.5rem;
-  height: 2.5rem;
+.hero-home {
+  background: linear-gradient(135deg, #eef2fb 0%, #f8fafc 100%);
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 0.5rem;
-  .logo {
-    stroke: white;
-  }
 }
 
-li {
-  list-style: none;
-  text-decoration: none;
+.hero-home h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
+
+.text-gradient {
+  background: linear-gradient(90deg, #155DFC, #4286f4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.hero-home .lead {
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  color: #474c5d;
+  font-size: 1.15rem;
+}
+
+.hero-home .btn-lg {
+  padding: 0.65rem 1.8rem;
+  font-size: 1.1rem;
+  border-radius: 0.7rem;
+}
+
+.hero-img {
+  object-fit: cover;
+  max-width: 800px;
+  max-height: 450px;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(44,44,92,0.13);
+  margin-top: 2rem;
+}
+
+.feature-card {
+  border-radius: 1.3rem;
+  border: 1.5px solid #e8eaf0;
+  box-shadow: 0 6px 28px 0 rgba(70,110,255,.07);
+  transition: box-shadow 0.2s;
+  background: #fff;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-card:hover {
+  box-shadow: 0 8px 40px rgba(70,110,255,0.14);
+}
+
+.feature-icon {
+  background: #f3f5fc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  font-size: 2.35rem;
+  box-shadow: 0 3px 15px 0 rgba(124, 144, 255, .06);
+}
+
