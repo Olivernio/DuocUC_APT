@@ -1,17 +1,17 @@
 .nav {
-    display: flex;
-    align-content: space-between;
-    justify-content: space-around;
+  display: flex;
+  align-content: space-between;
+  justify-content: space-around;
 }
 
 .logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-background {
-    background-color: red;
+  background-color: red;
 }
 
 .logo {
@@ -21,3 +21,24 @@
   height: auto;
 }
 
+.feature-div {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.metricas-div {
+  border: none;
+  box-shadow: none;
+  background-color: #155DFC;
+  color: white;
+  border-radius: 15px;
+}
+
+.accesibilidad {
+  max-width: 60%;
+  text-align: start;
+  .check_icon svg {
+    stroke: #00A63E;
+  }
+}

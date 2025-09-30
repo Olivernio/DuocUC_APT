@@ -1,9 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Inicio · PetStore{% endblock %}
+{% load static %}
+{% block title %} Inicio · PetStore {% endblock %}
+{% block head-tag %}  <link rel="stylesheet" href="{% static 'css/core/style.css' %}"> {% endblock %}
+
 {% block content %}
-
 {# HERO #}
-
 <section class="hero-home py-5">
   <div class="container text-center">
     <h1 class="display-4 fw-bold mb-3">
@@ -11,8 +12,9 @@
       <span class="text-gradient">Cuidado de Mascotas</span>
     </h1>
     <p class="lead mb-4">
-      Una plataforma completa y accesible para la gestión de tiendas de mascotas, centros de adopción y cuidado
-      veterinario, diseñada para todos los usuarios.
+      Una plataforma completa y accesible para la gestión de tiendas de
+      mascotas, centros de adopción y cuidado veterinario, diseñada para todos
+      los usuarios.
     </p>
     <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
       <a href="{% url 'catalog:product_list' %}" class="btn btn-dark btn-lg">
@@ -23,86 +25,132 @@
       </a>
     </div>
     <div class="d-flex justify-content-center">
-      <img alt="Gatitos" class="hero-img"
-        src="https://images.unsplash.com/photo-1749135872075-2bbc4a963f02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMHBldHMlMjBkb2dzJTIwY2F0c3xlbnwxfHx8fDE3NTc5MzE3ODl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral">
+      <img
+        alt="Gatitos"
+        class="hero-img"
+        src="https://images.unsplash.com/photo-1749135872075-2bbc4a963f02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMHBldHMlMjBkb2dzJTIwY2F0c3xlbnwxfHx8fDE3NTc5MzE3ODl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+      />
     </div>
   </div>
 </section>
-
 
 {# Caracteristicas #}
 <h1 class="display-4 fw-bold mb-3 text-center card-title">
   Características Principales
 </h1>
 <p class="mb-4 ms-5 text-center">
-  Nuestro sistema está diseñado con las mejores prácticas de accesibilidad y usabilidad para garantizar una experiencia
-  inclusiva.
+  Nuestro sistema está diseñado con las mejores prácticas de accesibilidad y
+  usabilidad para garantizar una experiencia inclusiva.
 </p>
-<div class="card">
-  <div class="row row-cols-1 row-cols-md-3 g-4 my-5 ms-3">
+<div class="feature-div container card">
+  <div class="row row-cols-1 row-cols-md-3 g-4 my-5">
     <div class="col">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
           <i class="bi bi-heart text-danger"></i>
         </div>
         <h5 class="fw-bold mb-2">Centro de Adopciones</h5>
-        <p class="mb-0 text-secondary">Conectamos mascotas necesitadas con familias amorosas a través de nuestro sistema
-          de adopción integral.</p>
-        </div>
+        <p class="mb-0 text-secondary">
+          Conectamos mascotas necesitadas con familias amorosas a través de
+          nuestro sistema de adopción integral.
+        </p>
       </div>
-      <div class="col">
-        <div class="card feature-card h-100 text-center py-4 px-2">
-          <div class="feature-icon mb-3 mx-auto">
-            <i class="bi bi-shield-check text-primary"></i>
-          </div>
-          <h5 class="fw-bold mb-2">Gestión Veterinaria</h5>
-          <p class="mb-0 text-secondary">Sistema completo para el manejo de historiales médicos, tratamientos y cuidados
-            especializados.</p>
-          </div>
+    </div>
+    <div class="col">
+      <div class="card feature-card h-100 text-center py-4 px-2">
+        <div class="feature-icon mb-3 mx-auto">
+          <i class="bi bi-shield-check text-primary"></i>
         </div>
-        <div class="" >
-          <div class="card feature-card h-100 text-center py-4 px-2">
-            <div class="feature-icon mb-3 mx-auto">
-              <i class="bi bi-people text-success"></i>
-            </div>
-            <h5 class="fw-bold mb-2">Accesibilidad Universal</h5>
-            <p class="mb-0 text-secondary">Diseñado para ser completamente accesible para personas con discapacidades
-              visuales, motoras y cognitivas.</p>
-            </div>
-          </div>
-        </div>
+        <h5 class="fw-bold mb-2">Gestión Veterinaria</h5>
+        <p class="mb-0 text-secondary">
+          Sistema completo para el manejo de historiales médicos, tratamientos y
+          cuidados especializados.
+        </p>
       </div>
-        
-
-{#  EST de la sección Características#}
-<div class="feature-div">
-  <div class="feature-icon">
-    <i class="bi bi-heart text-danger"></i>
-    <h5 class="fw-bold mb-2">Centro de Adopciones</h5>
-    <p class="mb-0 text-secondary">Conectamos mascotas necesitadas con familias amorosas a través de nuestro sistema
-      de adopción integral.</p>
-</div>
-<div class="feature-card text-center">
-  <i class="bi bi-shield-check text-primary"></i>
-  <h5 class="fw-bold mb-2">Gestión Veterinaria</h5>
-  <p class="mb-0 text-secondary">Sistema completo para el manejo de historiales médicos, tratamientos y cuidados
-  especializados.</p>
-</div>
-<div class=" mb-3 mx-auto">
-  <i class="bi bi-people text-success"></i>
-  <h5 class="fw-bold mb-2">Accesibilidad Universal</h5>
-  <p class="mb-0 text-secondary">Diseñado para ser completamente accesible para personas con discapacidades
-  visuales, motoras y cognitivas.</p>
+    </div>
+    <div class="">
+      <div class="card feature-card h-100 text-center py-4 px-2">
+        <div class="feature-icon mb-3 mx-auto">
+          <i class="bi bi-people text-success"></i>
+        </div>
+        <h5 class="fw-bold mb-2">Accesibilidad Universal</h5>
+        <p class="mb-0 text-secondary">
+          Diseñado para ser completamente accesible para personas con
+          discapacidades visuales, motoras y cognitivas.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
+{# METRICAS #}
+<section class="metricas-div container text-center py-4 my-5">
+  <h2 class="mt-5">Impacto en Números</h2>
+  <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 mt-5 mb-5">
+    <div class="col mt-2">
+      <h3 class="fs-1">500+</h3>
+      <p class="m-0">Mascotas Adoptadas</p>
+    </div>
+    <div class="col mt-2">
+      <h3 class="fs-1">1.200+</h3>
+      <p class="m-0">Usuarios Registrados</p>
+    </div>
+    <div class="col mt-2">
+      <h3 class="fs-1">98%</h3>
+      <p class="m-0">Satisfacción</p>
+    </div>
+    <div class="col mt-2">
+      <h3 class="fs-1">24/7</h3>
+      <p class="m-0">Soporte Disponible</p>
+    </div>
+  </div>
+</section>
 
+{# ACCESIBILIDAD #}
+<section class="accesibilidad container my-5 text-center">
+  <h2>Accesibilidad Universal</h2>
+  <p class="mb-4">
+    Diseñado siguiendo las pautas WCAG 2.1 AA para garantizar que todas las personas puedan usar nuestro sistema sin barreras.
+  </p>
+  <div class="grid-accesibilidad row row-cols-1 row-cols-sm-2 mt-5 mb-5">
+    <div class="col mt-5 d-flex justify-content-start align-items-start gap-3">
+      <i class="check_icon">{{ svg_img_check|safe }}</i>
+      <div>
+        <h4 class="fw-bold text-start">Navegación por Teclado</h4>
+        <p class="m-0">Todos los elementos son accesibles mediante teclado.</p>
+      </div>
+    </div>
+    <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
+      <i class="check_icon">{{ svg_img_check|safe }}</i>
+      <div>
+        <h4 class="fw-bold text-start">Alto Contraste</h4>
+        <p class="m-0">Opciones de contraste para usuarios con problemas visuales.</p>
+      </div>
+    </div>
+    <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
+      <i class="check_icon">{{ svg_img_check|safe }}</i>
+      <div>
+        <h4 class="fw-bold text-start">Lectores de Pantalla</h4>
+        <p class="m-0">Compatible con NVDA, JAWS y VoiceOver.</p>
+      </div>
+    </div>
+    <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
+      <i class="check_icon">{{ svg_img_check|safe }}</i>
+      <div>
+        <h4 class="fw-bold text-start">Texto Ampliable</h4>
+        <p class="m-0">Tamaños de texto ajustables hasta 200%.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 {# BENEFICIOS #}
-<section class="mb-5 mt-5">
+{% comment %} <section class="mb-5 mt-5">
   <div class="row g-3">
     <div class="col-md-4">
       <div class="card card-feature h-100 p-3">
-        <div class="d-flex align-items-center mb-2"><i class="bi bi-truck me-2"></i>
+        <div class="d-flex align-items-center mb-2">
+          <i class="bi bi-truck me-2"></i>
           <h6 class="m-0">Envío Gratis</h6>
         </div>
         <p class="text-secondary small m-0">En compras mayores a $50.000</p>
@@ -110,25 +158,31 @@
     </div>
     <div class="col-md-4">
       <div class="card card-feature h-100 p-3">
-        <div class="d-flex align-items-center mb-2"><i class="bi bi-heart-pulse me-2"></i>
+        <div class="d-flex align-items-center mb-2">
+          <i class="bi bi-heart-pulse me-2"></i>
           <h6 class="m-0">Adopción Responsable</h6>
         </div>
-        <p class="text-secondary small m-0">Conectamos mascotas con familias amorosas.</p>
+        <p class="text-secondary small m-0">
+          Conectamos mascotas con familias amorosas.
+        </p>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card card-feature h-100 p-3">
-        <div class="d-flex align-items-center mb-2"><i class="bi bi-star me-2"></i>
+        <div class="d-flex align-items-center mb-2">
+          <i class="bi bi-star me-2"></i>
           <h6 class="m-0">Calidad Premium</h6>
         </div>
-        <p class="text-secondary small m-0">Solo las mejores marcas para tu mascota.</p>
+        <p class="text-secondary small m-0">
+          Solo las mejores marcas para tu mascota.
+        </p>
       </div>
     </div>
   </div>
-</section>
+</section> {% endcomment %}
 
 {# DESTACADOS #}
-<section class="mb-4">
+{% comment %} <section class="mb-4">
   <div class="d-flex justify-content-between align-items-center mb-2">
     <h3 class="fw-bold m-0">Productos Destacados</h3>
     <a class="small" href="{% url 'catalog:product_list' %}">Ver todo</a>
@@ -138,17 +192,31 @@
     <div class="col-6 col-md-4 col-lg-3">
       <div class="card h-100">
         {% if p.image %}
-        <img src="{{ p.image.url }}" class="card-img-top" style="height:170px; object-fit:cover;" alt="{{ p.name }}">
+        <img
+          src="{{ p.image.url }}"
+          class="card-img-top"
+          style="height: 170px; object-fit: cover"
+          alt="{{ p.name }}"
+        />
         {% else %}
-        <div class="bg-light d-flex align-items-center justify-content-center" style="height:170px;">
-          <i class="bi bi-image text-secondary" style="font-size:2rem;"></i>
+        <div
+          class="bg-light d-flex align-items-center justify-content-center"
+          style="height: 170px"
+        >
+          <i class="bi bi-image text-secondary" style="font-size: 2rem"></i>
         </div>
         {% endif %}
         <div class="card-body">
-          <span class="badge bg-secondary mb-2">{{ p.get_category_display }}</span>
+          <span class="badge bg-secondary mb-2"
+            >{{ p.get_category_display }}</span
+          >
           <h6 class="card-title mb-1">{{ p.name }}</h6>
           <div class="text-primary fw-bold mb-2">${{ p.price }}</div>
-          <a href="{% url 'catalog:product_update' p.pk %}" class="btn btn-sm btn-outline-primary">Ver</a>
+          <a
+            href="{% url 'catalog:product_update' p.pk %}"
+            class="btn btn-sm btn-outline-primary"
+            >Ver</a
+          >
         </div>
       </div>
     </div>
@@ -158,22 +226,24 @@
     </div>
     {% endfor %}
   </div>
-</section>
+</section> {% endcomment %}
 
 {# SUSCRIPCIÓN (decorativo por ahora) #}
-<section class="p-4 bg-white border rounded-3">
+{% comment %} <section class="p-4 bg-white border rounded-3">
   <div class="row align-items-center">
     <div class="col-md-7">
       <h4 class="fw-bold">Mantente Informado</h4>
-      <p class="text-secondary mb-0">Recibe noticias sobre productos, consejos y mascotas en adopción.</p>
+      <p class="text-secondary mb-0">
+        Recibe noticias sobre productos, consejos y mascotas en adopción.
+      </p>
     </div>
     <div class="col-md-5 mt-3 mt-md-0">
       <form class="d-flex gap-2">
-        <input type="email" class="form-control" placeholder="Tu correo">
+        <input type="email" class="form-control" placeholder="Tu correo" />
         <button class="btn btn-primary" type="button">Suscribirse</button>
       </form>
     </div>
   </div>
-</section>
+</section> {% endcomment %}
 
 {% endblock %}
