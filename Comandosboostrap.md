@@ -1,5 +1,14 @@
 # Bootstrap 5 Diccionario de Clases y Componentes
 
+# Para trabajar en el entorno Virtual y empesar a trabjar
+- 1 - .\venv\Scripts\Activate
+- 2 - cd esto es de ustedes\Documentos\GitHub\DuocUC_APT\PetStorePOS
+- 3 - pip install -r requirements.txt
+- 4 - python manage.py migrate
+- 5 - python manage.py createsuperuser
+- 6 - python manage.py runserver
+
+
 ## Contenedores
 - `container`: Contenedor responsivo con ancho fijo basado en puntos de ruptura.
 - `container-fluid`: Contenedor que ocupa todo el ancho disponible.
