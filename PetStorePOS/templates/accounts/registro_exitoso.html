@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="alert alert-success text-center" role="alert">
+        <h2>¡Registro Exitoso!</h2>
+        <p>Gracias, <strong>{{ user.first_name }}</strong>, tu cuenta ha sido creada correctamente.</p>
+        <a href="{% url 'accounts:login' %}" class="btn btn-primary mt-3">
+            Iniciar sesión
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 # Para trabajar en el entorno Virtual y empesar a trabjar
 - 1 - .\venv\Scripts\Activate
-- 2 - cd esto es de ustedes\Documentos\GitHub\DuocUC_APT\PetStorePOS
+- 2 - cd esto es de ustedes\Documentos\GitHub\DuocUC_APT\ 
 - 3 - pip install -r requirements.txt
 - 4 - python manage.py migrate
 - 5 - python manage.py createsuperuser

@@ -4,26 +4,18 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-.gradient-left {
+.gradient-bg {
   background: linear-gradient(120deg, #3a68f2 0%, #9b37ff 100%);
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;}
+.gradient-left {
+ background: linear-gradient(120deg, #3a68f2 0%, #9b37ff 100%);
   color: #fff;
   position: relative;
 }
-
-.gradient-left .decor-circle {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.18;
-  filter: blur(4px);
+.text-white {
+  color: #fff !important;
 }
-
-.gradient-left .decor-circle-1 {
-  width: 120px; height: 120px; top: 25px; left: 20px; background: #fff;
-}
-.gradient-left .decor-circle-2 {
-  width: 70px; height: 70px; bottom: 60px; right: 45px; background: #d1b4ff;
-}
-
 .form-card {
   background: #fff;
   border-radius: 18px;
@@ -32,7 +24,6 @@ body {
   max-width: 400px;
   margin: 40px auto;
 }
-
 .btn-gradient {
   background: linear-gradient(90deg, #3a68f2 20%, #9b37ff 100%);
   color: #fff;
@@ -43,4 +34,14 @@ body {
   filter: brightness(1.10);
   color: #fff;
 }
-
+.wizard-step {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #f3f3f3; display: flex; align-items: center; justify-content: center;
+  color: #aaa; font-size: 1.5rem; margin: 0 6px; transition: all .2s;
+}
+.wizard-step.active {
+  background: #462be6; color: #fff;
+}
+.wizard-line {
+  flex: 1; height: 4px; background: #dedbe7; margin: 0 5px; border-radius: 3px;
+}

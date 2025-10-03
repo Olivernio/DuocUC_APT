@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# BLOQUE HEAD: carga tu CSS principal y los íconos de Bootstrap #}
+{% block head-tag %}
+<link rel="stylesheet" href="{% static 'css/accounts/register.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid min-vh-100 d-flex align-items-center gradient-bg">
+  <div class="row w-100">
+    {# -------- Columna izquierda: Información y fondo degradado -------- #}
+    <div class="col-md-6 d-flex flex-column justify-content-center gradient-left text-white px-5 py-5">
+      <div class="mb-4">
+        <h3 class="fw-bold mb-2">
+          <i class="bi bi-heart fs-2"></i> PetCare System
+        </h3>
+        <p class="mb-0">Únete a nuestra comunidad</p>
+      </div>
+      <h3>Crea tu cuenta</h3>
+      <p>Únete a miles de amantes de las mascotas. Compra productos, adopta mascotas y forma parte de nuestra comunidad.
+      </p>
+      <div>
+        <h5>¿Qué puedes hacer?</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <i class="bi bi-heart"></i> <strong>Adopciones</strong> - Adopta mascotas y encuentra tu compañero perfecto
+          </li>
+          <li class="mb-2">
+            <i class="bi bi-person"></i> <strong>Perfil Personal</strong> - Gestiona tu información y preferencias
+          </li>
+          <li class="mb-2">
+            <i class="bi bi-shield-check"></i> <strong>Seguridad</strong> - Tus datos están protegidos y seguros
+          </li>
+        </ul>
+      </div>
+    </div>
+    {# -------- Columna derecha: Formulario principal -------- #}
+    <div class="col-md-6 d-flex align-items-center justify-content-center py-3">
+      <div class="form-card shadow-lg rounded p-4 w-100 mx-auto" style="max-width:450px;">
+
+        {# --- Título del formulario --- #}
+        <h2 class="fw-bold mb-2 text-center">Registro de Usuario</h2>
+        <p class="text-center mb-3">Paso 1 de 3 - Información Personal</p>
+
+        <!-- Barra de pasos con iconos -->
+        <div class="wizard-progress d-flex justify-content-center align-items-center mb-4">
+          <span class="wizard-step active"><i class="bi bi-person"></i></span>
+          <span class="wizard-line"></span>
+          <span class="wizard-step"><i class="bi bi-geo-alt"></i></span>
+          <span class="wizard-line"></span>
+          <span class="wizard-step"><i class="bi bi-shield-check"></i></span>
+        </div>
+
+        {# --- Formulario de registro paso a paso --- #}
+        <form method="post" autocomplete="off">
+          {% csrf_token %}
+          {{ wizard.management_form }}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              {{ form.nombre.label_tag }}
+              <input type="text" name="{{ form.nombre.html_name }}" placeholder="Tu nombre"
+                class="form-control beautiful-input" id="{{ form.nombre.id_for_label }}">
+            </div>
+            <div class="col-md-6 mb-3">
+              {{ form.apellidos.label_tag }}
+              <input type="text" name="{{ form.apellidos.html_name }}" placeholder="Tus apellidos"
+                class="form-control beautiful-input" id="{{ form.apellidos.id_for_label }}">
+            </div>
+          </div>
+          <div class="mb-3">
+            {{ form.correo.label_tag }}
+            <div class="input-group beautiful-input">
+              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+              <input type="email" name="{{ form.correo.html_name }}" placeholder="tu@email.com"
+                     class="form-control" id="{{ form.correo.id_for_label }}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3">
+              {{ form.contraseña.label_tag }}
+              <div class="input-group beautiful-input">
+                <input type="password" name="{{ form.contraseña.html_name }}" placeholder="Mínimo 6 caracteres"
+                       class="form-control" id="{{ form.contraseña.id_for_label }}">
+                <span class="input-group-text"><i class="bi bi-eye"></i></span>
+              </div>
+            </div>
+            <div class="mb-3">
+              {{ form.confirmar_contraseña.label_tag }}
+              <div class="input-group beautiful-input">
+                <input type="password" name="{{ form.confirmar_contraseña.html_name }}" placeholder="Repite tu contraseña"
+                       class="form-control" id="{{ form.confirmar_contraseña.id_for_label }}">
+                <span class="input-group-text"><i class="bi bi-eye"></i></span>
+              </div>
+            </div>
+          </div>
+          <!-- Botón -->
+          <button type="submit" class="btn btn-gradient w-100">Siguiente <i class="bi bi-arrow-right"></i></button>
+
+
+        </form>
+
+        {# --- Mensaje de enlace para usuarios con cuenta --- #}
+        <div class="text-center mt-4">
+          <p>¿Ya tienes una cuenta? <a href="{% url 'accounts:login' %}">Inicia sesión aquí</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

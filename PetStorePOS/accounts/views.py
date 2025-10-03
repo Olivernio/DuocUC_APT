@@ -4,8 +4,23 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-
+from formtools.wizard.views import SessionWizardView
+from core.forms import PersonalInfoForm, ContactDataForm, PreferencesForm
 from .forms import CustomUserCreationForm
+
+FORMS = [
+    ("personal", PersonalInfoForm),
+    ("contact", ContactDataForm),
+    ("preferences", PreferencesForm),
+]
+
+TEMPLATES = {
+    "personal": "accounts/signup_step1.html",
+    "contact": "accounts/signup_step2.html",
+    "preferences": "accounts/signup_step3.html",
+}
+
+
 
 def signup(request):
     if request.method == "POST":
@@ -49,3 +64,22 @@ def login_view(request):
 def signoout(request):
     logout(request)
     return redirect('home')
+
+class RegistroWizard(SessionWizardView):
+    form_list = FORMS
+
+    def get_template_names(self):
+        return [TEMPLATES[self.steps.current]]
+
+    def done(self, form_list, **kwargs):
+        data = {}
+        for form in form_list:
+            data.update(form.cleaned_data)
+        user = User.objects.create_user(
+            username=data['correo'],
+            email=data['correo'],
+            password=data['contraseña'],
+            first_name=data['nombre'],
+            last_name=data['apellidos'],
+        )
+        return render(self.request, 'accounts/registro_exitoso.html', {'user': user})

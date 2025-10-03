@@ -112,7 +112,7 @@
           >
         </li>
         <li class="url-noactive">
-          <a href="#"><i class="bi bi-heart me-1"></i>Adopción</a>
+          <a href="{% url 'adoption:lista'%}"><i class="bi bi-heart me-1"></i>Adopción</a>
         </li>
         <li class="url-noactive">
           <a href="#"><i class="bi bi-info-circle me-1"></i>Acerca de</a>
@@ -157,13 +157,6 @@
             >Iniciar Sesión</a
           >
         </li>
-        <li>
-          <a
-            class="btn btn-outline-primary btn-sm"
-            href="{% url 'accounts:signup' %}"
-            >Registrarse</a
-          >
-        </li>
         {% endif %}
       </ul>
       <div class="menu-toggle" id="menu-toggle">☰</div>
@@ -199,7 +192,7 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"
+              <a class="nav-link" href="{% url 'adoption:lista'%}"
                 ><i class="bi bi-heart me-1"></i>Adopción</a
               >
             </li>
@@ -292,7 +285,7 @@
             <h6 class="fw-bold mb-3 text-light">Enlaces Rápidos</h6>
             <span class="" style="color: #D1D5DC;">
               <ul class="list-unstyled">
-                <li><a href="#">Catálogo de Productos</a></li>
+                <li><a href="{% url 'catalog:product_list' %}">Catálogo de Productos</a></li>
                 <li><a href="#">Centro de Adopciones</a></li>
                 <li><a href="#">Registrar Mascota</a></li>
                 <li><a href="#">Acerca del Proyecto</a></li>
