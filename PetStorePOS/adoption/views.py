@@ -5,6 +5,21 @@ from .models import Mascota, EstadoMascota, Especies
 from .forms import AdoptionRequestForm
 
 
+import requests
+
+def mascotas_huachitos_view(request):
+    url = "https://huachitos.cl/api/animales/"
+    try:
+        response = requests.get(url, timeout=15)
+        json_data = response.json()
+        mascotas = json_data.get("data", [])
+    except Exception as e:
+        print("ERROR API Huachitos:", e)
+        mascotas = []
+    return render(request, "adoption/mascotas_huachitos_list.html", {"mascotas": mascotas})
+
+
+
 def list_Mascotas(request):
     qs = Mascota.objects.all()
     Especie = request.GET.get("Especie")

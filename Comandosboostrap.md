@@ -2,12 +2,15 @@
 
 # Para trabajar en el entorno Virtual y empesar a trabjar
 - 1 - .\venv\Scripts\Activate
+
 - 2 - cd esto es de ustedes\Documentos\GitHub\DuocUC_APT\ 
 - 3 - pip install -r requirements.txt
 - 4 - python manage.py migrate
 - 5 - python manage.py createsuperuser
 - 6 - python manage.py runserver
 
+
+- Ocupar esto en emergencia en el duoc python manage.py runserver 8080
 
 ## Contenedores
 - `container`: Contenedor responsivo con ancho fijo basado en puntos de ruptura.
