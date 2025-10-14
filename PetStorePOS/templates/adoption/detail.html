@@ -1,58 +1,121 @@
-{% extends "base.html" %}
-{% block title %}{{ Mascota.Nombre }} · Adopción{% endblock %}
-{% block content %}
+{% extends 'base.html' %}
+{% load static %}
 
-<div class="row g-4">
-  <div class="col-md-6">
-    <div class="card">
-      {% if Mascota.Imagen %}
-        <img src="{{ Mascota.Imagen.url }}" class="card-img-top" alt="{{ Mascota.Nombre }}">
-      {% else %}
-        <div class="bg-light d-flex align-items-center justify-content-center" style="height:360px">
-          <i class="bi bi-image text-secondary" style="font-size:2rem;"></i>
-        </div>
-      {% endif %}
-      <div class="card-body">
-        <h4 class="card-title">{{ Mascota.Nombre }}</h4>
-        <p class="text-muted">
-          {{ Mascota.get_Especie_display }}{% if Mascota.Raza %} · {{ Mascota.Raza }}{% endif %}
+{% block head-tag %}
+  <style>
+    .detail-container {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .pet-image-gallery {
+      text-align: center;
+    }
+    .pet-image-gallery img {
+      max-width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    .pet-details h1 {
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+    .pet-details .badge {
+      font-size: 1rem;
+      padding: 0.5em 1em;
+    }
+    .pet-details .badge-info {
+        background-color: #155DFC;
+        color: white;
+    }
+    .detail-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+    }
+    .detail-section h3 {
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #155DFC;
+    }
+    .pet-actions {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .btn-adopt {
+      background-color: #00A63E;
+      color: white;
+      font-weight: bold;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      transition: background-color 0.3s;
+    }
+    .btn-adopt:hover {
+      background-color: #007a2e;
+      color: white;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="container detail-container">
+  {% if error_message %}
+    <div class="alert alert-danger text-center">
+      <h2>Error</h2>
+      <p>{{ error_message }}</p>
+      <a href="{% url 'adoption:list' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
+    </div>
+  {% elif mascota %}
+    <div class="row">
+      <div class="col-lg-6 pet-image-gallery">
+        {% if mascota.imagenes %}
+          <img src="{{ mascota.imagenes.0.imagen }}" alt="Foto de {{ mascota.nombre }}">
+        {% else %}
+          <img src="{% static 'img/png/Icono1.png' %}" alt="Sin foto disponible">
+        {% endif %}
+      </div>
+      <div class="col-lg-6 pet-details">
+        <h1>{{ mascota.nombre }}</h1>
+        <p>
+          <span class="badge badge-info">{{ mascota.tipo }}</span>
+          <span class="badge bg-secondary">{{ mascota.edad }}</span>
+          <span class="badge bg-dark">{{ mascota.genero|title }}</span>
         </p>
-        <ul class="list-group list-group-flush mb-3">
-          <li class="list-group-item">Edad: {{ Mascota.Edad_Años }} años</li>
-          <li class="list-group-item">Vacunado: {{ Mascota.is_Vacunado|yesno:"Sí,No" }}</li>
-          <li class="list-group-item">Esterilizado: {{ Mascota.is_castrado|yesno:"Sí,No" }}</li>
-          <li class="list-group-item">
-            Estado:
-            <span class="badge
-              {% if Mascota.Estado == 'AVAILABLE' %} text-bg-success
-              {% elif Mascota.Estado == 'PENDING' %} text-bg-warning
-              {% else %} text-bg-secondary {% endif %}">
-              {{ Mascota.get_Estado_display }}
-            </span>
-          </li>
-        </ul>
-        <p>{{ Mascota.description|default:"" }}</p>
+        <p class="lead"><i class="bi bi-geo-alt-fill"></i> {{ mascota.comuna }}, {{ mascota.region }}</p>
+
+        <div class="detail-section">
+          <h3>Descripción</h3>
+          <div>{{ mascota.desc_fisica|safe }}</div>
+          <div>{{ mascota.desc_personalidad|safe }}</div>
+          {% if mascota.desc_adicional %}
+            <hr>
+            <div>{{ mascota.desc_adicional|safe }}</div>
+          {% endif %}
+        </div>
+
+        <div class="detail-section">
+            <h3>Salud</h3>
+            <ul class="list-unstyled">
+                <li><strong>Esterilizado:</strong> {% if mascota.esterilizado %}Sí{% else %}No{% endif %}</li>
+                <li><strong>Vacunas al día:</strong> {% if mascota.vacunas %}Sí{% else %}No{% endif %}</li>
+            </ul>
+        </div>
+        
+        <div class="pet-actions">
+          <a href="{{ mascota.url }}" target="_blank" class="btn btn-adopt">
+            <i class="bi bi-heart-fill"></i> Adoptar en Huachitos.cl
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="col-md-6">
-    <div class="card p-3">
-      <h5 class="fw-bold mb-3">Solicitud de Adopción</h5>
-      <form method="post" action="{% url 'adoption:solicitud' Mascota.pk %}">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        {% for field in form %}
-          <div class="mb-3">
-            <label class="form-label">{{ field.label }}</label>
-            {{ field }}
-            <div class="form-text text-danger">{{ field.errors }}</div>
-          </div>
-        {% endfor %}
-        <button class="btn btn-success" type="submit">Enviar Solicitud</button>
-      </form>
+  {% else %}
+    <div class="alert alert-warning text-center">
+      <h2>Mascota no encontrada</h2>
+      <p>No se encontró información para la mascota solicitada.</p>
+      <a href="{% url 'adoption:list' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
     </div>
-  </div>
+  {% endif %}
 </div>
-
 {% endblock %}

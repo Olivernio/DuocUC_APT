@@ -1,48 +1,86 @@
-{% extends "base.html" %}
-{% block title %}Adopción · PetStore{% endblock %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head-tag %}
+  <link rel="stylesheet" href="{% static 'css/adoption/adoption.css' %}" />
+{% endblock %}
+
 {% block content %}
+<div class="container mt-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4">Adopta un Compañero</h1>
+    <p class="lead text-muted">
+      Encuentra a tu amigo fiel. Datos proporcionados por <a href="https://huachitos.cl/" target="_blank">Huachitos.cl</a>.
+    </p>
+  </div>
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h3 class="fw-bold m-0">Mascotas en Adopción</h3>
-  <form class="d-flex gap-2" method="get">
-    <select name="Especie" class="form-select form-select-sm" onchange="this.form.submit()">
-      <option value="">Todas las especies</option>
-      <option value="DOG"     {% if Especie == 'DOG' %}selected{% endif %}>Perros</option>
-      <option value="CAT"     {% if Especie == 'CAT' %}selected{% endif %}>Gatos</option>
-      <option value="HAMSTERS"{% if Especie == 'HAMSTERS' %}selected{% endif %}>Hamsters</option>
-      <option value="OTHER"   {% if Especie == 'OTHER' %}selected{% endif %}>Otros</option>
-    </select>
-    <select name="Estado" class="form-select form-select-sm" onchange="this.form.submit()">
-      <option value="AVAILABLE" {% if status == 'AVAILABLE' %}selected{% endif %}>Disponibles</option>
-      <option value="PENDING"   {% if status == 'PENDING' %}selected{% endif %}>En proceso</option>
-      <option value="ADOPTED"   {% if status == 'ADOPTED' %}selected{% endif %}>Adoptados</option>
-    </select>
-  </form>
-</div>
-
-<div class="row g-3">
-  {% for pet in Mascota %}
-    <div class="col-12 col-md-6 col-lg-4">
-      <div class="card h-100">
-        {% if pet.Imagen %}
-          <img src="{{ pet.Imagen.url }}" class="card-img-top" alt="{{ pet.Nombre }}">
-        {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{ pet.Nombre }}</h5>
-          <p class="card-text text-muted mb-1">{{ pet.get_Especie_display }} · {{ pet.Raza }}</p>
-          <p class="card-text"><small class="text-muted">Edad: {{ pet.Edad_Años }} años</small></p>
-          <p class="badge bg-{% if pet.Estado == 'AVAILABLE' %}success{% elif pet.Estado == 'PENDING' %}warning{% else %}secondary{% endif %}">
-            {{ pet.get_Estado_display }}
-          </p>
-        </div>
-        <div class="card-footer text-end">
-          <a href="{% url 'adoption:detalle' pet.pk %}" class="btn btn-sm btn-primary">Ver detalle</a>
-        </div>
+  <!-- Filtros -->
+  <div class="filters-container mb-5">
+    <form method="GET" action="{% url 'adoption:list' %}" class="row g-3 justify-content-center align-items-center">
+      <div class="col-md-4">
+        <label for="tipo" class="form-label visually-hidden">Filtrar por especie:</label>
+        <select name="tipo" id="tipo" class="form-select form-select-lg">
+          <option value="">Todas las especies</option>
+          {% for especie in especies_disponibles %}
+            <option value="{{ especie }}" {% if especie == tipo_filtrado %}selected{% endif %}>{{ especie|title }}</option>
+          {% endfor %}
+        </select>
       </div>
-    </div>
-  {% empty %}
-    <p class="text-muted">No hay mascotas que coincidan con el filtro.</p>
-  {% endfor %}
-</div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary btn-lg w-100">Filtrar</button>
+      </div>
+      <div class="col-md-2">
+        <a href="{% url 'adoption:list' %}" class="btn btn-outline-secondary btn-lg w-100">Limpiar</a>
+      </div>
+    </form>
+  </div>
 
+  {% if error_message %}
+    <div class="alert alert-danger text-center">
+        <h2><i class="bi bi-exclamation-triangle-fill"></i> Error de Conexión</h2>
+        <p>{{ error_message }}</p>
+    </div>
+  {% endif %}
+
+  <div class="huachitos-grid">
+    {% for mascota in mascotas %}
+      <a href="{% url 'adoption:mascota_detail' mascota.id %}" class="huachito-card-link">
+        <div class="huachito-card" style="--animation-order: {{ forloop.counter0 }};">
+          <div class="card-img-container">
+            <img src="{{ mascota.imagen }}" alt="Foto de {{ mascota.nombre }}">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+                <h3 class="card-title">{{ mascota.nombre }}</h3>
+                {% with mascota.tipo|lower as tipo %}
+                  <span class="card-badge {{ tipo }}">{{ mascota.tipo }}</span>
+                {% endwith %}
+            </div>
+            <div class="card-details">
+              <span><i class="bi bi-tag-fill"></i> {{ mascota.edad }}</span>
+              <span><i class="bi bi-gender-ambiguous"></i> {{ mascota.genero|title }}</span>
+            </div>
+            <div class="location">
+              <i class="bi bi-geo-alt-fill"></i>
+              <span>{{ mascota.comuna }}, {{ mascota.region }}</span>
+            </div>
+          </div>
+          <div class="card-footer-action">
+              Ver Detalles
+          </div>
+        </div>
+      </a>
+    {% empty %}
+      {% if not error_message %}
+      <div class="alert alert-info w-100 text-center col-12">
+        {% if tipo_filtrado %}
+          No se encontraron mascotas del tipo "{{ tipo_filtrado|title }}".
+        {% else %}
+          No hay mascotas disponibles desde la API en este momento.
+        {% endif %}
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

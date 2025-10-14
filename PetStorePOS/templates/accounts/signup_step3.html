@@ -26,18 +26,29 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ wizard.management_form }}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for error in form.non_field_errors %}
+                        <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
                     {% for field in form %}
                     <div class="mb-3">
                         {{ field.label_tag }}
                         {{ field }}
-                        {% if field.help_text %}
-                        <div class="form-text">{{ field.help_text }}</div>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        {% elif field.help_text %}
+                            <div class="form-text">{{ field.help_text|safe }}</div>
                         {% endif %}
-                        {% for error in field.errors %}
-                        <div class="text-danger small">{{ error }}</div>
-                        {% endfor %}
                     </div>
                     {% endfor %}
+
                     <div class="d-flex justify-content-between">
                         {% if wizard.steps.prev %}
                         <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"

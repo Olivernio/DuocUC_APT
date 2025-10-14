@@ -4,8 +4,6 @@ from . import views
 app_name = "adoption"
 
 urlpatterns = [
-    path("", views.list_Mascotas, name="lista"),
-    path("<int:pk>/", views.Detalle_Mascota, name="detalle"),
-    path("<int:pk>/Solicitud/", views.Enviar_Solicitud, name="solicitud"),
-    path('mascotas_huachitos/', views.mascotas_huachitos_view, name='mascotas_huachitos'),
+    path("", views.mascotas_huachitos_view, name="list"),
+    path("<int:pet_id>/", views.mascota_detail_view, name="mascota_detail"),
 ]
