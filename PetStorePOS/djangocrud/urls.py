@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings             
 from django.conf.urls.static import static    
 from core.views import home
+from djangocrud.views import about
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,7 +12,7 @@ urlpatterns = [
     path("dashboard/", include("dashboard.urls")),
     path("catalog/", include("catalog.urls")),  
     path('adoption/', include('adoption.urls')),
-
+    path("acerca/", about, name="about"),
 
 ]
 

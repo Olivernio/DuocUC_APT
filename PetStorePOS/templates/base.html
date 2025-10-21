@@ -63,7 +63,7 @@
             <i class="bi bi-heart"></i>
             <span class="ms-2" class="btn">Adopción</span>
           </a>
-          <a class="nav-link d-flex align-items-center" href="#">
+          <a class="nav-link d-flex align-items-center" href="{% url 'about' %}">
             <i class="bi bi-info-circle"></i>
             <span class="ms-2">Acerca de</span>
           </a>
@@ -113,7 +113,7 @@
           <a href="{% url 'adoption:list'%}"><i class="bi bi-heart me-1"></i>Adopción</a>
         </li>
         <li class="url-noactive">
-          <a href="#"><i class="bi bi-info-circle me-1"></i>Acerca de</a>
+          <a href=" {% url 'about' %}"><i class="bi bi-info-circle me-1"></i>Acerca de</a>
         </li>
         <li class="url-noactive">
           <a href="#"><i class="bi bi-person-gear me-1"></i>Mi Cuenta</a>
@@ -195,7 +195,7 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"
+              <a class="nav-link" href="{% url 'about' %}"
                 ><i class="bi bi-info-circle me-1"></i>Acerca de</a
               >
             </li>
@@ -284,9 +284,9 @@
             <span class="" style="color: #D1D5DC;">
               <ul class="list-unstyled">
                 <li><a href="{% url 'catalog:product_list' %}">Catálogo de Productos</a></li>
-                <li><a href="#">Centro de Adopciones</a></li>
+                <li><a href="{% url 'adoption:list'%}">Centro de Adopciones</a></li>
                 <li><a href="#">Registrar Mascota</a></li>
-                <li><a href="#">Acerca del Proyecto</a></li>
+                <li><a href="{% url 'about' %}">Acerca del Proyecto</a></li>
               </ul>
             </span>
           </div>
