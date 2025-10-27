@@ -5,3 +5,4 @@ sqlparse==0.5.3
 tzdata==2025.2
 django-bootstrap5==25.2
 django-formtools==2.5.1
+requests==2.32.5
