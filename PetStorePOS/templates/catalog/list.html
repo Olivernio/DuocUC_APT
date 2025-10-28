@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %} {# Opcional: para precios formateados #}
 
 {% block title %}Catálogo · PetStore{% endblock %}
 
@@ -9,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="container py-4">
+{# Main ya está en base.html, así que no lo repetimos aquí #}
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
       <h2 class="fw-bold m-0">
@@ -37,55 +38,69 @@
 
   {# BARRA DE FILTRO Y BUSQUEDA (usuario) #}
   {% if not request.user.is_staff %}
-  <form class="row g-2 align-items-end mb-4">
-    <div class="col-auto">
-      <input type="text" class="form-control" name="q" placeholder="Buscar productos..." value="{{ request.GET.q }}">
+  <form method="get" class="row g-2 align-items-end mb-4 bg-light p-3 rounded border shadow-sm"> {# Mejorado estilo #}
+    <div class="col-sm-6 col-md-4">
+       <label for="q_search" class="form-label small fw-bold">Buscar:</label> {# Añadido label #}
+      <input type="text" class="form-control" id="q_search" name="q" placeholder="Nombre, SKU..." value="{{ request.GET.q }}">
     </div>
-    <div class="col-auto">
-      <select name="cat" class="form-select">
-        <option value="">Todas las categorías</option>
+    <div class="col-sm-6 col-md-4">
+       <label for="cat_select" class="form-label small fw-bold">Categoría:</label> {# Añadido label #}
+      <select name="cat" id="cat_select" class="form-select">
+        <option value="">Todas</option>
         {% for c in categories %}
-            <option value="{{ c.pk }}" {% if c.pk == category_selected %}selected{% endif %}>{{ c.name }}</option>
+             {# Aseguramos comparación correcta de string con string #}
+            <option value="{{ c.pk }}" {% if c.pk|stringformat:"s" == category_selected %}selected{% endif %}>{{ c.name }}</option>
         {% endfor %}
-    </select>      
+    </select>
     </div>
     <div class="col-auto">
-      <button class="btn btn-outline-primary">Filtrar</button>
+      <button type="submit" class="btn btn-primary"> {# Cambiado a primary #}
+          <i class="bi bi-funnel me-1"></i>Filtrar
+      </button>
+       <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary ms-1" title="Limpiar filtros">
+           <i class="bi bi-x-lg"></i>
+       </a>
     </div>
   </form>
   {% endif %}
 
   <div class="row g-4">
     {% for p in products %}
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card product-card h-100">
+      <div class="col-6 col-md-4 col-lg-3 d-flex align-items-stretch"> {# Para alinear tarjetas #}
+        <div class="card product-card h-100 w-100"> {# Añadido w-100 #}
           <div class="product-card-img-container">
             {% if p.image %}
               <img src="{{ p.image.url }}" class="product-card-img" alt="{{ p.name }}">
             {% else %}
               <div class="product-card-no-img">
-                <i class="bi bi-box-seam" style="font-size: 3rem;"></i>
+                <i class="bi bi-box-seam text-secondary" style="font-size: 3rem;"></i>
               </div>
             {% endif %}
             {% if not p.is_active %}
               <span class="badge-inactive">Inactivo</span>
             {% endif %}
-            {% if p.stock == 0 %}
+            {% if p.stock <= 0 %} {# Cambiado a <= 0 #}
               <span class="badge-out">Agotado</span>
             {% endif %}
           </div>
           <div class="card-body d-flex flex-column">
-
-            <span class="badge bg-light text-dark border mb-1">{{ p.get_category_display }}</span>
-            <h5 class="product-name mt-1 mb-1">{{ p.name }}</h5>
-            <div class="product-price fw-bold mb-2">${{ p.price|floatformat:0 }}</div>
+             {# Categoría como badge #}
+             <span class="badge bg-light text-dark border mb-2 align-self-start">{{ p.get_category_display }}</span>
+             {# Nombre del producto #}
+            <h5 class="product-name mt-1 mb-1 fs-6">{{ p.name }}</h5>
+            {# Precio #}
+            <div class="product-price fw-bold mb-2">${{ p.price|floatformat:0 }}</div> {# Usamos floatformat para evitar decimales si son .00 #}
+            {# Stock #}
             <div class="small text-secondary mb-2">
               <i class="bi bi-box-seam me-1"></i>Stock: <strong>{{ p.stock }}</strong>
             </div>
-            <div class="small mb-3">{{ p.description|truncatewords:14 }}</div>
-            
+            {# Descripción corta #}
+            <div class="small mb-3 text-muted">{{ p.description|truncatewords:14 }}</div>
+
+            {# Botones - Se muestran al final usando mt-auto #}
             {% if request.user.is_staff %}
-              <div class="mt-auto d-flex gap-2">
+              {# Botones para Staff #}
+              <div class="mt-auto d-flex gap-2 pt-2 border-top">
                 <a class="btn btn-sm btn-outline-primary w-100" href="{% url 'catalog:product_update' p.pk %}">
                   <i class="bi bi-pencil me-1"></i>Editar
                 </a>
@@ -94,34 +109,50 @@
                 </a>
               </div>
             {% else %}
-              <button class="btn {% if p.stock == 0 or not p.is_active %}btn-outline-secondary disabled{% else %}btn-dark{% endif %} w-100 mt-auto">
-                <i class="bi bi-cart-plus"></i>
-                {% if p.stock == 0 or not p.is_active %}Agotado{% else %}Añadir al Carrito{% endif %}
-              </button>
+              {# -------- Botón Añadir al Carrito para usuarios normales (Corregido) -------- #}
+              <form action="{% url 'cart:add_to_cart' p.id %}" method="post" class="mt-auto pt-2 border-top">
+                  {% csrf_token %}
+                  {% if p.stock > 0 and p.is_active %}
+                      <button type="submit" class="btn btn-dark w-100">
+                          <i class="bi bi-cart-plus me-1"></i>Añadir al Carrito
+                      </button>
+                  {% else %}
+                      <button type="button" class="btn btn-outline-secondary w-100 disabled" aria-disabled="true">
+                          <i class="bi bi-x-circle me-1"></i>Agotado
+                      </button>
+                  {% endif %}
+              </form>
+              {# -------- Fin Botón Añadir al Carrito -------- #}
             {% endif %}
           </div>
         </div>
       </div>
     {% empty %}
       <div class="col">
-        <div class="text-center py-5">
-          <i class="bi bi-box-seam" style="font-size: 4rem;"></i>
+        <div class="alert alert-warning text-center py-5 shadow-sm"> {# Mejorado estilo #}
+          <i class="bi bi-box-seam display-1"></i>
           <h4 class="mt-3">No hay productos disponibles</h4>
+          <p class="text-muted">
+              {% if request.GET.q or category_selected %} {# Usamos category_selected #}
+                  No se encontraron productos que coincidan con tu búsqueda o filtro.
+              {% else %}
+                  Parece que aún no se han agregado productos al catálogo.
+              {% endif %}
+          </p>
           {% if request.user.is_staff %}
             <a href="{% url 'catalog:product_create' %}" class="btn btn-primary mt-3">
               <i class="bi bi-plus-lg me-1"></i>Crear el primer producto
             </a>
           {% endif %}
+           {% if request.GET.q or category_selected %} {# Usamos category_selected #}
+               <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary mt-3 ms-2">
+                   <i class="bi bi-x-lg me-1"></i>Limpiar Filtros
+               </a>
+           {% endif %}
         </div>
       </div>
     {% endfor %}
   </div>
-</main>
 
-
-
-
+{# Cierre del <main> que está en base.html #}
 {% endblock %}
-
-
-
