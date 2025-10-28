@@ -1,0 +1,277 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-28 01:43-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+
+#: .\djangocrud\settings.py:108
+msgid "Español"
+msgstr "Español"
+
+#: .\djangocrud\settings.py:109
+msgid "English"
+msgstr "Inglés"
+
+#: .\djangocrud\settings.py:110
+msgid "Português"
+msgstr "Portugués"
+
+#: .\templates\base.html:40
+msgid "Sistema Integral"
+msgstr "Sistema Integral"
+
+#: .\templates\base.html:52 .\templates\base.html:121 .\templates\base.html:215
+#: .\templates\core\home.html:4
+msgid "Inicio"
+msgstr "Inicio"
+
+#: .\templates\base.html:58 .\templates\base.html:126 .\templates\base.html:220
+msgid "Productos"
+msgstr "Productos"
+
+#: .\templates\base.html:65 .\templates\base.html:130 .\templates\base.html:225
+#: .\templates\core\home.html:25
+msgid "Adopción"
+msgstr "Adopción"
+
+#: .\templates\base.html:69 .\templates\base.html:133 .\templates\base.html:230
+msgid "Acerca de"
+msgstr "Acerca de"
+
+#: .\templates\base.html:72 .\templates\base.html:136
+msgid "Mi Cuenta"
+msgstr "Mi Cuenta"
+
+#: .\templates\base.html:79 .\templates\base.html:139 .\templates\base.html:235
+#: .\templates\base.html:328
+msgid "Accesibilidad"
+msgstr "Accesibilidad"
+
+#: .\templates\base.html:98
+msgid "Ingresar"
+msgstr "Ingresar"
+
+#: .\templates\base.html:161 .\templates\base.html:242
+msgid "Ir al Dashboard"
+msgstr "Ir al Dashboard"
+
+#: .\templates\base.html:176 .\templates\base.html:254
+msgid "Cerrar Sesión"
+msgstr "Cerrar Sesión"
+
+#: .\templates\base.html:186 .\templates\base.html:262
+msgid "Iniciar Sesión"
+msgstr "Iniciar Sesión"
+
+#: .\templates\base.html:207
+msgid "Toggle navigation"
+msgstr "Toggle navigation"
+
+#: .\templates\base.html:269
+msgid "Registrarse"
+msgstr "Registrarse"
+
+#: .\templates\base.html:305
+msgid ""
+"Sistema integral para el cuidado y gestión de mascotas, diseñado\n"
+"              con accesibilidad y usabilidad como prioridades principales."
+msgstr "Sistema integral para el cuidado y gestión de mascotas, diseñado\n"
+"              con accesibilidad y usabilidad como prioridades principales."
+
+#: .\templates\base.html:309
+msgid "Accesible"
+msgstr "Accesible"
+
+#: .\templates\base.html:310
+msgid "Intuitivo"
+msgstr "Intuitivo"
+
+#: .\templates\base.html:311
+msgid "Seguro"
+msgstr "Seguro"
+
+#: .\templates\base.html:316
+msgid "Enlaces Rápidos"
+msgstr "Enlaces Rápidos"
+
+#: .\templates\base.html:319
+msgid "Catálogo de Productos"
+msgstr "Catálogo de Productos"
+
+#: .\templates\base.html:320 .\templates\core\home.html:53
+msgid "Centro de Adopciones"
+msgstr "Centro de Adopciones"
+
+#: .\templates\base.html:321
+msgid "Registrar Mascota"
+msgstr "Registrar Mascota"
+
+#: .\templates\base.html:322
+msgid "Acerca del Proyecto"
+msgstr "Acerca del Proyecto"
+
+#: .\templates\base.html:330
+msgid ""
+"Este sitio cumple con las pautas WCAG 2.1 AA y está optimizado\n"
+"  para lectores de pantalla y navegación por teclado."
+msgstr ""
+"Este sitio cumple con las pautas WCAG 2.1 AA y está optimizado\n"
+"  para lectores de pantalla y navegación por teclado."
+
+#: .\templates\base.html:334
+msgid "Configurar Accesibilidad"
+msgstr "Configurar Accesibilidad"
+
+#: .\templates\base.html:340
+msgid ""
+"© 2025 PetCare System. Diseñado con accesibilidad universal y amor por\n"
+"          las mascotas."
+msgstr "© 2025 PetCare System. Diseñado con accesibilidad universal y amor por\n"
+"          las mascotas."
+
+#: .\templates\core\home.html:12
+msgid "Sistema Integral para el"
+msgstr "Sistema Integral para el"
+
+#: .\templates\core\home.html:13
+msgid "Cuidado de Mascotas"
+msgstr "Cuidado de Mascotas"
+
+#: .\templates\core\home.html:16
+msgid ""
+"Una plataforma completa y accesible para la gestión de tiendas de\n"
+"  mascotas, centros de adopción y cuidado veterinario, diseñada para todos\n"
+"  los usuarios."
+msgstr ""
+"Una plataforma completa y accesible para la gestión de tiendas de\n"
+"  mascotas, centros de adopción y cuidado veterinario, diseñada para todos\n"
+"  los usuarios."
+
+#: .\templates\core\home.html:22
+msgid "Explorar Productos"
+msgstr "Explorar Productos"
+
+#: .\templates\core\home.html:40
+msgid "Características Principales"
+msgstr "Características Principales"
+
+#: .\templates\core\home.html:43
+msgid ""
+"Nuestro sistema está diseñado con las mejores prácticas de accesibilidad y\n"
+"  usabilidad para garantizar una experiencia inclusiva."
+msgstr ""
+"Nuestro sistema está diseñado con las mejores prácticas de accesibilidad y\n"
+"  usabilidad para garantizar una experiencia inclusiva."
+
+#: .\templates\core\home.html:55
+msgid ""
+"Conectamos mascotas necesitadas con familias amorosas a través de\n"
+"          nuestro sistema de adopción integral."
+msgstr ""
+"Conectamos mascotas necesitadas con familias amorosas a través de\n"
+"          nuestro sistema de adopción integral."
+
+#: .\templates\core\home.html:65
+msgid "Gestión Veterinaria"
+msgstr "Gestión Veterinaria"
+
+#: .\templates\core\home.html:67
+msgid ""
+"Sistema completo para el manejo de historiales médicos, tratamientos y\n"
+"          cuidados especializados."
+msgstr ""
+"Sistema completo para el manejo de historiales médicos, tratamientos y\n"
+"          cuidados especializados."
+
+#: .\templates\core\home.html:77 .\templates\core\home.html:112
+msgid "Accesibilidad Universal"
+msgstr "Accesibilidad Universal"
+
+#: .\templates\core\home.html:79
+msgid ""
+"Diseñado para ser completamente accesible para personas con\n"
+"          discapacidades visuales, motoras y cognitivas."
+msgstr ""
+"Diseñado para ser completamente accesible para personas con\n"
+"          discapacidades visuales, motoras y cognitivas."
+
+#: .\templates\core\home.html:89
+msgid "Impacto en Números"
+msgstr "Impacto en Números"
+
+#: .\templates\core\home.html:93
+msgid "Mascotas Adoptadas"
+msgstr "Mascotas Adoptadas"
+
+#: .\templates\core\home.html:97
+msgid "Usuarios Registrados"
+msgstr "Usuarios Registrados"
+
+#: .\templates\core\home.html:101
+msgid "Satisfacción"
+msgstr "Satisfacción"
+
+#: .\templates\core\home.html:105
+msgid "Soporte Disponible"
+msgstr "Soporte Disponible"
+
+#: .\templates\core\home.html:114
+msgid ""
+"Diseñado siguiendo las pautas WCAG 2.1 AA para garantizar que todas las "
+"personas puedan usar nuestro sistema sin barreras."
+msgstr ""
+"Diseñado siguiendo las pautas WCAG 2.1 AA para garantizar que todas las "
+"personas puedan usar nuestro sistema sin barreras."
+
+#: .\templates\core\home.html:120
+msgid "Navegación por Teclado"
+msgstr "Navegación por Teclado"
+
+#: .\templates\core\home.html:121
+msgid "Todos los elementos son accesibles mediante teclado."
+msgstr "Todos los elementos son accesibles mediante teclado."
+
+#: .\templates\core\home.html:127
+msgid "Alto Contraste"
+msgstr "Alto Contraste"
+
+#: .\templates\core\home.html:128
+msgid "Opciones de contraste para usuarios con problemas visuales."
+msgstr "Opciones de contraste para usuarios con problemas visuales."
+
+#: .\templates\core\home.html:134
+msgid "Lectores de Pantalla"
+msgstr "Lectores de Pantalla"
+
+#: .\templates\core\home.html:135
+msgid "Compatible con NVDA, JAWS y VoiceOver."
+msgstr "Compatible con NVDA, JAWS y VoiceOver."
+
+#: .\templates\core\home.html:141
+msgid "Texto Ampliable"
+msgstr "Texto Ampliable"
+
+#: .\templates\core\home.html:142
+#, python-format
+msgid "Tamaños de texto ajustables hasta 200%%."
+msgstr "Tamaños de texto ajustables hasta 200%%."
+
+#, fuzzy
+#~| msgid "Sistema Integral"
+#~ msgid "Small integer"
+#~ msgstr "Sistema Integral"

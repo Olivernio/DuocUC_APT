@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} Inicio · PetStore {% endblock %}
+{% load i18n %} 
+{% block title %} {% trans "Inicio" %} · PetStore {% endblock %}
 {% block head-tag %}  <link rel="stylesheet" href="{% static 'css/core/style.css' %}"> {% endblock %}
 
 {% block content %}
@@ -8,20 +9,20 @@
 <section class="hero-home py-5">
   <div class="container text-center">
     <h1 class="display-4 fw-bold mb-3">
-      Sistema Integral para el
-      <span class="text-gradient">Cuidado de Mascotas</span>
+      {% trans "Sistema Integral para el" %} 
+      <span class="text-gradient">{% trans "Cuidado de Mascotas" %}</span>
     </h1>
     <p class="lead mb-4">
-      Una plataforma completa y accesible para la gestión de tiendas de
-      mascotas, centros de adopción y cuidado veterinario, diseñada para todos
-      los usuarios.
+      {% blocktrans %}Una plataforma completa y accesible para la gestión de tiendas de
+  mascotas, centros de adopción y cuidado veterinario, diseñada para todos
+  los usuarios.{% endblocktrans %}
     </p>
     <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
       <a href="{% url 'catalog:product_list' %}" class="btn btn-dark btn-lg">
-        <i class="bi bi-bag"></i> Explorar Productos
+        <i class="bi bi-bag"></i> {% trans "Explorar Productos" %}
       </a>
       <a href="{% url 'adoption:list' %}" class="btn btn-outline-dark btn-lg">
-        <i class="bi bi-heart"></i> Adopción
+        <i class="bi bi-heart"></i> {% trans "Adopción" %} 
       </a>
     </div>
     <div class="d-flex justify-content-center">
@@ -35,48 +36,48 @@
 </section>
 
 {# Caracteristicas #}
-<h1 class="display-4 fw-bold mb-3 text-center card-title">
-  Características Principales
+<h1 class="display-4 fw-bold mb-3 text-center card-title"> 
+  {% trans "Características Principales" %}
 </h1>
 <p class="mb-4 ms-5 text-center">
-  Nuestro sistema está diseñado con las mejores prácticas de accesibilidad y
-  usabilidad para garantizar una experiencia inclusiva.
+  {% blocktrans %}Nuestro sistema está diseñado con las mejores prácticas de accesibilidad y
+  usabilidad para garantizar una experiencia inclusiva.{% endblocktrans %}
 </p>
 <div class="feature-div container card">
   <div class="row row-cols-1 row-cols-md-3 g-4 my-5">
     <div class="col">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
-          <i class="bi bi-heart text-danger"></i>
+          <i class="bi bi-heart text-danger"></i> 
         </div>
-        <h5 class="fw-bold mb-2">Centro de Adopciones</h5>
+        <h5 class="fw-bold mb-2">{% trans "Centro de Adopciones" %}</h5>
         <p class="mb-0 text-secondary">
-          Conectamos mascotas necesitadas con familias amorosas a través de
-          nuestro sistema de adopción integral.
+          {% blocktrans %}Conectamos mascotas necesitadas con familias amorosas a través de
+          nuestro sistema de adopción integral.{% endblocktrans %}
         </p>
       </div>
     </div>
     <div class="col">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
-          <i class="bi bi-shield-check text-primary"></i>
+          <i class="bi bi-shield-check text-primary"></i> 
         </div>
-        <h5 class="fw-bold mb-2">Gestión Veterinaria</h5>
+        <h5 class="fw-bold mb-2">{% trans "Gestión Veterinaria" %}</h5>
         <p class="mb-0 text-secondary">
-          Sistema completo para el manejo de historiales médicos, tratamientos y
-          cuidados especializados.
+          {% blocktrans %}Sistema completo para el manejo de historiales médicos, tratamientos y
+          cuidados especializados.{% endblocktrans %}
         </p>
       </div>
     </div>
     <div class="">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
-          <i class="bi bi-people text-success"></i>
+          <i class="bi bi-people text-success"></i> 
         </div>
-        <h5 class="fw-bold mb-2">Accesibilidad Universal</h5>
+        <h5 class="fw-bold mb-2">{% trans "Accesibilidad Universal" %}</h5>
         <p class="mb-0 text-secondary">
-          Diseñado para ser completamente accesible para personas con
-          discapacidades visuales, motoras y cognitivas.
+          {% blocktrans %}Diseñado para ser completamente accesible para personas con
+          discapacidades visuales, motoras y cognitivas.{% endblocktrans %}
         </p>
       </div>
     </div>
@@ -84,61 +85,61 @@
 </div>
 
 {# METRICAS #}
-<section class="metricas-div container text-center py-4 my-5">
-  <h2 class="mt-5">Impacto en Números</h2>
+<section class="metricas-div container text-center py-4 my-5"> 
+  <h2 class="mt-5">{% trans "Impacto en Números" %}</h2>
   <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 mt-5 mb-5">
     <div class="col mt-2">
       <h3 class="fs-1">500+</h3>
-      <p class="m-0">Mascotas Adoptadas</p>
+      <p class="m-0">{% trans "Mascotas Adoptadas" %}</p>
     </div>
     <div class="col mt-2">
-      <h3 class="fs-1">1.200+</h3>
-      <p class="m-0">Usuarios Registrados</p>
+      <h3 class="fs-1">1.200+</h3> 
+      <p class="m-0">{% trans "Usuarios Registrados" %}</p>
     </div>
     <div class="col mt-2">
       <h3 class="fs-1">98%</h3>
-      <p class="m-0">Satisfacción</p>
+      <p class="m-0">{% trans "Satisfacción" %}</p>
     </div>
     <div class="col mt-2">
-      <h3 class="fs-1">24/7</h3>
-      <p class="m-0">Soporte Disponible</p>
+      <h3 class="fs-1">24/7</h3> 
+      <p class="m-0">{% trans "Soporte Disponible" %}</p>
     </div>
   </div>
 </section>
 
-{# ACCESIBILIDAD #}
+{# ACCESIBILIDAD #} 
 <section class="accesibilidad container my-5 text-center">
-  <h2>Accesibilidad Universal</h2>
+  <h2>{% trans "Accesibilidad Universal" %}</h2>
   <p class="mb-4">
-    Diseñado siguiendo las pautas WCAG 2.1 AA para garantizar que todas las personas puedan usar nuestro sistema sin barreras.
+    {% trans "Diseñado siguiendo las pautas WCAG 2.1 AA para garantizar que todas las personas puedan usar nuestro sistema sin barreras." %}
   </p>
   <div class="grid-accesibilidad row row-cols-1 row-cols-sm-2 mt-5 mb-5">
     <div class="col mt-5 d-flex justify-content-start align-items-start gap-3">
       <i class="check_icon">{{ svg_img_check|safe }}</i>
       <div>
-        <h4 class="fw-bold text-start">Navegación por Teclado</h4>
-        <p class="m-0">Todos los elementos son accesibles mediante teclado.</p>
+        <h4 class="fw-bold text-start">{% trans "Navegación por Teclado" %}</h4>
+        <p class="m-0">{% trans "Todos los elementos son accesibles mediante teclado." %}</p>
       </div>
     </div>
     <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
       <i class="check_icon">{{ svg_img_check|safe }}</i>
       <div>
-        <h4 class="fw-bold text-start">Alto Contraste</h4>
-        <p class="m-0">Opciones de contraste para usuarios con problemas visuales.</p>
+        <h4 class="fw-bold text-start">{% trans "Alto Contraste" %}</h4>
+        <p class="m-0">{% trans "Opciones de contraste para usuarios con problemas visuales." %}</p>
       </div>
     </div>
     <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
       <i class="check_icon">{{ svg_img_check|safe }}</i>
       <div>
-        <h4 class="fw-bold text-start">Lectores de Pantalla</h4>
-        <p class="m-0">Compatible con NVDA, JAWS y VoiceOver.</p>
+        <h4 class="fw-bold text-start">{% trans "Lectores de Pantalla" %}</h4>
+        <p class="m-0">{% trans "Compatible con NVDA, JAWS y VoiceOver." %}</p>
       </div>
     </div>
     <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
       <i class="check_icon">{{ svg_img_check|safe }}</i>
       <div>
-        <h4 class="fw-bold text-start">Texto Ampliable</h4>
-        <p class="m-0">Tamaños de texto ajustables hasta 200%.</p>
+        <h4 class="fw-bold text-start">{% trans "Texto Ampliable" %}</h4>
+        <p class="m-0">{% trans "Tamaños de texto ajustables hasta 200%." %}</p>
       </div>
     </div>
   </div>
@@ -151,19 +152,19 @@
       <div class="card card-feature h-100 p-3">
         <div class="d-flex align-items-center mb-2">
           <i class="bi bi-truck me-2"></i>
-          <h6 class="m-0">Envío Gratis</h6>
+          <h6 class="m-0">{% trans "Envío Gratis" %}</h6>
         </div>
-        <p class="text-secondary small m-0">En compras mayores a $50.000</p>
+        <p class="text-secondary small m-0">{% trans "En compras mayores a $50.000" %}</p>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card card-feature h-100 p-3">
         <div class="d-flex align-items-center mb-2">
           <i class="bi bi-heart-pulse me-2"></i>
-          <h6 class="m-0">Adopción Responsable</h6>
+          <h6 class="m-0">{% trans "Adopción Responsable" %}</h6>
         </div>
         <p class="text-secondary small m-0">
-          Conectamos mascotas con familias amorosas.
+          {% trans "Conectamos mascotas con familias amorosas." %}
         </p>
       </div>
     </div>
@@ -171,10 +172,10 @@
       <div class="card card-feature h-100 p-3">
         <div class="d-flex align-items-center mb-2">
           <i class="bi bi-star me-2"></i>
-          <h6 class="m-0">Calidad Premium</h6>
+          <h6 class="m-0">{% trans "Calidad Premium" %}</h6>
         </div>
         <p class="text-secondary small m-0">
-          Solo las mejores marcas para tu mascota.
+          {% trans "Solo las mejores marcas para tu mascota." %}
         </p>
       </div>
     </div>
@@ -184,8 +185,8 @@
 {# DESTACADOS #}
 {% comment %} <section class="mb-4">
   <div class="d-flex justify-content-between align-items-center mb-2">
-    <h3 class="fw-bold m-0">Productos Destacados</h3>
-    <a class="small" href="{% url 'catalog:product_list' %}">Ver todo</a>
+    <h3 class="fw-bold m-0">{% trans "Productos Destacados" %}</h3>
+    <a class="small" href="{% url 'catalog:product_list' %}">{% trans "Ver todo" %}</a>
   </div>
   <div class="row g-3">
     {% for p in featured %}
@@ -215,14 +216,14 @@
           <a
             href="{% url 'catalog:product_update' p.pk %}"
             class="btn btn-sm btn-outline-primary"
-            >Ver</a
+            >{% trans "Ver" %}</a
           >
         </div>
       </div>
     </div>
     {% empty %}
     <div class="col">
-      <p class="text-secondary">Aún no hay productos activos.</p>
+      <p class="text-secondary">{% trans "Aún no hay productos activos." %}</p>
     </div>
     {% endfor %}
   </div>
@@ -232,15 +233,15 @@
 {% comment %} <section class="p-4 bg-white border rounded-3">
   <div class="row align-items-center">
     <div class="col-md-7">
-      <h4 class="fw-bold">Mantente Informado</h4>
+      <h4 class="fw-bold">{% trans "Mantente Informado" %}</h4>
       <p class="text-secondary mb-0">
-        Recibe noticias sobre productos, consejos y mascotas en adopción.
+        {% trans "Recibe noticias sobre productos, consejos y mascotas en adopción." %}
       </p>
     </div>
-    <div class="col-md-5 mt-3 mt-md-0">
+    <div class="col-md-5 mt-3 mt-md-0">  
       <form class="d-flex gap-2">
-        <input type="email" class="form-control" placeholder="Tu correo" />
-        <button class="btn btn-primary" type="button">Suscribirse</button>
+        <input type="email" class="form-control" placeholder="{% trans 'Tu correo' %}" />
+        <button class="btn btn-primary" type="button">{% trans "Suscribirse" %}</button>
       </form>
     </div>
   </div>

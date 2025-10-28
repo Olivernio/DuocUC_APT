@@ -1,6 +1,7 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ request.LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,7 +37,7 @@
           />
           <span class="ms-2">
             <span class="fw-bold">PetCare</span><br />
-            <small class="text-muted">Sistema Integral</small>
+            <small class="text-muted">{% trans "Sistema Integral" %}</small>
           </span>
         </a>
 
@@ -48,37 +49,53 @@
             class="nav-link active d-flex align-items-center"
             href="{% url 'home' %}"
           >
-            <i class="bi bi-house-door"></i> <span class="ms-2">Inicio</span>
+            <i class="bi bi-house-door"></i> <span class="ms-2">{% trans "Inicio" %}</span>
           </a>
           <a
             class="nav-link d-flex align-items-center"
             href="{% url 'catalog:product_list' %}"
           >
-            <i class="bi bi-box"></i> <span class="ms-2">Productos</span>
+            <i class="bi bi-box"></i> <span class="ms-2">{% trans "Productos" %}</span>
           </a>
           <a
             class="nav-link d-flex align-items-center"
             href="{% url 'adoption:list'%}"
           >
             <i class="bi bi-heart"></i>
-            <span class="ms-2" class="btn">Adopción</span>
+            <span class="ms-2" class="btn">{% trans "Adopción" %}</span>
           </a>
           <a class="nav-link d-flex align-items-center" href="{% url 'about' %}">
             <i class="bi bi-info-circle"></i>
-            <span class="ms-2">Acerca de</span>
+            <span class="ms-2">{% trans "Acerca de" %}</span>
           </a>
           <a class="nav-link d-flex align-items-center" href="#">
-            <i class="bi bi-person"></i> <span class="ms-2">Mi Cuenta</span>
+            <i class="bi bi-person"></i> <span class="ms-2">{% trans "Mi Cuenta" %}</span>
           </a>
         </div>
 
         <!-- Accesibilidad y botón login/register -->
         <div class="d-flex align-items-center gap-2 ms-3">
           <a class="btn btn-outline-secondary" href="#">
-            <i class="bi bi-gear"></i> Accesibilidad
+            <i class="bi bi-gear"></i> {% trans "Accesibilidad" %}
           </a>
+
+          <form action="{% url 'set_language' %}" method="post" class="d-flex">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{{ request.get_full_path }}">
+              <select name="language" class="form-select form-select-sm" onchange="this.form.submit()">
+                  {% get_current_language as LANGUAGE_CODE %}
+                  {% get_available_languages as LANGUAGES %}
+                  {% get_language_info_list for LANGUAGES as languages %}
+                  {% for language in languages %}
+                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                        {{ language.code|upper }}
+                    </option>
+                  {% endfor %}
+              </select>
+          </form>
+      
           <a class="btn btn-outline-dark" href="{% url 'accounts:login' %}">
-            <i class="bi bi-box-arrow-in-right"></i> Ingresar
+            <i class="bi bi-box-arrow-in-right"></i> {% trans "Ingresar" %}
           </a>
           <a
             class="btn btn-primary"
@@ -101,33 +118,47 @@
       <ul class="nav-center">
         <li class="url-active">
           <a href="{% url 'home' %}"
-            ><i class="bi bi-house-door me-1"></i>Inicio</a
+            ><i class="bi bi-house-door me-1"></i>{% trans "Inicio" %}</a
           >
         </li>
         <li class="url-noactive">
           <a href="{% url 'catalog:product_list' %}"
-            ><i class="bi bi-bag me-1"></i>Productos</a
+            ><i class="bi bi-bag me-1"></i>{% trans "Productos" %}</a
           >
         </li>
         <li class="url-noactive">
-          <a href="{% url 'adoption:list'%}"><i class="bi bi-heart me-1"></i>Adopción</a>
+          <a href="{% url 'adoption:list'%}"><i class="bi bi-heart me-1"></i>{% trans "Adopción" %}</a>
         </li>
         <li class="url-noactive">
-          <a href=" {% url 'about' %}"><i class="bi bi-info-circle me-1"></i>Acerca de</a>
+          <a href=" {% url 'about' %}"><i class="bi bi-info-circle me-1"></i>{% trans "Acerca de" %}</a>
         </li>
         <li class="url-noactive">
-          <a href="#"><i class="bi bi-person-gear me-1"></i>Mi Cuenta</a>
+          <a href="#"><i class="bi bi-person-gear me-1"></i>{% trans "Mi Cuenta" %}</a>
         </li>
         <li class="url-noactive btn-accesibilidad">
-          <a href="#"><i class="bi bi-universal-access-circle me-1"></i>Accesibilidad</a>
+          <a href="#"><i class="bi bi-universal-access-circle me-1"></i>{% trans "Accesibilidad" %}</a>
         </li>
       </ul>
 
       <ul class="nav-right d-flex align-items-center">
+        <form action="{% url 'set_language' %}" method="post" class="d-flex">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{{ request.get_full_path }}">
+              <select name="language" class="form-select form-select-sm" onchange="this.form.submit()">
+                  {% get_current_language as LANGUAGE_CODE %}
+                  {% get_available_languages as LANGUAGES %}
+                  {% get_language_info_list for LANGUAGES as languages %}
+                  {% for language in languages %}
+                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                        {{ language.code|upper }}
+                    </option>
+                  {% endfor %}
+              </select>
+          </form>
         {% if request.user.is_authenticated %} {% if request.user.is_staff %}
         <li>
           <a href="{% url 'dashboard:index' %}"
-            ><i class="bi bi-speedometer2 me-1"></i>Ir al Dashboard</a
+            ><i class="bi bi-speedometer2 me-1"></i>{% trans "Ir al Dashboard" %}</a
           >
         </li>
         {% endif %}
@@ -142,7 +173,7 @@
               <a
               class="text-start"
               href="{% url 'accounts:logout' %}"
-              >Cerrar Sesión</a
+              >{% trans "Cerrar Sesión" %}</a
               >
             </div>
           </li>
@@ -152,7 +183,7 @@
           <a
             class="btn btn-outline-primary btn-sm"
             href="{% url 'accounts:login' %}"
-            >Iniciar Sesión</a
+            >{% trans "Iniciar Sesión" %}</a
           >
         </li>
         {% endif %}
@@ -173,7 +204,7 @@
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
-          aria-label="Toggle navigation"
+          aria-label="{% trans 'Toggle navigation' %}"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -181,34 +212,34 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link" href="{% url 'home' %}"
-                ><i class="bi bi-house-door me-1"></i>Inicio</a
+                ><i class="bi bi-house-door me-1"></i>{% trans "Inicio" %}</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'catalog:product_list' %}"
-                ><i class="bi bi-bag me-1"></i>Productos</a
+                ><i class="bi bi-bag me-1"></i>{% trans "Productos" %}</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'adoption:list'%}"
-                ><i class="bi bi-heart me-1"></i>Adopción</a
+                ><i class="bi bi-heart me-1"></i>{% trans "Adopción" %}</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}"
-                ><i class="bi bi-info-circle me-1"></i>Acerca de</a
+                ><i class="bi bi-info-circle me-1"></i>{% trans "Acerca de" %}</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"
-                ><i class="bi bi-gear me-1"></i>Accesibilidad</a
+                ><i class="bi bi-gear me-1"></i>{% trans "Accesibilidad" %}</a
               >
             </li>
             {% if request.user.is_authenticated %}
             {% if request.user.is_staff %}
             <li>
               <a href="{% url 'dashboard:index' %}"
-                ><i class="bi bi-speedometer2 me-1"></i>Ir al Dashboard</a
+                ><i class="bi bi-speedometer2 me-1"></i>{% trans "Ir al Dashboard" %}</a
               >
             </li>
             {% endif %}
@@ -220,7 +251,7 @@
               <a
                 class="btn btn-outline-secondary btn-sm"
                 href="{% url 'accounts:logout' %}"
-                >Cerrar Sesión</a
+                >{% trans "Cerrar Sesión" %}</a
               >
             </li>
             {% else %}
@@ -228,14 +259,14 @@
               <a
                 class="btn btn-outline-primary btn-sm"
                 href="{% url 'accounts:login' %}"
-                >Iniciar Sesión</a
+                >{% trans "Iniciar Sesión" %}</a 
               >
             </li>
             <li>
               <a
                 class="btn btn-outline-primary btn-sm"
                 href="{% url 'accounts:signup' %}"
-                >Registrarse</a
+                >{% trans "Registrarse" %}</a
               >
             </li>
             {% endif %}
@@ -269,43 +300,43 @@
               <span class="fs-5 fw-bold text-light">PetCare System</span>
             </div>
             <p class="mb-2 small text-start" style="color: #D1D5DC;">
-              Sistema integral para el cuidado y gestión de mascotas, diseñado
-              con accesibilidad y usabilidad como prioridades principales.
+              {% blocktrans %}Sistema integral para el cuidado y gestión de mascotas, diseñado
+              con accesibilidad y usabilidad como prioridades principales.{% endblocktrans %}
             </p>
             <div class="d-flex gap-2 mt-1">
-              <span class="badge-accesible mt-2 me-1">Accesible</span>
-              <span class="badge-intuitivo mt-2 ms-1 me-1">Intuitivo</span>
-              <span class="badge-seguro mt-2 ms-1">Seguro</span>
+              <span class="badge-accesible mt-2 me-1">{% trans "Accesible" %}</span>
+              <span class="badge-intuitivo mt-2 ms-1 me-1">{% trans "Intuitivo" %}</span>
+              <span class="badge-seguro mt-2 ms-1">{% trans "Seguro" %}</span>
             </div>
           </div>
           <!-- Enlaces rápidos -->
           <div class="col-md-3 px-lg-5 text-start">
-            <h6 class="fw-bold mb-3 text-light">Enlaces Rápidos</h6>
+            <h6 class="fw-bold mb-3 text-light">{% trans "Enlaces Rápidos" %}</h6>
             <span class="" style="color: #D1D5DC;">
               <ul class="list-unstyled">
-                <li><a href="{% url 'catalog:product_list' %}">Catálogo de Productos</a></li>
-                <li><a href="{% url 'adoption:list'%}">Centro de Adopciones</a></li>
-                <li><a href="#">Registrar Mascota</a></li>
-                <li><a href="{% url 'about' %}">Acerca del Proyecto</a></li>
+                <li><a href="{% url 'catalog:product_list' %}">{% trans "Catálogo de Productos" %}</a></li>
+                <li><a href="{% url 'adoption:list'%}">{% trans "Centro de Adopciones" %}</a></li>
+                <li><a href="#">{% trans "Registrar Mascota" %}</a></li>
+                <li><a href="{% url 'about' %}">{% trans "Acerca del Proyecto" %}</a></li>
               </ul>
             </span>
           </div>
           <!-- Accesibilidad -->
           <div class="col-md-3 text-start">
-            <h6 class="fw-bold mb-3 text-light">Accesibilidad</h6>
+            <h6 class="fw-bold mb-3 text-light">{% trans "Accesibilidad" %}</h6>
             <p class="small mb-2" style="color: #D1D5DC;">
-              Este sitio cumple con las pautas WCAG 2.1 AA y está optimizado
-              para lectores de pantalla y navegación por teclado.
+              {% blocktrans %}Este sitio cumple con las pautas WCAG 2.1 AA y está optimizado
+  para lectores de pantalla y navegación por teclado.{% endblocktrans %}
             </p>
             <button class="btn btn-light shadow-sm btn-sm" type="button">
-              Configurar Accesibilidad
+              {% trans "Configurar Accesibilidad" %}
             </button>
           </div>
         </div>
         <hr class="my-4 opacity-25" />
         <div class="text-center small opacity-75">
-          © 2025 PetCare System. Diseñado con accesibilidad universal y amor por
-          las mascotas.
+          {% blocktrans %}© 2025 PetCare System. Diseñado con accesibilidad universal y amor por
+          las mascotas.{% endblocktrans %}
         </div>
       </div>
     </footer>
