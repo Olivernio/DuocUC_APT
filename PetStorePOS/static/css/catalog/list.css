@@ -4,7 +4,8 @@
   transition: box-shadow .14s, transform .09s;
   border: none;
 }
-.product-card:hover {
+.product-card:hover,
+.product-card:focus-within {
   box-shadow: 0 6px 24px 0 rgba(80,140,220,0.13);
   transform: translateY(-2px) scale(1.013);
 }

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% block title %} Iniciar sesión {% endblock %}
 {% block head-tag %}
   <link rel="stylesheet" href="{% static 'css/accounts/login.css' %}">
@@ -20,21 +21,21 @@
         <p class="mb-4">Accede a tu cuenta para gestionar tus adopciones, compras y formar parte de nuestra comunidad de amantes de las mascotas.</p>
         <ul class="list-unstyled">
           <li class="mb-3 d-flex align-items-start">
-            <i class="bi bi-heart fs-4 me-3"></i>
+            <i class="bi bi-heart fs-4 me-3" aria-hidden="true"></i>
             <div>
               <span class="fw-bold d-block">Adopta Mascotas</span>
               <small>Encuentra tu compañero perfecto en nuestro centro de adopciones</small>
             </div>
           </li>
           <li class="mb-3 d-flex align-items-start">
-            <i class="bi bi-person fs-4 me-3"></i>
+            <i class="bi bi-person fs-4 me-3" aria-hidden="true"></i>
             <div>
               <span class="fw-bold d-block">Perfil Personal</span>
               <small>Gestiona tus datos, historial de compras y preferencias</small>
             </div>
           </li>
           <li class="d-flex align-items-start">
-            <i class="bi bi-lock fs-4 me-3"></i>
+            <i class="bi bi-lock fs-4 me-3" aria-hidden="true"></i>
             <div>
               <span class="fw-bold d-block">Compras Seguras</span>
               <small>Realiza pedidos de productos con total seguridad</small>
@@ -50,20 +51,28 @@
         <h2 class="fw-bold mb-4 text-center">Iniciar Sesión</h2>
         {% for message in messages %}
           <div class="alert alert-{{ message.tags }} d-flex align-items-center" role="alert">
-            <i class="bi bi-exclamation-circle me-2"></i> {{ message }}
+            <i class="bi bi-exclamation-circle me-2" aria-hidden="true"></i> {{ message }}
           </div>
         {% endfor %}
 
         <form method="POST" novalidate>
           {% csrf_token %}
-          <div class="mb-3 input-group">
-            <span class="input-group-text bg-light border-0"><i class="bi bi-envelope"></i></span>
-            <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+          <div class="mb-3">
+            <label for="id_email" class="visually-hidden">{% trans "Correo electrónico" %}</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-0" aria-hidden="true"><i class="bi bi-envelope"></i></span>
+              <input type="email" name="email" class="form-control" placeholder="{% trans 'Correo electrónico' %}" required id="id_email">
+            </div>
           </div>
-          <div class="mb-3 input-group">
-            <span class="input-group-text bg-light border-0"><i class="bi bi-lock"></i></span>
-            <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
-            <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="bi bi-eye"></i></button>
+          <div class="mb-3">
+            <label for="id_password" class="visually-hidden">{% trans "Contraseña" %}</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-0" aria-hidden="true"><i class="bi bi-lock"></i></span>
+              <input type="password" name="password" class="form-control" placeholder="{% trans 'Contraseña' %}" required id="id_password">
+              <button class="btn btn-outline-secondary" type="button" id="togglePassword" aria-label="{% trans 'Mostrar contraseña' %}">
+                <i class="bi bi-eye" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
 
           <div class="text-end mb-3">

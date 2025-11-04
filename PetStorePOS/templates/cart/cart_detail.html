@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %} {# #}
+{% load i18n %}
 
 {% block title %}Mi Carrito de Compras{% endblock %}
 
@@ -15,12 +16,16 @@
                             <td>
                                 {% if item.product.image %}
                                     <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid rounded" style="max-height: 60px; object-fit: cover;"> {% else %}
-                                    <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 60px; width: 60px;"> <i class="bi bi-box-seam text-secondary fs-3"></i> </div>
+                                    <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 60px; width: 60px;"> 
+                                        <i class="bi bi-box-seam text-secondary fs-3" role="img" aria-label="{% trans 'Imagen de producto no disponible' %}"></i>
+                                    </div>
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="#" class="text-decoration-none text-dark fw-bold">{{ item.product.name }}</a> <div class="small text-muted">SKU: {{ item.product.sku }}</div> <form action="{% url 'cart:remove_from_cart' item.id %}" method="post" class="mt-1"> {% csrf_token %}
-                                    <button type="submit" class="btn btn-sm btn-outline-danger p-1 lh-1 border-0 text-danger"> <i class="bi bi-trash me-1"></i>Eliminar </button>
+                                <span class="text-dark fw-bold">{{ item.product.name }}</span> <div class="small text-muted">SKU: {{ item.product.sku }}</div> <form action="{% url 'cart:remove_from_cart' item.id %}" method="post" class="mt-1"> {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger p-1 lh-1 border-0 text-danger" aria-label="{% trans 'Eliminar' %} {{ item.product.name }} {% trans 'del carrito' %}"> 
+                                        <i class="bi bi-trash me-1" aria-hidden="true"></i>{% trans "Eliminar" %}
+                                    </button>
                                 </form>
                             </td>
                             <td class="text-center">${{ item.product.price|floatformat:0 }}</td> <td class="text-center">
@@ -28,7 +33,7 @@
                                     <input type="number" name="quantity" value="{{ item.quantity }}"
                                            min="1" max="{{ item.product.stock }}"
                                            class="form-control form-control-sm text-center me-1" style="width: 65px;"
-                                           aria-label="Cantidad"> <button type="submit" class="btn btn-sm btn-outline-secondary p-1 lh-1" title="Actualizar cantidad"> <i class="bi bi-check-lg"></i> </button>
+                                           aria-label="{% trans 'Cantidad de' %} {{ item.product.name }}"> <button type="submit" class="btn btn-sm btn-outline-secondary p-1 lh-1" aria-label="{% trans 'Actualizar cantidad de' %} {{ item.product.name }}"> <i class="bi bi-check-lg" aria-hidden="true"></i> </button>
                                 </form>
                                 <div class="small text-muted mt-1">(Stock: {{ item.product.stock }})</div> </td>
                             <td class="text-end fw-bold">${{ item.total_price|floatformat:0 }}</td> </tr>
@@ -42,13 +47,13 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-4">
-            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary"> <i class="bi bi-arrow-left me-1"></i>Seguir Comprando </a>
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary"> <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>Seguir Comprando </a>
             {# TODO: Reemplaza '#' con la URL de tu vista de checkout #}
-            <a href="#" class="btn btn-primary btn-lg"> Proceder al Pago<i class="bi bi-arrow-right ms-1"></i> </a>
+            <a href="#" class="btn btn-primary btn-lg"> Proceder al Pago<i class="bi bi-arrow-right ms-1" aria-hidden="true"></i> </a>
         </div>
 
     {% else %}
-        <div class="alert alert-info text-center shadow-sm" role="alert"> <i class="bi bi-cart-x display-1 text-primary"></i> <h4 class="alert-heading mt-3">¡Tu carrito está vacío!</h4> <p>Parece que aún no has añadido ningún producto. Explora nuestro catálogo para encontrar algo que te guste.</p> <hr> <a href="{% url 'catalog:product_list' %}" class="btn btn-primary"> Ir al Catálogo </a>
+        <div class="alert alert-info text-center shadow-sm" role="alert"> <i class="bi bi-cart-x display-1 text-primary" aria-hidden="true"></i> <h4 class="alert-heading mt-3">¡Tu carrito está vacío!</h4> <p>Parece que aún no has añadido ningún producto. Explora nuestro catálogo para encontrar algo que te guste.</p> <hr> <a href="{% url 'catalog:product_list' %}" class="btn btn-primary"> Ir al Catálogo </a>
         </div>
     {% endif %}
 {# Cierre del <main> de base.html #}

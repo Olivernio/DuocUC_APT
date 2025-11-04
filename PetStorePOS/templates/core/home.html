@@ -19,10 +19,10 @@
     </p>
     <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
       <a href="{% url 'catalog:product_list' %}" class="btn btn-dark btn-lg">
-        <i class="bi bi-bag"></i> {% trans "Explorar Productos" %}
+        <i class="bi bi-bag" aria-hidden="true"></i>. {% trans "Explorar Productos" %}
       </a>
       <a href="{% url 'adoption:list' %}" class="btn btn-outline-dark btn-lg">
-        <i class="bi bi-heart"></i> {% trans "Adopción" %} 
+        <i class="bi bi-heart" aria-hidden="true"></i>. {% trans "Adopción" %} 
       </a>
     </div>
     <div class="d-flex justify-content-center">
@@ -48,7 +48,7 @@
     <div class="col">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
-          <i class="bi bi-heart text-danger"></i> 
+          <i class="bi bi-heart text-danger" aria-hidden="true"></i></i> 
         </div>
         <h5 class="fw-bold mb-2">{% trans "Centro de Adopciones" %}</h5>
         <p class="mb-0 text-secondary">
@@ -60,7 +60,7 @@
     <div class="col">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
-          <i class="bi bi-shield-check text-primary"></i> 
+          <i class="bi bi-shield-check text-primary" aria-hidden="true"></i> 
         </div>
         <h5 class="fw-bold mb-2">{% trans "Gestión Veterinaria" %}</h5>
         <p class="mb-0 text-secondary">
@@ -72,7 +72,7 @@
     <div class="">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
-          <i class="bi bi-people text-success"></i> 
+          <i class="bi bi-people text-success" aria-hidden="true"></i> 
         </div>
         <h5 class="fw-bold mb-2">{% trans "Accesibilidad Universal" %}</h5>
         <p class="mb-0 text-secondary">
@@ -115,28 +115,28 @@
   </p>
   <div class="grid-accesibilidad row row-cols-1 row-cols-sm-2 mt-5 mb-5">
     <div class="col mt-5 d-flex justify-content-start align-items-start gap-3">
-      <i class="check_icon">{{ svg_img_check|safe }}</i>
+      <i class="check_icon" aria-hidden="true">{{ svg_img_check|safe }}</i>
       <div>
         <h4 class="fw-bold text-start">{% trans "Navegación por Teclado" %}</h4>
         <p class="m-0">{% trans "Todos los elementos son accesibles mediante teclado." %}</p>
       </div>
     </div>
     <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
-      <i class="check_icon">{{ svg_img_check|safe }}</i>
+      <i class="check_icon" aria-hidden="true">{{ svg_img_check|safe }}</i>
       <div>
         <h4 class="fw-bold text-start">{% trans "Alto Contraste" %}</h4>
         <p class="m-0">{% trans "Opciones de contraste para usuarios con problemas visuales." %}</p>
       </div>
     </div>
     <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
-      <i class="check_icon">{{ svg_img_check|safe }}</i>
+      <i class="check_icon" aria-hidden="true">{{ svg_img_check|safe }}</i>
       <div>
         <h4 class="fw-bold text-start">{% trans "Lectores de Pantalla" %}</h4>
         <p class="m-0">{% trans "Compatible con NVDA, JAWS y VoiceOver." %}</p>
       </div>
     </div>
     <div class="col mt-5 d-flex text-center justify-content-start align-items-start gap-3">
-      <i class="check_icon">{{ svg_img_check|safe }}</i>
+      <i class="check_icon" aria-hidden="true">{{ svg_img_check|safe }}</i>
       <div>
         <h4 class="fw-bold text-start">{% trans "Texto Ampliable" %}</h4>
         <p class="m-0">{% trans "Tamaños de texto ajustables hasta 200%." %}</p>

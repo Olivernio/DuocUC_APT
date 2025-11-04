@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Configuración de Accesibilidad" %} · PetStore{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">{% trans "Configuración de Accesibilidad" %}</h1>
+        <p class="lead text-muted">
+            {% blocktrans %}Selecciona un modo de visualización para mejorar tu experiencia en el sitio.{% endblocktrans %}
+        </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        
+        <div class="col-md-5">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-display fs-1 text-primary mb-3"></i>
+                    <h5 class="fw-bold mb-3">{% trans "Modo Estándar" %}</h5>
+                    <p class="text-secondary mb-4">
+                        {% blocktrans %}La experiencia de visualización por defecto del sitio.{% endblocktrans %}
+                    </p>
+                    <button class="btn btn-primary" id="btn-default-mode">
+                        {% trans "Activar Modo Estándar" %}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-circle-half fs-1 text-warning mb-3"></i>
+                    <h5 class="fw-bold mb-3">{% trans "Modo Alto Contraste" %}</h5>
+                    <p class="text-secondary mb-4">
+                        {% blocktrans %}Aumenta el contraste de los colores (fondo oscuro, texto claro) para mejorar la legibilidad.{% endblocktrans %}
+                    </p>
+                    <button class="btn btn-warning" id="btn-high-contrast">
+                        {% trans "Activar Alto Contraste" %}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 mt-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-palette-fill fs-1 text-info mb-3"></i>
+                    <h5 class="fw-bold mb-3">{% trans "Modo Daltónicos" %}</h5>
+                    <p class="text-secondary mb-4">
+                        {% blocktrans %}Ajusta los colores para mejorar la distinción (ej. Rojo/Verde).{% endblocktrans %}
+                    </p>
+                    <button class="btn btn-info text-white" id="btn-colorblind">
+                        {% trans "Activar Modo Daltónico" %}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="my-5">
+
+    <section>
+        <h2 class="text-center mb-4">{% trans "Nuestro Compromiso" %}</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <h5 class="fw-bold">{% trans "Navegación por Teclado" %}</h5>
+                <p class="text-secondary">
+                    {% blocktrans %}Todo el sitio es navegable usando solo el teclado. Utilizamos "focus" visibles y un orden lógico de elementos para facilitar la navegación sin ratón.{% endblocktrans %}
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h5 class="fw-bold">{% trans "Soporte para Lector de Pantalla" %}</h5>
+                <p class="text-secondary">
+                    {% blocktrans %}Usamos etiquetas semánticas de HTML5 y atributos ARIA (como 'aria-label') para asegurar que los lectores de pantalla puedan interpretar el contenido y las acciones correctamente.{% endblocktrans %}
+                </p>
+            </div>
+        </div>
+    </section>
+
+</main>
+{% endblock %}

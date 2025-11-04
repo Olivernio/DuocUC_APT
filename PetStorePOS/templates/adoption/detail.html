@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block head-tag %}
   <style>
@@ -83,7 +84,7 @@
           <span class="badge bg-secondary">{{ mascota.edad }}</span>
           <span class="badge bg-dark">{{ mascota.genero|title }}</span>
         </p>
-        <p class="lead"><i class="bi bi-geo-alt-fill"></i> {{ mascota.comuna }}, {{ mascota.region }}</p>
+        <p class="lead"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i> {{ mascota.comuna }}, {{ mascota.region }}</p>
 
         <div class="detail-section">
           <h3>Descripción</h3>
@@ -105,7 +106,8 @@
         
         <div class="pet-actions">
           <a href="{{ mascota.url }}" target="_blank" class="btn btn-adopt">
-            <i class="bi bi-heart-fill"></i> Adoptar en Huachitos.cl
+            <i class="bi bi-heart-fill" aria-hidden="true"></i> Adoptar en Huachitos.cl
+            <span class="visually-hidden">({% trans "se abre en una nueva pestaña" %})</span>
           </a>
         </div>
       </div>

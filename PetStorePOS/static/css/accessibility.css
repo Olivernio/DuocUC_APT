@@ -1,0 +1,106 @@
+/* PetStorePOS/static/css/accessibility.css */
+
+/* :root es el <html> tag */
+:root.high-contrast {
+    /* Fondo oscuro y texto claro por defecto */
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* Forzamos a los elementos comunes de fondo blanco a ser oscuros */
+:root.high-contrast .bg-white,
+:root.high-contrast .bg-light,
+:root.high-contrast .card,
+:root.high-contrast .alert-info,
+:root.high-contrast .table {
+    background-color: #111111 !important;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF !important;
+}
+
+/* Textos y enlaces */
+:root.high-contrast .text-muted,
+:root.high-contrast .text-secondary {
+    color: #DDDDDD !important;
+}
+
+:root.high-contrast .text-dark,
+:root.high-contrast .text-primary,
+:root.high-contrast .product-name {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast a {
+    color: #FFFF00 !important; /* Amarillo brillante para enlaces */
+    text-decoration: underline !important;
+}
+
+/* Botones */
+:root.high-contrast .btn-primary {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .btn-outline-secondary {
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+/* Navbar (para que no desaparezca) */
+:root.high-contrast .navbar {
+    display: block !important;
+}
+
+/* Puedes seguir añadiendo más reglas aquí para ajustar tu sitio */
+
+/* --- MODO DALTÓNICO (PROTANOPIA/DEUTERANOPIA) --- */
+
+:root.colorblind-mode a,
+:root.colorblind-mode a:hover {
+    /* Añade subrayado para que los enlaces no dependan solo del color */
+    text-decoration: underline !important;
+}
+
+:root.colorblind-mode .text-primary {
+    /* Cambiamos el azul (problemático) por un tono más oscuro */
+    color: #000033 !important;
+}
+:root.colorblind-mode .text-danger,
+:root.colorblind-mode .bi-heart.text-danger {
+    /* El rojo se cambia por un naranja oscuro, más distinguible */
+    color: #CC79A7 !important; /* Rosa */
+}
+
+:root.colorblind-mode .text-success,
+:root.colorblind-mode .bi-people.text-success {
+    /* El verde se cambia por un azul claro */
+    color: #56B4E9 !important; /* Azul cielo */
+}
+
+/* Insignias (Badges) */
+:root.colorblind-mode .badge-seguro {
+    background-color: #0072B2 !important; /* Azul oscuro */
+    color: #FFFFFF !important;
+}
+
+:root.colorblind-mode .badge-intuitivo {
+    background-color: #E69F00 !important; /* Naranja */
+    color: #000000 !important;
+}
+
+:root.colorblind-mode .badge-accesible {
+    background-color: #56B4E9 !important; /* Azul cielo */
+    color: #000000 !important;
+}
+
+/* Botones */
+:root.colorblind-mode .btn-primary {
+     background-color: #0072B2 !important; /* Azul oscuro */
+     border-color: #0072B2 !important;
+}
+
+:root.colorblind-mode .btn-danger {
+    background-color: #CC79A7 !important; /* Rosa */
+     border-color: #CC79A7 !important;
+}

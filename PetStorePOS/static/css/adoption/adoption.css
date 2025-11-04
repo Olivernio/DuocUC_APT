@@ -43,7 +43,8 @@
   transition: transform 0.3s ease;
 }
 
-.huachito-card-link:hover {
+.huachito-card-link:hover,
+.huachito-card-link:focus { /* <-- AÑADIDO :focus */
   transform: translateY(-8px);
 }
 
@@ -70,7 +71,8 @@
   }
 }
 
-.huachito-card:hover {
+.huachito-card:hover,
+.huachito-card:focus-within { /* <-- AÑADIDO :focus-within */
   box-shadow: var(--card-hover-shadow);
 }
 
@@ -91,7 +93,8 @@
   transition: transform 0.4s ease;
 }
 
-.huachito-card:hover .card-img-container img {
+.huachito-card:hover .card-img-container img,
+.huachito-card:focus-within .card-img-container img { /* <-- AÑADIDO :focus-within */
   transform: scale(1.08);
 }
 

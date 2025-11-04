@@ -4,7 +4,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from core.views import home
-from djangocrud.views import about
+from djangocrud.views import about, accessibility
 from django.conf.urls.i18n import i18n_patterns
 
 # Define aquí las URLs que quieres traducir
@@ -16,6 +16,7 @@ urlpatterns_trans = i18n_patterns(
     path('adoption/', include('adoption.urls')), # <- path ahora está definido
     path("acerca/", about, name="about"), # <- path ahora está definido
     path("cart/", include("cart.urls")), # <- path ahora está definido
+    path("accesibilidad/", accessibility, name="accessibility"),
     # prefix_default_language=False # Descomenta si no quieres /es/ al inicio
 )
 
