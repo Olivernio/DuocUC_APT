@@ -61,8 +61,8 @@
                 <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active fw-bold{% endif %} d-flex align-items-center" href="{% url 'about' %}">
                     <i class="bi bi-info-circle" aria-hidden="true"></i> <span class="ms-2">{% trans "Acerca de" %}</span>
                 </a>
-                {# Enlace a Mi Cuenta (aún sin funcionalidad) #}
-                <a class="nav-link d-flex align-items-center" href="#">
+                {# Enlace a Mi Cuenta #}
+                <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active fw-bold{% endif %} d-flex align-items-center" href="{% url 'accounts:profile' %}">
                     <i class="bi bi-person" aria-hidden="true"></i> <span class="ms-2">{% trans "Mi Cuenta" %}</span>
                 </a>
             </div>
@@ -249,7 +249,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{% url 'catalog:product_list' %}" class="text-decoration-none" style="color: #D1D5DC;">{% trans "Catálogo de Productos" %}</a></li>
                         <li><a href="{% url 'adoption:list'%}" class="text-decoration-none" style="color: #D1D5DC;">{% trans "Centro de Adopciones" %}</a></li>
-                        <li><a href="#" class="text-decoration-none" style="color: #D1D5DC;">{% trans "Mi Cuenta" %}</a></li> {# Actualizado enlace #}
+                        <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active fw-bold{% endif %}" href="{% url 'accounts:profile' %}"><i class="bi bi-person me-1" aria-hidden="true"></i>{% trans "Mi Cuenta" %}</a></li>
                         <li><a href="{% url 'about' %}" class="text-decoration-none" style="color: #D1D5DC;">{% trans "Acerca del Proyecto" %}</a></li>
                     </ul>
                 </div>

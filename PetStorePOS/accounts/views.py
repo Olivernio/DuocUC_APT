@@ -130,3 +130,18 @@ class RegistroWizard(SessionWizardView):
 
         # Redirigir a 'home' en lugar de a registro_exitoso.html
         return redirect('home') #
+
+def profile_view(request):
+    """
+    Muestra la página 'Mi Cuenta' si el usuario está logueado.
+    Muestra 'Acceso Requerido' si es un invitado.
+    """
+    if not request.user.is_authenticated:
+        # Si no está logueado, muestra la plantilla de "Acceso Requerido"
+        return render(request, 'accounts/access_required.html')
+    
+    # Si está logueado, muestra su perfil
+    context = {
+        'user': request.user
+    }
+    return render(request, 'accounts/profile.html', context)

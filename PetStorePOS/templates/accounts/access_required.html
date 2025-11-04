@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Acceso Requerido" %} · PetStore{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body p-4 p-md-5 text-center">
+                    
+                    <div class="mb-3">
+                        <i class="bi bi-box-arrow-in-right text-primary" style="font-size: 3rem;" aria-hidden="true"></i>
+                    </div>
+
+                    <h2 class="fw-bold mb-3">
+                        {% trans "Acceso Requerido" %}
+                    </h2>
+                    
+                    <p class="text-muted mb-4">
+                        {% blocktrans %}Para acceder a tu cuenta, necesitas iniciar sesión o crear una cuenta nueva.{% endblocktrans %}
+                    </p>
+
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        <a href="{% url 'accounts:login' %}" class="btn btn-dark btn-lg">
+                            <i class="bi bi-box-arrow-in-right me-1" aria-hidden="true"></i>
+                            {% trans "Iniciar Sesión" %}
+                        </a>
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg">
+                            {% trans "Volver al Inicio" %}
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

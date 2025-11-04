@@ -15,4 +15,6 @@ urlpatterns = [
         RegistroWizard.as_view(views.FORMS), # Usamos FORMS de views.py
         name="registro"
     ),
+    
+    path("mi-cuenta/", views.profile_view, name="profile"),
 ]
