@@ -8,15 +8,79 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-28 01:43-0300\n"
+"POT-Creation-Date: 2025-11-09 11:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\adoption\views.py:13
+msgid "perro"
+msgstr "cachorro"
+
+#: .\adoption\views.py:13
+msgid "gato"
+msgstr "gato"
+
+#: .\adoption\views.py:13
+msgid "conejo"
+msgstr "coelho"
+
+#: .\adoption\views.py:13
+msgid "roedor"
+msgstr "roedor"
+
+#: .\adoption\views.py:13
+msgid "ave"
+msgstr "pássaro"
+
+#: .\catalog\models.py:5
+msgid "Alimentos"
+msgstr "Comida"
+
+#: .\catalog\models.py:6
+msgid "Medicamentos"
+msgstr "Medicamentos"
+
+#: .\catalog\models.py:7
+msgid "Accesorios"
+msgstr "Acessórios"
+
+#: .\catalog\models.py:11
+msgid "SKU"
+msgstr "SKU"
+
+#: .\catalog\models.py:12 .\templates\accounts\profile.html:110
+msgid "Nombre"
+msgstr "Nome"
+
+#: .\catalog\models.py:13
+msgid "Categoría"
+msgstr "Categoria:"
+
+#: .\catalog\models.py:14
+msgid "Precio"
+msgstr "Preço"
+
+#: .\catalog\models.py:15
+msgid "Stock"
+msgstr "estoque:"
+
+#: .\catalog\models.py:16
+msgid "Descripción"
+msgstr "Descrição"
+
+#: .\catalog\models.py:17
+msgid "Imagen"
+msgstr "Imagem"
+
+#: .\catalog\models.py:18
+msgid "Activo"
+msgstr "Ativo"
 
 #: .\djangocrud\settings.py:108
 msgid "Español"
@@ -30,124 +94,741 @@ msgstr "Inglês"
 msgid "Português"
 msgstr "Português"
 
-#: .\templates\base.html:40
-msgid "Sistema Integral"
-msgstr "Sistema Abrangente"
+#: .\templates\accessibility\accessibility.html:5
+#: .\templates\accessibility\accessibility.html:10
+msgid "Configuración de Accesibilidad"
+msgstr "Configurações de Acessibilidade"
 
-#: .\templates\base.html:52 .\templates\base.html:121 .\templates\base.html:215
+#: .\templates\accessibility\accessibility.html:12
+msgid ""
+"Selecciona un modo de visualización para mejorar tu experiencia en el sitio."
+msgstr ""
+"Selecione um modo de visualização para mejorar sua experiência no site."
+
+#: .\templates\accessibility\accessibility.html:22
+msgid "Modo Estándar"
+msgstr "Modo Padrão"
+
+#: .\templates\accessibility\accessibility.html:24
+msgid "La experiencia de visualización por defecto del sitio."
+msgstr "A experiência de visualização padrão do site."
+
+#: .\templates\accessibility\accessibility.html:27
+msgid "Activar Modo Estándar"
+msgstr "Ativar Modo Padrão"
+
+#: .\templates\accessibility\accessibility.html:37
+msgid "Modo Alto Contraste"
+msgstr "Modo de Alto Contraste"
+
+#: .\templates\accessibility\accessibility.html:39
+msgid ""
+"Aumenta el contraste de los colores (fondo oscuro, texto claro) para mejorar "
+"la legibilidad."
+msgstr ""
+"Aumenta o contraste das cores (fundo escuro, texto claro) para melhorar a "
+"legibilidade."
+
+#: .\templates\accessibility\accessibility.html:42
+msgid "Activar Alto Contraste"
+msgstr "Ativar Alto Contraste"
+
+#: .\templates\accessibility\accessibility.html:52
+msgid "Modo Daltónicos"
+msgstr "Modo Daltônico"
+
+#: .\templates\accessibility\accessibility.html:54
+msgid "Ajusta los colores para mejorar la distinción (ej. Rojo/Verde)."
+msgstr "Ajusta as cores para melhorar a distinção (ex. Vermelho/Verde)."
+
+#: .\templates\accessibility\accessibility.html:57
+msgid "Activar Modo Daltónico"
+msgstr "Ativar Modo Daltônico"
+
+#: .\templates\accessibility\accessibility.html:68
+msgid "Nuestro Compromiso"
+msgstr "Nosso Compromisso"
+
+#: .\templates\accessibility\accessibility.html:71
+#: .\templates\core\home.html:120
+msgid "Navegación por Teclado"
+msgstr "Navegação por Teclado"
+
+#: .\templates\accessibility\accessibility.html:73
+msgid ""
+"Todo el sitio es navegable usando solo el teclado. Utilizamos \"focus\" "
+"visibles y un orden lógico de elementos para facilitar la navegación sin "
+"ratón."
+msgstr ""
+"Todo o site é navegável usando apenas o teclado. Usamos \"foco\" visível e "
+"uma ordem lógica dos elementos para facilitar a navegação sem mouse."
+
+#: .\templates\accessibility\accessibility.html:77
+msgid "Soporte para Lector de Pantalla"
+msgstr "Suporte para Leitor de Tela"
+
+#: .\templates\accessibility\accessibility.html:79
+msgid ""
+"Usamos etiquetas semánticas de HTML5 y atributos ARIA (como 'aria-label') "
+"para asegurar que los lectores de pantalla puedan interpretar el contenido y "
+"las acciones correctamente."
+msgstr ""
+"Usamos tags semânticas HTML5 e atributos ARIA (como 'aria-label') para "
+"garantir que os leitores de tela possam interpretar o conteúdo e as ações "
+"corretamente."
+
+#: .\templates\accounts\access_required.html:5
+#: .\templates\accounts\access_required.html:19
+msgid "Acceso Requerido"
+msgstr "Acesso Requerido"
+
+#: .\templates\accounts\access_required.html:23
+msgid ""
+"Para acceder a tu cuenta, necesitas iniciar sesión o crear una cuenta nueva."
+msgstr ""
+"Para acessar sua conta, você precisa fazer login ou criar uma nova conta."
+
+#: .\templates\accounts\access_required.html:29 .\templates\base.html:106
+#: .\templates\base.html:198
+msgid "Iniciar Sesión"
+msgstr "Iniciar Sessão"
+
+#: .\templates\accounts\access_required.html:32
+msgid "Volver al Inicio"
+msgstr "Voltar ao Início"
+
+#: .\templates\accounts\login.html:61 .\templates\accounts\login.html:64
+msgid "Correo electrónico"
+msgstr "E-mail"
+
+#: .\templates\accounts\login.html:68 .\templates\accounts\login.html:71
+msgid "Contraseña"
+msgstr "Senha"
+
+#: .\templates\accounts\login.html:72
+msgid "Mostrar contraseña"
+msgstr "Mostrar senha"
+
+#: .\templates\accounts\profile.html:5 .\templates\base.html:66
+#: .\templates\base.html:153 .\templates\base.html:252
+msgid "Mi Cuenta"
+msgstr "Minha Conta"
+
+#: .\templates\accounts\profile.html:16
+msgid "Hola, "
+msgstr "Olá, "
+
+#: .\templates\accounts\profile.html:17
+msgid "Gestiona tu cuenta y preferencias"
+msgstr "Gerencie sua conta e preferências"
+
+#: .\templates\accounts\profile.html:27 .\templates\accounts\profile.html:83
+msgid "Pedidos"
+msgstr "Pedidos"
+
+#: .\templates\accounts\profile.html:40
+msgid "Total Gastado"
+msgstr "Total Gasto"
+
+#: .\templates\accounts\profile.html:53
+msgid "Adopciones"
+msgstr "Adoções"
+
+#: .\templates\accounts\profile.html:66 .\templates\accounts\profile.html:89
+msgid "Reseñas"
+msgstr "Avaliações"
+
+#: .\templates\accounts\profile.html:80
+msgid "Perfil"
+msgstr "Perfil"
+
+#: .\templates\accounts\profile.html:86
+msgid "Mascotas"
+msgstr "Animais de Estimação"
+
+#: .\templates\accounts\profile.html:92 .\templates\base.html:102
+#: .\templates\base.html:195
+msgid "Cerrar Sesión"
+msgstr "Encerrar Sessão"
+
+#: .\templates\accounts\profile.html:103
+msgid "Información Personal"
+msgstr "Informações Pessoais"
+
+#: .\templates\accounts\profile.html:104
+msgid "Editar Perfil"
+msgstr "Editar Perfil"
+
+#: .\templates\accounts\profile.html:114
+msgid "Apellidos"
+msgstr "Sobrenome"
+
+#: .\templates\accounts\profile.html:121
+msgid "Correo Electrónico"
+msgstr "Endereço de E-mail"
+
+#: .\templates\accounts\profile.html:125
+msgid "Teléfono"
+msgstr "Telefone"
+
+#: .\templates\accounts\profile.html:134
+msgid "Dirección"
+msgstr "Endereço"
+
+#: .\templates\accounts\profile.html:140
+msgid "Ciudad"
+msgstr "Cidade"
+
+#: .\templates\accounts\profile.html:149
+msgid "Código Postal"
+msgstr "Código Postal"
+
+#: .\templates\accounts\profile.html:158
+msgid "Preferencias de Comunicación"
+msgstr "Preferências de Comunicação"
+
+#: .\templates\accounts\profile.html:164 .\templates\accounts\profile.html:169
+msgid "Newsletter"
+msgstr "Newsletter"
+
+#: .\templates\accounts\profile.html:165
+msgid "Recibe noticias y ofertas especiales"
+msgstr "Receba notícias e ofertas especiais"
+
+#: .\templates\accounts\profile.html:175 .\templates\accounts\profile.html:180
+msgid "Alertas de Adopción"
+msgstr "Alertas de Adoção"
+
+#: .\templates\accounts\profile.html:176
+msgid "Notificaciones sobre nuevas mascotas"
+msgstr "Notificações sobre novos animais"
+
+#: .\templates\accounts\profile.html:186 .\templates\accounts\profile.html:191
+msgid "Recomendaciones de Productos"
+msgstr "Recomendações de Produtos"
+
+#: .\templates\accounts\profile.html:187
+msgid "Sugerecias personalizadas"
+msgstr "Sugestões personalizadas"
+
+#: .\templates\accounts\profile.html:200
+msgid "Mis Pedidos"
+msgstr "Meus Pedidos"
+
+#: .\templates\accounts\profile.html:201
+msgid "Aquí verás el historial de tus pedidos."
+msgstr "Aqui você verá seu histórico de pedidos."
+
+#: .\templates\accounts\profile.html:209
+msgid "Mis Mascotas"
+msgstr "Meus Animais de Estimação"
+
+#: .\templates\accounts\profile.html:210
+msgid "Aquí podrás gestionar las mascotas asociadas a tu cuenta."
+msgstr "Aqui você pode gerenciar os animais associados à sua conta."
+
+#: .\templates\accounts\profile.html:218
+msgid "Mis Reseñas"
+msgstr "Minhas Avaliações"
+
+#: .\templates\accounts\profile.html:219
+msgid "Aquí verás las reseñas que has dejado."
+msgstr "Aqui você verá as avaliações que você deixou."
+
+#: .\templates\accounts\signup_step1.html:26
+msgid "Paso 1: Información Personal (actual)"
+msgstr "Passo 1: Informações Pessoais (atual)"
+
+#: .\templates\accounts\signup_step1.html:26
+msgid "Paso 2: Datos de Contacto"
+msgstr "Passo 2: Dados de Contato"
+
+#: .\templates\accounts\signup_step1.html:26
+msgid "Paso 3: Seguridad"
+msgstr "Passo 3: Segurança"
+
+#: .\templates\accounts\signup_step3.html:20
+msgid "Paso 1: Información Personal (completado)"
+msgstr "Passo 1: Informações Pessoais (concluído)"
+
+#: .\templates\accounts\signup_step3.html:20
+msgid "Paso 2: Datos de Contacto (completado)"
+msgstr "Passo 2: Dados de Contato (concluído)"
+
+#: .\templates\accounts\signup_step3.html:20
+msgid "Paso 3: Seguridad (actual)"
+msgstr "Passo 3: Segurança (atual)"
+
+#: .\templates\acerca\about.html:9 .\templates\base.html:62
+#: .\templates\base.html:152
+msgid "Acerca de"
+msgstr "Sobre"
+
+#: .\templates\acerca\about.html:11
+msgid ""
+"Somos más que un sistema de gestión. Somos una plataforma diseñada con el "
+"corazón, enfocada en conectar vidas y facilitar el cuidado responsable de "
+"nuestros compañeros animales."
+msgstr ""
+"Somos mais do que um sistema de gerenciamento. Somos uma plataforma "
+"desenhada com o coração, focada em conectar vidas e facilitar o cuidado "
+"responsável dos nossos companheiros animais."
+
+#: .\templates\acerca\about.html:16
+msgid "Veterinario cuidando un gato"
+msgstr "Veterinário cuidando de um gato"
+
+#: .\templates\acerca\about.html:23
+msgid "Nuestra Misión"
+msgstr "Nossa Missão"
+
+#: .\templates\acerca\about.html:25
+msgid ""
+"Crear un ecosistema tecnológico accesible e inclusivo que revoluciona la "
+"gestión en tiendas de mascotas, veterinarias y centros de adopción, siempre "
+"poniendo el bienestar animal y la accesibilidad universal como pilares.\n"
+"            <br>\n"
+"            Creemos que la tecnología debe servir a todos, sin excepción. "
+"Cada línea de código está pensada para un mundo más justo y amoroso."
+msgstr ""
+"Criar um ecossistema tecnológico acessível e inclusivo que revoluciona a "
+"gestão em pet shops, clínicas veterinárias e centros de adoção, sempre "
+"colocando o bem-estar animal e a acessibilidade universal como pilares.\n"
+"            <br>\n"
+"            Acreditamos que a tecnologia deve servir a todos, sem exceção. "
+"Cada linha de código é pensada para um mundo mais justo e amoroso."
+
+#: .\templates\acerca\about.html:32
+msgid "Nuestros Objetivos"
+msgstr "Nossos Objetivos"
+
+#: .\templates\acerca\about.html:37
+msgid "Facilitar Adopciones"
+msgstr "Facilitar Adoções"
+
+#: .\templates\acerca\about.html:38
+msgid ""
+"Crear un puente efectivo entre mascotas que necesitan hogar y familias "
+"dispuestas a adoptar."
+msgstr ""
+"Criar uma ponte eficaz entre animais que precisam de um lar e famílias "
+"dispostas a adotar."
+
+#: .\templates\acerca\about.html:44
+msgid "Gestión Integral"
+msgstr "Gestão Integral"
+
+#: .\templates\acerca\about.html:45
+msgid ""
+"Herramientas completas para la administración de tiendas y centros "
+"veterinarios."
+msgstr ""
+"Ferramentas completas para a administração de lojas e centros veterinários."
+
+#: .\templates\acerca\about.html:51
+msgid "Accesibilidad Total"
+msgstr "Acessibilidade Total"
+
+#: .\templates\acerca\about.html:52
+msgid ""
+"Garantizar que todas las personas, sin importar sus capacidades, puedan usar "
+"el sistema."
+msgstr ""
+"Garantir que todas as pessoas, independentemente de suas capacidades, possam "
+"usar o sistema."
+
+#: .\templates\acerca\about.html:58
+msgid "Comunidad Unida"
+msgstr "Comunidade Unida"
+
+#: .\templates\acerca\about.html:59
+msgid ""
+"Fomentar una comunidad de amantes de los animales comprometida por el "
+"bienestar animal."
+msgstr ""
+"Fomentar uma comunidade de amantes de animais comprometida com o bem-estar "
+"animal."
+
+#: .\templates\acerca\about.html:69
+msgid "Principios de Diseño"
+msgstr "Princípios de Design"
+
+#: .\templates\acerca\about.html:73
+msgid "Inclusividad"
+msgstr "Inclusividade"
+
+#: .\templates\acerca\about.html:74
+msgid "Diseñamos para todos, considerando diversas necesidades y capacidades."
+msgstr ""
+"Projetamos para todos, considerando diversas necessidades e capacidades."
+
+#: .\templates\acerca\about.html:79
+msgid "Usabilidad"
+msgstr "Usabilidade"
+
+#: .\templates\acerca\about.html:80
+msgid "Interfaces intuitivas, trabajo optimizado y fácil acceso."
+msgstr "Interfaces intuitivas, trabalho otimizado e fácil acesso."
+
+#: .\templates\acerca\about.html:85
+msgid "Transparencia"
+msgstr "Transparência"
+
+#: .\templates\acerca\about.html:86
+msgid "Información clara y accesible en todo momento."
+msgstr "Informação clara e acessível em todos os momentos."
+
+#: .\templates\acerca\about.html:91
+msgid "Bienestar Animal"
+msgstr "Bem-estar Animal"
+
+#: .\templates\acerca\about.html:92
+msgid ""
+"Cada función está pensada en el cuidado y protección de nuestras mascotas."
+msgstr ""
+"Cada função é pensada no cuidado e proteção dos nossos animais de estimação."
+
+#: .\templates\acerca\about.html:99
+msgid "Tecnología y Accesibilidad"
+msgstr "Tecnologia e Acessibilidade"
+
+#: .\templates\acerca\about.html:102
+msgid "Stack Tecnológico"
+msgstr "Stack Tecnológico"
+
+#: .\templates\acerca\about.html:113
+msgid "Características de Accesibilidad"
+msgstr "Recursos de Acessibilidade"
+
+#: .\templates\acerca\about.html:115
+msgid "WCAG 2.1 AA: Estándares de accesibilidad web"
+msgstr "WCAG 2.1 AA: Padrões de acessibilidade web"
+
+#: .\templates\acerca\about.html:116
+msgid "Roles ARIA y etiquetas para lectores de pantalla"
+msgstr "Funções ARIA e etiquetas para leitores de tela"
+
+#: .\templates\acerca\about.html:117
+msgid "Navegación por teclado"
+msgstr "Navegação por teclado"
+
+#: .\templates\acerca\about.html:118
+msgid "Contraste optimizado para baja visión"
+msgstr "Contraste otimizado para baixa visão"
+
+#: .\templates\acerca\about.html:128
+msgid "Nuestro Equipo"
+msgstr "Nossa Equipe"
+
+#: .\templates\acerca\about.html:132
+msgid "Desarrolladores"
+msgstr "Desenvolvedores"
+
+#: .\templates\acerca\about.html:133
+msgid "Expertos en Python, Django y accesibilidad digital."
+msgstr "Especialistas em Python, Django e acessibilidade digital."
+
+#: .\templates\acerca\about.html:138
+msgid "Veterinarios Consultores"
+msgstr "Veterinários Consultores"
+
+#: .\templates\acerca\about.html:139
+msgid "Profesionales que asesoran en funciones clínicas y bienestar animal."
+msgstr "Profissionais que assessoram em funções clínicas e bem-estar animal."
+
+#: .\templates\acerca\about.html:144
+msgid "Especialistas en Accesibilidad"
+msgstr "Especialistas em Acessibilidade"
+
+#: .\templates\acerca\about.html:145
+msgid "Referentes en WCAG y diseño inclusivo."
+msgstr "Referências em WCAG e design inclusivo."
+
+#: .\templates\acerca\about.html:150
+msgid "Activistas de Adopción"
+msgstr "Ativistas de Adoção"
+
+#: .\templates\acerca\about.html:151
+msgid "Voluntarios con experiencias en rescate y adopción."
+msgstr "Voluntários com experiência em resgate e adoção."
+
+#: .\templates\acerca\about.html:158
+msgid "Impacto Social"
+msgstr "Impacto Social"
+
+#: .\templates\acerca\about.html:161
+msgid ""
+"La tecnología debe servir a todos, los animales nos enseñan que el amor no "
+"tiene barreras."
+msgstr ""
+"A tecnologia deve servir a todos, os animais nos ensinam que o amor não tem "
+"barreiras."
+
+#: .\templates\acerca\about.html:163
+msgid "Filosofía del equipo PetStorePOS"
+msgstr "Filosofia da equipe PetStorePOS"
+
+#: .\templates\adoption\detail.html:110
+msgid "se abre en una nueva pestaña"
+msgstr "(abre em uma nova aba)"
+
+#: .\templates\adoption\list.html:12
+msgid "Adopta un Compañero"
+msgstr "Adote um companheiro"
+
+#: .\templates\adoption\list.html:14
+msgid "Encuentra a tu amigo fiel. Datos proporcionados por"
+msgstr "Encontre o seu amigo leal. Dados fornecidos pela"
+
+#: .\templates\adoption\list.html:21
+msgid "Filtrar por especie:"
+msgstr "Filtrar por espécie:"
+
+#: .\templates\adoption\list.html:23
+msgid "Todas las especies"
+msgstr "Todas as espécies"
+
+#: .\templates\adoption\list.html:31 .\templates\catalog\list.html:59
+msgid "Filtrar"
+msgstr "Filtro"
+
+#: .\templates\adoption\list.html:34
+msgid "Limpiar"
+msgstr "Filtros limpos"
+
+#: .\templates\adoption\list.html:41
+msgid "Error de Conexión"
+msgstr "Erro de ligação"
+
+#: .\templates\adoption\list.html:70
+msgid "Ver Detalles"
+msgstr "Ver detalhes"
+
+#: .\templates\adoption\list.html:78
+#, python-format
+msgid "No se encontraron mascotas del tipo \"%(tipo)s\"."
+msgstr "Não foram encontrados animais de estimação do tipo \"%(type)s\"."
+
+#: .\templates\adoption\list.html:80
+msgid "No hay mascotas disponibles desde la API en este momento."
+msgstr "No hay mascotas disponibles desde la API en este momento."
+
+#: .\templates\base.html:47
+msgid "Sistema Integral"
+msgstr "Sistema Integral"
+
+#: .\templates\base.html:53 .\templates\base.html:149
 #: .\templates\core\home.html:4
 msgid "Inicio"
-msgstr "Começar"
+msgstr "Início"
 
-#: .\templates\base.html:58 .\templates\base.html:126 .\templates\base.html:220
+#: .\templates\base.html:56 .\templates\base.html:150
+#: .\templates\catalog\list.html:21
 msgid "Productos"
 msgstr "Produtos"
 
-#: .\templates\base.html:65 .\templates\base.html:130 .\templates\base.html:225
+#: .\templates\base.html:59 .\templates\base.html:151
 #: .\templates\core\home.html:25
 msgid "Adopción"
 msgstr "Adoção"
 
-#: .\templates\base.html:69 .\templates\base.html:133 .\templates\base.html:230
-msgid "Acerca de"
-msgstr "Sobre"
-
-#: .\templates\base.html:72 .\templates\base.html:136
-msgid "Mi Cuenta"
-msgstr "Minha conta"
-
-#: .\templates\base.html:79 .\templates\base.html:139 .\templates\base.html:235
-#: .\templates\base.html:328
+#: .\templates\base.html:72 .\templates\base.html:154 .\templates\base.html:257
 msgid "Accesibilidad"
 msgstr "Acessibilidade"
 
-#: .\templates\base.html:98
-msgid "Ingresar"
-msgstr "Entre"
-
-#: .\templates\base.html:161 .\templates\base.html:242
+#: .\templates\base.html:94 .\templates\base.html:191
 msgid "Ir al Dashboard"
-msgstr "Vá para o painel"
+msgstr "Ir para o Dashboard"
 
-#: .\templates\base.html:176 .\templates\base.html:254
-msgid "Cerrar Sesión"
-msgstr "Sair"
+#: .\templates\base.html:109 .\templates\base.html:200
+msgid "Registrarse"
+msgstr "Registrar-se"
 
-#: .\templates\base.html:186 .\templates\base.html:262
-msgid "Iniciar Sesión"
-msgstr "Conecte-se"
+#: .\templates\base.html:114 .\templates\base.html:160
+msgid "Ver carrito de compras"
+msgstr "Ver carrinho de compras"
 
-#: .\templates\base.html:207
+#: .\templates\base.html:144
 msgid "Toggle navigation"
 msgstr "Alternar navegação"
 
-#: .\templates\base.html:269
-msgid "Registrarse"
-msgstr "Cadastre-se"
+#: .\templates\base.html:233
+msgid "Icono de corazón"
+msgstr "Ícone de coração"
 
-#: .\templates\base.html:305
+#: .\templates\base.html:238
 msgid ""
 "Sistema integral para el cuidado y gestión de mascotas, diseñado\n"
 "              con accesibilidad y usabilidad como prioridades principales."
-msgstr "Um sistema abrangente de cuidados e gerenciamento de animais de estimação, projetado com acessibilidade e usabilidade como principais prioridades."
+msgstr ""
+"Sistema integral para o cuidado e gestão de animais de estimação, desenhado "
+"com acessibilidade e usabilidade como prioridades principais."
 
-#: .\templates\base.html:309
+#: .\templates\base.html:242
 msgid "Accesible"
 msgstr "Acessível"
 
-#: .\templates\base.html:310
+#: .\templates\base.html:243
 msgid "Intuitivo"
 msgstr "Intuitivo"
 
-#: .\templates\base.html:311
+#: .\templates\base.html:244
 msgid "Seguro"
-msgstr "Claro"
+msgstr "Seguro"
 
-#: .\templates\base.html:316
+#: .\templates\base.html:248
 msgid "Enlaces Rápidos"
-msgstr "Links rápidos"
+msgstr "Links Rápidos"
 
-#: .\templates\base.html:319
+#: .\templates\base.html:250
 msgid "Catálogo de Productos"
 msgstr "Catálogo de Produtos"
 
-#: .\templates\base.html:320 .\templates\core\home.html:53
+#: .\templates\base.html:251 .\templates\core\home.html:53
 msgid "Centro de Adopciones"
-msgstr "Centro de Adoção"
+msgstr "Centro de Adoções"
 
-#: .\templates\base.html:321
-msgid "Registrar Mascota"
-msgstr "Registrar animal de estimação"
-
-#: .\templates\base.html:322
+#: .\templates\base.html:253
 msgid "Acerca del Proyecto"
 msgstr "Sobre o Projeto"
 
-#: .\templates\base.html:330
+#: .\templates\base.html:259
 msgid ""
 "Este sitio cumple con las pautas WCAG 2.1 AA y está optimizado\n"
 "  para lectores de pantalla y navegación por teclado."
 msgstr ""
 "Este site cumpre as diretrizes WCAG 2.1 AA e está otimizado\n"
-"  para leitores de tela e navegação por teclado."
+"  para leitores de tela e navegação por teclado."
 
-#: .\templates\base.html:334
+#: .\templates\base.html:263
 msgid "Configurar Accesibilidad"
-msgstr "Configurar acessibilidade"
+msgstr "Configurar Acessibilidade"
 
-#: .\templates\base.html:340
+#: .\templates\base.html:270
+#, python-format
 msgid ""
-"© 2025 PetCare System. Diseñado con accesibilidad universal y amor por\n"
-"          las mascotas."
+"© %(year)s PetCare System. Diseñado con accesibilidad universal y amor por\n"
+"              las mascotas."
 msgstr ""
+"© %(year)s PetCare System. Desenhado com acessibilidade universal e amor "
+"pelos\n"
+"              animais de estimação."
+
+#: .\templates\cart\cart_detail.html:20 .\templates\catalog\list.html:77
+msgid "Imagen de producto no disponible"
+msgstr "Imagem do produto não disponível"
+
+#: .\templates\cart\cart_detail.html:26 .\templates\cart\cart_detail.html:27
+#: .\templates\catalog\list.html:109
+msgid "Eliminar"
+msgstr "Remover"
+
+#: .\templates\cart\cart_detail.html:26
+msgid "del carrito"
+msgstr "do carrinho"
+
+#: .\templates\cart\cart_detail.html:36
+msgid "Cantidad de"
+msgstr "Quantidade de"
+
+#: .\templates\cart\cart_detail.html:36
+msgid "Actualizar cantidad de"
+msgstr "Atualizar quantidade de"
+
+#: .\templates\catalog\list.html:6
+msgid "Catálogo"
+msgstr "Catálogo"
+
+#: .\templates\catalog\list.html:19
+msgid "Inventario de Productos"
+msgstr "Inventário de produtos"
+
+#: .\templates\catalog\list.html:21
+msgid "Catálogo de"
+msgstr "Catálogo de"
+
+#: .\templates\catalog\list.html:26
+msgid "Gestiona y explora el catálogo completo."
+msgstr "Gira e explore o catálogo completo."
+
+#: .\templates\catalog\list.html:28
+msgid "Encuentra todo para el cuidado y bienestar de tu mascota."
+msgstr ""
+"Encontre tudo o que precisa para o cuidado e bem-estar do seu animal de "
+"estimação."
+
+#: .\templates\catalog\list.html:35
+msgid "Nuevo producto"
+msgstr "Novo produto"
+
+#: .\templates\catalog\list.html:44
+msgid "Buscar:"
+msgstr "Procurar:"
+
+#: .\templates\catalog\list.html:45
+msgid "Buscar por nombre, SKU..."
+msgstr "Pesquisar por nome, SKU..."
+
+#: .\templates\catalog\list.html:48
+msgid "Categoría:"
+msgstr "Categoria:"
+
+#: .\templates\catalog\list.html:50
+msgid "Todas"
+msgstr "Todos"
+
+#: .\templates\catalog\list.html:61
+msgid "Limpiar filtros"
+msgstr "Filtros limpos"
+
+#: .\templates\catalog\list.html:81
+msgid "Inactivo"
+msgstr "Parado"
+
+#: .\templates\catalog\list.html:84 .\templates\catalog\list.html:122
+msgid "Agotado"
+msgstr "Esgotado"
+
+#: .\templates\catalog\list.html:96
+msgid "Stock:"
+msgstr "estoque:"
+
+#: .\templates\catalog\list.html:106
+msgid "Editar"
+msgstr "Editar"
+
+#: .\templates\catalog\list.html:118
+msgid "Añadir al Carrito"
+msgstr "adicionar ao carrinho"
+
+#: .\templates\catalog\list.html:135
+msgid "No hay productos disponibles"
+msgstr "Não existem produtos disponíveis."
+
+#: .\templates\catalog\list.html:138
+msgid "No se encontraron productos que coincidan con tu búsqueda o filtro."
+msgstr ""
+"Não foram encontrados produtos que correspondam à sua pesquisa ou filtro."
+
+#: .\templates\catalog\list.html:140
+msgid "Parece que aún no se han agregado productos al catálogo."
+msgstr "Parece que ainda não foi adicionado nenhum produto ao catálogo."
+
+#: .\templates\catalog\list.html:145
+msgid "Crear el primer producto"
+msgstr "Crie o primeiro produto"
+
+#: .\templates\catalog\list.html:150
+msgid "Limpiar Filtros"
+msgstr "Filtros limpos"
 
 #: .\templates\core\home.html:12
 msgid "Sistema Integral para el"
-msgstr "Sistema abrangente para o"
+msgstr "Sistema Integral para o"
 
 #: .\templates\core\home.html:13
 msgid "Cuidado de Mascotas"
-msgstr "Cuidados com animais de estimação"
+msgstr "Cuidado de Animais de Estimação"
 
 #: .\templates\core\home.html:16
 msgid ""
@@ -155,34 +836,33 @@ msgid ""
 "  mascotas, centros de adopción y cuidado veterinario, diseñada para todos\n"
 "  los usuarios."
 msgstr ""
-"Uma plataforma completa e acessível para a gestão de pet shops,\n"
-"  centros de adoção e cuidados veterinários, projetada para todos\n"
-"  os usuários."
+"Uma plataforma completa e acessível para a gestão de lojas de animais,\n"
+"  centros de adoção e cuidados veterinários, desenhada para todos os\n"
+"  usuários."
 
 #: .\templates\core\home.html:22
 msgid "Explorar Productos"
-msgstr "Explorar produtos"
+msgstr "Explorar Produtos"
 
 #: .\templates\core\home.html:40
 msgid "Características Principales"
-msgstr "Principais recursos"
+msgstr "Características Principais"
 
 #: .\templates\core\home.html:43
 msgid ""
 "Nuestro sistema está diseñado con las mejores prácticas de accesibilidad y\n"
 "  usabilidad para garantizar una experiencia inclusiva."
 msgstr ""
-"Nosso sistema é projetado com as melhores práticas de acessibilidade e\n"
-"  usabilidade para garantir uma experiência inclusiva."
+"Nosso sistema é desenhado com as melhores práticas de acessibilidade e\n"
+"  usabilidade para garantir uma experiência inclusiva."
 
 #: .\templates\core\home.html:55
 msgid ""
 "Conectamos mascotas necesitadas con familias amorosas a través de\n"
 "          nuestro sistema de adopción integral."
 msgstr ""
-"Conectamos animais de estimação necessitados com famílias amorosas através "
-"do\n"
-"          nosso sistema de adoção abrangente."
+"Conectamos animais necessitados com famílias amorosas através do\n"
+"          nosso sistema de adoção integral."
 
 #: .\templates\core\home.html:65
 msgid "Gestión Veterinaria"
@@ -194,7 +874,7 @@ msgid ""
 "          cuidados especializados."
 msgstr ""
 "Sistema completo para o gerenciamento de históricos médicos, tratamentos e\n"
-"  cuidados especializados."
+"          cuidados especializados."
 
 #: .\templates\core\home.html:77 .\templates\core\home.html:112
 msgid "Accesibilidad Universal"
@@ -205,8 +885,8 @@ msgid ""
 "Diseñado para ser completamente accesible para personas con\n"
 "          discapacidades visuales, motoras y cognitivas."
 msgstr ""
-"Projetado para ser totalmente acessível para pessoas com\n"
-"  deficiências visuais, motoras e cognitivas."
+"Desenhado para ser completamente acessível para pessoas com\n"
+"          deficiências visuais, motoras e cognitivas."
 
 #: .\templates\core\home.html:89
 msgid "Impacto en Números"
@@ -214,11 +894,11 @@ msgstr "Impacto em Números"
 
 #: .\templates\core\home.html:93
 msgid "Mascotas Adoptadas"
-msgstr "Animais de estimação adotados"
+msgstr "Animais Adotados"
 
 #: .\templates\core\home.html:97
 msgid "Usuarios Registrados"
-msgstr "Usuários registrados"
+msgstr "Usuários Registrados"
 
 #: .\templates\core\home.html:101
 msgid "Satisfacción"
@@ -226,35 +906,31 @@ msgstr "Satisfação"
 
 #: .\templates\core\home.html:105
 msgid "Soporte Disponible"
-msgstr "Suporte disponível"
+msgstr "Suporte Disponível"
 
 #: .\templates\core\home.html:114
 msgid ""
 "Diseñado siguiendo las pautas WCAG 2.1 AA para garantizar que todas las "
 "personas puedan usar nuestro sistema sin barreras."
 msgstr ""
-"Projetado seguindo as diretrizes WCAG 2.1 AA para garantir que todos possam "
-"usar nosso sistema sem barreiras."
-
-#: .\templates\core\home.html:120
-msgid "Navegación por Teclado"
-msgstr "Navegação pelo teclado"
+"Desenhado seguindo as diretrizes WCAG 2.1 AA para garantir que todas as "
+"pessoas possam usar nosso sistema sem barreiras."
 
 #: .\templates\core\home.html:121
 msgid "Todos los elementos son accesibles mediante teclado."
-msgstr "Todos os elementos são acessíveis via teclado."
+msgstr "Todos os elementos são acessíveis por teclado."
 
 #: .\templates\core\home.html:127
 msgid "Alto Contraste"
-msgstr "Alto contraste"
+msgstr "Alto Contraste"
 
 #: .\templates\core\home.html:128
 msgid "Opciones de contraste para usuarios con problemas visuales."
-msgstr "Opções de contraste para usuários com deficiência visual."
+msgstr "Opções de contraste para usuários com problemas visuais."
 
 #: .\templates\core\home.html:134
 msgid "Lectores de Pantalla"
-msgstr "Leitores de tela"
+msgstr "Leitores de Tela"
 
 #: .\templates\core\home.html:135
 msgid "Compatible con NVDA, JAWS y VoiceOver."
@@ -262,14 +938,9 @@ msgstr "Compatível com NVDA, JAWS e VoiceOver."
 
 #: .\templates\core\home.html:141
 msgid "Texto Ampliable"
-msgstr "Texto expansível"
+msgstr "Texto Ampliável"
 
 #: .\templates\core\home.html:142
 #, python-format
 msgid "Tamaños de texto ajustables hasta 200%%."
-msgstr "Tamanhos de texto ajustáveis ​​em até 200%%."
-
-#, fuzzy
-#~| msgid "Sistema Integral"
-#~ msgid "Small integer"
-#~ msgstr "Sistema Abrangente"
+msgstr "Tamanhos de texto ajustáveis em até 200%%."

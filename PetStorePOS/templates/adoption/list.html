@@ -9,37 +9,37 @@
 {% block content %}
 <div class="container mt-5">
   <div class="text-center mb-5">
-    <h1 class="display-4">Adopta un Compañero</h1>
+    <h1 class="display-4">{% trans "Adopta un Compañero" %}</h1>
     <p class="lead text-muted">
-      Encuentra a tu amigo fiel. Datos proporcionados por <a href="https://huachitos.cl/" target="_blank">Huachitos.cl</a>.
+      {% trans "Encuentra a tu amigo fiel. Datos proporcionados por" %} <a href="https://huachitos.cl/" target="_blank">Huachitos.cl</a>
     </p>
   </div>
 
-  <!-- Filtros -->
   <div class="filters-container mb-5">
     <form method="GET" action="{% url 'adoption:list' %}" class="row g-3 justify-content-center align-items-center">
       <div class="col-md-4">
-        <label for="tipo" class="form-label visually-hidden">Filtrar por especie:</label>
+        <label for="tipo" class="form-label visually-hidden">{% trans "Filtrar por especie:" %}</label>
         <select name="tipo" id="tipo" class="form-select form-select-lg">
-          <option value="">Todas las especies</option>
-          {% for especie in especies_disponibles %}
-            <option value="{{ especie }}" {% if especie == tipo_filtrado %}selected{% endif %}>{{ especie|title }}</option>
+          <option value="">{% trans "Todas las especies" %}</option>
+          {% for key, text in especies_disponibles %}
+            {# especie.0 es la clave ("perro"), especie.1 es el texto ("Dog" o "Cachorro") #}
+            <option value="{{ key }}" {% if key == tipo_filtrado %}selected{% endif %}>{{ text|title }}</option>
           {% endfor %}
         </select>
       </div>
       <div class="col-md-2">
-        <button type="submit" class="btn btn-primary btn-lg w-100">Filtrar</button>
+        <button type="submit" class="btn btn-primary btn-lg w-100">{% trans "Filtrar" %}</button>
       </div>
       <div class="col-md-2">
-        <a href="{% url 'adoption:list' %}" class="btn btn-outline-secondary btn-lg w-100">Limpiar</a>
+        <a href="{% url 'adoption:list' %}" class="btn btn-outline-secondary btn-lg w-100">{% trans "Limpiar" %}</a>
       </div>
     </form>
   </div>
 
   {% if error_message %}
     <div class="alert alert-danger text-center">
-        <h2><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> Error de Conexión</h2>
-        <p>{{ error_message }}</p>
+        <h2><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> {% trans "Error de Conexión" %}</h2>
+        <p>{{ error_message }}</p> {# El mensaje de error de la API no se traduce #}
     </div>
   {% endif %}
 
@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="card-footer-action">
-              Ver Detalles
+              {% trans "Ver Detalles" %}
           </div>
         </div>
       </a>
@@ -75,9 +75,9 @@
       {% if not error_message %}
       <div class="alert alert-info w-100 text-center col-12">
         {% if tipo_filtrado %}
-          No se encontraron mascotas del tipo "{{ tipo_filtrado|title }}".
+          {% blocktrans with tipo=tipo_filtrado|title %}No se encontraron mascotas del tipo "{{ tipo }}".{% endblocktrans %}
         {% else %}
-          No hay mascotas disponibles desde la API en este momento.
+          {% trans "No hay mascotas disponibles desde la API en este momento." %}
         {% endif %}
       </div>
       {% endif %}

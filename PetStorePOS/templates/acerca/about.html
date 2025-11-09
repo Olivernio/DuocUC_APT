@@ -5,105 +5,101 @@
 {% block content %}
 <main class="container py-5">
 
-    <!-- TÍTULO PRINCIPAL -->
     <div class="text-center mb-4">
-        <h1>Acerca de <span class="text-primary">PetStorePOS</span></h1>
-        <p class="lead">Somos más que un sistema de gestión. Somos una plataforma diseñada con el corazón, enfocada en conectar vidas y facilitar el cuidado responsable de nuestros compañeros animales.</p>
+        <h1>{% trans "Acerca de" %} <span class="text-primary">PetStorePOS</span></h1>
+        <p class="lead">
+            {% blocktrans %}Somos más que un sistema de gestión. Somos una plataforma diseñada con el corazón, enfocada en conectar vidas y facilitar el cuidado responsable de nuestros compañeros animales.{% endblocktrans %}
+        </p>
     </div>
 
-    <!-- IMAGEN PRINCIPAL -->
     <div class="d-flex justify-content-center mb-5">
-        <img src="{% static 'img/png/gato.jpg' %}" class="rounded shadow" style="max-width:450px; width:100%; object-fit:cover;" alt="Cuidado Animal">
+        <img src="{% static 'img/png/gato.jpg' %}" class="rounded shadow" style="max-width:450px; width:100%; object-fit:cover;" alt="{% trans 'Veterinario cuidando un gato' %}">
     </div>
 
-    <!-- MISIÓN -->
     <section class="bg-light rounded p-5 mb-5 shadow-sm">
         <div class="text-center mb-3">
             <i class="bi bi-bullseye text-primary" style="font-size:2rem;" aria-hidden="true"></i>
         </div>
-        <h2 class="text-center mb-3">Nuestra Misión</h2>
+        <h2 class="text-center mb-3">{% trans "Nuestra Misión" %}</h2>
         <p class="text-center">
-            Crear un ecosistema tecnológico accesible e inclusivo que revoluciona la gestión en tiendas de mascotas, veterinarias y centros de adopción, siempre poniendo el bienestar animal y la accesibilidad universal como pilares.
+            {% blocktrans %}Crear un ecosistema tecnológico accesible e inclusivo que revoluciona la gestión en tiendas de mascotas, veterinarias y centros de adopción, siempre poniendo el bienestar animal y la accesibilidad universal como pilares.
             <br>
-            Creemos que la tecnología debe servir a todos, sin excepción. Cada línea de código está pensada para un mundo más justo y amoroso.
+            Creemos que la tecnología debe servir a todos, sin excepción. Cada línea de código está pensada para un mundo más justo y amoroso.{% endblocktrans %}
         </p>
     </section>
 
-    <!-- OBJETIVOS -->
     <section class="mb-5">
-        <h2 class="text-center mb-4">Nuestros Objetivos</h2>
+        <h2 class="text-center mb-4">{% trans "Nuestros Objetivos" %}</h2>
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="bg-white border rounded p-4 h-100 shadow-sm">
                     <i class="bi bi-heart text-danger" style="font-size:1.5rem;" aria-hidden="true"></i>
-                    <h5 class="mt-2 mb-1">Facilitar Adopciones</h5>
-                    <p class="mb-0">Crear un puente efectivo entre mascotas que necesitan hogar y familias dispuestas a adoptar.</p>
+                    <h5 class="mt-2 mb-1">{% trans "Facilitar Adopciones" %}</h5>
+                    <p class="mb-0">{% trans "Crear un puente efectivo entre mascotas que necesitan hogar y familias dispuestas a adoptar." %}</p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="bg-white border rounded p-4 h-100 shadow-sm">
                     <i class="bi bi-shield-check text-info" style="font-size:1.5rem;" aria-hidden="true"></i>
-                    <h5 class="mt-2 mb-1">Gestión Integral</h5>
-                    <p class="mb-0">Herramientas completas para la administración de tiendas y centros veterinarios.</p>
+                    <h5 class="mt-2 mb-1">{% trans "Gestión Integral" %}</h5>
+                    <p class="mb-0">{% trans "Herramientas completas para la administración de tiendas y centros veterinarios." %}</p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="bg-white border rounded p-4 h-100 shadow-sm mt-4 mt-md-0">
                     <i class="bi bi-eye text-success" style="font-size:1.5rem;" aria-hidden="true"></i>
-                    <h5 class="mt-2 mb-1">Accesibilidad Total</h5>
-                    <p class="mb-0">Garantizar que todas las personas, sin importar sus capacidades, puedan usar el sistema.</p>
+                    <h5 class="mt-2 mb-1">{% trans "Accesibilidad Total" %}</h5>
+                    <p class="mb-0">{% trans "Garantizar que todas las personas, sin importar sus capacidades, puedan usar el sistema." %}</p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="bg-white border rounded p-4 h-100 shadow-sm mt-4 mt-md-0">
                     <i class="bi bi-people text-primary" style="font-size:1.5rem;" aria-hidden="true"></i>
-                    <h5 class="mt-2 mb-1">Comunidad Unida</h5>
-                    <p class="mb-0">Fomentar una comunidad de amantes de los animales comprometida por el bienestar animal.</p>
+                    <h5 class="mt-2 mb-1">{% trans "Comunidad Unida" %}</h5>
+                    <p class="mb-0">{% trans "Fomentar una comunidad de amantes de los animales comprometida por el bienestar animal." %}</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PRINCIPIOS DE DISEÑO -->
     <section class="bg-light rounded px-4 py-5 mb-5 shadow-sm">
         <div class="text-center mb-3">
             <i class="bi bi-lightbulb text-warning" style="font-size:2rem;" aria-hidden="true"></i>
         </div>
-        <h2 class="text-center mb-3">Principios de Diseño</h2>
+        <h2 class="text-center mb-3">{% trans "Principios de Diseño" %}</h2>
         <div class="row row-cols-1 row-cols-md-2 g-4 text-center">
             <div class="col">
                 <div class="bg-white border rounded p-3">
-                    <strong>Inclusividad</strong>
-                    <div class="small text-muted">Diseñamos para todos, considerando diversas necesidades y capacidades.</div>
+                    <strong>{% trans "Inclusividad" %}</strong>
+                    <div class="small text-muted">{% trans "Diseñamos para todos, considerando diversas necesidades y capacidades." %}</div>
                 </div>
             </div>
             <div class="col">
                 <div class="bg-white border rounded p-3">
-                    <strong>Usabilidad</strong>
-                    <div class="small text-muted">Interfaces intuitivas, trabajo optimizado y fácil acceso.</div>
+                    <strong>{% trans "Usabilidad" %}</strong>
+                    <div class="small text-muted">{% trans "Interfaces intuitivas, trabajo optimizado y fácil acceso." %}</div>
                 </div>
             </div>
             <div class="col">
                 <div class="bg-white border rounded p-3 mt-4 mt-md-0">
-                    <strong>Transparencia</strong>
-                    <div class="small text-muted">Información clara y accesible en todo momento.</div>
+                    <strong>{% trans "Transparencia" %}</strong>
+                    <div class="small text-muted">{% trans "Información clara y accesible en todo momento." %}</div>
                 </div>
             </div>
             <div class="col">
                 <div class="bg-white border rounded p-3 mt-4 mt-md-0">
-                    <strong>Bienestar Animal</strong>
-                    <div class="small text-muted">Cada función está pensada en el cuidado y protección de nuestras mascotas.</div>
+                    <strong>{% trans "Bienestar Animal" %}</strong>
+                    <div class="small text-muted">{% trans "Cada función está pensada en el cuidado y protección de nuestras mascotas." %}</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TECNOLOGÍA -->
     <section class="mb-5">
-        <h2 class="text-center mb-4">Tecnología y Accesibilidad</h2>
+        <h2 class="text-center mb-4">{% trans "Tecnología y Accesibilidad" %}</h2>
         <div class="row">
             <div class="col-md-6">
-                <h5>Stack Tecnológico</h5>
+                <h5>{% trans "Stack Tecnológico" %}</h5>
                 <ul>
                     <li>Python</li>
                     <li>Django</li>
@@ -114,59 +110,57 @@
                 </ul>
             </div>
             <div class="col-md-6">
-                <h5>Características de Accesibilidad</h5>
+                <h5>{% trans "Características de Accesibilidad" %}</h5>
                 <ul>
-                    <li>WCAG 2.1 AA: Estándares de accesibilidad web</li>
-                    <li>Roles ARIA y etiquetas para lectores de pantalla</li>
-                    <li>Navegación por teclado</li>
-                    <li>Contraste optimizado para baja visión</li>
+                    <li>{% trans "WCAG 2.1 AA: Estándares de accesibilidad web" %}</li>
+                    <li>{% trans "Roles ARIA y etiquetas para lectores de pantalla" %}</li>
+                    <li>{% trans "Navegación por teclado" %}</li>
+                    <li>{% trans "Contraste optimizado para baja visión" %}</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- EQUIPO -->
     <section class="bg-light rounded p-5 mb-5 shadow-sm">
         <div class="text-center mb-3">
             <i class="bi bi-people text-primary" style="font-size:2rem;" aria-hidden="true"></i>
         </div>
-        <h2 class="text-center mb-3">Nuestro Equipo</h2>
+        <h2 class="text-center mb-3">{% trans "Nuestro Equipo" %}</h2>
         <div class="row row-cols-1 row-cols-md-2 g-4 text-center">
             <div class="col">
                 <div class="bg-white border rounded p-3">
-                    <strong>Desarrolladores</strong>
-                    <div class="small text-muted">Expertos en Python, Django y accesibilidad digital.</div>
+                    <strong>{% trans "Desarrolladores" %}</strong>
+                    <div class="small text-muted">{% trans "Expertos en Python, Django y accesibilidad digital." %}</div>
                 </div>
             </div>
             <div class="col">
                 <div class="bg-white border rounded p-3">
-                    <strong>Veterinarios Consultores</strong>
-                    <div class="small text-muted">Profesionales que asesoran en funciones clínicas y bienestar animal.</div>
+                    <strong>{% trans "Veterinarios Consultores" %}</strong>
+                    <div class="small text-muted">{% trans "Profesionales que asesoran en funciones clínicas y bienestar animal." %}</div>
                 </div>
             </div>
             <div class="col">
                 <div class="bg-white border rounded p-3 mt-4 mt-md-0">
-                    <strong>Especialistas en Accesibilidad</strong>
-                    <div class="small text-muted">Referentes en WCAG y diseño inclusivo.</div>
+                    <strong>{% trans "Especialistas en Accesibilidad" %}</strong>
+                    <div class="small text-muted">{% trans "Referentes en WCAG y diseño inclusivo." %}</div>
                 </div>
             </div>
             <div class="col">
                 <div class="bg-white border rounded p-3 mt-4 mt-md-0">
-                    <strong>Activistas de Adopción</strong>
-                    <div class="small text-muted">Voluntarios con experiencias en rescate y adopción.</div>
+                    <strong>{% trans "Activistas de Adopción" %}</strong>
+                    <div class="small text-muted">{% trans "Voluntarios con experiencias en rescate y adopción." %}</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- IMPACTO SOCIAL -->
     <section class="mb-5">
-        <h2 class="text-center mb-4">Impacto Social</h2>
+        <h2 class="text-center mb-4">{% trans "Impacto Social" %}</h2>
         <div class="text-center mb-4">
             <span class="badge rounded-pill bg-gradient bg-primary text-white fs-5 px-4 py-3" style="background: linear-gradient(90deg, #267ffe 60%, #7e4bfa 100%);">
-                "La tecnología debe servir a todos, los animales nos enseñan que el amor no tiene barreras."
+                "{% blocktrans %}La tecnología debe servir a todos, los animales nos enseñan que el amor no tiene barreras.{% endblocktrans %}"
             </span>
-            <div class="small text-muted mt-2">Filosofía del equipo PetStorePOS</div>
+            <div class="small text-muted mt-2">{% trans "Filosofía del equipo PetStorePOS" %}</div>
         </div>
     </section>
 </main>

@@ -1,20 +1,21 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _ 
 
 class Category(models.TextChoices):
-    FOOD = "FOOD", "Alimentos"
-    MED = "MED", "Medicamentos"
-    ACC = "ACC", "Accesorios"
+    FOOD = "FOOD", _("Alimentos")
+    MED = "MED", _("Medicamentos")
+    ACC = "ACC", _("Accesorios")
 
 
 class Product(models.Model):
-    sku = models.CharField("SKU", max_length=3, unique=True)
-    name = models.CharField("Nombre", max_length=120)
-    category = models.CharField("Categoría", max_length=8, choices=Category.choices)
-    price = models.DecimalField("Precio", max_digits=10, decimal_places=2)
-    stock = models.PositiveIntegerField("Stock", default=0)
-    description = models.TextField("Descripción", blank=True)
-    image = models.ImageField("Imagen", upload_to="products/", blank=True, null=True)  # requiere Pillow Installar y agregar en requeriments
-    is_active = models.BooleanField("Activo", default=True)
+    sku = models.CharField(_("SKU"), max_length=3, unique=True)
+    name = models.CharField(_("Nombre"), max_length=120)
+    category = models.CharField(_("Categoría"), max_length=8, choices=Category.choices)
+    price = models.DecimalField(_("Precio"), max_digits=10, decimal_places=2)
+    stock = models.PositiveIntegerField(_("Stock"), default=0)
+    description = models.TextField(_("Descripción"), blank=True)
+    image = models.ImageField(_("Imagen"), upload_to="products/", blank=True, null=True)
+    is_active = models.BooleanField(_("Activo"), default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

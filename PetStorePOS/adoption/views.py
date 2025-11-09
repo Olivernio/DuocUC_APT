@@ -1,5 +1,6 @@
 import requests
 from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
 
 def mascotas_huachitos_view(request):
     """
@@ -9,7 +10,17 @@ def mascotas_huachitos_view(request):
     api_url = "https://huachitos.cl/api/animales/"
     
     # Available species for filtering
-    available_species = ["perro", "gato", "conejo", "roedor", "ave"]
+    # Define las CLAVES (keys) que la API de Huachitos espera (en español)
+    species_keys = ["perro", "gato", "conejo", "roedor", "ave"]
+
+    # Define la lista para MOSTRAR al usuario (con traducciones)
+    species_for_display = [
+        ("perro", _("perro")),
+        ("gato", _("gato")),
+        ("conejo", _("conejo")),
+        ("roedor", _("roedor")),
+        ("ave", _("ave")),
+    ]
     
     # Get the animal type from the query string
     type_filter = request.GET.get("tipo", "").lower()
@@ -25,7 +36,7 @@ def mascotas_huachitos_view(request):
         pets = api_data.get("data", [])
 
         # Filter pets if a valid type is specified
-        if type_filter and type_filter in available_species:
+        if type_filter and type_filter in species_keys:
             pets = [pet for pet in pets if pet.get("tipo", "").lower() == type_filter]
 
     except requests.exceptions.RequestException as e:
@@ -35,7 +46,7 @@ def mascotas_huachitos_view(request):
 
     context = {
         "mascotas": pets,
-        "especies_disponibles": available_species,
+        "especies_disponibles": species_for_display, # <-- Pasamos la lista de tuplas
         "tipo_filtrado": type_filter,
         "error_message": error_message,
     }
