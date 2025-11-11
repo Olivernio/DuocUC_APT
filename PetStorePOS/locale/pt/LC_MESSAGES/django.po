@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-09 11:43-0300\n"
+"POT-Creation-Date: 2025-11-10 18:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,29 +18,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\adoption\views.py:13
+#: .\adoption\views.py:18
 msgid "perro"
 msgstr "cachorro"
 
-#: .\adoption\views.py:13
+#: .\adoption\views.py:19
 msgid "gato"
 msgstr "gato"
 
-#: .\adoption\views.py:13
+#: .\adoption\views.py:20
 msgid "conejo"
 msgstr "coelho"
 
-#: .\adoption\views.py:13
+#: .\adoption\views.py:21
 msgid "roedor"
 msgstr "roedor"
 
-#: .\adoption\views.py:13
+#: .\adoption\views.py:22
 msgid "ave"
 msgstr "pássaro"
 
+#: .\cart\views.py:16
+#, python-brace-format
+msgid "'{}' no está disponible."
+msgstr "'{}' não está disponível."
+
+#: .\cart\views.py:29
+#, python-brace-format
+msgid "Se añadió otra unidad de '{}' al carrito."
+msgstr "Mais uma unidade de '{}' foi adicionada ao carrinho."
+
+#: .\cart\views.py:31
+#, python-brace-format
+msgid "No puedes añadir más de '{}', stock máximo alcanzado."
+msgstr "Você não pode adicionar mais de '{}', estoque máximo atingido."
+
+#: .\cart\views.py:33
+#, python-brace-format
+msgid "'{}' añadido al carrito."
+msgstr "'{}' adicionado ao carrinho."
+
+#: .\cart\views.py:49 .\cart\views.py:66
+#, python-brace-format
+msgid "'{}' eliminado del carrito."
+msgstr "'{}' removido do carrinho."
+
+#: .\cart\views.py:60
+msgid "Cantidad inválida."
+msgstr "Quantidade inválida."
+
+#: .\cart\views.py:70
+#, python-brace-format
+msgid "Stock máximo para '{}' es {}. Cantidad ajustada."
+msgstr "Estoque máximo para '{}' é {}. Quantidade ajustada."
+
+#: .\cart\views.py:74
+#, python-brace-format
+msgid "Cantidad de '{}' actualizada."
+msgstr "Quantidade de '{}' atualizada."
+
 #: .\catalog\models.py:5
 msgid "Alimentos"
-msgstr "Comida"
+msgstr "Alimentos"
 
 #: .\catalog\models.py:6
 msgid "Medicamentos"
@@ -54,13 +93,14 @@ msgstr "Acessórios"
 msgid "SKU"
 msgstr "SKU"
 
-#: .\catalog\models.py:12 .\templates\accounts\profile.html:110
+#: .\catalog\models.py:12 .\core\forms.py:7
+#: .\templates\accounts\profile.html:110
 msgid "Nombre"
 msgstr "Nome"
 
 #: .\catalog\models.py:13
 msgid "Categoría"
-msgstr "Categoria:"
+msgstr "Categoria"
 
 #: .\catalog\models.py:14
 msgid "Precio"
@@ -68,7 +108,7 @@ msgstr "Preço"
 
 #: .\catalog\models.py:15
 msgid "Stock"
-msgstr "estoque:"
+msgstr "Estoque"
 
 #: .\catalog\models.py:16
 msgid "Descripción"
@@ -81,6 +121,28 @@ msgstr "Imagem"
 #: .\catalog\models.py:18
 msgid "Activo"
 msgstr "Ativo"
+
+#: .\core\forms.py:8 .\templates\accounts\profile.html:114
+msgid "Apellidos"
+msgstr "Sobrenome"
+
+#: .\core\forms.py:12 .\templates\accounts\login.html:61
+#: .\templates\accounts\login.html:64 .\templates\accounts\signup_step2.html:38
+msgid "Correo electrónico"
+msgstr "E-mail"
+
+#: .\core\forms.py:17 .\templates\accounts\login.html:68
+#: .\templates\accounts\login.html:71
+msgid "Contraseña"
+msgstr "Senha"
+
+#: .\core\forms.py:23
+msgid "Confirmar Contraseña"
+msgstr "Confirmar Senha"
+
+#: .\core\forms.py:34
+msgid "Las contraseñas no coinciden."
+msgstr "As senhas não coincidem."
 
 #: .\djangocrud\settings.py:108
 msgid "Español"
@@ -102,8 +164,7 @@ msgstr "Configurações de Acessibilidade"
 #: .\templates\accessibility\accessibility.html:12
 msgid ""
 "Selecciona un modo de visualización para mejorar tu experiencia en el sitio."
-msgstr ""
-"Selecione um modo de visualização para mejorar sua experiência no site."
+msgstr "Selecione um modo de visualização para mejorar sua experiência no site."
 
 #: .\templates\accessibility\accessibility.html:22
 msgid "Modo Estándar"
@@ -139,7 +200,7 @@ msgstr "Modo Daltônico"
 
 #: .\templates\accessibility\accessibility.html:54
 msgid "Ajusta los colores para mejorar la distinción (ej. Rojo/Verde)."
-msgstr "Ajusta as cores para melhorar a distinção (ex. Vermelho/Verde)."
+msgstr "Ajusta as cores para mejorar a distinção (ex. Vermelho/Verde)."
 
 #: .\templates\accessibility\accessibility.html:57
 msgid "Activar Modo Daltónico"
@@ -185,8 +246,7 @@ msgstr "Acesso Requerido"
 #: .\templates\accounts\access_required.html:23
 msgid ""
 "Para acceder a tu cuenta, necesitas iniciar sesión o crear una cuenta nueva."
-msgstr ""
-"Para acessar sua conta, você precisa fazer login ou criar uma nova conta."
+msgstr "Para acessar sua conta, você precisa fazer login ou criar uma nova conta."
 
 #: .\templates\accounts\access_required.html:29 .\templates\base.html:106
 #: .\templates\base.html:198
@@ -196,14 +256,6 @@ msgstr "Iniciar Sessão"
 #: .\templates\accounts\access_required.html:32
 msgid "Volver al Inicio"
 msgstr "Voltar ao Início"
-
-#: .\templates\accounts\login.html:61 .\templates\accounts\login.html:64
-msgid "Correo electrónico"
-msgstr "E-mail"
-
-#: .\templates\accounts\login.html:68 .\templates\accounts\login.html:71
-msgid "Contraseña"
-msgstr "Senha"
 
 #: .\templates\accounts\login.html:72
 msgid "Mostrar contraseña"
@@ -258,10 +310,6 @@ msgstr "Informações Pessoais"
 #: .\templates\accounts\profile.html:104
 msgid "Editar Perfil"
 msgstr "Editar Perfil"
-
-#: .\templates\accounts\profile.html:114
-msgid "Apellidos"
-msgstr "Sobrenome"
 
 #: .\templates\accounts\profile.html:121
 msgid "Correo Electrónico"
@@ -335,29 +383,114 @@ msgstr "Minhas Avaliações"
 msgid "Aquí verás las reseñas que has dejado."
 msgstr "Aqui você verá as avaliações que você deixou."
 
-#: .\templates\accounts\signup_step1.html:26
+#: .\templates\accounts\signup_step1.html:14
+msgid "Únete a nuestra comunidad"
+msgstr "Junte-se à nossa comunidade"
+
+#: .\templates\accounts\signup_step1.html:15
+msgid "Crea tu cuenta"
+msgstr "Crie sua conta"
+
+#: .\templates\accounts\signup_step1.html:16
+msgid ""
+"Únete a miles de amantes de las mascotas. Compra productos, adopta mascotas "
+"y forma parte de nuestra comunidad."
+msgstr ""
+"Junte-se a milhares de amantes de animais. Compre produtos, adote animais "
+"e faça parte da nossa comunidade."
+
+#: .\templates\accounts\signup_step1.html:23
+#: .\templates\accounts\signup_step2.html:18
+#: .\templates\accounts\signup_step3.html:18
+msgid "Registro de Usuario"
+msgstr "Registro de Usuário"
+
+#: .\templates\accounts\signup_step1.html:24
+#, python-format
+msgid "Paso %(current_step)s de %(total_steps)s - Información Personal"
+msgstr "Passo %(current_step)s de %(total_steps)s - Informações Pessoais"
+
+#: .\templates\accounts\signup_step1.html:27
 msgid "Paso 1: Información Personal (actual)"
 msgstr "Passo 1: Informações Pessoais (atual)"
 
-#: .\templates\accounts\signup_step1.html:26
+#: .\templates\accounts\signup_step1.html:27
 msgid "Paso 2: Datos de Contacto"
 msgstr "Passo 2: Dados de Contato"
 
-#: .\templates\accounts\signup_step1.html:26
+#: .\templates\accounts\signup_step1.html:27
+#: .\templates\accounts\signup_step2.html:23
 msgid "Paso 3: Seguridad"
 msgstr "Passo 3: Segurança"
 
-#: .\templates\accounts\signup_step3.html:20
+#: .\templates\accounts\signup_step1.html:48
+#: .\templates\accounts\signup_step2.html:53
+msgid "Siguiente"
+msgstr "Próximo"
+
+#: .\templates\accounts\signup_step1.html:53
+msgid "¿Ya tienes una cuenta?"
+msgstr "Já tem uma conta?"
+
+#: .\templates\accounts\signup_step1.html:54
+msgid "Inicia sesión aquí"
+msgstr "Faça login aqui"
+
+#: .\templates\accounts\signup_step2.html:12
+msgid "Datos de Contacto"
+msgstr "Dados de Contato"
+
+#: .\templates\accounts\signup_step2.html:13
+msgid "Necesitamos tu correo electrónico. Lo usarás para iniciar sesión."
+msgstr "Precisamos do seu e-mail. Você o usará para fazer login."
+
+#: .\templates\accounts\signup_step2.html:19
+#, python-format
+msgid "Paso %(current_step)s de %(total_steps)s - Datos de Contacto"
+msgstr "Passo %(current_step)s de %(total_steps)s - Dados de Contato"
+
+#: .\templates\accounts\signup_step2.html:21
+#: .\templates\accounts\signup_step3.html:21
 msgid "Paso 1: Información Personal (completado)"
 msgstr "Passo 1: Informações Pessoais (concluído)"
 
-#: .\templates\accounts\signup_step3.html:20
+#: .\templates\accounts\signup_step2.html:22
+msgid "Paso 2: Datos de Contacto (actual)"
+msgstr "Passo 2: Dados de Contato (atual)"
+
+#: .\templates\accounts\signup_step2.html:50
+#: .\templates\accounts\signup_step3.html:48
+msgid "Anterior"
+msgstr "Anterior"
+
+#: .\templates\accounts\signup_step3.html:12
+msgid "¡Último paso!"
+msgstr "Último passo!"
+
+#: .\templates\accounts\signup_step3.html:13
+msgid "Crea una contraseña segura para proteger tu cuenta."
+msgstr "Crie uma senha segura para proteger sua conta."
+
+#: .\templates\accounts\signup_step3.html:19
+#, python-format
+msgid "Paso %(current_step)s de %(total_steps)s - Seguridad"
+msgstr "Passo %(current_step)s de %(total_steps)s - Segurança"
+
+#: .\templates\accounts\signup_step3.html:21
 msgid "Paso 2: Datos de Contacto (completado)"
 msgstr "Passo 2: Dados de Contato (concluído)"
 
-#: .\templates\accounts\signup_step3.html:20
+#: .\templates\accounts\signup_step3.html:21
 msgid "Paso 3: Seguridad (actual)"
 msgstr "Passo 3: Segurança (atual)"
+
+#: .\templates\accounts\signup_step3.html:35
+msgid "Mínimo 6 caracteres"
+msgstr "Mínimo 6 caracteres"
+
+#: .\templates\accounts\signup_step3.html:51
+msgid "¡Finalizar Registro!"
+msgstr "Finalizar Registro!"
 
 #: .\templates\acerca\about.html:9 .\templates\base.html:62
 #: .\templates\base.html:152
@@ -370,9 +503,9 @@ msgid ""
 "corazón, enfocada en conectar vidas y facilitar el cuidado responsable de "
 "nuestros compañeros animales."
 msgstr ""
-"Somos mais do que um sistema de gerenciamento. Somos uma plataforma "
-"desenhada com o coração, focada em conectar vidas e facilitar o cuidado "
-"responsável dos nossos companheiros animais."
+"Somos mais do que um sistema de gerenciamento. Somos uma plataforma desenhada "
+"com o coração, focada em conectar vidas e facilitar o cuidado responsável "
+"dos nossos companheiros animais."
 
 #: .\templates\acerca\about.html:16
 msgid "Veterinario cuidando un gato"
@@ -422,8 +555,7 @@ msgstr "Gestão Integral"
 msgid ""
 "Herramientas completas para la administración de tiendas y centros "
 "veterinarios."
-msgstr ""
-"Ferramentas completas para a administração de lojas e centros veterinários."
+msgstr "Ferramentas completas para a administração de lojas e centros veterinários."
 
 #: .\templates\acerca\about.html:51
 msgid "Accesibilidad Total"
@@ -445,9 +577,7 @@ msgstr "Comunidade Unida"
 msgid ""
 "Fomentar una comunidad de amantes de los animales comprometida por el "
 "bienestar animal."
-msgstr ""
-"Fomentar uma comunidade de amantes de animais comprometida com o bem-estar "
-"animal."
+msgstr "Fomentar uma comunidade de amantes de animais comprometida com o bem-estar animal."
 
 #: .\templates\acerca\about.html:69
 msgid "Principios de Diseño"
@@ -459,8 +589,7 @@ msgstr "Inclusividade"
 
 #: .\templates\acerca\about.html:74
 msgid "Diseñamos para todos, considerando diversas necesidades y capacidades."
-msgstr ""
-"Projetamos para todos, considerando diversas necessidades e capacidades."
+msgstr "Projetamos para todos, considerando diversas necessidades e capacidades."
 
 #: .\templates\acerca\about.html:79
 msgid "Usabilidad"
@@ -485,8 +614,7 @@ msgstr "Bem-estar Animal"
 #: .\templates\acerca\about.html:92
 msgid ""
 "Cada función está pensada en el cuidado y protección de nuestras mascotas."
-msgstr ""
-"Cada função é pensada no cuidado e proteção dos nossos animais de estimação."
+msgstr "Cada função é pensada no cuidado e proteção dos nossos animais de estimação."
 
 #: .\templates\acerca\about.html:99
 msgid "Tecnología y Accesibilidad"
@@ -574,11 +702,11 @@ msgstr "(abre em uma nova aba)"
 
 #: .\templates\adoption\list.html:12
 msgid "Adopta un Compañero"
-msgstr "Adote um companheiro"
+msgstr "Adote um Companheiro"
 
 #: .\templates\adoption\list.html:14
 msgid "Encuentra a tu amigo fiel. Datos proporcionados por"
-msgstr "Encontre o seu amigo leal. Dados fornecidos pela"
+msgstr "Encontre seu amigo fiel. Dados fornecidos por"
 
 #: .\templates\adoption\list.html:21
 msgid "Filtrar por especie:"
@@ -590,28 +718,28 @@ msgstr "Todas as espécies"
 
 #: .\templates\adoption\list.html:31 .\templates\catalog\list.html:59
 msgid "Filtrar"
-msgstr "Filtro"
+msgstr "Filtrar"
 
 #: .\templates\adoption\list.html:34
 msgid "Limpiar"
-msgstr "Filtros limpos"
+msgstr "Limpar"
 
 #: .\templates\adoption\list.html:41
 msgid "Error de Conexión"
-msgstr "Erro de ligação"
+msgstr "Erro de Conexão"
 
 #: .\templates\adoption\list.html:70
 msgid "Ver Detalles"
-msgstr "Ver detalhes"
+msgstr "Ver Detalhes"
 
 #: .\templates\adoption\list.html:78
 #, python-format
 msgid "No se encontraron mascotas del tipo \"%(tipo)s\"."
-msgstr "Não foram encontrados animais de estimação do tipo \"%(type)s\"."
+msgstr "Não foram encontrados animais de estimação do tipo \"%(tipo)s\"."
 
 #: .\templates\adoption\list.html:80
 msgid "No hay mascotas disponibles desde la API en este momento."
-msgstr "No hay mascotas disponibles desde la API en este momento."
+msgstr "Nenhum animal de estimação disponível na API no momento."
 
 #: .\templates\base.html:47
 msgid "Sistema Integral"
@@ -642,7 +770,7 @@ msgstr "Ir para o Dashboard"
 
 #: .\templates\base.html:109 .\templates\base.html:200
 msgid "Registrarse"
-msgstr "Registrar-se"
+msgstr "Registar"
 
 #: .\templates\base.html:114 .\templates\base.html:160
 msgid "Ver carrito de compras"
@@ -714,26 +842,78 @@ msgstr ""
 "pelos\n"
 "              animais de estimação."
 
-#: .\templates\cart\cart_detail.html:20 .\templates\catalog\list.html:77
+#: .\templates\cart\cart_detail.html:6 .\templates\cart\cart_detail.html:10
+msgid "Mi Carrito de Compras"
+msgstr "Meu Carrinho de Compras"
+
+#: .\templates\cart\cart_detail.html:16
+msgid "Producto"
+msgstr "Produto"
+
+#: .\templates\cart\cart_detail.html:18
+msgid "Precio Unitario"
+msgstr "Preço Unitário"
+
+#: .\templates\cart\cart_detail.html:19
+msgid "Cantidad"
+msgstr "Quantidade"
+
+#: .\templates\cart\cart_detail.html:20
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#: .\templates\cart\cart_detail.html:31 .\templates\catalog\list.html:77
 msgid "Imagen de producto no disponible"
 msgstr "Imagem do produto não disponível"
 
-#: .\templates\cart\cart_detail.html:26 .\templates\cart\cart_detail.html:27
+#: .\templates\cart\cart_detail.html:39 .\templates\cart\cart_detail.html:40
 #: .\templates\catalog\list.html:109
 msgid "Eliminar"
 msgstr "Remover"
 
-#: .\templates\cart\cart_detail.html:26
+#: .\templates\cart\cart_detail.html:39
 msgid "del carrito"
 msgstr "do carrinho"
 
-#: .\templates\cart\cart_detail.html:36
+#: .\templates\cart\cart_detail.html:50
 msgid "Cantidad de"
 msgstr "Quantidade de"
 
-#: .\templates\cart\cart_detail.html:36
+#: .\templates\cart\cart_detail.html:51
 msgid "Actualizar cantidad de"
 msgstr "Atualizar quantidade de"
+
+#: .\templates\cart\cart_detail.html:55 .\templates\catalog\list.html:96
+msgid "Stock:"
+msgstr "Estoque:"
+
+#: .\templates\cart\cart_detail.html:63
+msgid "Total Carrito:"
+msgstr "Total do Carrinho:"
+
+#: .\templates\cart\cart_detail.html:71
+msgid "Seguir Comprando"
+msgstr "Continuar Comprando"
+
+#: .\templates\cart\cart_detail.html:73
+msgid "Proceder al Pago"
+msgstr "Ir para o Pagamento"
+
+#: .\templates\cart\cart_detail.html:79
+msgid "¡Tu carrito está vacío!"
+msgstr "Seu carrinho está vazio!"
+
+#: .\templates\cart\cart_detail.html:80
+msgid ""
+"Parece que aún no has añadido ningún producto. Explora nuestro catálogo para "
+"encontrar algo que te guste."
+msgstr ""
+"Parece que você ainda não adicionou nenhum produto. Explore nosso catálogo "
+"para encontrar algo que você goste."
+
+#: .\templates\cart\cart_detail.html:82
+msgid "Ir al Catálogo"
+msgstr "Ir para o Catálogo"
 
 #: .\templates\catalog\list.html:6
 msgid "Catálogo"
@@ -741,7 +921,7 @@ msgstr "Catálogo"
 
 #: .\templates\catalog\list.html:19
 msgid "Inventario de Productos"
-msgstr "Inventário de produtos"
+msgstr "Inventário de Produtos"
 
 #: .\templates\catalog\list.html:21
 msgid "Catálogo de"
@@ -749,13 +929,11 @@ msgstr "Catálogo de"
 
 #: .\templates\catalog\list.html:26
 msgid "Gestiona y explora el catálogo completo."
-msgstr "Gira e explore o catálogo completo."
+msgstr "Gerencie e explore o catálogo completo."
 
 #: .\templates\catalog\list.html:28
 msgid "Encuentra todo para el cuidado y bienestar de tu mascota."
-msgstr ""
-"Encontre tudo o que precisa para o cuidado e bem-estar do seu animal de "
-"estimação."
+msgstr "Encontre tudo para o cuidado e bem-estar do seu animal de estimação."
 
 #: .\templates\catalog\list.html:35
 msgid "Nuevo producto"
@@ -775,23 +953,19 @@ msgstr "Categoria:"
 
 #: .\templates\catalog\list.html:50
 msgid "Todas"
-msgstr "Todos"
+msgstr "Todas"
 
 #: .\templates\catalog\list.html:61
 msgid "Limpiar filtros"
-msgstr "Filtros limpos"
+msgstr "Limpar filtros"
 
 #: .\templates\catalog\list.html:81
 msgid "Inactivo"
-msgstr "Parado"
+msgstr "Inativo"
 
 #: .\templates\catalog\list.html:84 .\templates\catalog\list.html:122
 msgid "Agotado"
 msgstr "Esgotado"
-
-#: .\templates\catalog\list.html:96
-msgid "Stock:"
-msgstr "estoque:"
 
 #: .\templates\catalog\list.html:106
 msgid "Editar"
@@ -799,28 +973,27 @@ msgstr "Editar"
 
 #: .\templates\catalog\list.html:118
 msgid "Añadir al Carrito"
-msgstr "adicionar ao carrinho"
+msgstr "Adicionar ao Carrinho"
 
 #: .\templates\catalog\list.html:135
 msgid "No hay productos disponibles"
-msgstr "Não existem produtos disponíveis."
+msgstr "Nenhum produto disponível"
 
 #: .\templates\catalog\list.html:138
 msgid "No se encontraron productos que coincidan con tu búsqueda o filtro."
-msgstr ""
-"Não foram encontrados produtos que correspondam à sua pesquisa ou filtro."
+msgstr "Nenhum produto encontrado que corresponda à sua pesquisa ou filtro."
 
 #: .\templates\catalog\list.html:140
 msgid "Parece que aún no se han agregado productos al catálogo."
-msgstr "Parece que ainda não foi adicionado nenhum produto ao catálogo."
+msgstr "Parece que ainda não foram adicionados produtos ao catálogo."
 
 #: .\templates\catalog\list.html:145
 msgid "Crear el primer producto"
-msgstr "Crie o primeiro produto"
+msgstr "Criar o primeiro produto"
 
 #: .\templates\catalog\list.html:150
 msgid "Limpiar Filtros"
-msgstr "Filtros limpos"
+msgstr "Limpar Filtros"
 
 #: .\templates\core\home.html:12
 msgid "Sistema Integral para el"

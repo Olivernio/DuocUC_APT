@@ -9,14 +9,15 @@
          {# -------- Columna izquierda -------- #}
         <div class="col-md-6 d-flex flex-column justify-content-center gradient-left text-white px-5 py-5">
             <h3 class="fw-bold mb-2"><i class="bi bi-heart fs-2" aria-hidden="true"></i> PetCare System</h3>
-            <h3 class="mt-4">¡Último paso!</h3>
-            <p>Crea una contraseña segura para proteger tu cuenta.</p>
+            <h3 class="mt-4">{% trans "¡Último paso!" %}</h3>
+            <p>{% trans "Crea una contraseña segura para proteger tu cuenta." %}</p>
         </div>
          {# -------- Columna derecha -------- #}
         <div class="col-md-6 d-flex align-items-center justify-content-center py-3">
             <div class="form-card shadow-lg rounded p-4 w-100 mx-auto" style="max-width: 450px;">
-                <h2 class="fw-bold mb-2 text-center">Registro de Usuario</h2>
-                <p class="text-center mb-3">Paso {{ wizard.steps.current|add:"1" }} de {{ wizard.steps.count }} - Seguridad</p> <div class="wizard-progress d-flex justify-content-center align-items-center mb-4">
+                <h2 class="fw-bold mb-2 text-center">{% trans "Registro de Usuario" %}</h2>
+                <p class="text-center mb-3">{% blocktrans with current_step=wizard.steps.current|add:"1" total_steps=wizard.steps.count %}Paso {{ current_step }} de {{ total_steps }} - Seguridad{% endblocktrans %}</p> 
+                <div class="wizard-progress d-flex justify-content-center align-items-center mb-4">
                     <span class="wizard-step active" aria-label="{% trans 'Paso 1: Información Personal (completado)' %}"><i class="bi bi-person" aria-hidden="true"></i></span> <span class="wizard-line active"></span> <span class="wizard-step active" aria-label="{% trans 'Paso 2: Datos de Contacto (completado)' %}"><i class="bi bi-geo-alt" aria-hidden="true"></i></span> <span class="wizard-line active"></span> <span class="wizard-step active" aria-label="{% trans 'Paso 3: Seguridad (actual)' %}"><i class="bi bi-shield-check" aria-hidden="true"></i></span> </div>
 
                 <form method="post" autocomplete="off">
@@ -31,7 +32,7 @@
                              <input
                                 type="password"
                                 name="{{ field.html_name }}"
-                                placeholder="Mínimo 6 caracteres"
+                                placeholder="{% trans 'Mínimo 6 caracteres' %}"
                                 class="form-control"
                                 id="{{ field.id_for_label }}"
                                 required
@@ -44,10 +45,10 @@
                     {% endfor %}
                     <div class="d-flex justify-content-between">
                         {% if wizard.steps.prev %}
-                        <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn btn-outline-secondary"> <i class="bi bi-arrow-left"></i> Anterior
+                        <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn btn-outline-secondary"> <i class="bi bi-arrow-left"></i> {% trans "Anterior" %}
                         </button>
                         {% endif %}
-                        <button type="submit" class="btn btn-gradient w-50"> ¡Finalizar Registro!
+                        <button type="submit" class="btn btn-gradient w-50"> {% trans "¡Finalizar Registro!" %}
                         </button>
                     </div>
                 </form>

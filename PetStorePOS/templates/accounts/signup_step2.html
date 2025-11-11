@@ -9,16 +9,18 @@
         {# -------- Columna izquierda -------- #}
         <div class="col-md-6 d-flex flex-column justify-content-center gradient-left text-white px-5 py-5">
             <h3 class="fw-bold mb-2"><i class="bi bi-heart fs-2" aria-hidden="true"></i> PetCare System</h3>
-            <h3 class="mt-4">Datos de Contacto</h3>
-            <p>Necesitamos tu correo electrónico. Lo usarás para iniciar sesión.</p>
+            <h3 class="mt-4">{% trans "Datos de Contacto" %}</h3>
+            <p>{% trans "Necesitamos tu correo electrónico. Lo usarás para iniciar sesión." %}</p>
         </div>
         {# -------- Columna derecha -------- #}
         <div class="col-md-6 d-flex align-items-center justify-content-center py-3">
             <div class="form-card shadow-lg rounded p-4 w-100 mx-auto" style="max-width: 450px;">
-                <h2 class="fw-bold mb-2 text-center">Registro de Usuario</h2>
-                <p class="text-center mb-3">Paso {{ wizard.steps.current|add:"1" }} de {{ wizard.steps.count }} - Datos de Contacto</p> <div class="wizard-progress d-flex justify-content-center align-items-center mb-4">
-                    <span class="wizard-step active"><i class="bi bi-person"></i></span> <span class="wizard-line active"></span>
-                    <span class="wizard-step active"><i class="bi bi-geo-alt"></i></span> <span class="wizard-line"></span> <span class="wizard-step"><i class="bi bi-shield-check"></i></span> </div>
+                <h2 class="fw-bold mb-2 text-center">{% trans "Registro de Usuario" %}</h2>
+                <p class="text-center mb-3">{% blocktrans with current_step=wizard.steps.current|add:"1" total_steps=wizard.steps.count %}Paso {{ current_step }} de {{ total_steps }} - Datos de Contacto{% endblocktrans %}</p> 
+                <div class="wizard-progress d-flex justify-content-center align-items-center mb-4">
+                    <span class="wizard-step active" aria-label="{% trans 'Paso 1: Información Personal (completado)' %}"><i class="bi bi-person" aria-hidden="true"></i></span> <span class="wizard-line active"></span>
+                    <span class="wizard-step active" aria-label="{% trans 'Paso 2: Datos de Contacto (actual)' %}"><i class="bi bi-geo-alt" aria-hidden="true"></i></span> <span class="wizard-line"></span> 
+                    <span class="wizard-step" aria-label="{% trans 'Paso 3: Seguridad' %}"><i class="bi bi-shield-check" aria-hidden="true"></i></span> </div>
 
                 <form method="post" autocomplete="off">
                     {% csrf_token %}
@@ -33,7 +35,7 @@
                              <input
                                 type="{{ field.field.widget.input_type }}"
                                 name="{{ field.html_name }}"
-                                placeholder="tu@email.com"
+                                placeholder="{% trans 'Correo electrónico' %}"
                                 class="form-control"
                                 id="{{ field.id_for_label }}"
                                 value="{{ field.value|default_if_none:'' }}"
@@ -45,10 +47,10 @@
                     {% endfor %}
                     <div class="d-flex justify-content-between">
                         {% if wizard.steps.prev %}
-                            <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn btn-outline-secondary"> <i class="bi bi-arrow-left"></i> Anterior
+                            <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn btn-outline-secondary"> <i class="bi bi-arrow-left"></i> {% trans "Anterior" %}
                             </button>
                         {% endif %}
-                        <button type="submit" class="btn btn-gradient"> Siguiente <i class="bi bi-arrow-right"></i> </button>
+                        <button type="submit" class="btn btn-gradient"> {% trans "Siguiente" %} <i class="bi bi-arrow-right"></i> </button>
                     </div>
                 </form>
             </div>
