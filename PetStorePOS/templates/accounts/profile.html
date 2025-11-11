@@ -1,237 +1,161 @@
 {% extends "base.html" %}
 {% load static %}
-{% load i18n %}
-
-{% block title %}{% trans "Mi Cuenta" %} · PetStore{% endblock %}
-
+{% load widget_tweaks %}
 {% block content %}
 <div class="container py-4">
-    
-    {# Header de Perfil #}
-    <div class="d-flex align-items-center mb-4">
-        <div class="profile-avatar-circle bg-primary text-white me-3 d-flex align-items-center justify-content-center">
-            {% if user.first_name %}{{ user.first_name|first|upper }}{% else %}{{ user.username|first|upper }}{% endif %}
+    {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    <div class="d-flex align-items-center mb-3">
+        <div class="profile-avatar-circle bg-secondary text-white me-3 d-flex align-items-center justify-content-center"
+             style="width:54px;height:54px;font-size:22px;font-weight:bold;border-radius:50%;">
+            {{ user.first_name|default:user.username|first|upper }}{{ user.last_name|default:""|first|upper }}
         </div>
         <div>
-            <h1 class="h3 fw-bold mb-0">{% trans "Hola, " %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</h1>
-            <p class="text-muted mb-0">{% trans "Gestiona tu cuenta y preferencias" %}</p>
+            <h1 class="h3 fw-bold mb-0">Hola, <span style="color:#2676FB;">{{ user.first_name }}</span></h1>
+            <p class="text-muted mb-0">Gestiona tu cuenta y preferencias</p>
         </div>
     </div>
-
-    {# Tarjetas de Resumen #}
-    <div class="row g-3 mb-4">
-        <div class="col-md-3 col-sm-6">
-            <div class="card h-100 shadow-sm border-0 rounded-3">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                    <div>
-                        <h6 class="text-muted mb-1">{% trans "Pedidos" %}</h6>
-                        <h4 class="fw-bold mb-0">
-                            <i class="bi bi-bag me-2" aria-hidden="true"></i>1
-                        </h4>
-                    </div>
-                    <i class="bi bi-cart fs-3 text-muted" aria-hidden="true"></i>
+    <div class="row g-2 mb-3">
+        <div class="col-md-3 col-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <div class="fw-bold" style="font-size:22px;">{{ user_orders }}</div>
+                    <div class="small text-muted">Pedidos</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card h-100 shadow-sm border-0 rounded-3">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                    <div>
-                        <h6 class="text-muted mb-1">{% trans "Total Gastado" %}</h6>
-                        <h4 class="fw-bold mb-0">
-                            <i class="bi bi-currency-dollar me-2" aria-hidden="true"></i>76
-                        </h4>
-                    </div>
-                    <i class="bi bi-graph-up-arrow fs-3 text-muted" aria-hidden="true"></i>
+        <div class="col-md-3 col-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <div class="fw-bold" style="font-size:22px;">€{{ total_spent }}</div>
+                    <div class="small text-muted">Total Gastado</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card h-100 shadow-sm border-0 rounded-3">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                    <div>
-                        <h6 class="text-muted mb-1">{% trans "Adopciones" %}</h6>
-                        <h4 class="fw-bold mb-0">
-                            <i class="bi bi-heart me-2" aria-hidden="true"></i>1
-                        </h4>
-                    </div>
-                    <i class="bi bi-house-heart fs-3 text-muted" aria-hidden="true"></i>
+        <div class="col-md-3 col-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <div class="fw-bold" style="font-size:22px;">{{ adoptions }}</div>
+                    <div class="small text-muted">Adopciones</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card h-100 shadow-sm border-0 rounded-3">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                    <div>
-                        <h6 class="text-muted mb-1">{% trans "Reseñas" %}</h6>
-                        <h4 class="fw-bold mb-0">
-                            <i class="bi bi-star me-2" aria-hidden="true"></i>2
-                        </h4>
-                    </div>
-                    <i class="bi bi-chat-left-text fs-3 text-muted" aria-hidden="true"></i>
+        <div class="col-md-3 col-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <div class="fw-bold" style="font-size:22px;">{{ reviews }}</div>
+                    <div class="small text-muted">Reseñas</div>
                 </div>
             </div>
         </div>
     </div>
-
-    {# Pestañas de Navegación #}
-    <ul class="nav nav-tabs mb-4" id="profileTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-content" type="button" role="tab" aria-controls="profile-content" aria-selected="true">{% trans "Perfil" %}</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders-content" type="button" role="tab" aria-controls="orders-content" aria-selected="false">{% trans "Pedidos" %}</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pets-tab" data-bs-toggle="tab" data-bs-target="#pets-content" type="button" role="tab" aria-controls="pets-content" aria-selected="false">{% trans "Mascotas" %}</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-content" type="button" role="tab" aria-controls="reviews-content" aria-selected="false">{% trans "Reseñas" %}</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link text-danger" href="{% url 'accounts:logout' %}">{% trans "Cerrar Sesión" %}</a>
-        </li>
+    <ul class="nav nav-tabs mb-3" id="profileTab" role="tablist">
+        <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Perfil</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link disabled" href="#">Pedidos</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link disabled" href="#">Mascotas</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link disabled" href="#">Reseñas</a></li>
     </ul>
-
-    {# Contenido de las Pestañas #}
-    <div class="tab-content" id="profileTabContent">
-        {# Pestaña de Perfil #}
-        <div class="tab-pane fade show active" id="profile-content" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="card shadow-sm border-0 rounded-3 p-4">
-                <h5 class="fw-bold mb-3 d-flex align-items-center">
-                    <i class="bi bi-person-fill me-2 text-primary" aria-hidden="true"></i>
-                    {% trans "Información Personal" %}
-                    <button class="btn btn-sm btn-outline-secondary ms-auto">{% trans "Editar Perfil" %}</button>
-                </h5>
-                <hr>
-
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label class="form-label text-muted small">{% trans "Nombre" %}</label>
-                        <p class="form-control-plaintext fw-bold">{{ user.first_name|default:"-" }}</p>
+    <div class="card shadow-sm border-0 rounded-3 mb-4">
+        <div class="card-body px-4 py-4">
+            <h5 class="fw-bold mb-4">
+                <i class="bi bi-person-fill me-2 text-primary"></i> Información Personal
+                {% if not edit_mode %}
+                    <a href="?edit=true" class="btn btn-sm btn-outline-secondary float-end">Editar Perfil</a>
+                {% endif %}
+            </h5>
+            {% if edit_mode %}
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Nombre</label>
+                        {{ form.first_name|add_class:"form-control" }}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label text-muted small">{% trans "Apellidos" %}</label>
-                        <p class="form-control-plaintext fw-bold">{{ user.last_name|default:"-" }}</p>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label class="form-label text-muted small">{% trans "Correo Electrónico" %}</label>
-                        <p class="form-control-plaintext fw-bold">{{ user.email|default:"-" }}</p>
+                        <label class="form-label fw-bold">Apellidos</label>
+                        {{ form.last_name|add_class:"form-control" }}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label text-muted small">{% trans "Teléfono" %}</label>
-                        <p class="form-control-plaintext fw-bold">
-                            {% if user.userprofile.phone_number %}{{ user.userprofile.phone_number }}{% else %}-{% endif %}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label class="form-label text-muted small">{% trans "Dirección" %}</label>
-                        <p class="form-control-plaintext fw-bold">
-                            {% if user.userprofile.address %}{{ user.userprofile.address }}{% else %}-{% endif %}
-                        </p>
+                        <label class="form-label fw-bold">Correo Electrónico</label>
+                        {{ form.email|add_class:"form-control" }}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label text-muted small">{% trans "Ciudad" %}</label>
-                        <p class="form-control-plaintext fw-bold">
-                            {% if user.userprofile.city %}{{ user.userprofile.city }}{% else %}-{% endif %}
-                        </p>
+                        <label class="form-label fw-bold">Teléfono</label>
+                        {{ form.phone_number|add_class:"form-control" }}
                     </div>
-                </div>
-
-                <div class="row mb-4">
                     <div class="col-md-6">
-                        <label class="form-label text-muted small">{% trans "Código Postal" %}</label>
-                        <p class="form-control-plaintext fw-bold">
-                            {% if user.userprofile.postal_code %}{{ user.userprofile.postal_code }}{% else %}-{% endif %}
-                        </p>
+                        <label class="form-label fw-bold">Dirección</label>
+                        {{ form.address|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Ciudad</label>
+                        {{ form.city|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Código Postal</label>
+                        {{ form.postal_code|add_class:"form-control" }}
                     </div>
                 </div>
-
-                <h5 class="fw-bold mb-3 d-flex align-items-center">
-                    <i class="bi bi-bell-fill me-2 text-primary" aria-hidden="true"></i>
-                    {% trans "Preferencias de Comunicación" %}
-                </h5>
-                <hr>
-
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div>
-                        <h6 class="mb-0">{% trans "Newsletter" %}</h6>
-                        <small class="text-muted">{% trans "Recibe noticias y ofertas especiales" %}</small>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="newsletterSwitch" {% if user.userprofile.receive_newsletter %}checked{% endif %} disabled>
-                        <label class="form-check-label visually-hidden" for="newsletterSwitch">{% trans "Newsletter" %}</label>
-                    </div>
+                <h5 class="fw-bold mt-4 mb-3">Preferencias de Comunicación</h5>
+                <div class="form-check mb-2">{{ form.receive_newsletter }} <label class="form-check-label">Newsletter</label></div>
+                <div class="form-check mb-2">{{ form.receive_adoption_alerts }} <label class="form-check-label">Alertas de Adopción</label></div>
+                <div class="form-check mb-4">{{ form.receive_product_recommendations }} <label class="form-check-label">Recomendaciones de Productos</label></div>
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                    <button type="submit" class="btn btn-outline-dark px-4" name="cancel">Cancelar</button>
                 </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div>
-                        <h6 class="mb-0">{% trans "Alertas de Adopción" %}</h6>
-                        <small class="text-muted">{% trans "Notificaciones sobre nuevas mascotas" %}</small>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="adoptionAlertsSwitch" {% if user.userprofile.receive_adoption_alerts %}checked{% endif %} disabled>
-                        <label class="form-check-label visually-hidden" for="adoptionAlertsSwitch">{% trans "Alertas de Adopción" %}</label>
-                    </div>
+            </form>
+            {% else %}
+            <div class="row mb-3">
+                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Nombre</label>
+                    <input type="text" readonly class="form-control-plaintext" value="{{ user.first_name }}">
                 </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div>
-                        <h6 class="mb-0">{% trans "Recomendaciones de Productos" %}</h6>
-                        <small class="text-muted">{% trans "Sugerecias personalizadas" %}</small>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="productRecommendationsSwitch" {% if user.userprofile.receive_product_recommendations %}checked{% endif %} disabled>
-                        <label class="form-check-label visually-hidden" for="productRecommendationsSwitch">{% trans "Recomendaciones de Productos" %}</label>
-                    </div>
+                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Apellidos</label>
+                    <input type="text" readonly class="form-control-plaintext" value="{{ user.last_name }}">
                 </div>
             </div>
-        </div>
-
-        {# Pestaña de Pedidos (Contenido futuro) #}
-        <div class="tab-pane fade" id="orders-content" role="tabpanel" aria-labelledby="orders-tab">
-            <div class="card shadow-sm border-0 rounded-3 p-4">
-                <h5 class="fw-bold mb-3">{% trans "Mis Pedidos" %}</h5>
-                <p>{% trans "Aquí verás el historial de tus pedidos." %}</p>
-                {# Contenido de pedidos irá aquí #}
+            <div class="row mb-3">
+                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Correo Electrónico</label>
+                    <input type="text" readonly class="form-control-plaintext" value="{{ user.email }}">
+                </div>
+                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Teléfono</label>
+                    <input type="text" readonly class="form-control-plaintext" value="{{ user.userprofile.phone_number }}">
+                </div>
             </div>
-        </div>
-
-        {# Pestaña de Mascotas (Contenido futuro) #}
-        <div class="tab-pane fade" id="pets-content" role="tabpanel" aria-labelledby="pets-tab">
-            <div class="card shadow-sm border-0 rounded-3 p-4">
-                <h5 class="fw-bold mb-3">{% trans "Mis Mascotas" %}</h5>
-                <p>{% trans "Aquí podrás gestionar las mascotas asociadas a tu cuenta." %}</p>
-                {# Contenido de mascotas irá aquí #}
+            <div class="row mb-3">
+                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Dirección</label>
+                    <input type="text" readonly class="form-control-plaintext" value="{{ user.userprofile.address }}">
+                </div>
+                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Ciudad</label>
+                    <input type="text" readonly class="form-control-plaintext" value="{{ user.userprofile.city }}">
+                </div>
             </div>
-        </div>
-
-        {# Pestaña de Reseñas (Contenido futuro) #}
-        <div class="tab-pane fade" id="reviews-content" role="tabpanel" aria-labelledby="reviews-tab">
-            <div class="card shadow-sm border-0 rounded-3 p-4">
-                <h5 class="fw-bold mb-3">{% trans "Mis Reseñas" %}</h5>
-                <p>{% trans "Aquí verás las reseñas que has dejado." %}</p>
-                {# Contenido de reseñas irá aquí #}
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Código Postal</label>
+                    <input type="text" readonly class="form-control-plaintext" value="{{ user.userprofile.postal_code }}">
+                </div>
             </div>
+            <h5 class="fw-bold mt-4 mb-2">Preferencias de Comunicación</h5>
+            <ul class="mb-0" style="list-style:none; padding:0;">
+                <li>
+                    <span class="fw-bold">Newsletter</span>
+                    <span class="ms-2 text-muted small">Recibe noticias y ofertas especiales</span>
+                    <input type="checkbox" disabled {% if user.userprofile.receive_newsletter %}checked{% endif %}>
+                </li>
+                <li>
+                    <span class="fw-bold">Alertas de Adopción</span>
+                    <span class="ms-2 text-muted small">Notificaciones sobre nuevas mascotas</span>
+                    <input type="checkbox" disabled {% if user.userprofile.receive_adoption_alerts %}checked{% endif %}>
+                </li>
+                <li>
+                    <span class="fw-bold">Recomendaciones de Productos</span>
+                    <span class="ms-2 text-muted small">Sugerencias personalizadas</span>
+                    <input type="checkbox" disabled {% if user.userprofile.receive_product_recommendations %}checked{% endif %}>
+                </li>
+            </ul>
+            {% endif %}
         </div>
     </div>
 </div>
-
-{# Estilo para el avatar circular del perfil #}
-<style>
-    .profile-avatar-circle {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        font-size: 1.8rem;
-        font-weight: bold;
-        text-align: center;
-    }
-</style>
 {% endblock %}
