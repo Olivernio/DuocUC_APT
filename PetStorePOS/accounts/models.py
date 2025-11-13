@@ -23,12 +23,4 @@ class UserProfile(models.Model):
 # Señales para crear/actualizar UserProfile automáticamente
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, **kwargs):
-    """
-    Crea o actualiza el UserProfile automáticamente cada vez que
-    el objeto User es guardado.
-
-    Usa get_or_create() para crear el perfil si no existe
-    (especialmente para usuarios creados ANTES de este modelo)
-    y simplemente lo obtiene si ya existe.
-    """
     UserProfile.objects.get_or_create(user=instance)

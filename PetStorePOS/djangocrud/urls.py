@@ -17,7 +17,7 @@ urlpatterns_trans = i18n_patterns(
     path("acerca/", about, name="about"), # <- path ahora está definido
     path("cart/", include("cart.urls")), # <- path ahora está definido
     path("accesibilidad/", accessibility, name="accessibility"),
-    # prefix_default_language=False # Descomenta si no quieres /es/ al inicio
+    path('captcha/', include('captcha.urls')),
 )
 
 # Define aquí las URLs que NO quieres traducir (como admin o i18n)

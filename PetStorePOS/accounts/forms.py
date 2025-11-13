@@ -3,13 +3,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import UserProfile
 import re
+from captcha.fields import CaptchaField
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text='Requiere un email válido.')
+    captcha = CaptchaField()  # <-- Nuevo campo captcha
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "email", "password1", "password2", "captcha")
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -52,13 +54,10 @@ class EditProfileForm(forms.ModelForm):
 
     def clean_email(self):
         correo = self.cleaned_data['email']
-        # Elimina la siguiente línea que obliga solo a @gmail.com
+        # Elimina la siguiente línea si quieres aceptar emails distintos a Gmail
         # if not re.match(r'^[A-Za-z0-9._%+-]+@gmail\.com$', correo):
         #     raise forms.ValidationError('El correo debe ser una cuenta de Gmail válida.')
-        # Django ya valida el formato correctamente,
-        # pero si quieres puedes agregar otros checks aquí.
         return correo
-
 
     def clean_phone_number(self):
         phone = self.cleaned_data['phone_number']
