@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "adoption",
     "cart",
     'widget_tweaks',
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [

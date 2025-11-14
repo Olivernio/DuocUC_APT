@@ -68,8 +68,7 @@
                             {{ field }}
                             {% endif %}
                         </div>
-                        {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor
-                        %}
+                        {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
                     </div>
                     {% endif %}
                     {% endfor %}

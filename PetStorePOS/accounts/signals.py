@@ -2,6 +2,10 @@ from django.contrib.auth.signals import user_logged_in #
 from django.dispatch import receiver #
 from cart.models import Cart, CartItem #
 
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from .models import UserProfile
+
 @receiver(user_logged_in) #
 def merge_session_cart_on_login(sender, request, user, **kwargs): #
     session_key = request.session.session_key #
@@ -33,3 +37,12 @@ def merge_session_cart_on_login(sender, request, user, **kwargs): #
 
     session_cart.delete() #
     print(f"Carrito de sesión fusionado para el usuario {user.username}") #
+
+# --- AÑADE ESTE CÓDIGO QUE MOVIERON DE MODELS.PY ---
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, **kwargs):
+    """
+    Crea o actualiza el UserProfile automáticamente cuando
+    un User es guardado.
+    """
+    UserProfile.objects.get_or_create(user=instance)

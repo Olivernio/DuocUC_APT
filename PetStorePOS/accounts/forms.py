@@ -3,11 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import UserProfile
 import re
-from captcha.fields import CaptchaField
+from django_recaptcha.fields import ReCaptchaField
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text='Requiere un email válido.')
-    captcha = CaptchaField()  # <-- Nuevo campo captcha
+    captcha = ReCaptchaField()  # <-- Corregido: ReCaptchaField
 
     class Meta:
         model = User

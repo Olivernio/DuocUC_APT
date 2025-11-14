@@ -17,7 +17,7 @@ urlpatterns_trans = i18n_patterns(
     path("acerca/", about, name="about"), # <- path ahora está definido
     path("cart/", include("cart.urls")), # <- path ahora está definido
     path("accesibilidad/", accessibility, name="accessibility"),
-    path('captcha/', include('captcha.urls')),
+    # path('captcha/', include('django_recaptcha.urls')),
 )
 
 # Define aquí las URLs que NO quieres traducir (como admin o i18n)

@@ -124,12 +124,8 @@
                  </a>
                  {# -------- Fin Icono Carrito -------- #}
 
-                  <a
-                    class="btn btn-dark btn-sm" {# Cambiado a oscuro para diferenciarlo #}
-                    href="{% url 'admin:index' %}"
-                  >
-                    <i class="bi bi-person-gear" aria-hidden="true"></i> Admin
-                  </a>
+                 {% comment %} Botón ADMIN {% endcomment %}
+                  {% comment %} <a class="btn btn-dark btn-sm" href="{% url 'admin:index' %}"><i class="bi bi-person-gear" aria-hidden="true"></i> Admin</a> {% endcomment %}
             </div>
         </div>
     </nav>
@@ -200,7 +196,7 @@
                              {% trans "Registrarse" %}
                          </a>
                      {% endif %}
-                     <a class="btn btn-dark btn-sm w-100 mt-2 mt-lg-0" href="{% url 'admin:index' %}"><i class="bi bi-person-gear" aria-hidden="true"></i> Admin</a>
+                     {% comment %} <a class="btn btn-dark btn-sm w-100 mt-2 mt-lg-0" href="{% url 'admin:index' %}"><i class="bi bi-person-gear" aria-hidden="true"></i> Admin</a> {% endcomment %}
                 </div>
             </div>
         </div>

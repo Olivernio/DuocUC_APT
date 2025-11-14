@@ -1,0 +1,119 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load humanize %}
+
+{% block dashboard_title %}{% trans "Punto de Venta" %}{% endblock %}
+
+{% block dashboard_head %}
+<style>
+    /* Estilos específicos para el POS */
+    .pos-product-card {
+        cursor: pointer;
+        transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    }
+    .pos-product-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.07);
+    }
+    .pos-product-card .card-body {
+        padding: 1rem;
+    }
+    .pos-product-card .product-price {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--bs-dark);
+    }
+    .pos-add-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        line-height: 1;
+    }
+    .pos-cart-body {
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{% endblock %}
+
+
+{% block dashboard_content %}
+    
+    {# -------- Cabecera del Contenido -------- #}
+    <div class="mb-4">
+        <h2 class="fw-bold mb-0">{% trans "Punto de Venta" %}</h2>
+        <p class="text-muted mb-0">{% trans "Registra ventas de forma rápida y eficiente" %}</p>
+    </div>
+
+    {# -------- Barra de Búsqueda -------- #}
+    <div class_ ="card stat-card mb-4">
+        <div class="card-body">
+            <form method="get">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                    <input type="text" name="q" class="form-control bg-light border-0" placeholder="{% trans 'Buscar producto por nombre o escanear código...' %}" value="{{ request.GET.q }}">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {# -------- Contenido Principal (Productos y Carrito) -------- #}
+    <div class="row g-4">
+        
+        {# --- Columna de Productos (Izquierda) --- #}
+        <div class="col-lg-8">
+            <div class="row g-3">
+                {% for product in products %}
+                <div class="col-md-6 col-xl-4">
+                    <div class="card pos-product-card h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold mb-0 text-dark">{{ product.name }}</h6>
+                                <small class="text-muted">{{ product.sku }}</small>
+                                <div class="product-price mt-2 mb-2">${{ product.price|floatformat:0|intcomma }}</div>
+                                <span class="badge bg-secondary bg-opacity-25 text-dark-emphasis">
+                                    Stock: {{ product.stock }}
+                                </span>
+                            </div>
+                            <div class="ms-3">
+                                {# Este botón eventualmente llamará a una función JS para agregar al carrito #}
+                                <button class="btn btn-dark pos-add-btn d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        {% trans "No se encontraron productos activos o en stock." %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# --- Columna de Carrito (Derecha) --- #}
+        <div class="col-lg-4">
+            <div class="card stat-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-cart me-2"></i>{% trans "Carrito" %} (0)
+                    </h5>
+                </div>
+                <div class="card-body pos-cart-body">
+                    <div class="text-center">
+                        <i class="bi bi-cart-x" style="font-size: 3rem; color: #ccc;"></i>
+                        <p class="text-muted mt-2">{% trans "Carrito vacío" %}</p>
+                    </div>
+                </div>
+                {# El footer del carrito se mostraría cuando haya items #}
+                </div>
+        </div>
+    </div>
+
+{% endblock %}

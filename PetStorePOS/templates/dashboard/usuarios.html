@@ -1,0 +1,248 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block dashboard_title %}{% trans "Gestión de Usuarios" %}{% endblock %}
+
+{% block dashboard_head %}
+    {# --- Corregida la ruta al CSS --- #}
+    <link rel="stylesheet" href="{% static 'css/dashboard/usuarios.css' %}" />
+{% endblock %}
+
+{% block dashboard_content %}
+    
+    {# -------- Cabecera del Contenido -------- #}
+    <div class_ ="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">{% trans "Gestión de Usuarios" %}</h2>
+            <p class="text-muted mb-0">{% trans "Administra las cuentas de usuarios, historial de compras y actividades" %}</p>
+        </div>
+        <a href="#" class="btn btn-dark">
+            <i class="bi bi-download me-1"></i> {% trans "Exportar Datos" %}
+        </a>
+    </div>
+
+    {# -------- Tarjetas de Estadísticas Globales (de la captura) -------- #}
+    <div class="row g-4 mb-4">
+        <div class="col-lg-2 col-md-4 col-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <i class="bi bi-people-fill fs-2 text-primary"></i>
+                    <div class="mt-2">
+                        <h6 class="text-muted fw-normal">{% trans "Total Usuarios" %}</h6>
+                        <h4 class="fw-bold mb-0">{{ total_users }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <i class="bi bi-person-check-fill fs-2 text-success"></i>
+                    <div class="mt-2">
+                        <h6 class="text-muted fw-normal">{% trans "Usuarios Activos" %}</h6>
+                        <h4 class="fw-bold mb-0">{{ active_users }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <i class="bi bi-box-seam fs-2 text-info"></i>
+                    <div class="mt-2">
+                        <h6 class="text-muted fw-normal">{% trans "Total Pedidos" %}</h6>
+                        <h4 class="fw-bold mb-0">{{ global_total_pedidos }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <i class="bi bi-currency-euro fs-2 text-dark"></i>
+                    <div class="mt-2">
+                        <h6 class="text-muted fw-normal">{% trans "Ingresos Totales" %}</h6>
+                        <h4 class="fw-bold mb-0">€{{ global_ingresos_totales }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <i class="bi bi-heart-fill fs-2 text-danger"></i>
+                    <div class="mt-2">
+                        <h6 class="text-muted fw-normal">{% trans "Adopciones" %}</h6>
+                        <h4 class="fw-bold mb-0">{{ global_adopciones }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <i class="bi bi-star-fill fs-2 text-warning"></i>
+                    <div class="mt-2">
+                        <h6 class="text-muted fw-normal">{% trans "Reseñas" %}</h6>
+                        <h4 class="fw-bold mb-0">{{ global_reseñas }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# -------- Contenido Principal (Dos Columnas) -------- #}
+    <div class="row g-4">
+        
+        {# --- Columna de Lista de Usuarios (Izquierda) --- #}
+        <div class="col-lg-4">
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{% trans "Lista de Usuarios" %}</h5>
+                    <small class="text-muted">{% trans "usuarios encontrados" %}</small>
+                </div>
+                <div class="card-body p-3">
+                    <form method="get" class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                            <input type="text" name="q" class="form-control bg-light border-0" placeholder="{% trans 'Buscar usuarios...' %}" value="{{ request.GET.q }}">
+                        </div>
+                    </form>
+
+                    <div class="list-group list-group-flush" style="max-height: 600px; overflow-y: auto;">
+                        {% for user in users %}
+                        <a href="?selected={{ user.pk }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" 
+                           class="list-group-item list-group-item-action {% if selected_user.pk == user.pk %}active{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <div class="user-avatar-circle bg-secondary text-white me-3">
+                                    {% if user.first_name %}{{ user.first_name|first|upper }}{% endif %}
+                                    {% if user.last_name %}{{ user.last_name|first|upper }}{% endif %}
+                                    {% if not user.first_name and not user.last_name %}{{ user.username|first|upper }}{% endif %}
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="fw-bold mb-0">{{ user.first_name|default:user.username }} {{ user.last_name }}</h6>
+                                        {% if user.is_active %}
+                                            <span class="badge bg-success">{% trans "Activo" %}</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">{% trans "Inactivo" %}</span>
+                                        {% endif %}
+                                    </div>
+                                    <small class="text-muted d-block">{{ user.email }}</small>
+                                    {# Mockup de stats - idealmente esto vendría del queryset #}
+                                    <small class="d-block mt-1">{% trans "1 pedidos" %} • {% trans "€76 gastado" %}</small>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# --- Columna de Detalles (Derecha) --- #}
+        <div class="col-lg-8">
+            {% if selected_user %}
+                {# --- VISTA DE DETALLE (image_26e928.png) --- #}
+                <div class="card chart-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="user-avatar-circle bg-secondary text-white me-3" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                                {% if selected_user.first_name %}{{ selected_user.first_name|first|upper }}{% endif %}
+                                {% if selected_user.last_name %}{{ selected_user.last_name|first|upper }}{% endif %}
+                            </div>
+                            <div class="flex-grow-1">
+                                <h4 class="fw-bold mb-0">{{ selected_user.first_name }} {{ selected_user.last_name }}</h4>
+                                <span class="text-muted">{{ selected_user.email }}</span>
+                            </div>
+                            <div>
+                                {% if selected_user.is_active %}
+                                    <span class="badge bg-success fs-6 me-2">{% trans "Activo" %}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary fs-6 me-2">{% trans "Inactivo" %}</span>
+                                {% endif %}
+                                <button class="btn btn-outline-secondary">{% trans "Desactivar" %}</button>
+                                <button class="btn btn-danger">{% trans "Eliminar" %}</button>
+                            </div>
+                        </div>
+
+                        <ul class="nav nav-tabs mb-4" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="tab-resumen" data-bs-toggle="tab" data-bs-target="#pane-resumen" type="button" role="tab">{% trans "Resumen" %}</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab-compras" data-bs-toggle="tab" data-bs-target="#pane-compras" type="button" role="tab">{% trans "Compras" %}</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab-mascotas" data-bs-toggle="tab" data-bs-target="#pane-mascotas" type="button" role="tab">{% trans "Mascotas" %}</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab-reseñas" data-bs-toggle="tab" data-bs-target="#pane-reseñas" type="button" role="tab">{% trans "Reseñas" %}</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="pane-resumen" role="tabpanel">
+                                <<div class="row">
+                                    <div class="col-md-6">
+                                        <h5>{% trans "Información Personal" %}</h5>
+                                        {# --- DATOS REALES DEL MODELO UserProfile --- #}
+                                        <p class="mb-1">
+                                            <strong class="text-muted">{% trans "Teléfono" %}:</strong> 
+                                            {{ selected_user.userprofile.phone_number|default_if_none:"No especificado" }}
+                                        </p>
+                                        <p class="mb-1">
+                                            <strong class="text-muted">{% trans "Dirección" %}:</strong> 
+                                            {{ selected_user.userprofile.address|default_if_none:"No especificada" }}
+                                        </p>
+                                        <p class="mb-1">
+                                            <strong class="text-muted">{% trans "Ciudad" %}:</strong> 
+                                            {{ selected_user.userprofile.city|default_if_none:"No especificada" }}
+                                        </p>
+                                        <p class="mb-1">
+                                            <strong class="text-muted">{% trans "C. Postal" %}:</strong> 
+                                            {{ selected_user.userprofile.postal_code|default_if_none:"N/A" }}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>{% trans "Actividad" %}</h5>
+                                        <p class="mb-1"><strong class="text-muted">{% trans "Registro" %}:</strong> {{ selected_user.date_joined|date:"d/m/Y" }}</p>
+                                        <p class="mb-1"><strong class="text-muted">{% trans "Último acceso" %}:</strong> {{ selected_user.last_login|date:"d/m/Y"|default_if_none:"Nunca" }}</p>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <h5>{% trans "Estadísticas" %}</h5>
+                                <div class="row g-3">
+                                    <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">{{ selected_user_stats.pedidos }}</h5><small>{% trans "Pedidos" %}</small></div></div>
+                                    <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">€{{ selected_user_stats.total_gastado }}</h5><small>{% trans "Total Gastado" %}</small></div></div>
+                                    <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">{{ selected_user_stats.adopciones }}</h5><small>{% trans "Adopciones" %}</small></div></div>
+                                    <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">{{ selected_user_stats.reseñas }}</h5><small>{% trans "Reseñas" %}</small></div></div>
+                                </div>
+                                <hr class="my-4">
+                                <h5>{% trans "Preferencias" %}</h5>
+                                <span class="badge {% if selected_user.userprofile.receive_newsletter %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Newsletter" %}: {% if selected_user.userprofile.receive_newsletter %}Si{% else %}No{% endif %}</span>
+                                <span class="badge {% if selected_user.userprofile.receive_adoption_alerts %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Alertas adopción" %}: {% if selected_user.userprofile.receive_adoption_alerts %}Si{% else %}No{% endif %}</span>
+                                <span class="badge {% if selected_user.userprofile.receive_product_recommendations %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Recomendaciones" %}: {% if selected_user.userprofile.receive_product_recommendations %}Si{% else %}No{% endif %}</span>
+                            </div>
+                            <div class="tab-pane fade" id="pane-compras" role="tabpanel">
+                                <p class="text-muted">{% trans "Historial de compras del usuario..." %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                {# --- VISTA VACÍA (image_26f0a8.png) --- #}
+                <div class="card chart-card">
+                    <div class="card-body d-flex align-items-center justify-content-center text-center" style="min-height: 600px;">
+                        <div>
+                            <i class="bi bi-person-bounding-box" style="font-size: 5rem; color: #ccc;"></i>
+                            <h4 class="mt-3">{% trans "Selecciona un usuario" %}</h4>
+                            <p class="text-muted">{% trans "Elige un usuario de la lista para ver su información detallada, historial de compras y actividades." %}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

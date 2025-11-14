@@ -1,0 +1,121 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block dashboard_title %}{% trans "Centro de Adopciones" %}{% endblock %}
+
+{% block dashboard_head %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/adopciones.css' %}" />
+{% endblock %}
+
+{% block dashboard_content %}
+    
+    {# -------- Cabecera del Contenido -------- #}
+    <div class="mb-4">
+        <h2 class="fw-bold mb-0">{% trans "Centro de Adopciones" %}</h2>
+        <p class="text-muted mb-0">{% trans "Encuentra su nuevo compañero peludo" %}</p>
+    </div>
+
+    {# -------- Barra de Búsqueda y Filtro -------- #}
+    <div class="card stat-card mb-4">
+        <div class="card-body d-flex flex-wrap gap-3 align-items-center">
+            
+            <form method="get" class="d-flex flex-grow-1">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                    <input type="text" name="q" class="form-control bg-light border-0" placeholder="{% trans 'Buscar por nombre o raza...' %}" value="{{ query }}">
+                </div>
+            </form>
+            
+            <div class="vr d-none d-md-block"></div>
+            
+            <form method="get" class="d-flex">
+                <select name="tipo" class="form-select bg-light border-0" onchange="this.form.submit()">
+                    <option value="">{% trans "Todas las especies" %}</option>
+                    {% for key, name in especies_disponibles %}
+                        <option value="{{ key }}" {% if key == tipo_filtrado %}selected{% endif %}>{{ name|title }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
+
+    {# -------- Tarjetas de Estadísticas (Basadas en API) -------- #}
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card stat-card h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-heart-fill fs-1 text-success me-3"></i>
+                    <div>
+                        <h6 class="text-muted fw-normal">{% trans "Disponibles" %}</h6>
+                        <h3 class="fw-bold mb-0">{{ disponibles_count }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-hourglass-split fs-1 text-secondary me-3"></i>
+                    <div>
+                        <h6 class="text-muted fw-normal">{% trans "En proceso" %}</h6>
+                        <h3 class="fw-bold mb-0">0</h3>
+                        <small class="text-muted">{% trans "(API no provee esta data)" %}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-house-heart-fill fs-1 text-secondary me-3"></i>
+                    <div>
+                        <h6 class="text-muted fw-normal">{% trans "Adoptados" %}</h6>
+                        <h3 class="fw-bold mb-0">0</h3>
+                        <small class="text-muted">{% trans "(API no provee esta data)" %}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# -------- Grilla de Mascotas (API) -------- #}
+    <div class="row g-4">
+        {% for mascota in mascotas %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card adoption-card h-100">
+                <div class="adoption-card-img-container">
+                    {% if mascota.imagen %}
+                        <img src="{{ mascota.imagen }}" alt="{{ mascota.nombre }}">
+                    {% else %}
+                        <div class="no-image-placeholder">
+                            <i class="bi bi-image-alt"></i>
+                        </div>
+                    {% endif %}
+                    <span class="badge species-badge bg-primary text-white">{{ mascota.tipo|title }}</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-1">{{ mascota.nombre }}</h5>
+                    <p class="card-text text-muted small">{{ mascota.raza|default_if_none:mascota.tipo|title }} • {{ mascota.edad }}</p>
+                    <p class="card-text small flex-grow-1">{{ mascota.desc_personalidad|truncatewords:20 }}</p>
+                    
+                    <div class="d-flex gap-2 mt-auto pt-3 border-top">
+                        {# Los botones ahora apuntan a la vista pública de 'adoption' #}
+                        <a href="{% url 'adoption:mascota_detail' mascota.id %}" class="btn btn-outline-secondary w-50">{% trans "Ver detalles" %}</a>
+                        <a href="{{ mascota.url }}" target="_blank" class="btn btn-dark w-50">{% trans "Adoptar" %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center py-4">
+                <i class="bi bi-search-heart fs-1"></i>
+                <h4 class="mt-3">{% trans "No se encontraron mascotas" %}</h4>
+                <p class="text-muted mb-0">{% trans "No hay mascotas que coincidan con los filtros de búsqueda actuales en la API." %}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

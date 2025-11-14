@@ -1,5 +1,5 @@
-from captcha.fields import ReCaptchaField            # django‑recaptcha 3.x
-from captcha.widgets import ReCaptchaV2Checkbox      # v2 Checkbox por defecto
+from django_recaptcha.fields import ReCaptchaField            # django‑recaptcha 3.x
+from django_recaptcha.widgets import ReCaptchaV2Checkbox      # v2 Checkbox por defecto
 
 from django import forms
 from django.core.exceptions import ValidationError

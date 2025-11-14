@@ -1,19 +1,43 @@
 from django.urls import path
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.views.generic import TemplateView
-app_name= "dashboard"
+from . import views 
+from django.contrib.auth.decorators import login_required, user_passes_test 
 
-#Con esta Funcion es que solo usuario que tenga staff puedan entrar
-staff_required = user_passes_test(lambda u: u.is_staff)
+app_name = "dashboard"
 
 urlpatterns = [
+    # Dashboard principal
     path(
-        "",
-        staff_required(  # verifica que sea staff
-            login_required(  # verifica que esté logeado
-                TemplateView.as_view(template_name="dashboard/index.html")
-            )
-        ),
-        name="index",
+        "", 
+        views.index, 
+        name="index"
     ),
+    
+    # Dashboard de Inventario
+    path(
+        "inventario/", 
+        login_required(user_passes_test(lambda u: u.is_staff)(views.DashboardInventoryListView.as_view())), 
+        name="inventario"
+    ),
+    
+    # Dashboard de Adopciones (API)
+    path(
+        "adopciones/", 
+        views.dashboard_adopciones_api_view,
+        name="adopciones"
+    ),
+    
+    # Dashboard de Punto de Venta (POS)
+    path(
+        "pos/", 
+        login_required(user_passes_test(lambda u: u.is_staff)(views.DashboardPOSView.as_view())), 
+        name="pos"
+    ),
+
+    # --- AÑADE ESTA URL PARA GESTIÓN DE USUARIOS ---
+    path(
+        "usuarios/", 
+        login_required(user_passes_test(lambda u: u.is_staff)(views.DashboardUserListView.as_view())), 
+        name="usuarios"
+    ),
+    # --- FIN DE LA URL AÑADIDA ---
 ]

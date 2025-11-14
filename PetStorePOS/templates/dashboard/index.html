@@ -1,0 +1,178 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load humanize %}
+
+{% block dashboard_title %}{% trans "Resumen General" %}{% endblock %}
+
+{% block dashboard_content %}
+    
+    {# -------- Cabecera del Contenido -------- #}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">{% trans "Resumen general del sistema" %}</h2>
+            <p class="text-muted mb-0">{% now "j F, Y" %}</p>
+        </div>
+    </div>
+
+    {# -------- Fila 1: Tarjetas de Estadísticas -------- #}
+    <div class="row g-4 mb-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <div>
+                        <h6 class="text-muted fw-normal">{% trans "Ventas del Mes" %}</h6>
+                        <h3 class="fw-bold mb-0">${{ 720000|intcomma }}</h3>
+                        <small class="text-success"><i class="bi bi-arrow-up"></i> 15.3%</small>
+                    </div>
+                    <div class="stat-icon bg-success bg-opacity-10">
+                        <i class="bi bi-currency-dollar text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <div>
+                        <h6 class="text-muted fw-normal">{% trans "Productos Vendidos" %}</h6>
+                        <h3 class="fw-bold mb-0">200</h3>
+                        <small class="text-success"><i class="bi bi-arrow-up"></i> 8.2%</small>
+                    </div>
+                    <div class="stat-icon bg-primary bg-opacity-10">
+                        <i class="bi bi-box-seam text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <div>
+                        <h6 class="text-muted fw-normal">{% trans "Stock Bajo" %}</h6>
+                        <h3 class="fw-bold mb-0">12</h3>
+                        <small class="text-danger"><i class="bi bi-arrow-down"></i> -2</small>
+                    </div>
+                    <div class="stat-icon bg-warning bg-opacity-10">
+                        <i class="bi bi-exclamation-triangle text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <div>
+                        <h6 class="text-muted fw-normal">{% trans "Adopciones" %}</h6>
+                        <h3 class="fw-bold mb-0">8</h3>
+                        <small class="text-success"><i class="bi bi-arrow-up"></i> +4</small>
+                    </div>
+                    <div class="stat-icon bg-danger bg-opacity-10">
+                        <i class="bi bi-heart text-danger"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# -------- Fila 2: Gráficos -------- #}
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+            <div class="card chart-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Ventas por Mes" %}</h5>
+                    <div class="d-flex align-items-center justify-content-center bg-light" style="min-height: 300px;">
+                        <p class="text-muted">{% trans "Aquí iría el Gráfico de Barras (requiere JS)" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card chart-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Distribución por Categoría" %}</h5>
+                    <div class="d-flex align-items-center justify-content-center bg-light" style="min-height: 300px;">
+                        <p class="text-muted">{% trans "Aquí iría el Gráfico de Torta (requiere JS)" %}</p>
+                    </div>
+                    <div class="mt-3">
+                        <p class="d-flex justify-content-between mb-1"><span class="text-primary"><i class="bi bi-circle-fill me-2"></i>{% trans "Alimentos" %}</span> <strong>45%</strong></p>
+                        <p class="d-flex justify-content-between mb-1"><span class="text-success"><i class="bi bi-circle-fill me-2"></i>{% trans "Medicamentos" %}</span> <strong>25%</strong></p>
+                        <p class="d-flex justify-content-between mb-1"><span class="text-warning"><i class="bi bi-circle-fill me-2"></i>{% trans "Accesorios" %}</span> <strong>30%</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# -------- Fila 3: Listas de Detalles -------- #}
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card chart-card">
+                <div class="card-header"><h5 class="card-title mb-0">{% trans "Ventas Recientes" %}</h5></div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">{% trans "Alimento Premium Perros" %}</h6>
+                            <small class="text-muted">10:30 AM</small>
+                        </div>
+                        <span class="fw-bold">$45.000</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">{% trans "Collar Reflectivo" %}</h6>
+                            <small class="text-muted">11:15 AM</small>
+                        </div>
+                        <span class="fw-bold">$12.000</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">{% trans "Vitaminas para Aves" %}</h6>
+                            <small class="text-muted">12:00 PM</small>
+                        </div>
+                        <span class="fw-bold">$8.500</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">{% trans "Antiparasitario Gatos" %}</h6>
+                            <small class="text-muted">02:30 PM</small>
+                        </div>
+                        <span class="fw-bold">$18.000</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card chart-card">
+                <div class="card-header"><h5 class="card-title mb-0 text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>{% trans "Stock Bajo" %}</h5></div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">{% trans "Antiparasitario Gatos" %}</h6>
+                            <small class="text-muted">{% trans "Mínimo requerido" %}: 10</small>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">5 {% trans "unidades" %}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">{% trans "Vitaminas para Aves" %}</h6>
+                            <small class="text-muted">{% trans "Mínimo requerido" %}: 15</small>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">8 {% trans "unidades" %}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">{% trans "Juguete Interactivo" %}</h6>
+                            <small class="text-muted">{% trans "Mínimo requerido" %}: 10</small>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">3 {% trans "unidades" %}</span>
+                    </li>
+                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">...</h6>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

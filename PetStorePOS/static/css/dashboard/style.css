@@ -1,0 +1,117 @@
+/* Estilo para el layout del Dashboard */
+.dashboard-body {
+    display: flex;
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1rem;
+}
+
+.sidebar-header .navbar-brand {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.sidebar-user {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+}
+
+.sidebar-nav .nav-item {
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-nav .nav-link {
+    color: #555;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.sidebar-nav .nav-link i {
+    font-size: 1.1rem;
+}
+
+.sidebar-nav .nav-link:hover {
+    background-color: #f0f0f0;
+    color: #111;
+}
+
+.sidebar-nav .nav-link.active {
+    background-color: #eef2ff;
+    color: #435ebe;
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.sidebar-footer .nav-link {
+    color: #555;
+    font-weight: 500;
+}
+.sidebar-footer .nav-link:hover {
+    color: #d9534f;
+}
+
+
+/* Contenido principal */
+.main-content {
+    margin-left: 260px; /* Mismo ancho que .sidebar */
+    flex-grow: 1;
+    padding: 2rem;
+    width: calc(100% - 260px);
+}
+
+/* Estilos para las tarjetas del dashboard */
+.stat-card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.stat-card .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-card .stat-icon {
+    font-size: 2.5rem;
+    padding: 1rem;
+    border-radius: 50%;
+    color: white;
+}
+
+.chart-card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
