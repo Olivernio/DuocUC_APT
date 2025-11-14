@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "adoption",
     "cart",
+    "orders",
     'widget_tweaks',
     'django_recaptcha',
 ]

@@ -37,32 +37,82 @@
     {% endif %}
   </div>
 
-  {# BARRA DE FILTRO Y BUSQUEDA (usuario) #}
+  {# BARRA DE FILTRO Y BUSQUEDA AVANZADA (usuario) #}
   {% if not request.user.is_staff %}
-  <form method="get" class="row g-2 align-items-end mb-4 bg-light p-3 rounded border shadow-sm"> {# Mejorado estilo #}
-    <div class="col-sm-6 col-md-4">
-       <label for="q_search" class="form-label small fw-bold">{% trans "Buscar:" %}</label> {# Añadido label #}
-      <input type="text" class="form-control" id="q_search" name="q" placeholder="{% trans 'Buscar por nombre, SKU...' %}" value="{{ request.GET.q }}">
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-light">
+      <h5 class="mb-0"><i class="bi bi-search me-2"></i>{% trans "Búsqueda Avanzada" %}</h5>
     </div>
-    <div class="col-sm-6 col-md-4">
-       <label for="cat_select" class="form-label small fw-bold">{% trans "Categoría:" %}</label> {# Añadido label #}
-      <select name="cat" id="cat_select" class="form-select">
-        <option value="">{% trans "Todas" %}</option>
-        {% for c in categories %}
-             {# Aseguramos comparación correcta de string con string #}
-            <option value="{{ c.pk }}" {% if c.pk|stringformat:"s" == category_selected %}selected{% endif %}>{{ c.name }}</option>
-        {% endfor %}
-    </select>
+    <div class="card-body">
+      <form method="get" action="{% url 'catalog:product_list' %}">
+        <div class="row g-3">
+          <!-- Búsqueda de texto -->
+          <div class="col-md-4">
+            <label for="{{ form.search.id_for_label }}" class="form-label">{{ form.search.label }}</label>
+            {{ form.search }}
+          </div>
+          
+          <!-- Categoría -->
+          <div class="col-md-2">
+            <label for="{{ form.category.id_for_label }}" class="form-label">{{ form.category.label }}</label>
+            {{ form.category }}
+          </div>
+          
+          <!-- Precio mínimo -->
+          <div class="col-md-2">
+            <label for="{{ form.min_price.id_for_label }}" class="form-label">{{ form.min_price.label }}</label>
+            {{ form.min_price }}
+          </div>
+          
+          <!-- Precio máximo -->
+          <div class="col-md-2">
+            <label for="{{ form.max_price.id_for_label }}" class="form-label">{{ form.max_price.label }}</label>
+            {{ form.max_price }}
+          </div>
+          
+          <!-- Disponibilidad -->
+          <div class="col-md-2">
+            <label class="form-label d-block">{% trans "Filtros" %}</label>
+            <div class="form-check mt-2">
+              {{ form.in_stock }}
+              <label class="form-check-label" for="{{ form.in_stock.id_for_label }}">
+                {{ form.in_stock.label }}
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row g-3 mt-2">
+          <!-- Ordenamiento -->
+          <div class="col-md-4">
+            <label for="{{ form.order_by.id_for_label }}" class="form-label">{{ form.order_by.label }}</label>
+            {{ form.order_by }}
+          </div>
+          
+          <!-- Botones -->
+          <div class="col-md-8 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary me-2">
+              <i class="bi bi-search me-1"></i>{% trans "Buscar" %}
+            </button>
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary" title="{% trans 'Limpiar filtros' %}">
+              <i class="bi bi-x-lg me-1"></i>{% trans "Limpiar" %}
+            </a>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary"> {# Cambiado a primary #}
-          <i class="bi bi-funnel me-1"></i>{% trans "Filtrar" %}
-      </button>
-       <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary ms-1" title="{% trans 'Limpiar filtros' %}">
-           <i class="bi bi-x-lg" aria-hidden="true"></i>
-       </a>
-    </div>
-  </form>
+  </div>
+  
+  <!-- Mostrar resultados de búsqueda -->
+  {% if search_query %}
+  <div class="alert alert-info mb-3">
+    <i class="bi bi-info-circle me-2"></i>
+    {% trans "Resultados para" %}: <strong>"{{ search_query }}"</strong>
+    {% if category_selected %}
+      | {% trans "Categoría" %}: <strong>{{ category_selected }}</strong>
+    {% endif %}
+  </div>
+  {% endif %}
   {% endif %}
 
   <div class="row g-4">
@@ -154,6 +204,43 @@
       </div>
     {% endfor %}
   </div>
+
+  {# Paginación #}
+  {% if is_paginated %}
+  <nav aria-label="{% trans 'Paginación de productos' %}" class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.in_stock %}&in_stock={{ request.GET.in_stock }}{% endif %}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">
+          <i class="bi bi-chevron-left"></i> {% trans "Anterior" %}
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">{% trans "Anterior" %}</span>
+      </li>
+      {% endif %}
+      
+      <li class="page-item active">
+        <span class="page-link">
+          {% trans "Página" %} {{ page_obj.number }} {% trans "de" %} {{ page_obj.paginator.num_pages }}
+        </span>
+      </li>
+      
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.in_stock %}&in_stock={{ request.GET.in_stock }}{% endif %}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">
+          {% trans "Siguiente" %} <i class="bi bi-chevron-right"></i>
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">{% trans "Siguiente" %}</span>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
 
 {# Cierre del <main> que está en base.html #}
 {% endblock %}

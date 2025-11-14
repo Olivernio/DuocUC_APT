@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load i18n %}
+
+{% block title %}{% trans "Gestión de Pedidos - Admin" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">{% trans "Gestión de Pedidos" %}</h2>
+        <a href="{% url 'dashboard:index' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>{% trans "Volver al Dashboard" %}
+        </a>
+    </div>
+    
+    # Estadisticas 
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-title">
+                    <h5 class="card-title">{% trans "Total de Pedidos" %}</h5>
+                    <h2>{{ total_orders }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Pendientes" %}</h5>
+                <h2>{{ pending_orders }}</h2>
+            </div>
+        </div>
+    </div>
+     <div class="col-md-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Confirmadas" %}</h5>
+                    <h2>{{ confirmed_orders }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Filtros -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label for="status" class="form-label">{% trans "Filtrar por Estado" %}</label>
+                    <select name="status" id="status" class="form-select">
+                        <option value="">{% trans "Todos los estados" %}</option>
+                        {% for status_code, status_name in status_choices %}
+                        <option value="{{ status_code }}" {% if status_filter == status_code %}selected{% endif %}>
+                            {{ status_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2">
+                        <i class="bi bi-funnel me-1"></i>{% trans "Filtrar" %}
+                    </button>
+                    <a href="{% url 'orders:admin_order_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle me-1"></i>{% trans "Limpiar" %}
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Tabla de Pedidos -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% if orders %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>{% trans "Número" %}</th>
+                            <th>{% trans "Usuario" %}</th>
+                            <th>{% trans "Fecha" %}</th>
+                            <th>{% trans "Estado" %}</th>
+                            <th class="text-end">{% trans "Total" %}</th>
+                            <th class="text-center">{% trans "Acciones" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td><strong>#{{ order.order_number }}</strong></td>
+                            <td>{{ order.user.username }}</td>
+                            <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                <span class="badge 
+                                    {% if order.status == 'PENDING' %}bg-warning
+                                    {% elif order.status == 'CONFIRMED' %}bg-info
+                                    {% elif order.status == 'PROCESSING' %}bg-primary
+                                    {% elif order.status == 'SHIPPED' %}bg-secondary
+                                    {% elif order.status == 'DELIVERED' %}bg-success
+                                    {% elif order.status == 'CANCELLED' %}bg-danger
+                                    {% endif %}">
+                                    {{ order.get_status_display }}
+                                </span>
+                            </td>
+                            <td class="text-end fw-bold">${{ order.total|floatformat:0|intcomma }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'orders:admin_order_detail' order.id %}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-eye me-1"></i>{% trans "Ver" %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center">
+                <i class="bi bi-inbox display-1 text-primary"></i>
+                <h4 class="alert-heading mt-3">{% trans "No hay pedidos" %}</h4>
+                <p>{% trans "No se encontraron pedidos con los filtros seleccionados." %}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

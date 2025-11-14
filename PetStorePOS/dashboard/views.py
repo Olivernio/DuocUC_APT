@@ -19,11 +19,91 @@ from accounts.models import UserProfile
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def index(request):
+    """
+    Dashboard principal con estadísticas reales calculadas desde la base de datos.
+    """
+    from datetime import datetime
+    from orders.models import Order, OrderItem, OrderStatus
+    
+    # Obtener el primer día del mes actual
+    today = datetime.now()
+    first_day_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    
+    # 1. VENTAS DEL MES ACTUAL (suma de todas las órdenes confirmadas/entregadas)
+    try:
+        sales_this_month = Order.objects.filter(
+            created_at__gte=first_day_month,  # Desde el primer día del mes
+            status__in=[
+                OrderStatus.CONFIRMED,
+                OrderStatus.PROCESSING,
+                OrderStatus.SHIPPED,
+                OrderStatus.DELIVERED
+            ]
+        ).aggregate(total=Sum('total'))['total'] or 0
+    except Exception as e:
+        # Si hay error (por ejemplo, si no existe la tabla), usar 0
+        sales_this_month = 0
+        if request.user.is_staff and request.user.is_superuser:
+            print(f"Error calculando ventas: {e}")
+    
+    # 2. PRODUCTOS VENDIDOS ESTE MES (suma de cantidades de OrderItems)
+    try:
+        products_sold_this_month = OrderItem.objects.filter(
+            order__created_at__gte=first_day_month,
+            order__status__in=[
+                OrderStatus.CONFIRMED,
+                OrderStatus.PROCESSING,
+                OrderStatus.SHIPPED,
+                OrderStatus.DELIVERED
+            ]
+        ).aggregate(total=Sum('quantity'))['total'] or 0
+    except Exception as e:
+        products_sold_this_month = 0
+        if request.user.is_staff and request.user.is_superuser:
+            print(f"Error calculando productos vendidos: {e}")
+    
+    # 3. STOCK BAJO (ya lo tenías, pero lo mantenemos)
+    stock_bajo = Product.objects.filter(stock__lte=10, is_active=True).count()
+    
+    # 4. ADOPCIONES (ya lo tenías)
+    adopciones_count = Mascota.objects.filter(Estado=EstadoMascota.Adoptado).count()
+    
+    # 5. PRODUCTOS MÁS VENDIDOS (top 5 para mostrar en el dashboard)
+    try:
+        top_products = OrderItem.objects.values(
+            'product__name',  # Nombre del producto
+            'product__sku'    # SKU del producto
+        ).annotate(
+            total_sold=Sum('quantity')  # Suma las cantidades
+        ).order_by('-total_sold')[:5]  # Ordena descendente, toma 5
+    except Exception as e:
+        top_products = []
+        if request.user.is_staff and request.user.is_superuser:
+            print(f"Error calculando top productos: {e}")
+    
+    # 6. ÓRDENES RECIENTES (últimas 5 órdenes)
+    try:
+        recent_orders = Order.objects.select_related('user').order_by('-created_at')[:5]
+    except Exception as e:
+        recent_orders = []
+        if request.user.is_staff and request.user.is_superuser:
+            print(f"Error obteniendo órdenes recientes: {e}")
+    
+    # 7. PRODUCTOS CON STOCK BAJO (lista completa, no solo el count)
+    low_stock_products = Product.objects.filter(
+        stock__lte=10,
+        is_active=True
+    ).order_by('stock')[:10]  # Los 10 con menos stock
+    
     context = {
-        'ventas_mes': 720000,
-        'productos_vendidos': 200,
-        'stock_bajo': Product.objects.filter(stock__lte=10, is_active=True).count(),
-        'adopciones_count': Mascota.objects.filter(Estado=EstadoMascota.Adoptado).count()
+        'ventas_mes': sales_this_month,
+        'productos_vendidos': products_sold_this_month,
+        'stock_bajo': stock_bajo,
+        'adopciones_count': adopciones_count,
+        'top_products': top_products,
+        'recent_orders': recent_orders,
+        'low_stock_products': low_stock_products,
+        'month_name': today.strftime('%B %Y'),  # Nombre del mes para mostrar
     }
     return render(request, "dashboard/index.html", context)
 
