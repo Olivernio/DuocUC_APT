@@ -12,7 +12,18 @@ from .forms import CheckoutForm
 
 @login_required
 def checkout_view(request):
-
+    """
+    Vista de checkout: muestra el formulario y procesa la orden.
+    
+    ¿Qué hace?
+    1. Verifica que el usuario tenga productos en el carrito
+    2. Muestra el formulario de checkout
+    3. Valida el stock antes de crear la orden
+    4. Crea la orden y los OrderItems
+    5. Reduce el stock de los productos
+    6. Limpia el carrito
+    7. Redirige a la confirmación
+    """
     cart = get_or_create_cart(request)
     
     # Verificar que el carrito no esté vacío
@@ -75,6 +86,15 @@ def checkout_view(request):
                     
                     # Limpiar el carrito
                     cart.items.all().delete()
+                
+                # Crear notificación para el usuario
+                try:
+                    from accounts.utils import notify_order_created
+                    notify_order_created(request.user, order)
+                except Exception as e:
+                    # Si hay error al crear notificación, no fallar la orden
+                    if request.user.is_staff:
+                        print(f"Error creando notificación: {e}")
                 
                 # Si todo salió bien, redirigir a confirmación
                 messages.success(
@@ -189,6 +209,16 @@ def admin_order_detail_view(request, order_id):
             old_status = order.status
             order.status = new_status
             order.save()
+            
+            # Crear notificación para el usuario dueño de la orden
+            try:
+                from accounts.utils import notify_order_updated
+                notify_order_updated(order.user, order, old_status, new_status)
+            except Exception as e:
+                # Si hay error al crear notificación, no fallar el cambio de estado
+                if request.user.is_staff:
+                    print(f"Error creando notificación: {e}")
+            
             messages.success(
                 request, 
                 _("Estado de la orden #{} cambiado de {} a {}").format(

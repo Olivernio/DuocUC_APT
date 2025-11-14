@@ -160,20 +160,40 @@
                 </a>
               </div>
             {% else %}
-              {# -------- Botón Añadir al Carrito para usuarios normales (Corregido) -------- #}
-              <form action="{% url 'cart:add_to_cart' p.id %}" method="post" class="mt-auto pt-2 border-top">
-                  {% csrf_token %}
-                  {% if p.stock > 0 and p.is_active %}
-                      <button type="submit" class="btn btn-dark w-100">
-                          <i class="bi bi-cart-plus me-1" aria-hidden="true"></i>{% trans "Añadir al Carrito" %}
-                      </button>
-                  {% else %}
-                      <button type="button" class="btn btn-outline-secondary w-100 disabled" aria-disabled="true">
-                          <i class="bi bi-x-circle me-1" aria-hidden="true"></i>{% trans "Agotado" %}
-                      </button>
-                  {% endif %}
-              </form>
-              {# -------- Fin Botón Añadir al Carrito -------- #}
+              {# -------- Botones para usuarios normales -------- #}
+              <div class="mt-auto pt-2 border-top">
+                {# Botón de Favorito #}
+                {% if user.is_authenticated %}
+                <div class="mb-2">
+                  <a href="{% url 'accounts:toggle_favorite' p.id %}" 
+                     class="btn btn-sm w-100 {% if p.id in favorite_ids %}btn-danger{% else %}btn-outline-danger{% endif %}" 
+                     id="favorite-btn-{{ p.id }}"
+                     title="{% if p.id in favorite_ids %}{% trans 'Quitar de favoritos' %}{% else %}{% trans 'Agregar a favoritos' %}{% endif %}">
+                    <i class="bi {% if p.id in favorite_ids %}bi-heart-fill{% else %}bi-heart{% endif %}" aria-hidden="true"></i>
+                    {% if p.id in favorite_ids %}
+                      {% trans "En Favoritos" %}
+                    {% else %}
+                      {% trans "Agregar a Favoritos" %}
+                    {% endif %}
+                  </a>
+                </div>
+                {% endif %}
+                
+                {# Botón Añadir al Carrito #}
+                <form action="{% url 'cart:add_to_cart' p.id %}" method="post">
+                    {% csrf_token %}
+                    {% if p.stock > 0 and p.is_active %}
+                        <button type="submit" class="btn btn-dark w-100">
+                            <i class="bi bi-cart-plus me-1" aria-hidden="true"></i>{% trans "Añadir al Carrito" %}
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn btn-outline-secondary w-100 disabled" aria-disabled="true">
+                            <i class="bi bi-x-circle me-1" aria-hidden="true"></i>{% trans "Agotado" %}
+                        </button>
+                    {% endif %}
+                </form>
+              </div>
+              {# -------- Fin Botones -------- #}
             {% endif %}
           </div>
         </div>

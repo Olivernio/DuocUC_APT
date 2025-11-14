@@ -1,15 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
+from django.http import JsonResponse
+from django.utils.translation import gettext_lazy as _
 from formtools.wizard.views import SessionWizardView
 from core.forms import PersonalInfoForm, ContactDataForm, PreferencesForm
 from .forms import CustomUserCreationForm, EditProfileForm
 from cart.models import Cart
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
+from catalog.models import Product
 
 # Lista de formularios usados en el wizard y su orden lógico
 FORMS = [
@@ -149,3 +152,91 @@ def profile_view(request):
         "edit_mode": edit_mode,
     }
     return render(request, "accounts/profile.html", context)
+
+
+#Esto sirve para poder agregar o quitar productos a favoritos o si ya esta , lo podra quitar o agregar , pocas palabras 
+# AGREGA | QUITA | 
+@login_required
+def toggle_favorite(request, product_id):
+
+    product = get_object_or_404(Product, id=product_id)
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    
+    # Verificar si el producto ya está en favoritos
+    if product in user_profile.favorite_products.all():
+        # Quitar de favoritos
+        user_profile.favorite_products.remove(product)
+        is_favorite = False
+        message = _("Producto removido de favoritos")
+    else:
+        # Agregar a favoritos
+        user_profile.favorite_products.add(product)
+        is_favorite = True
+        message = _("Producto agregado a favoritos")
+    
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'is_favorite': is_favorite,
+            'message': str(message),
+            'favorites_count': user_profile.favorite_products.count()
+        })
+    
+    messages.success(request, message)
+    return redirect(request.META.get('HTTP_REFERER', 'catalog:product_list'))
+
+
+#Muestra la lista o las cosas que marco el usuario como favoritas
+@login_required
+def favorites_list(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    favorites = user_profile.favorite_products.filter(is_active=True)
+    
+    context = {
+        'favorites': favorites,
+        'favorites_count': favorites.count(),
+    }
+    return render(request, 'accounts/favorites.html', context)
+
+#mostrara las notifacaciones al usuario
+@login_required
+def notifications_list(request):
+    from .models import Notification
+    
+    notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
+    unread_count = notifications.filter(is_read=False).count()
+    
+    context = {
+        'notifications': notifications,
+        'unread_count': unread_count,
+    }
+    return render(request, 'accounts/notifications.html', context)
+
+
+#Marca una notificacion leida si no me equivoco manual o automatica
+@login_required
+def mark_notification_read(request, notification_id):
+    from .models import Notification
+    
+    notification = get_object_or_404(Notification, id=notification_id, user=request.user)
+    notification.is_read = True
+    notification.save()
+    
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'success': True})
+    
+    messages.success(request, _("Notificación marcada como leída"))
+    return redirect('accounts:notifications')
+
+
+#Este def funciona principalmente para marcas todas las notificaciones del usuario como leidas o cosas asi.
+@login_required
+def mark_all_notifications_read(request):
+    from .models import Notification
+    
+    Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
+    
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'success': True})
+    
+    messages.success(request, _("Todas las notificaciones han sido marcadas como leídas"))
+    return redirect('accounts:notifications')

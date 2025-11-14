@@ -88,6 +88,18 @@ class ProductListView(ListView):
         context['search_query'] = self.request.GET.get('search', '').strip()
         context['category_selected'] = self.request.GET.get('category') or self.request.GET.get('cat', '')
         
+        # Obtener favoritos del usuario (si está autenticado)
+        if self.request.user.is_authenticated:
+            try:
+                from accounts.models import UserProfile
+                user_profile, created = UserProfile.objects.get_or_create(user=self.request.user)
+                favorite_ids = list(user_profile.favorite_products.values_list('id', flat=True))
+                context['favorite_ids'] = favorite_ids
+            except:
+                context['favorite_ids'] = []
+        else:
+            context['favorite_ids'] = []
+        
         return context
 
 
