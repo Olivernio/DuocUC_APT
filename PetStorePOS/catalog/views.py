@@ -1,10 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .models import Product, Category
-from .forms import ProductForm, ProductSearchForm
+from django.utils.translation import gettext_lazy as _
+from .models import Product, Category, ProductReview
+from .forms import ProductForm, ProductSearchForm, ReviewForm
 
 
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -119,3 +123,97 @@ class ProductDeleteView(DeleteView):
     model = Product
     template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy("catalog:product_list")
+
+
+class ProductDetailView(DetailView):
+    """
+    Vista para mostrar el detalle de un producto con sus reseñas.
+    """
+    model = Product
+    template_name = 'catalog/product_detail.html'
+    context_object_name = 'product'
+    
+    def get_context_data(self, **kwargs):
+        """
+        Agrega información sobre reseñas al contexto.
+        """
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        
+        # Reseñas aprobadas (ordenadas por fecha, más recientes primero)
+        context['reviews'] = product.reviews.filter(is_approved=True).order_by('-created_at')
+        
+        # Promedio de calificaciones y total de reseñas
+        context['average_rating'] = product.get_average_rating()
+        context['total_reviews'] = product.get_total_reviews()
+        
+        # Verificar si el usuario puede dejar una reseña
+        context['can_review'] = False
+        if self.request.user.is_authenticated:
+            # Verificar si el usuario ha comprado el producto
+            from orders.models import OrderItem
+            has_purchased = OrderItem.objects.filter(
+                order__user=self.request.user,
+                product=product
+            ).exists()
+            
+            # Verificar si ya dejó una reseña
+            has_reviewed = product.reviews.filter(user=self.request.user).exists()
+            
+            # Solo puede reseñar si compró el producto y no ha reseñado antes
+            context['can_review'] = has_purchased and not has_reviewed
+        
+        # Formulario de reseña (para mostrar en el template)
+        context['review_form'] = ReviewForm()
+        
+        return context
+
+
+@login_required
+def create_review(request, product_id):
+    """
+    Vista para crear una reseña de un producto.
+    Solo usuarios que hayan comprado el producto pueden reseñarlo.
+    """
+    product = get_object_or_404(Product, id=product_id)
+    
+    # Verificar que el usuario haya comprado el producto
+    from orders.models import OrderItem
+    has_purchased = OrderItem.objects.filter(
+        order__user=request.user,
+        product=product
+    ).exists()
+    
+    if not has_purchased:
+        messages.error(request, _("Debes haber comprado este producto para poder reseñarlo."))
+        return redirect('catalog:product_detail', pk=product.id)
+    
+    # Verificar si ya dejó una reseña
+    if ProductReview.objects.filter(product=product, user=request.user).exists():
+        messages.warning(request, _("Ya has dejado una reseña para este producto."))
+        return redirect('catalog:product_detail', pk=product.id)
+    
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.is_approved = False  # Requiere aprobación del administrador
+            review.save()
+            
+            messages.success(request, _("Tu reseña ha sido enviada y será revisada por un administrador antes de publicarse."))
+            return redirect('catalog:product_detail', pk=product.id)
+    else:
+        form = ReviewForm()
+    
+    # Si hay errores, mostrar el formulario nuevamente
+    context = {
+        'product': product,
+        'review_form': form,
+        'reviews': product.reviews.filter(is_approved=True).order_by('-created_at'),
+        'average_rating': product.get_average_rating(),
+        'total_reviews': product.get_total_reviews(),
+        'can_review': True,  # Ya verificamos que puede reseñar
+    }
+    return render(request, 'catalog/product_detail.html', context)

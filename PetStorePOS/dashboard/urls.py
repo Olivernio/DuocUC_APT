@@ -40,4 +40,21 @@ urlpatterns = [
         name="usuarios"
     ),
     # --- FIN DE LA URL AÑADIDA ---
+    
+    # URLs para exportación a CSV
+    path(
+        "exportar/productos/",
+        views.export_products_csv,
+        name="export_products_csv"
+    ),
+    path(
+        "exportar/pedidos/",
+        views.export_orders_csv,
+        name="export_orders_csv"
+    ),
+    path(
+        "exportar/usuarios/",
+        views.export_users_csv,
+        name="export_users_csv"
+    ),
 ]

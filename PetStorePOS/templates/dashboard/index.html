@@ -1,6 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% load i18n %}
 {% load humanize %}
+{% load static %}
 
 {% block dashboard_title %}{% trans "Resumen General" %}{% endblock %}
 
@@ -12,6 +13,22 @@
             <h2 class="fw-bold mb-0">{% trans "Resumen general del sistema" %}</h2>
             <p class="text-muted mb-0">{% now "j F, Y" %}</p>
         </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-download me-1"></i>{% trans "Exportar Datos" %}
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'dashboard:export_products_csv' %}">
+                    <i class="bi bi-box-seam me-2"></i>{% trans "Exportar Productos" %}
+                </a></li>
+                <li><a class="dropdown-item" href="{% url 'dashboard:export_orders_csv' %}">
+                    <i class="bi bi-cart-check me-2"></i>{% trans "Exportar Pedidos" %}
+                </a></li>
+                <li><a class="dropdown-item" href="{% url 'dashboard:export_users_csv' %}">
+                    <i class="bi bi-people me-2"></i>{% trans "Exportar Usuarios" %}
+                </a></li>
+            </ul>
+        </div>
     </div>
 
     {# -------- Fila 1: Tarjetas de Estadísticas -------- #}
@@ -21,8 +38,8 @@
                 <div class="card-body">
                     <div>
                         <h6 class="text-muted fw-normal">{% trans "Ventas del Mes" %}</h6>
-                        <h3 class="fw-bold mb-0">${{ 720000|intcomma }}</h3>
-                        <small class="text-success"><i class="bi bi-arrow-up"></i> 15.3%</small>
+                        <h3 class="fw-bold mb-0">${{ ventas_mes|floatformat:0|intcomma }}</h3>
+                        <small class="text-muted">{{ month_name }}</small>
                     </div>
                     <div class="stat-icon bg-success bg-opacity-10">
                         <i class="bi bi-currency-dollar text-success"></i>
@@ -35,8 +52,8 @@
                 <div class="card-body">
                     <div>
                         <h6 class="text-muted fw-normal">{% trans "Productos Vendidos" %}</h6>
-                        <h3 class="fw-bold mb-0">200</h3>
-                        <small class="text-success"><i class="bi bi-arrow-up"></i> 8.2%</small>
+                        <h3 class="fw-bold mb-0">{{ productos_vendidos|intcomma }}</h3>
+                        <small class="text-muted">{% trans "Este mes" %}</small>
                     </div>
                     <div class="stat-icon bg-primary bg-opacity-10">
                         <i class="bi bi-box-seam text-primary"></i>
@@ -49,8 +66,8 @@
                 <div class="card-body">
                     <div>
                         <h6 class="text-muted fw-normal">{% trans "Stock Bajo" %}</h6>
-                        <h3 class="fw-bold mb-0">12</h3>
-                        <small class="text-danger"><i class="bi bi-arrow-down"></i> -2</small>
+                        <h3 class="fw-bold mb-0">{{ stock_bajo }}</h3>
+                        <small class="text-muted">{% trans "Menos de 10 unidades" %}</small>
                     </div>
                     <div class="stat-icon bg-warning bg-opacity-10">
                         <i class="bi bi-exclamation-triangle text-warning"></i>
@@ -63,8 +80,8 @@
                 <div class="card-body">
                     <div>
                         <h6 class="text-muted fw-normal">{% trans "Adopciones" %}</h6>
-                        <h3 class="fw-bold mb-0">8</h3>
-                        <small class="text-success"><i class="bi bi-arrow-up"></i> +4</small>
+                        <h3 class="fw-bold mb-0">{{ adopciones_count }}</h3>
+                        <small class="text-muted">{% trans "Total adoptadas" %}</small>
                     </div>
                     <div class="stat-icon bg-danger bg-opacity-10">
                         <i class="bi bi-heart text-danger"></i>
@@ -76,28 +93,45 @@
 
     {# -------- Fila 2: Gráficos -------- #}
     <div class="row g-4 mb-4">
+        {# Gráfico de Ventas por Mes (Línea) #}
         <div class="col-lg-8">
             <div class="card chart-card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">{% trans "Ventas por Mes" %}</h5>
-                    <div class="d-flex align-items-center justify-content-center bg-light" style="min-height: 300px;">
-                        <p class="text-muted">{% trans "Aquí iría el Gráfico de Barras (requiere JS)" %}</p>
-                    </div>
+                    <h5 class="card-title">{% trans "Ventas por Mes" %} ({% trans "Últimos 6 meses" %})</h5>
+                    <canvas id="salesChart" style="max-height: 300px;"></canvas>
                 </div>
             </div>
         </div>
+        
+        {# Gráfico de Adopciones por Especie (Pastel) #}
         <div class="col-lg-4">
             <div class="card chart-card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">{% trans "Distribución por Categoría" %}</h5>
-                    <div class="d-flex align-items-center justify-content-center bg-light" style="min-height: 300px;">
-                        <p class="text-muted">{% trans "Aquí iría el Gráfico de Torta (requiere JS)" %}</p>
-                    </div>
-                    <div class="mt-3">
-                        <p class="d-flex justify-content-between mb-1"><span class="text-primary"><i class="bi bi-circle-fill me-2"></i>{% trans "Alimentos" %}</span> <strong>45%</strong></p>
-                        <p class="d-flex justify-content-between mb-1"><span class="text-success"><i class="bi bi-circle-fill me-2"></i>{% trans "Medicamentos" %}</span> <strong>25%</strong></p>
-                        <p class="d-flex justify-content-between mb-1"><span class="text-warning"><i class="bi bi-circle-fill me-2"></i>{% trans "Accesorios" %}</span> <strong>30%</strong></p>
-                    </div>
+                    <h5 class="card-title">{% trans "Adopciones por Especie" %}</h5>
+                    <canvas id="adoptionsChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {# -------- Fila 3: Más Gráficos -------- #}
+    <div class="row g-4 mb-4">
+        {# Gráfico de Productos Más Vendidos (Barras Horizontal) #}
+        <div class="col-lg-6">
+            <div class="card chart-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Top 10 Productos Más Vendidos" %}</h5>
+                    <canvas id="topProductsChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        {# Gráfico de Stock por Categoría (Barras Vertical) #}
+        <div class="col-lg-6">
+            <div class="card chart-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Stock por Categoría" %}</h5>
+                    <canvas id="stockChart" style="max-height: 300px;"></canvas>
                 </div>
             </div>
         </div>
@@ -109,34 +143,19 @@
             <div class="card chart-card">
                 <div class="card-header"><h5 class="card-title mb-0">{% trans "Ventas Recientes" %}</h5></div>
                 <ul class="list-group list-group-flush">
+                    {% for order in recent_orders %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-0">{% trans "Alimento Premium Perros" %}</h6>
-                            <small class="text-muted">10:30 AM</small>
+                            <h6 class="mb-0">{% trans "Orden" %} #{{ order.order_number }}</h6>
+                            <small class="text-muted">{{ order.created_at|date:"d/m/Y H:i" }} - {{ order.user.username }}</small>
                         </div>
-                        <span class="fw-bold">$45.000</span>
+                        <span class="fw-bold">${{ order.total|floatformat:0|intcomma }}</span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-0">{% trans "Collar Reflectivo" %}</h6>
-                            <small class="text-muted">11:15 AM</small>
-                        </div>
-                        <span class="fw-bold">$12.000</span>
+                    {% empty %}
+                    <li class="list-group-item text-center text-muted">
+                        {% trans "No hay órdenes recientes" %}
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-0">{% trans "Vitaminas para Aves" %}</h6>
-                            <small class="text-muted">12:00 PM</small>
-                        </div>
-                        <span class="fw-bold">$8.500</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-0">{% trans "Antiparasitario Gatos" %}</h6>
-                            <small class="text-muted">02:30 PM</small>
-                        </div>
-                        <span class="fw-bold">$18.000</span>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -144,35 +163,198 @@
             <div class="card chart-card">
                 <div class="card-header"><h5 class="card-title mb-0 text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>{% trans "Stock Bajo" %}</h5></div>
                 <ul class="list-group list-group-flush">
+                    {% for product in low_stock_products %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-0">{% trans "Antiparasitario Gatos" %}</h6>
-                            <small class="text-muted">{% trans "Mínimo requerido" %}: 10</small>
+                            <h6 class="mb-0">{{ product.name }}</h6>
+                            <small class="text-muted">SKU: {{ product.sku }} | {% trans "Mínimo requerido" %}: 10</small>
                         </div>
-                        <span class="badge bg-danger rounded-pill">5 {% trans "unidades" %}</span>
+                        <span class="badge bg-danger rounded-pill">{{ product.stock }} {% trans "unidades" %}</span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-0">{% trans "Vitaminas para Aves" %}</h6>
-                            <small class="text-muted">{% trans "Mínimo requerido" %}: 15</small>
-                        </div>
-                        <span class="badge bg-danger rounded-pill">8 {% trans "unidades" %}</span>
+                    {% empty %}
+                    <li class="list-group-item text-center text-success">
+                        ✅ {% trans "Todos los productos tienen stock suficiente" %}
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-0">{% trans "Juguete Interactivo" %}</h6>
-                            <small class="text-muted">{% trans "Mínimo requerido" %}: 10</small>
-                        </div>
-                        <span class="badge bg-danger rounded-pill">3 {% trans "unidades" %}</span>
-                    </li>
-                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-0">...</h6>
-                        </div>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
 
+{% endblock %}
+
+{% block dashboard_head %}
+{{ sales_by_month|json_script:"sales-data" }}
+{{ months_labels|json_script:"months-labels" }}
+{{ top_products_names|json_script:"top-products-names" }}
+{{ top_products_quantities|json_script:"top-products-quantities" }}
+{{ adoptions_by_species|json_script:"adoptions-data" }}
+{{ stock_by_category|json_script:"stock-data" }}
+
+<script>
+// JavaScript para crear los gráficos con Chart.js
+document.addEventListener('DOMContentLoaded', function() {
+    // Datos desde Django (convertidos a JSON de forma segura)
+    const salesData = JSON.parse(document.getElementById('sales-data').textContent);
+    const monthsLabels = JSON.parse(document.getElementById('months-labels').textContent);
+    const topProductsNames = JSON.parse(document.getElementById('top-products-names').textContent);
+    const topProductsQuantities = JSON.parse(document.getElementById('top-products-quantities').textContent);
+    const adoptionsData = JSON.parse(document.getElementById('adoptions-data').textContent);
+    const stockData = JSON.parse(document.getElementById('stock-data').textContent);
+    
+    // 1. GRÁFICO DE VENTAS POR MES (Línea)
+    const salesCtx = document.getElementById('salesChart');
+    if (salesCtx) {
+        new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: monthsLabels,
+                datasets: [{
+                    label: '{% trans "Ventas ($)" %}',
+                    data: salesData,
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // 2. GRÁFICO DE ADOPCIONES POR ESPECIE (Pastel)
+    const adoptionsCtx = document.getElementById('adoptionsChart');
+    if (adoptionsCtx && Object.keys(adoptionsData).length > 0) {
+        const adoptionLabels = Object.keys(adoptionsData);
+        const adoptionValues = Object.values(adoptionsData);
+        
+        new Chart(adoptionsCtx, {
+            type: 'pie',
+            data: {
+                labels: adoptionLabels,
+                datasets: [{
+                    data: adoptionValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 159, 64, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    } else if (adoptionsCtx) {
+        adoptionsCtx.parentElement.innerHTML = '<p class="text-muted text-center py-5">{% trans "No hay datos de adopciones disponibles" %}</p>';
+    }
+    
+    // 3. GRÁFICO DE PRODUCTOS MÁS VENDIDOS (Barras Horizontal)
+    const topProductsCtx = document.getElementById('topProductsChart');
+    if (topProductsCtx && topProductsNames.length > 0) {
+        new Chart(topProductsCtx, {
+            type: 'bar',
+            data: {
+                labels: topProductsNames,
+                datasets: [{
+                    label: '{% trans "Unidades Vendidas" %}',
+                    data: topProductsQuantities,
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Barras horizontales
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    } else if (topProductsCtx) {
+        topProductsCtx.parentElement.innerHTML = '<p class="text-muted text-center py-5">{% trans "No hay datos de ventas disponibles" %}</p>';
+    }
+    
+    // 4. GRÁFICO DE STOCK POR CATEGORÍA (Barras Vertical)
+    const stockCtx = document.getElementById('stockChart');
+    if (stockCtx && Object.keys(stockData).length > 0) {
+        const stockLabels = Object.keys(stockData);
+        const stockValues = Object.values(stockData);
+        
+        new Chart(stockCtx, {
+            type: 'bar',
+            data: {
+                labels: stockLabels,
+                datasets: [{
+                    label: '{% trans "Stock Total" %}',
+                    data: stockValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    } else if (stockCtx) {
+        stockCtx.parentElement.innerHTML = '<p class="text-muted text-center py-5">{% trans "No hay datos de stock disponibles" %}</p>';
+    }
+});
+</script>
 {% endblock %}

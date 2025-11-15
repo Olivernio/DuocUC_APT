@@ -1,4 +1,5 @@
 import requests
+import csv
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView 
@@ -6,6 +7,7 @@ from django.db.models import Sum, F, Value, DecimalField, Q
 from django.db.models.functions import Coalesce 
 from django.db import models 
 from django.utils.translation import gettext_lazy as _
+from django.http import HttpResponse
 
 # --- Importaciones de Modelos ---
 from django.contrib.auth.models import User # <-- ¡IMPORTANTE! Importamos el modelo User
@@ -95,6 +97,83 @@ def index(request):
         is_active=True
     ).order_by('stock')[:10]  # Los 10 con menos stock
     
+    # 8. DATOS PARA GRÁFICOS
+    
+    # 8.1 Ventas por mes (últimos 6 meses)
+    try:
+        from datetime import timedelta
+        from django.db.models.functions import TruncMonth
+        
+        sales_by_month = []
+        months_labels = []
+        
+        for i in range(6):
+            month_date = today.replace(day=1) - timedelta(days=30*i)
+            month_start = month_date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            if i == 0:
+                month_end = today
+            else:
+                next_month = (month_date.replace(day=28) + timedelta(days=4)).replace(day=1)
+                month_end = next_month - timedelta(days=1)
+            
+            month_sales = Order.objects.filter(
+                created_at__gte=month_start,
+                created_at__lte=month_end,
+                status__in=[
+                    OrderStatus.CONFIRMED,
+                    OrderStatus.PROCESSING,
+                    OrderStatus.SHIPPED,
+                    OrderStatus.DELIVERED
+                ]
+            ).aggregate(total=Sum('total'))['total'] or 0
+            
+            sales_by_month.append(float(month_sales))
+            months_labels.append(month_date.strftime('%b %Y'))
+        
+        # Invertir para mostrar del más antiguo al más reciente
+        sales_by_month.reverse()
+        months_labels.reverse()
+    except:
+        sales_by_month = [0] * 6
+        months_labels = [''] * 6
+    
+    # 8.2 Productos más vendidos (top 10) - datos para gráfico
+    try:
+        top_products_chart = OrderItem.objects.values(
+            'product__name'
+        ).annotate(
+            total_sold=Sum('quantity')
+        ).order_by('-total_sold')[:10]
+        
+        top_products_names = [p['product__name'] for p in top_products_chart]
+        top_products_quantities = [int(p['total_sold']) for p in top_products_chart]
+    except:
+        top_products_names = []
+        top_products_quantities = []
+    
+    # 8.3 Adopciones por especie - datos para gráfico
+    try:
+        adoptions_by_species_chart = {}
+        for especie_code, especie_name in Especies.choices:
+            count = Mascota.objects.filter(Especie=especie_code).count()
+            if count > 0:
+                adoptions_by_species_chart[str(especie_name)] = int(count)
+    except:
+        adoptions_by_species_chart = {}
+    
+    # 8.4 Stock por categoría - datos para gráfico
+    try:
+        stock_by_category = {}
+        for cat_code, cat_name in Category.choices:
+            total_stock = Product.objects.filter(
+                category=cat_code,
+                is_active=True
+            ).aggregate(total=Sum('stock'))['total'] or 0
+            if total_stock > 0:
+                stock_by_category[str(cat_name)] = int(total_stock)
+    except:
+        stock_by_category = {}
+    
     context = {
         'ventas_mes': sales_this_month,
         'productos_vendidos': products_sold_this_month,
@@ -103,7 +182,15 @@ def index(request):
         'top_products': top_products,
         'recent_orders': recent_orders,
         'low_stock_products': low_stock_products,
-        'month_name': today.strftime('%B %Y'),  # Nombre del mes para mostrar
+        'month_name': today.strftime('%B %Y'),
+        
+        # Datos para gráficos
+        'sales_by_month': sales_by_month,
+        'months_labels': months_labels,
+        'top_products_names': top_products_names,
+        'top_products_quantities': top_products_quantities,
+        'adoptions_by_species': adoptions_by_species_chart,
+        'stock_by_category': stock_by_category,
     }
     return render(request, "dashboard/index.html", context)
 
@@ -272,3 +359,130 @@ class DashboardUserListView(ListView):
         
         return context
 # --- FIN DE LA VISTA DE USUARIOS ---
+
+# ============================================
+# FUNCIONES DE EXPORTACIÓN A CSV
+# ============================================
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def export_products_csv(request):
+    """
+    Exporta todos los productos a un archivo CSV.
+    Columnas: SKU, Nombre, Categoría, Precio, Stock, Descripción, Activo
+    """
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="productos_export.csv"'
+    
+    # Configurar el writer con encoding UTF-8
+    writer = csv.writer(response)
+    
+    # Escribir encabezados
+    writer.writerow([
+        'SKU',
+        'Nombre',
+        'Categoría',
+        'Precio',
+        'Stock',
+        'Descripción',
+        'Activo'
+    ])
+    
+    # Escribir datos
+    products = Product.objects.all().order_by('name')
+    for product in products:
+        writer.writerow([
+            product.sku,
+            product.name,
+            product.get_category_display(),
+            product.price,
+            product.stock,
+            product.description[:200] if product.description else '',  # Limitar a 200 caracteres
+            'Sí' if product.is_active else 'No'
+        ])
+    
+    return response
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def export_orders_csv(request):
+    """
+    Exporta todas las órdenes a un archivo CSV.
+    Columnas: Número de Orden, Usuario, Total, Estado, Fecha de Creación, Dirección de Envío
+    """
+    from orders.models import Order, OrderStatus
+    
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="pedidos_export.csv"'
+    
+    writer = csv.writer(response)
+    
+    # Escribir encabezados
+    writer.writerow([
+        'Número de Orden',
+        'Usuario',
+        'Email',
+        'Total',
+        'Estado',
+        'Fecha de Creación',
+        'Ciudad de Envío',
+        'Dirección de Envío'
+    ])
+    
+    # Escribir datos
+    orders = Order.objects.select_related('user').all().order_by('-created_at')
+    for order in orders:
+        writer.writerow([
+            order.order_number,
+            order.user.username,
+            order.user.email,
+            order.total,
+            order.get_status_display(),
+            order.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            order.shipping_city,
+            order.shipping_address
+        ])
+    
+    return response
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def export_users_csv(request):
+    """
+    Exporta todos los usuarios a un archivo CSV.
+    Columnas: Username, Email, Nombre, Apellido, Fecha de Registro, Es Staff, Es Superusuario
+    """
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="usuarios_export.csv"'
+    
+    writer = csv.writer(response)
+    
+    # Escribir encabezados
+    writer.writerow([
+        'Username',
+        'Email',
+        'Nombre',
+        'Apellido',
+        'Fecha de Registro',
+        'Es Staff',
+        'Es Superusuario',
+        'Último Acceso'
+    ])
+    
+    # Escribir datos
+    users = User.objects.all().order_by('date_joined')
+    for user in users:
+        writer.writerow([
+            user.username,
+            user.email,
+            user.first_name,
+            user.last_name,
+            user.date_joined.strftime('%Y-%m-%d %H:%M:%S') if user.date_joined else '',
+            'Sí' if user.is_staff else 'No',
+            'Sí' if user.is_superuser else 'No',
+            user.last_login.strftime('%Y-%m-%d %H:%M:%S') if user.last_login else 'Nunca'
+        ])
+    
+    return response

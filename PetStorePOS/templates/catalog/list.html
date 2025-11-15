@@ -12,255 +12,264 @@
 
 {% block content %}
 {# Main ya está en base.html, así que no lo repetimos aquí #}
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-      <h2 class="fw-bold m-0">
-        {% if request.user.is_staff %}
-          {% trans "Inventario de Productos" %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2 class="fw-bold m-0">
+      {% if request.user.is_staff %}
+      {% trans "Inventario de Productos" %}
+      {% else %}
+      {% trans "Catálogo de" %} <span class="text-primary">{% trans "Productos" %}</span>
+      {% endif %}
+    </h2>
+    <p class="text-muted m-0">
+      {% if request.user.is_staff %}
+      {% trans "Gestiona y explora el catálogo completo." %}
+      {% else %}
+      {% trans "Encuentra todo para el cuidado y bienestar de tu mascota." %}
+      {% endif %}
+    </p>
+  </div>
+  {% if request.user.is_staff %}
+  <a href="{% url 'catalog:product_create' %}" class="btn btn-primary shadow-sm">
+    <i class="bi bi-plus-lg me-1"></i>
+    {% trans "Nuevo producto" %}
+  </a>
+  {% endif %}
+</div>
+
+{# BARRA DE FILTRO Y BUSQUEDA AVANZADA (usuario) #}
+{% if not request.user.is_staff %}
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-light">
+    <h5 class="mb-0"><i class="bi bi-search me-2"></i>{% trans "Búsqueda Avanzada" %}</h5>
+  </div>
+  <div class="card-body">
+    <form method="get" action="{% url 'catalog:product_list' %}">
+      <div class="row g-3">
+        <!-- Búsqueda de texto -->
+        <div class="col-md-4">
+          <label for="{{ form.search.id_for_label }}" class="form-label">{{ form.search.label }}</label>
+          {{ form.search }}
+        </div>
+
+        <!-- Categoría -->
+        <div class="col-md-2">
+          <label for="{{ form.category.id_for_label }}" class="form-label">{{ form.category.label }}</label>
+          {{ form.category }}
+        </div>
+
+        <!-- Precio mínimo -->
+        <div class="col-md-2">
+          <label for="{{ form.min_price.id_for_label }}" class="form-label">{{ form.min_price.label }}</label>
+          {{ form.min_price }}
+        </div>
+
+        <!-- Precio máximo -->
+        <div class="col-md-2">
+          <label for="{{ form.max_price.id_for_label }}" class="form-label">{{ form.max_price.label }}</label>
+          {{ form.max_price }}
+        </div>
+
+        <!-- Disponibilidad -->
+        <div class="col-md-2">
+          <label class="form-label d-block">{% trans "Filtros" %}</label>
+          <div class="form-check mt-2">
+            {{ form.in_stock }}
+            <label class="form-check-label" for="{{ form.in_stock.id_for_label }}">
+              {{ form.in_stock.label }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 mt-2">
+        <!-- Ordenamiento -->
+        <div class="col-md-4">
+          <label for="{{ form.order_by.id_for_label }}" class="form-label">{{ form.order_by.label }}</label>
+          {{ form.order_by }}
+        </div>
+
+        <!-- Botones -->
+        <div class="col-md-8 d-flex align-items-end">
+          <button type="submit" class="btn btn-primary me-2">
+            <i class="bi bi-search me-1"></i>{% trans "Buscar" %}
+          </button>
+          <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary"
+            title="{% trans 'Limpiar filtros' %}">
+            <i class="bi bi-x-lg me-1"></i>{% trans "Limpiar" %}
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Mostrar resultados de búsqueda -->
+{% if search_query %}
+<div class="alert alert-info mb-3">
+  <i class="bi bi-info-circle me-2"></i>
+  {% trans "Resultados para" %}: <strong>"{{ search_query }}"</strong>
+  {% if category_selected %}
+  | {% trans "Categoría" %}: <strong>{{ category_selected }}</strong>
+  {% endif %}
+</div>
+{% endif %}
+{% endif %}
+
+<div class="row g-4">
+  {% for p in products %}
+  <div class="col-6 col-md-4 col-lg-3 d-flex align-items-stretch"> {# Para alinear tarjetas #}
+    <div class="card product-card h-100 w-100"> {# Añadido w-100 #}
+      <div class="product-card-img-container">
+        {% if p.image %}
+        <img src="{{ p.image.url }}" class="product-card-img" alt="{{ p.name }}">
         {% else %}
-          {% trans "Catálogo de" %} <span class="text-primary">{% trans "Productos" %}</span>
+        <div class="product-card-no-img">
+          <i class="bi bi-box-seam text-secondary" style="font-size: 3rem;" role="img"
+            aria-label="{% trans 'Imagen de producto no disponible' %}"></i>
+        </div>
         {% endif %}
-      </h2>
-      <p class="text-muted m-0">
+        {% if not p.is_active %}
+        <span class="badge-inactive">{% trans "Inactivo" %}</span>
+        {% endif %}
+        {% if p.stock <= 0 %} {# Cambiado a <=0 #} <span class="badge-out">{% trans "Agotado" %}</span>
+          {% endif %}
+      </div>
+      <div class="card-body d-flex flex-column">
+        {# Categoría como badge #}
+        <span class="badge bg-light text-dark border mb-2 align-self-start">{{ p.get_category_display }}</span>
+        {# Nombre del producto (enlace al detalle) #}
+        <h5 class="product-name mt-1 mb-1 fs-6">
+          <a href="{% url 'catalog:product_detail' p.pk %}" class="text-decoration-none text-dark">
+            {{ p.name }}
+          </a>
+        </h5>
+        {# Precio #}
+        <div class="product-price fw-bold mb-2">${{ p.price|floatformat:0 }}</div> {# Usamos floatformat para evitar
+        decimales si son .00 #}
+        {# Stock #}
+        <div class="small text-secondary mb-2">
+          <i class="bi bi-box-seam me-1" aria-hidden="true"></i>{% trans "Stock:" %} <strong>{{ p.stock }}</strong>
+        </div>
+        {# Descripción corta #}
+        <div class="small mb-3 text-muted">{{ p.description|truncatewords:14 }}</div>
+
+        {# Botones - Se muestran al final usando mt-auto #}
         {% if request.user.is_staff %}
-          {% trans "Gestiona y explora el catálogo completo." %}
+        {# Botones para Staff #}
+        <div class="mt-auto d-flex gap-2 pt-2 border-top">
+          <a class="btn btn-sm btn-outline-primary w-100" href="{% url 'catalog:product_update' p.pk %}">
+            <i class="bi bi-pencil me-1" aria-hidden="true"></i>{% trans "Editar" %}
+          </a>
+          <a class="btn btn-sm btn-outline-danger w-100" href="{% url 'catalog:product_delete' p.pk %}">
+            <i class="bi bi-trash me-1" aria-hidden="true"></i>{% trans "Eliminar" %}
+          </a>
+        </div>
         {% else %}
-          {% trans "Encuentra todo para el cuidado y bienestar de tu mascota." %}
+        {# -------- Botones para usuarios normales -------- #}
+        <div class="mt-auto pt-2 border-top">
+          {# Botón de Favorito #}
+          {% if user.is_authenticated %}
+          <div class="mb-2">
+            <a href="{% url 'accounts:toggle_favorite' p.id %}"
+              class="btn btn-sm w-100 {% if p.id in favorite_ids %}btn-danger{% else %}btn-outline-danger{% endif %}"
+              id="favorite-btn-{{ p.id }}"
+              title="{% if p.id in favorite_ids %}{% trans 'Quitar de favoritos' %}{% else %}{% trans 'Agregar a favoritos' %}{% endif %}">
+              <i class="bi {% if p.id in favorite_ids %}bi-heart-fill{% else %}bi-heart{% endif %}"
+                aria-hidden="true"></i>
+              {% if p.id in favorite_ids %}
+              {% trans "En Favoritos" %}
+              {% else %}
+              {% trans "Agregar a Favoritos" %}
+              {% endif %}
+            </a>
+          </div>
+          {% endif %}
+
+          {# Botón Añadir al Carrito #}
+          <form action="{% url 'cart:add_to_cart' p.id %}" method="post">
+            {% csrf_token %}
+            {% if p.stock > 0 and p.is_active %}
+            <button type="submit" class="btn btn-dark w-100">
+              <i class="bi bi-cart-plus me-1" aria-hidden="true"></i>{% trans "Añadir al Carrito" %}
+            </button>
+            {% else %}
+            <button type="button" class="btn btn-outline-secondary w-100 disabled" aria-disabled="true">
+              <i class="bi bi-x-circle me-1" aria-hidden="true"></i>{% trans "Agotado" %}
+            </button>
+            {% endif %}
+          </form>
+        </div>
+        {# -------- Fin Botones -------- #}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col">
+    <div class="alert alert-warning text-center py-5 shadow-sm"> {# Mejorado estilo #}
+      <i class="bi bi-box-seam display-1" aria-hidden="true"></i>
+      <h4 class="mt-3">{% trans "No hay productos disponibles" %}</h4>
+      <p class="text-muted">
+        {% if request.GET.q or category_selected %} {# Usamos category_selected #}
+        {% trans "No se encontraron productos que coincidan con tu búsqueda o filtro." %}
+        {% else %}
+        {% trans "Parece que aún no se han agregado productos al catálogo." %}
         {% endif %}
       </p>
-    </div>
-    {% if request.user.is_staff %}
-      <a href="{% url 'catalog:product_create' %}" class="btn btn-primary shadow-sm">
-        <i class="bi bi-plus-lg me-1"></i>
-        {% trans "Nuevo producto" %}
+      {% if request.user.is_staff %}
+      <a href="{% url 'catalog:product_create' %}" class="btn btn-primary mt-3">
+        <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{% trans "Crear el primer producto" %}
       </a>
-    {% endif %}
-  </div>
-
-  {# BARRA DE FILTRO Y BUSQUEDA AVANZADA (usuario) #}
-  {% if not request.user.is_staff %}
-  <div class="card shadow-sm mb-4">
-    <div class="card-header bg-light">
-      <h5 class="mb-0"><i class="bi bi-search me-2"></i>{% trans "Búsqueda Avanzada" %}</h5>
-    </div>
-    <div class="card-body">
-      <form method="get" action="{% url 'catalog:product_list' %}">
-        <div class="row g-3">
-          <!-- Búsqueda de texto -->
-          <div class="col-md-4">
-            <label for="{{ form.search.id_for_label }}" class="form-label">{{ form.search.label }}</label>
-            {{ form.search }}
-          </div>
-          
-          <!-- Categoría -->
-          <div class="col-md-2">
-            <label for="{{ form.category.id_for_label }}" class="form-label">{{ form.category.label }}</label>
-            {{ form.category }}
-          </div>
-          
-          <!-- Precio mínimo -->
-          <div class="col-md-2">
-            <label for="{{ form.min_price.id_for_label }}" class="form-label">{{ form.min_price.label }}</label>
-            {{ form.min_price }}
-          </div>
-          
-          <!-- Precio máximo -->
-          <div class="col-md-2">
-            <label for="{{ form.max_price.id_for_label }}" class="form-label">{{ form.max_price.label }}</label>
-            {{ form.max_price }}
-          </div>
-          
-          <!-- Disponibilidad -->
-          <div class="col-md-2">
-            <label class="form-label d-block">{% trans "Filtros" %}</label>
-            <div class="form-check mt-2">
-              {{ form.in_stock }}
-              <label class="form-check-label" for="{{ form.in_stock.id_for_label }}">
-                {{ form.in_stock.label }}
-              </label>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row g-3 mt-2">
-          <!-- Ordenamiento -->
-          <div class="col-md-4">
-            <label for="{{ form.order_by.id_for_label }}" class="form-label">{{ form.order_by.label }}</label>
-            {{ form.order_by }}
-          </div>
-          
-          <!-- Botones -->
-          <div class="col-md-8 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary me-2">
-              <i class="bi bi-search me-1"></i>{% trans "Buscar" %}
-            </button>
-            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary" title="{% trans 'Limpiar filtros' %}">
-              <i class="bi bi-x-lg me-1"></i>{% trans "Limpiar" %}
-            </a>
-          </div>
-        </div>
-      </form>
+      {% endif %}
+      {% if request.GET.q or category_selected %} {# Usamos category_selected #}
+      <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary mt-3 ms-2">
+        <i class="bi bi-x-lg me-1" aria-hidden="true"></i>{% trans "Limpiar Filtros" %}
+      </a>
+      {% endif %}
     </div>
   </div>
-  
-  <!-- Mostrar resultados de búsqueda -->
-  {% if search_query %}
-  <div class="alert alert-info mb-3">
-    <i class="bi bi-info-circle me-2"></i>
-    {% trans "Resultados para" %}: <strong>"{{ search_query }}"</strong>
-    {% if category_selected %}
-      | {% trans "Categoría" %}: <strong>{{ category_selected }}</strong>
+  {% endfor %}
+</div>
+
+{# Paginación #}
+{% if is_paginated %}
+<nav aria-label="{% trans 'Paginación de productos' %}" class="mt-4">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link"
+        href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.in_stock %}&in_stock={{ request.GET.in_stock }}{% endif %}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">
+        <i class="bi bi-chevron-left"></i> {% trans "Anterior" %}
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">{% trans "Anterior" %}</span>
+    </li>
     {% endif %}
-  </div>
-  {% endif %}
-  {% endif %}
 
-  <div class="row g-4">
-    {% for p in products %}
-      <div class="col-6 col-md-4 col-lg-3 d-flex align-items-stretch"> {# Para alinear tarjetas #}
-        <div class="card product-card h-100 w-100"> {# Añadido w-100 #}
-          <div class="product-card-img-container">
-            {% if p.image %}
-              <img src="{{ p.image.url }}" class="product-card-img" alt="{{ p.name }}">
-            {% else %}
-              <div class="product-card-no-img">
-                <i class="bi bi-box-seam text-secondary" style="font-size: 3rem;" role="img" aria-label="{% trans 'Imagen de producto no disponible' %}"></i>
-              </div>
-            {% endif %}
-            {% if not p.is_active %}
-              <span class="badge-inactive">{% trans "Inactivo" %}</span>
-            {% endif %}
-            {% if p.stock <= 0 %} {# Cambiado a <= 0 #}
-              <span class="badge-out">{% trans "Agotado" %}</span>
-            {% endif %}
-          </div>
-          <div class="card-body d-flex flex-column">
-             {# Categoría como badge #}
-             <span class="badge bg-light text-dark border mb-2 align-self-start">{{ p.get_category_display }}</span>
-             {# Nombre del producto #}
-            <h5 class="product-name mt-1 mb-1 fs-6">{{ p.name }}</h5>
-            {# Precio #}
-            <div class="product-price fw-bold mb-2">${{ p.price|floatformat:0 }}</div> {# Usamos floatformat para evitar decimales si son .00 #}
-            {# Stock #}
-            <div class="small text-secondary mb-2">
-              <i class="bi bi-box-seam me-1" aria-hidden="true"></i>{% trans "Stock:" %} <strong>{{ p.stock }}</strong>
-            </div>
-            {# Descripción corta #}
-            <div class="small mb-3 text-muted">{{ p.description|truncatewords:14 }}</div>
+    <li class="page-item active">
+      <span class="page-link">
+        {% trans "Página" %} {{ page_obj.number }} {% trans "de" %} {{ page_obj.paginator.num_pages }}
+      </span>
+    </li>
 
-            {# Botones - Se muestran al final usando mt-auto #}
-            {% if request.user.is_staff %}
-              {# Botones para Staff #}
-              <div class="mt-auto d-flex gap-2 pt-2 border-top">
-                <a class="btn btn-sm btn-outline-primary w-100" href="{% url 'catalog:product_update' p.pk %}">
-                  <i class="bi bi-pencil me-1" aria-hidden="true"></i>{% trans "Editar" %}
-                </a>
-                <a class="btn btn-sm btn-outline-danger w-100" href="{% url 'catalog:product_delete' p.pk %}">
-                  <i class="bi bi-trash me-1" aria-hidden="true"></i>{% trans "Eliminar" %}
-                </a>
-              </div>
-            {% else %}
-              {# -------- Botones para usuarios normales -------- #}
-              <div class="mt-auto pt-2 border-top">
-                {# Botón de Favorito #}
-                {% if user.is_authenticated %}
-                <div class="mb-2">
-                  <a href="{% url 'accounts:toggle_favorite' p.id %}" 
-                     class="btn btn-sm w-100 {% if p.id in favorite_ids %}btn-danger{% else %}btn-outline-danger{% endif %}" 
-                     id="favorite-btn-{{ p.id }}"
-                     title="{% if p.id in favorite_ids %}{% trans 'Quitar de favoritos' %}{% else %}{% trans 'Agregar a favoritos' %}{% endif %}">
-                    <i class="bi {% if p.id in favorite_ids %}bi-heart-fill{% else %}bi-heart{% endif %}" aria-hidden="true"></i>
-                    {% if p.id in favorite_ids %}
-                      {% trans "En Favoritos" %}
-                    {% else %}
-                      {% trans "Agregar a Favoritos" %}
-                    {% endif %}
-                  </a>
-                </div>
-                {% endif %}
-                
-                {# Botón Añadir al Carrito #}
-                <form action="{% url 'cart:add_to_cart' p.id %}" method="post">
-                    {% csrf_token %}
-                    {% if p.stock > 0 and p.is_active %}
-                        <button type="submit" class="btn btn-dark w-100">
-                            <i class="bi bi-cart-plus me-1" aria-hidden="true"></i>{% trans "Añadir al Carrito" %}
-                        </button>
-                    {% else %}
-                        <button type="button" class="btn btn-outline-secondary w-100 disabled" aria-disabled="true">
-                            <i class="bi bi-x-circle me-1" aria-hidden="true"></i>{% trans "Agotado" %}
-                        </button>
-                    {% endif %}
-                </form>
-              </div>
-              {# -------- Fin Botones -------- #}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    {% empty %}
-      <div class="col">
-        <div class="alert alert-warning text-center py-5 shadow-sm"> {# Mejorado estilo #}
-          <i class="bi bi-box-seam display-1" aria-hidden="true"></i>
-          <h4 class="mt-3">{% trans "No hay productos disponibles" %}</h4>
-          <p class="text-muted">
-              {% if request.GET.q or category_selected %} {# Usamos category_selected #}
-                  {% trans "No se encontraron productos que coincidan con tu búsqueda o filtro." %}
-              {% else %}
-                  {% trans "Parece que aún no se han agregado productos al catálogo." %}
-              {% endif %}
-          </p>
-          {% if request.user.is_staff %}
-            <a href="{% url 'catalog:product_create' %}" class="btn btn-primary mt-3">
-              <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{% trans "Crear el primer producto" %}
-            </a>
-          {% endif %}
-           {% if request.GET.q or category_selected %} {# Usamos category_selected #}
-               <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary mt-3 ms-2">
-                   <i class="bi bi-x-lg me-1" aria-hidden="true"></i>{% trans "Limpiar Filtros" %}
-               </a>
-           {% endif %}
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-
-  {# Paginación #}
-  {% if is_paginated %}
-  <nav aria-label="{% trans 'Paginación de productos' %}" class="mt-4">
-    <ul class="pagination justify-content-center">
-      {% if page_obj.has_previous %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.in_stock %}&in_stock={{ request.GET.in_stock }}{% endif %}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">
-          <i class="bi bi-chevron-left"></i> {% trans "Anterior" %}
-        </a>
-      </li>
-      {% else %}
-      <li class="page-item disabled">
-        <span class="page-link">{% trans "Anterior" %}</span>
-      </li>
-      {% endif %}
-      
-      <li class="page-item active">
-        <span class="page-link">
-          {% trans "Página" %} {{ page_obj.number }} {% trans "de" %} {{ page_obj.paginator.num_pages }}
-        </span>
-      </li>
-      
-      {% if page_obj.has_next %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.in_stock %}&in_stock={{ request.GET.in_stock }}{% endif %}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">
-          {% trans "Siguiente" %} <i class="bi bi-chevron-right"></i>
-        </a>
-      </li>
-      {% else %}
-      <li class="page-item disabled">
-        <span class="page-link">{% trans "Siguiente" %}</span>
-      </li>
-      {% endif %}
-    </ul>
-  </nav>
-  {% endif %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link"
+        href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.in_stock %}&in_stock={{ request.GET.in_stock }}{% endif %}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">
+        {% trans "Siguiente" %} <i class="bi bi-chevron-right"></i>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">{% trans "Siguiente" %}</span>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
 
 {# Cierre del <main> que está en base.html #}
-{% endblock %}
+  {% endblock %}

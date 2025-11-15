@@ -6,6 +6,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.http import JsonResponse
 from django.utils.translation import gettext_lazy as _
+from django import forms
 from formtools.wizard.views import SessionWizardView
 from core.forms import PersonalInfoForm, ContactDataForm, PreferencesForm
 from .forms import CustomUserCreationForm, EditProfileForm
@@ -75,6 +76,30 @@ class RegistroWizard(SessionWizardView):
         data = {}
         for form in form_list:
             data.update(form.cleaned_data)
+        
+        # Validar reCAPTCHA solo cuando se completa el wizard
+        recaptcha_value = data.get('recaptcha')
+        if not recaptcha_value:
+            messages.error(self.request, _("Por favor, completa la verificación reCAPTCHA antes de finalizar el registro."))
+            # Volver al último paso del wizard con los datos guardados
+            return self.render_goto_step(self.steps.last)
+        
+        # Validar el reCAPTCHA manualmente usando ReCaptchaField original
+        # Esto evita errores de timeout-or-duplicate en pasos intermedios
+        from django_recaptcha.fields import ReCaptchaField
+        try:
+            # Crear una instancia del campo ReCaptchaField para validar
+            recaptcha_field = ReCaptchaField()
+            recaptcha_field.clean(recaptcha_value)
+        except forms.ValidationError as e:
+            error_msg = ', '.join(e.messages) if hasattr(e, 'messages') else str(e)
+            # Si es un error de timeout, dar un mensaje más amigable
+            if 'timeout' in error_msg.lower() or 'duplicate' in error_msg.lower():
+                messages.error(self.request, _("La verificación reCAPTCHA ha expirado. Por favor, completa el reCAPTCHA nuevamente y envía el formulario inmediatamente."))
+            else:
+                messages.error(self.request, _("Error en la verificación reCAPTCHA: {}").format(error_msg))
+            return self.render_goto_step(self.steps.last)
+        
         try:
             user = User.objects.create_user(
                 username=data['correo'],
@@ -84,7 +109,7 @@ class RegistroWizard(SessionWizardView):
                 last_name=data['apellidos'],
             )
         except IntegrityError:
-            messages.error(self.request, "Ya existe un usuario con este correo electrónico.")
+            messages.error(self.request, _("Ya existe un usuario con este correo electrónico."))
             return redirect('accounts:registro')
         # Fusionar carrito
         session_key = self.request.session.session_key
@@ -117,6 +142,8 @@ class RegistroWizard(SessionWizardView):
 def profile_view(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     edit_mode = request.GET.get('edit', 'false') == 'true'
+    tab = request.GET.get('tab', 'perfil')  # Pestaña activa: perfil, pedidos, mascotas, reseñas
+    
     if request.method == "POST":
         if "cancel" in request.POST:
             return redirect('accounts:profile')
@@ -136,11 +163,42 @@ def profile_view(request):
             "last_name": request.user.last_name,
             "email": request.user.email,
         })
-    # Aquí puedes hacer el conteo real si tienes modelos (esto es demo)
-    user_orders = 0
-    total_spent = 0
-    adoptions = 0
-    reviews = 0
+    
+    # Obtener datos reales
+    from orders.models import Order
+    from catalog.models import ProductReview
+    from adoption.models import AdoptionRequest
+    from django.db.models import Sum, Count
+    
+    # Pedidos
+    user_orders = Order.objects.filter(user=request.user).count()
+    total_spent = Order.objects.filter(user=request.user).aggregate(
+        total=Sum('total')
+    )['total'] or 0
+    
+    # Adopciones (buscamos por email ya que AdoptionRequest no tiene ForeignKey a User)
+    adoptions = AdoptionRequest.objects.filter(email=request.user.email).count()
+    
+    # Reseñas
+    reviews = ProductReview.objects.filter(user=request.user, is_approved=True).count()
+    
+    # Datos para las pestañas
+    orders_list = []
+    adoptions_list = []
+    reviews_list = []
+    
+    if tab == 'pedidos':
+        from django.core.paginator import Paginator
+        orders_list = Order.objects.filter(user=request.user).select_related('user').prefetch_related('items__product').order_by('-created_at')
+        paginator = Paginator(orders_list, 10)
+        page_number = request.GET.get('page')
+        orders_list = paginator.get_page(page_number)
+    
+    elif tab == 'mascotas':
+        adoptions_list = AdoptionRequest.objects.filter(email=request.user.email).select_related('Mascota').order_by('-created_at')
+    
+    elif tab == 'reseñas':
+        reviews_list = ProductReview.objects.filter(user=request.user).select_related('product').order_by('-created_at')
 
     context = {
         "user": request.user,
@@ -150,6 +208,10 @@ def profile_view(request):
         "adoptions": adoptions,
         "reviews": reviews,
         "edit_mode": edit_mode,
+        "active_tab": tab,
+        "orders_list": orders_list,
+        "adoptions_list": adoptions_list,
+        "reviews_list": reviews_list,
     }
     return render(request, "accounts/profile.html", context)
 
@@ -158,29 +220,48 @@ def profile_view(request):
 # AGREGA | QUITA | 
 @login_required
 def toggle_favorite(request, product_id):
-
-    product = get_object_or_404(Product, id=product_id)
-    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    """
+    Vista para agregar/quitar un producto de favoritos.
+    Soporta tanto AJAX como requests normales.
+    """
+    if request.method != 'POST':
+        messages.error(request, _("Método no permitido"))
+        return redirect('catalog:product_list')
     
-    # Verificar si el producto ya está en favoritos
-    if product in user_profile.favorite_products.all():
-        # Quitar de favoritos
-        user_profile.favorite_products.remove(product)
-        is_favorite = False
-        message = _("Producto removido de favoritos")
-    else:
-        # Agregar a favoritos
-        user_profile.favorite_products.add(product)
-        is_favorite = True
-        message = _("Producto agregado a favoritos")
+    try:
+        product = get_object_or_404(Product, id=product_id)
+        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+        
+        if product in user_profile.favorite_products.all():
+            user_profile.favorite_products.remove(product)
+            is_favorite = False
+            message = _("Producto eliminado de favoritos")
+        else:
+            user_profile.favorite_products.add(product)
+            is_favorite = True
+            message = _("Producto agregado a favoritos")
+        
+        favorite_count = product.favorited_by.count()
+    except Exception as e:
+        # Si las migraciones no se han ejecutado, retornar error
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'success': False,
+                'message': _('Las migraciones no se han ejecutado. Por favor ejecuta: python manage.py migrate')
+            }, status=500)
+        messages.error(request, _("Error: Las migraciones no se han ejecutado. Por favor ejecuta: python manage.py migrate"))
+        return redirect('catalog:product_list')
     
+    # Si es una petición AJAX, retornar JSON
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return JsonResponse({
+            'success': True,
             'is_favorite': is_favorite,
             'message': str(message),
-            'favorites_count': user_profile.favorite_products.count()
+            'favorite_count': favorite_count
         })
     
+    # Si no es AJAX, redirigir con mensaje
     messages.success(request, message)
     return redirect(request.META.get('HTTP_REFERER', 'catalog:product_list'))
 

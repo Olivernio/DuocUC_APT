@@ -28,10 +28,12 @@ class PreferencesForm(forms.Form):
         min_length=6,
         required=True,
     )
-    # Google reCAPTCHA (v2 checkbox)
+    # Google reCAPTCHA (v2 checkbox) - Accesible
     recaptcha = ReCaptchaField(
         widget=ReCaptchaV2Checkbox(),
-        label="Verificación anti-bots",
+        label=_("Verificación de seguridad"),
+        help_text=_("Por favor, completa la verificación reCAPTCHA. Si tienes problemas de visión, puedes usar el desafío de audio disponible en el widget."),
+        required=True,
     )
 
     def clean(self):

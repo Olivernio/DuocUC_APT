@@ -96,4 +96,56 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const submitButton = form ? form.querySelector('button[type="submit"]:not([name="wizard_goto_step"])') : null;
+    
+    if (!form || !submitButton) return;
+    
+    // Función para verificar si el reCAPTCHA está completado
+    function checkRecaptcha() {
+        // Buscar el textarea oculto que contiene el token de reCAPTCHA
+        const recaptchaResponse = form.querySelector('textarea[name*="recaptcha"]');
+        if (recaptchaResponse && recaptchaResponse.value && recaptchaResponse.value.trim() !== '') {
+            return true;
+        }
+        return false;
+    }
+    
+    // Manejar el envío del formulario
+    form.addEventListener('submit', function(e) {
+        if (!checkRecaptcha()) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert('{% trans "Por favor, completa la verificación reCAPTCHA antes de continuar." %}');
+            return false;
+        }
+    });
+    
+    // Observar cambios en el DOM para detectar cuando el reCAPTCHA se completa
+    const observer = new MutationObserver(function(mutations) {
+        if (checkRecaptcha()) {
+            // El reCAPTCHA está completado
+            console.log('reCAPTCHA completado correctamente');
+        }
+    });
+    
+    // Observar el formulario para cambios
+    if (form) {
+        observer.observe(form, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['value']
+        });
+    }
+    
+    // Limpiar el observer después de 60 segundos
+    setTimeout(function() {
+        observer.disconnect();
+    }, 60000);
+});
+</script>
 {% endblock %}

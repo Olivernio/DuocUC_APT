@@ -29,14 +29,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'core', 
-    'accounts',
-    'catalog',
+    'catalog',   
+    'accounts',     
     "django_bootstrap5",
     "adoption",
     "cart",
-    "orders",
+    "orders", 
     'widget_tweaks',
-    'django_recaptcha',
+    'django_recaptcha',   
 ]
 
 MIDDLEWARE = [

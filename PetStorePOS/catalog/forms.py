@@ -1,7 +1,7 @@
 # catalog/forms.py
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from .models import Product, Category
+from .models import Product, Category, ProductReview
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -18,11 +18,8 @@ class ProductForm(forms.ModelForm):
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 
-
+#Formulario para búsqueda avanzada de productos.
 class ProductSearchForm(forms.Form):
-    """
-    Formulario para búsqueda avanzada de productos.
-    """
     # Campo de búsqueda de texto
     search = forms.CharField(
         required=False,
@@ -86,3 +83,37 @@ class ProductSearchForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-select'}),
         label=_('Ordenar por')
     )
+
+
+#formulario para crear reseñas de productos
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = ProductReview
+        fields = ['rating', 'comment']
+        widgets = {
+            'rating': forms.NumberInput(attrs={
+                'min': 1,
+                'max': 5,
+                'class': 'form-control',
+                'placeholder': _('Calificación de 1 a 5')
+            }),
+            'comment': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': _('Escribe tu opinión sobre el producto...')
+            }),
+        }
+        labels = {
+            'rating': _('Calificación'),
+            'comment': _('Comentario'),
+        }
+        help_texts = {
+            'rating': _('Selecciona una calificación de 1 a 5 estrellas'),
+            'comment': _('Comparte tu experiencia con este producto'),
+        }
+    #Valida que la calificación esté entre 1 y 5.
+    def clean_rating(self):
+        rating = self.cleaned_data.get('rating')
+        if rating and (rating < 1 or rating > 5):
+            raise forms.ValidationError(_("La calificación debe estar entre 1 y 5."))
+        return rating
