@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-10 18:21-0300\n"
+"POT-Creation-Date: 2025-11-17 12:28-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,24 +19,116 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\adoption\views.py:18
+#: .\accounts\views.py:58
+msgid "Por favor, ingresa email y contraseña."
+msgstr ""
+
+#: .\accounts\views.py:67 .\accounts\views.py:81
+msgid "Usuario o contraseña incorrectos."
+msgstr ""
+
+#: .\accounts\views.py:77
+#, python-brace-format
+msgid "¡Bienvenido, {}!"
+msgstr ""
+
+#: .\accounts\views.py:102
+msgid ""
+"Por favor, completa la verificación reCAPTCHA antes de finalizar el registro."
+msgstr ""
+
+#: .\accounts\views.py:121
+msgid ""
+"La verificación reCAPTCHA ha expirado. Por favor, completa el reCAPTCHA "
+"nuevamente y envía el formulario inmediatamente."
+msgstr ""
+
+#: .\accounts\views.py:123
+#, python-brace-format
+msgid "Error en la verificación reCAPTCHA: {}"
+msgstr ""
+
+#: .\accounts\views.py:135
+msgid "Ya existe un usuario con este correo electrónico."
+msgstr ""
+
+#: .\accounts\views.py:251
+msgid "Método no permitido"
+msgstr ""
+
+#: .\accounts\views.py:261
+msgid "Producto eliminado de favoritos"
+msgstr ""
+
+#: .\accounts\views.py:265
+msgid "Producto agregado a favoritos"
+msgstr ""
+
+#: .\accounts\views.py:273
+msgid ""
+"Las migraciones no se han ejecutado. Por favor ejecuta: python manage.py "
+"migrate"
+msgstr ""
+
+#: .\accounts\views.py:275
+msgid ""
+"Error: Las migraciones no se han ejecutado. Por favor ejecuta: python "
+"manage.py migrate"
+msgstr ""
+
+#: .\accounts\views.py:331
+msgid "Notificación marcada como leída"
+msgstr ""
+
+#: .\accounts\views.py:345
+msgid "Todas las notificaciones han sido marcadas como leídas"
+msgstr ""
+
+#: .\adoption\views.py:23 .\adoption\views.py:80 .\dashboard\views.py:245
 msgid "perro"
 msgstr ""
 
-#: .\adoption\views.py:19
+#: .\adoption\views.py:23 .\adoption\views.py:82 .\dashboard\views.py:246
 msgid "gato"
 msgstr ""
 
-#: .\adoption\views.py:20
+#: .\adoption\views.py:23 .\adoption\views.py:84 .\dashboard\views.py:247
 msgid "conejo"
 msgstr ""
 
-#: .\adoption\views.py:21
+#: .\adoption\views.py:24 .\adoption\views.py:86 .\dashboard\views.py:248
 msgid "roedor"
 msgstr ""
 
-#: .\adoption\views.py:22
+#: .\adoption\views.py:24 .\adoption\views.py:88 .\dashboard\views.py:249
 msgid "ave"
+msgstr ""
+
+#: .\adoption\views.py:43
+msgid ""
+"No se pudo conectar con la API de Huachitos en este momento. Por favor, "
+"intenta más tarde."
+msgstr ""
+
+#: .\adoption\views.py:94
+msgid "Año"
+msgid_plural "Años"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\adoption\views.py:102
+msgid "Macho"
+msgstr ""
+
+#: .\adoption\views.py:104
+msgid "Hembra"
+msgstr ""
+
+#: .\adoption\views.py:116
+msgid ""
+"No se pudo cargar la información de la mascota. Es posible que ya no esté "
+"disponible."
 msgstr ""
 
 #: .\cart\views.py:16
@@ -78,94 +170,462 @@ msgstr ""
 msgid "Cantidad de '{}' actualizada."
 msgstr ""
 
-#: .\catalog\models.py:5
+#: .\catalog\admin.py:30
+msgid "Información de la Reseña"
+msgstr ""
+
+#: .\catalog\admin.py:40 .\catalog\forms.py:108 .\catalog\models.py:66
+#: .\catalog\models.py:157
+msgid "Comentario"
+msgstr ""
+
+#: .\catalog\admin.py:51
+#, python-brace-format
+msgid "{} reseña(s) aprobada(s) exitosamente."
+msgstr ""
+
+#: .\catalog\admin.py:54
+msgid "Aprobar reseñas seleccionadas"
+msgstr ""
+
+#: .\catalog\admin.py:63
+#, python-brace-format
+msgid "{} reseña(s) rechazada(s)."
+msgstr ""
+
+#: .\catalog\admin.py:66
+msgid "Rechazar reseñas seleccionadas"
+msgstr ""
+
+#: .\catalog\forms.py:28
+#, fuzzy
+#| msgid "Productos"
+msgid "Buscar productos..."
+msgstr "Productos"
+
+#: .\catalog\forms.py:30 .\templates\catalog\list.html:95
+msgid "Buscar"
+msgstr ""
+
+#: .\catalog\forms.py:36 .\templates\dashboard\inventario.html:35
+msgid "Todas las categorías"
+msgstr ""
+
+#: .\catalog\forms.py:38 .\catalog\models.py:15 .\catalog\models.py:102
+#: .\templates\catalog\list.html:113 .\templates\dashboard\inventario.html:97
+msgid "Categoría"
+msgstr ""
+
+#: .\catalog\forms.py:46
+msgid "Mínimo"
+msgstr ""
+
+#: .\catalog\forms.py:50
+msgid "Precio Mínimo"
+msgstr ""
+
+#: .\catalog\forms.py:58
+msgid "Máximo"
+msgstr ""
+
+#: .\catalog\forms.py:62
+msgid "Precio Máximo"
+msgstr ""
+
+#: .\catalog\forms.py:69
+#, fuzzy
+#| msgid "Soporte Disponible"
+msgid "Solo productos disponibles"
+msgstr "Soporte Disponible"
+
+#: .\catalog\forms.py:76
+msgid "Nombre (A-Z)"
+msgstr ""
+
+#: .\catalog\forms.py:77
+msgid "Nombre (Z-A)"
+msgstr ""
+
+#: .\catalog\forms.py:78
+msgid "Precio (Menor a Mayor)"
+msgstr ""
+
+#: .\catalog\forms.py:79
+msgid "Precio (Mayor a Menor)"
+msgstr ""
+
+#: .\catalog\forms.py:80
+msgid "Más recientes"
+msgstr ""
+
+#: .\catalog\forms.py:81
+msgid "Más antiguos"
+msgstr ""
+
+#: .\catalog\forms.py:84
+msgid "Ordenar por"
+msgstr ""
+
+#: .\catalog\forms.py:98
+msgid "Calificación de 1 a 5"
+msgstr ""
+
+#: .\catalog\forms.py:103
+msgid "Escribe tu opinión sobre el producto..."
+msgstr ""
+
+#: .\catalog\forms.py:107 .\catalog\models.py:61 .\catalog\models.py:152
+#, fuzzy
+#| msgid "Satisfacción"
+msgid "Calificación"
+msgstr "Satisfacción"
+
+#: .\catalog\forms.py:111
+msgid "Selecciona una calificación de 1 a 5 estrellas"
+msgstr ""
+
+#: .\catalog\forms.py:112
+msgid "Comparte tu experiencia con este producto"
+msgstr ""
+
+#: .\catalog\forms.py:119
+msgid "La calificación debe estar entre 1 y 5."
+msgstr ""
+
+#: .\catalog\models.py:7 .\catalog\models.py:94
 msgid "Alimentos"
 msgstr ""
 
-#: .\catalog\models.py:6
+#: .\catalog\models.py:8 .\catalog\models.py:95
 msgid "Medicamentos"
 msgstr ""
 
-#: .\catalog\models.py:7
+#: .\catalog\models.py:9 .\catalog\models.py:96
 #, fuzzy
 #| msgid "Accesible"
 msgid "Accesorios"
 msgstr "Accesible"
 
-#: .\catalog\models.py:11
+#: .\catalog\models.py:13 .\catalog\models.py:100
 msgid "SKU"
 msgstr ""
 
-#: .\catalog\models.py:12 .\core\forms.py:7
-#: .\templates\accounts\profile.html:110
+#: .\catalog\models.py:14 .\catalog\models.py:101 .\core\forms.py:10
+#: .\templates\accounts\profile.html:108 .\templates\accounts\profile.html:161
 msgid "Nombre"
 msgstr ""
 
-#: .\catalog\models.py:13
-msgid "Categoría"
-msgstr ""
-
-#: .\catalog\models.py:14
+#: .\catalog\models.py:16 .\catalog\models.py:103
+#: .\templates\dashboard\inventario.html:98
 msgid "Precio"
 msgstr ""
 
-#: .\catalog\models.py:15
+#: .\catalog\models.py:17 .\catalog\models.py:104
+#: .\templates\dashboard\inventario.html:99
 msgid "Stock"
 msgstr ""
 
-#: .\catalog\models.py:16
+#: .\catalog\models.py:18 .\catalog\models.py:105
+#: .\templates\adoption\detail.html:90
 #, fuzzy
 #| msgid "Satisfacción"
 msgid "Descripción"
 msgstr "Satisfacción"
 
-#: .\catalog\models.py:17
+#: .\catalog\models.py:19 .\catalog\models.py:106
 msgid "Imagen"
 msgstr ""
 
-#: .\catalog\models.py:18
+#: .\catalog\models.py:20 .\catalog\models.py:107
+#: .\templates\dashboard\usuarios.html:127
+#: .\templates\dashboard\usuarios.html:161
 #, fuzzy
 #| msgid "Intuitivo"
 msgid "Activo"
 msgstr "Intuitivo"
 
-#: .\core\forms.py:8 .\templates\accounts\profile.html:114
+#: .\catalog\models.py:53 .\catalog\models.py:144 .\orders\models.py:129
+#: .\templates\cart\cart_detail.html:16
+#: .\templates\dashboard\inventario.html:96
+#: .\templates\orders\admin_order_detail.html:35
+#: .\templates\orders\order_detail.html:43
+#, fuzzy
+#| msgid "Productos"
+msgid "Producto"
+msgstr "Productos"
+
+#: .\catalog\models.py:58 .\catalog\models.py:149 .\orders\models.py:30
+#: .\templates\orders\admin_order_detail.html:133
+#: .\templates\orders\admin_order_list.html:82
+msgid "Usuario"
+msgstr ""
+
+#: .\catalog\models.py:63 .\catalog\models.py:154
+msgid "Calificación de 1 a 5 estrellas"
+msgstr ""
+
+#: .\catalog\models.py:67 .\catalog\models.py:158
+msgid "Tu opinión sobre el producto"
+msgstr ""
+
+#: .\catalog\models.py:70 .\catalog\models.py:161
+#: .\templates\accounts\profile.html:390
+msgid "Aprobada"
+msgstr ""
+
+#: .\catalog\models.py:72 .\catalog\models.py:163
+msgid "Las reseñas deben ser aprobadas por un administrador"
+msgstr ""
+
+#: .\catalog\models.py:75 .\catalog\models.py:166 .\orders\models.py:83
+#: .\orders\models.py:140
+msgid "Fecha de Creación"
+msgstr ""
+
+#: .\catalog\models.py:80 .\catalog\models.py:171
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Reseña de Producto"
+msgstr "Catálogo de Productos"
+
+#: .\catalog\models.py:81 .\catalog\models.py:172
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Reseñas de Productos"
+msgstr "Catálogo de Productos"
+
+#: .\catalog\views.py:187
+msgid "¡Gracias por tu reseña!"
+msgstr ""
+
+#: .\catalog\views.py:190
+msgid "Hubo un error con tu reseña."
+msgstr ""
+
+#: .\core\forms.py:11 .\templates\accounts\profile.html:112
+#: .\templates\accounts\profile.html:165
 msgid "Apellidos"
 msgstr ""
 
-#: .\core\forms.py:12 .\templates\accounts\login.html:61
-#: .\templates\accounts\login.html:64 .\templates\accounts\signup_step2.html:38
+#: .\core\forms.py:15 .\templates\accounts\login.html:60
+#: .\templates\accounts\login.html:63 .\templates\accounts\signup_step2.html:38
 msgid "Correo electrónico"
 msgstr ""
 
-#: .\core\forms.py:17 .\templates\accounts\login.html:68
-#: .\templates\accounts\login.html:71
+#: .\core\forms.py:20 .\templates\accounts\login.html:67
+#: .\templates\accounts\login.html:70 .\templates\accounts\login.html:86
 #, fuzzy
 #| msgid "Alto Contraste"
 msgid "Contraseña"
 msgstr "Alto Contraste"
 
-#: .\core\forms.py:23
+#: .\core\forms.py:26
 #, fuzzy
 #| msgid "Alto Contraste"
 msgid "Confirmar Contraseña"
 msgstr "Alto Contraste"
 
 #: .\core\forms.py:34
+msgid "Verificación de seguridad"
+msgstr ""
+
+#: .\core\forms.py:35
+msgid ""
+"Por favor, completa la verificación reCAPTCHA. Si tienes problemas de "
+"visión, puedes usar el desafío de audio disponible en el widget."
+msgstr ""
+
+#: .\core\forms.py:44
 msgid "Las contraseñas no coinciden."
 msgstr ""
 
-#: .\djangocrud\settings.py:108
+#: .\djangocrud\settings.py:112
 msgid "Español"
 msgstr "Español"
 
-#: .\djangocrud\settings.py:109
+#: .\djangocrud\settings.py:113
 msgid "English"
 msgstr "Inglés"
 
-#: .\djangocrud\settings.py:110
+#: .\djangocrud\settings.py:114
 msgid "Português"
 msgstr "Portugués"
+
+#: .\orders\admin.py:23
+msgid "Información Básica"
+msgstr ""
+
+#: .\orders\admin.py:26 .\templates\orders\admin_order_detail.html:101
+#: .\templates\orders\checkout.html:17 .\templates\orders\order_detail.html:79
+msgid "Información de Envío"
+msgstr ""
+
+#: .\orders\admin.py:29
+msgid "Fechas"
+msgstr ""
+
+#: .\orders\forms.py:7 .\orders\models.py:60
+#, fuzzy
+#| msgid "Satisfacción"
+msgid "Dirección de Envío"
+msgstr "Satisfacción"
+
+#: .\orders\forms.py:13
+msgid "Ej: Av. Principal 123, Depto 45"
+msgstr ""
+
+#: .\orders\forms.py:16
+msgid "Ingresa tu dirección completa"
+msgstr ""
+
+#: .\orders\forms.py:22 .\orders\forms.py:33 .\orders\models.py:65
+#: .\templates\accounts\profile.html:128 .\templates\accounts\profile.html:185
+#: .\templates\dashboard\usuarios.html:200
+#: .\templates\orders\admin_order_detail.html:109
+#: .\templates\orders\order_detail.html:87
+msgid "Ciudad"
+msgstr ""
+
+#: .\orders\forms.py:27 .\orders\forms.py:38
+msgid "Ej: Santiago"
+msgstr ""
+
+#: .\orders\forms.py:44
+msgid "Notas Adicionales"
+msgstr ""
+
+#: .\orders\forms.py:50
+msgid "Instrucciones especiales de entrega (opcional)"
+msgstr ""
+
+#: .\orders\models.py:13 .\templates\accounts\profile.html:390
+msgid "Pendiente"
+msgstr ""
+
+#: .\orders\models.py:14
+msgid "Confirmada"
+msgstr ""
+
+#: .\orders\models.py:15
+msgid "En Proceso"
+msgstr ""
+
+#: .\orders\models.py:16
+msgid "Enviada"
+msgstr ""
+
+#: .\orders\models.py:17
+msgid "Entregada"
+msgstr ""
+
+#: .\orders\models.py:18
+msgid "Cancelada"
+msgstr ""
+
+#: .\orders\models.py:35 .\templates\accounts\profile.html:230
+#: .\templates\orders\order_list.html:17
+msgid "Número de Orden"
+msgstr ""
+
+#: .\orders\models.py:44 .\templates\accounts\profile.html:232
+#: .\templates\dashboard\inventario.html:101
+#: .\templates\orders\admin_order_list.html:84
+#: .\templates\orders\order_list.html:19
+msgid "Estado"
+msgstr ""
+
+#: .\orders\models.py:52 .\templates\accounts\profile.html:233
+#: .\templates\orders\admin_order_detail.html:57
+#: .\templates\orders\admin_order_list.html:85
+#: .\templates\orders\checkout.html:110 .\templates\orders\order_detail.html:65
+#: .\templates\orders\order_list.html:20
+msgid "Total"
+msgstr ""
+
+#: .\orders\models.py:70 .\templates\accounts\profile.html:132
+#: .\templates\accounts\profile.html:191
+#: .\templates\orders\admin_order_detail.html:114
+#: .\templates\orders\order_detail.html:92
+msgid "Código Postal"
+msgstr ""
+
+#: .\orders\models.py:77 .\templates\orders\admin_order_detail.html:120
+#: .\templates\orders\order_detail.html:98
+#, fuzzy
+#| msgid "Mascotas Adoptadas"
+msgid "Notas"
+msgstr "Mascotas Adoptadas"
+
+#: .\orders\models.py:84
+msgid "Fecha de Actualización"
+msgstr ""
+
+#: .\orders\models.py:88 .\orders\models.py:122
+#: .\templates\dashboard\index.html:149
+#: .\templates\orders\admin_order_detail.html:12
+#: .\templates\orders\order_detail.html:12
+msgid "Orden"
+msgstr ""
+
+#: .\orders\models.py:89
+msgid "Órdenes"
+msgstr ""
+
+#: .\orders\models.py:132 .\templates\cart\cart_detail.html:19
+#: .\templates\orders\admin_order_detail.html:36
+#: .\templates\orders\order_detail.html:44
+msgid "Cantidad"
+msgstr ""
+
+#: .\orders\models.py:135 .\templates\cart\cart_detail.html:18
+#: .\templates\orders\admin_order_detail.html:37
+#: .\templates\orders\order_detail.html:45
+msgid "Precio Unitario"
+msgstr ""
+
+#: .\orders\models.py:144
+msgid "Item de Orden"
+msgstr ""
+
+#: .\orders\models.py:145
+msgid "Items de Orden"
+msgstr ""
+
+#: .\orders\views.py:31
+msgid "Tu carrito está vacío."
+msgstr ""
+
+#: .\orders\views.py:39
+#, python-brace-format
+msgid "El producto '{}' no tiene suficiente stock. Stock disponible: {}"
+msgstr ""
+
+#: .\orders\views.py:72
+#, python-brace-format
+msgid "Stock insuficiente para '{}'"
+msgstr ""
+
+#: .\orders\views.py:102
+#, python-brace-format
+msgid "¡Orden creada exitosamente! Número de orden: {}"
+msgstr ""
+
+#: .\orders\views.py:109
+msgid "Ocurrió un error al procesar tu orden. Por favor intenta nuevamente."
+msgstr ""
+
+#: .\orders\views.py:166 .\orders\views.py:200
+msgid "No tienes permisos para acceder a esta página."
+msgstr ""
+
+#: .\orders\views.py:224
+#, python-brace-format
+msgid "Estado de la orden #{} cambiado de {} a {}"
+msgstr ""
+
+#: .\orders\views.py:232
+msgid "Estado inválido."
+msgstr ""
 
 #: .\templates\accessibility\accessibility.html:5
 #: .\templates\accessibility\accessibility.html:10
@@ -260,8 +720,9 @@ msgid ""
 "Para acceder a tu cuenta, necesitas iniciar sesión o crear una cuenta nueva."
 msgstr ""
 
-#: .\templates\accounts\access_required.html:29 .\templates\base.html:106
-#: .\templates\base.html:198
+#: .\templates\accounts\access_required.html:29
+#: .\templates\accounts\login.html:49 .\templates\base.html:112
+#: .\templates\base.html:233
 msgid "Iniciar Sesión"
 msgstr "Iniciar Sesión"
 
@@ -269,143 +730,414 @@ msgstr "Iniciar Sesión"
 msgid "Volver al Inicio"
 msgstr ""
 
-#: .\templates\accounts\login.html:72
+#: .\templates\accounts\favorites.html:6
+#, fuzzy
+#| msgid "Registrar Mascota"
+msgid "Mis Favoritos"
+msgstr "Registrar Mascota"
+
+#: .\templates\accounts\favorites.html:12
+msgid "Mis Productos Favoritos"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:15
+#: .\templates\accounts\notifications.html:15
+msgid "Tienes"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:15
+msgid "producto(s) en favoritos"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:17
+msgid "Aún no tienes productos favoritos"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:22
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Volver al Catálogo"
+msgstr "Catálogo de Productos"
+
+#: .\templates\accounts\favorites.html:40 .\templates\catalog\list.html:135
+#: .\templates\catalog\list.html:197 .\templates\catalog\product_detail.html:94
+#: .\templates\dashboard\inventario.html:120
+msgid "Agotado"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:50 .\templates\cart\cart_detail.html:55
+#: .\templates\catalog\list.html:151
+msgid "Stock:"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:56
+#: .\templates\accounts\notifications.html:61
+#: .\templates\orders\admin_order_list.html:110
+msgid "Ver"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:58 .\templates\catalog\list.html:176
+msgid "Quitar de favoritos"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:59
+msgid "Quitar"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:70
+msgid "No tienes productos favoritos aún"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:71
+msgid ""
+"Explora nuestro catálogo y agrega productos a tus favoritos haciendo clic en "
+"el corazón ❤️"
+msgstr ""
+
+#: .\templates\accounts\favorites.html:74
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Ver Catálogo"
+msgstr "Catálogo de Productos"
+
+#: .\templates\accounts\login.html:3 .\templates\accounts\login.html:81
+#, fuzzy
+#| msgid "Iniciar Sesión"
+msgid "Iniciar sesión"
+msgstr "Iniciar Sesión"
+
+#: .\templates\accounts\login.html:17
+#, fuzzy
+#| msgid "Registrarse"
+msgid "Área de Usuario"
+msgstr "Registrarse"
+
+#: .\templates\accounts\login.html:18
+msgid "¡Bienvenido de vuelta!"
+msgstr ""
+
+#: .\templates\accounts\login.html:19
+msgid ""
+"Accede a tu cuenta para gestionar tus adopciones, compras y formar parte de "
+"nuestra comunidad de amantes de las mascotas."
+msgstr ""
+
+#: .\templates\accounts\login.html:24
+#, fuzzy
+#| msgid "Mascotas Adoptadas"
+msgid "Adopta Mascotas"
+msgstr "Mascotas Adoptadas"
+
+#: .\templates\accounts\login.html:25
+msgid "Encuentra tu compañero perfecto en nuestro centro de adopciones"
+msgstr ""
+
+#: .\templates\accounts\login.html:31
+msgid "Perfil Personal"
+msgstr ""
+
+#: .\templates\accounts\login.html:32
+msgid "Gestiona tus datos, historial de compras y preferencias"
+msgstr ""
+
+#: .\templates\accounts\login.html:38
+msgid "Compras Seguras"
+msgstr ""
+
+#: .\templates\accounts\login.html:39
+msgid "Realiza pedidos de productos con total seguridad"
+msgstr ""
+
+#: .\templates\accounts\login.html:71
 msgid "Mostrar contraseña"
 msgstr ""
 
-#: .\templates\accounts\profile.html:5 .\templates\base.html:66
-#: .\templates\base.html:153 .\templates\base.html:252
+#: .\templates\accounts\login.html:78
+msgid "¿Olvidaste tu contraseña?"
+msgstr ""
+
+#: .\templates\accounts\login.html:84
+#, fuzzy
+#| msgid "Centro de Adopciones"
+msgid "Cuenta de Demostración"
+msgstr "Centro de Adopciones"
+
+#: .\templates\accounts\login.html:85
+#: .\templates\orders\admin_order_detail.html:134
+msgid "Email"
+msgstr ""
+
+#: .\templates\accounts\login.html:87
+msgid "Usa esta cuenta para probar las funcionalidades del sistema."
+msgstr ""
+
+#: .\templates\accounts\login.html:91
+msgid "¿No tienes una cuenta?"
+msgstr ""
+
+#: .\templates\accounts\login.html:91
+msgid "Regístrate aquí"
+msgstr ""
+
+#: .\templates\accounts\login.html:92
+msgid "¿Problemas para acceder?"
+msgstr ""
+
+#: .\templates\accounts\login.html:92
+msgid "Contacta al soporte"
+msgstr ""
+
+#: .\templates\accounts\notifications.html:6
+#: .\templates\accounts\notifications.html:12
+msgid "Mis Notificaciones"
+msgstr ""
+
+#: .\templates\accounts\notifications.html:15
+msgid "notificación(es) no leída(s)"
+msgstr ""
+
+#: .\templates\accounts\notifications.html:17
+msgid "No tienes notificaciones nuevas"
+msgstr ""
+
+#: .\templates\accounts\notifications.html:23
+msgid "Marcar Todas como Leídas"
+msgstr ""
+
+#: .\templates\accounts\notifications.html:50
+msgid "Nueva"
+msgstr ""
+
+#: .\templates\accounts\notifications.html:66
+msgid "Marcar Leída"
+msgstr ""
+
+#: .\templates\accounts\notifications.html:77
+msgid "No tienes notificaciones"
+msgstr ""
+
+#: .\templates\accounts\notifications.html:78
+msgid "Cuando tengas notificaciones, aparecerán aquí."
+msgstr ""
+
+#: .\templates\accounts\profile.html:7 .\templates\base.html:66
+#: .\templates\base.html:171 .\templates\base.html:288
 msgid "Mi Cuenta"
 msgstr "Mi Cuenta"
 
-#: .\templates\accounts\profile.html:16
-msgid "Hola, "
+#: .\templates\accounts\profile.html:24
+msgid "Hola"
 msgstr ""
 
-#: .\templates\accounts\profile.html:17
+#: .\templates\accounts\profile.html:25
 msgid "Gestiona tu cuenta y preferencias"
 msgstr ""
 
-#: .\templates\accounts\profile.html:27 .\templates\accounts\profile.html:83
+#: .\templates\accounts\profile.html:35 .\templates\accounts\profile.html:74
+#: .\templates\dashboard\usuarios.html:217
 msgid "Pedidos"
 msgstr ""
 
-#: .\templates\accounts\profile.html:40
+#: .\templates\accounts\profile.html:43 .\templates\dashboard\usuarios.html:218
 msgid "Total Gastado"
 msgstr ""
 
-#: .\templates\accounts\profile.html:53
+#: .\templates\accounts\profile.html:51 .\templates\dashboard\base.html:73
+#: .\templates\dashboard\index.html:82 .\templates\dashboard\usuarios.html:76
+#: .\templates\dashboard\usuarios.html:219
 #, fuzzy
 #| msgid "Adopción"
 msgid "Adopciones"
 msgstr "Adopción"
 
-#: .\templates\accounts\profile.html:66 .\templates\accounts\profile.html:89
+#: .\templates\accounts\profile.html:59 .\templates\accounts\profile.html:84
+#: .\templates\catalog\product_detail.html:127
+#: .\templates\dashboard\usuarios.html:87
+#: .\templates\dashboard\usuarios.html:181
+#: .\templates\dashboard\usuarios.html:220
 msgid "Reseñas"
 msgstr ""
 
-#: .\templates\accounts\profile.html:80
+#: .\templates\accounts\profile.html:69
 msgid "Perfil"
 msgstr ""
 
-#: .\templates\accounts\profile.html:86
+#: .\templates\accounts\profile.html:79 .\templates\dashboard\usuarios.html:178
 #, fuzzy
 #| msgid "Mascotas Adoptadas"
 msgid "Mascotas"
 msgstr "Mascotas Adoptadas"
 
-#: .\templates\accounts\profile.html:92 .\templates\base.html:102
-#: .\templates\base.html:195
-msgid "Cerrar Sesión"
-msgstr "Cerrar Sesión"
-
-#: .\templates\accounts\profile.html:103
+#: .\templates\accounts\profile.html:96 .\templates\dashboard\usuarios.html:189
 msgid "Información Personal"
 msgstr ""
 
-#: .\templates\accounts\profile.html:104
+#: .\templates\accounts\profile.html:99
 msgid "Editar Perfil"
 msgstr ""
 
-#: .\templates\accounts\profile.html:121
+#: .\templates\accounts\profile.html:116 .\templates\accounts\profile.html:171
 msgid "Correo Electrónico"
 msgstr ""
 
-#: .\templates\accounts\profile.html:125
+#: .\templates\accounts\profile.html:120 .\templates\accounts\profile.html:175
+#: .\templates\dashboard\usuarios.html:192
 msgid "Teléfono"
 msgstr ""
 
-#: .\templates\accounts\profile.html:134
+#: .\templates\accounts\profile.html:124 .\templates\accounts\profile.html:181
+#: .\templates\dashboard\usuarios.html:196
+#: .\templates\orders\admin_order_detail.html:105
+#: .\templates\orders\order_detail.html:83
 #, fuzzy
 #| msgid "Satisfacción"
 msgid "Dirección"
 msgstr "Satisfacción"
 
-#: .\templates\accounts\profile.html:140
-msgid "Ciudad"
-msgstr ""
-
-#: .\templates\accounts\profile.html:149
-msgid "Código Postal"
-msgstr ""
-
-#: .\templates\accounts\profile.html:158
+#: .\templates\accounts\profile.html:136 .\templates\accounts\profile.html:195
 msgid "Preferencias de Comunicación"
 msgstr ""
 
-#: .\templates\accounts\profile.html:164 .\templates\accounts\profile.html:169
+#: .\templates\accounts\profile.html:139 .\templates\accounts\profile.html:198
+#: .\templates\dashboard\usuarios.html:224
 msgid "Newsletter"
 msgstr ""
 
-#: .\templates\accounts\profile.html:165
-msgid "Recibe noticias y ofertas especiales"
-msgstr ""
-
-#: .\templates\accounts\profile.html:175 .\templates\accounts\profile.html:180
+#: .\templates\accounts\profile.html:143 .\templates\accounts\profile.html:203
 #, fuzzy
 #| msgid "Centro de Adopciones"
 msgid "Alertas de Adopción"
 msgstr "Centro de Adopciones"
 
-#: .\templates\accounts\profile.html:176
-msgid "Notificaciones sobre nuevas mascotas"
-msgstr ""
-
-#: .\templates\accounts\profile.html:186 .\templates\accounts\profile.html:191
+#: .\templates\accounts\profile.html:147 .\templates\accounts\profile.html:208
 #, fuzzy
 #| msgid "Catálogo de Productos"
 msgid "Recomendaciones de Productos"
 msgstr "Catálogo de Productos"
 
-#: .\templates\accounts\profile.html:187
-msgid "Sugerecias personalizadas"
+#: .\templates\accounts\profile.html:151
+msgid "Guardar"
 msgstr ""
 
-#: .\templates\accounts\profile.html:200
-msgid "Mis Pedidos"
+#: .\templates\accounts\profile.html:154
+msgid "Cancelar"
 msgstr ""
 
-#: .\templates\accounts\profile.html:201
-msgid "Aquí verás el historial de tus pedidos."
+#: .\templates\accounts\profile.html:199
+msgid "Recibe noticias y ofertas especiales"
+msgstr ""
+
+#: .\templates\accounts\profile.html:204
+msgid "Notificaciones sobre nuevas mascotas"
 msgstr ""
 
 #: .\templates\accounts\profile.html:209
-#, fuzzy
-#| msgid "Registrar Mascota"
-msgid "Mis Mascotas"
-msgstr "Registrar Mascota"
-
-#: .\templates\accounts\profile.html:210
-msgid "Aquí podrás gestionar las mascotas asociadas a tu cuenta."
+msgid "Sugerencias personalizadas"
 msgstr ""
 
-#: .\templates\accounts\profile.html:218
+#: .\templates\accounts\profile.html:223 .\templates\orders\order_list.html:6
+#: .\templates\orders\order_list.html:10
+msgid "Mis Pedidos"
+msgstr ""
+
+#: .\templates\accounts\profile.html:231
+#: .\templates\orders\admin_order_detail.html:15
+#: .\templates\orders\admin_order_list.html:83
+#: .\templates\orders\order_detail.html:14
+#: .\templates\orders\order_list.html:18
+msgid "Fecha"
+msgstr ""
+
+#: .\templates\accounts\profile.html:234
+#: .\templates\dashboard\inventario.html:102
+#: .\templates\orders\admin_order_list.html:86
+#: .\templates\orders\order_list.html:21
+#, fuzzy
+#| msgid "Adopción"
+msgid "Acciones"
+msgstr "Adopción"
+
+#: .\templates\accounts\profile.html:242
+msgid "Items:"
+msgstr ""
+
+#: .\templates\accounts\profile.html:260 .\templates\orders\order_list.html:46
+msgid "Ver Detalle"
+msgstr ""
+
+#: .\templates\accounts\profile.html:270
+msgid "Paginación de pedidos"
+msgstr ""
+
+#: .\templates\accounts\profile.html:274
+#: .\templates\accounts\signup_step2.html:50
+#: .\templates\accounts\signup_step3.html:87 .\templates\catalog\list.html:242
+#: .\templates\catalog\list.html:247
+msgid "Anterior"
+msgstr ""
+
+#: .\templates\accounts\profile.html:292
+#: .\templates\accounts\signup_step1.html:48
+#: .\templates\accounts\signup_step2.html:53 .\templates\catalog\list.html:261
+#: .\templates\catalog\list.html:266
+msgid "Siguiente"
+msgstr ""
+
+#: .\templates\accounts\profile.html:301 .\templates\orders\order_list.html:57
+msgid "No tienes pedidos aún"
+msgstr ""
+
+#: .\templates\accounts\profile.html:302
+msgid "Cuando realices tu primera compra, aparecerá aquí."
+msgstr ""
+
+#: .\templates\accounts\profile.html:304
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Explorar Catálogo"
+msgstr "Catálogo de Productos"
+
+#: .\templates\accounts\profile.html:316
+#, fuzzy
+#| msgid "Centro de Adopciones"
+msgid "Mis Solicitudes de Adopción"
+msgstr "Centro de Adopciones"
+
+#: .\templates\accounts\profile.html:341
+msgid "Solicitud:"
+msgstr ""
+
+#: .\templates\accounts\profile.html:359
+msgid "No tienes solicitudes de adopción"
+msgstr ""
+
+#: .\templates\accounts\profile.html:360
+msgid "Cuando solicites adoptar una mascota, aparecerá aquí."
+msgstr ""
+
+#: .\templates\accounts\profile.html:362
+#, fuzzy
+#| msgid "Soporte Disponible"
+msgid "Ver Mascotas Disponibles"
+msgstr "Soporte Disponible"
+
+#: .\templates\accounts\profile.html:374
 msgid "Mis Reseñas"
 msgstr ""
 
-#: .\templates\accounts\profile.html:219
-msgid "Aquí verás las reseñas que has dejado."
+#: .\templates\accounts\profile.html:410
+msgid "No has escrito reseñas aún"
 msgstr ""
+
+#: .\templates\accounts\profile.html:411
+msgid "Comparte tu opinión sobre los productos que has comprado."
+msgstr ""
+
+#: .\templates\accounts\profile.html:413
+#, fuzzy
+#| msgid "Productos"
+msgid "Ver Productos"
+msgstr "Productos"
 
 #: .\templates\accounts\signup_step1.html:14
 msgid "Únete a nuestra comunidad"
@@ -423,7 +1155,7 @@ msgstr ""
 
 #: .\templates\accounts\signup_step1.html:23
 #: .\templates\accounts\signup_step2.html:18
-#: .\templates\accounts\signup_step3.html:18
+#: .\templates\accounts\signup_step3.html:23
 #, fuzzy
 #| msgid "Registrarse"
 msgid "Registro de Usuario"
@@ -445,11 +1177,6 @@ msgstr ""
 #: .\templates\accounts\signup_step1.html:27
 #: .\templates\accounts\signup_step2.html:23
 msgid "Paso 3: Seguridad"
-msgstr ""
-
-#: .\templates\accounts\signup_step1.html:48
-#: .\templates\accounts\signup_step2.html:53
-msgid "Siguiente"
 msgstr ""
 
 #: .\templates\accounts\signup_step1.html:53
@@ -476,7 +1203,7 @@ msgid "Paso %(current_step)s de %(total_steps)s - Datos de Contacto"
 msgstr ""
 
 #: .\templates\accounts\signup_step2.html:21
-#: .\templates\accounts\signup_step3.html:21
+#: .\templates\accounts\signup_step3.html:32
 msgid "Paso 1: Información Personal (completado)"
 msgstr ""
 
@@ -484,42 +1211,44 @@ msgstr ""
 msgid "Paso 2: Datos de Contacto (actual)"
 msgstr ""
 
-#: .\templates\accounts\signup_step2.html:50
-#: .\templates\accounts\signup_step3.html:48
-msgid "Anterior"
-msgstr ""
-
-#: .\templates\accounts\signup_step3.html:12
+#: .\templates\accounts\signup_step3.html:16
 msgid "¡Último paso!"
 msgstr ""
 
-#: .\templates\accounts\signup_step3.html:13
+#: .\templates\accounts\signup_step3.html:17
 msgid "Crea una contraseña segura para proteger tu cuenta."
 msgstr ""
 
-#: .\templates\accounts\signup_step3.html:19
+#: .\templates\accounts\signup_step3.html:25
 #, python-format
-msgid "Paso %(current_step)s de %(total_steps)s - Seguridad"
+msgid ""
+"\n"
+"                    Paso %(current_step)s de %(total_steps)s - Seguridad\n"
+"                    "
 msgstr ""
 
-#: .\templates\accounts\signup_step3.html:21
+#: .\templates\accounts\signup_step3.html:36
 msgid "Paso 2: Datos de Contacto (completado)"
 msgstr ""
 
-#: .\templates\accounts\signup_step3.html:21
+#: .\templates\accounts\signup_step3.html:40
 msgid "Paso 3: Seguridad (actual)"
 msgstr ""
 
-#: .\templates\accounts\signup_step3.html:35
+#: .\templates\accounts\signup_step3.html:65
 msgid "Mínimo 6 caracteres"
 msgstr ""
 
-#: .\templates\accounts\signup_step3.html:51
+#: .\templates\accounts\signup_step3.html:91
 msgid "¡Finalizar Registro!"
 msgstr ""
 
+#: .\templates\accounts\signup_step3.html:122
+msgid "Por favor, completa la verificación reCAPTCHA antes de continuar."
+msgstr ""
+
 #: .\templates\acerca\about.html:9 .\templates\base.html:62
-#: .\templates\base.html:152
+#: .\templates\base.html:170
 msgid "Acerca de"
 msgstr "Acerca de"
 
@@ -725,6 +1454,30 @@ msgstr ""
 msgid "Filosofía del equipo PetStorePOS"
 msgstr ""
 
+#: .\templates\adoption\detail.html:100
+msgid "Salud"
+msgstr ""
+
+#: .\templates\adoption\detail.html:102
+msgid "Esterilizado:"
+msgstr ""
+
+#: .\templates\adoption\detail.html:102 .\templates\adoption\detail.html:103
+msgid "Sí"
+msgstr ""
+
+#: .\templates\adoption\detail.html:102 .\templates\adoption\detail.html:103
+msgid "No"
+msgstr ""
+
+#: .\templates\adoption\detail.html:103
+msgid "Vacunas al día:"
+msgstr ""
+
+#: .\templates\adoption\detail.html:109
+msgid "Adoptar en Huachitos.cl"
+msgstr ""
+
 #: .\templates\adoption\detail.html:110
 msgid "se abre en una nueva pestaña"
 msgstr ""
@@ -741,15 +1494,17 @@ msgstr ""
 msgid "Filtrar por especie:"
 msgstr ""
 
-#: .\templates\adoption\list.html:23
+#: .\templates\adoption\list.html:23 .\templates\dashboard\adopciones.html:34
 msgid "Todas las especies"
 msgstr ""
 
-#: .\templates\adoption\list.html:31 .\templates\catalog\list.html:59
+#: .\templates\adoption\list.html:31
+#: .\templates\orders\admin_order_list.html:63
 msgid "Filtrar"
 msgstr ""
 
-#: .\templates\adoption\list.html:34
+#: .\templates\adoption\list.html:34 .\templates\catalog\list.html:99
+#: .\templates\orders\admin_order_list.html:66
 msgid "Limpiar"
 msgstr ""
 
@@ -774,46 +1529,66 @@ msgstr ""
 msgid "Sistema Integral"
 msgstr "Sistema Integral"
 
-#: .\templates\base.html:53 .\templates\base.html:149
+#: .\templates\base.html:53 .\templates\base.html:167
 #: .\templates\core\home.html:4
 msgid "Inicio"
 msgstr "Inicio"
 
-#: .\templates\base.html:56 .\templates\base.html:150
-#: .\templates\catalog\list.html:21
+#: .\templates\base.html:56 .\templates\base.html:168
+#: .\templates\catalog\list.html:21 .\templates\catalog\product_detail.html:38
+#: .\templates\orders\admin_order_detail.html:28
+#: .\templates\orders\checkout.html:92 .\templates\orders\order_detail.html:36
 msgid "Productos"
 msgstr "Productos"
 
-#: .\templates\base.html:59 .\templates\base.html:151
+#: .\templates\base.html:59 .\templates\base.html:169
 #: .\templates\core\home.html:25
 msgid "Adopción"
 msgstr "Adopción"
 
-#: .\templates\base.html:72 .\templates\base.html:154 .\templates\base.html:257
+#: .\templates\base.html:71 .\templates\base.html:173
+#: .\templates\catalog\product_detail.html:115
+msgid "Favoritos"
+msgstr ""
+
+#: .\templates\base.html:78 .\templates\base.html:175 .\templates\base.html:293
+#: .\templates\dashboard\base.html:88
 msgid "Accesibilidad"
 msgstr "Accesibilidad"
 
-#: .\templates\base.html:94 .\templates\base.html:191
+#: .\templates\base.html:100 .\templates\base.html:226
 msgid "Ir al Dashboard"
 msgstr "Ir al Dashboard"
 
-#: .\templates\base.html:109 .\templates\base.html:200
+#: .\templates\base.html:108 .\templates\base.html:230
+msgid "Cerrar Sesión"
+msgstr "Cerrar Sesión"
+
+#: .\templates\base.html:115 .\templates\base.html:235
 msgid "Registrarse"
 msgstr "Registrarse"
 
-#: .\templates\base.html:114 .\templates\base.html:160
+#: .\templates\base.html:121 .\templates\base.html:182
+msgid "Ver notificaciones"
+msgstr ""
+
+#: .\templates\base.html:126 .\templates\base.html:187
+msgid "notificaciones no leídas"
+msgstr ""
+
+#: .\templates\base.html:134 .\templates\base.html:195
 msgid "Ver carrito de compras"
 msgstr ""
 
-#: .\templates\base.html:144
+#: .\templates\base.html:162
 msgid "Toggle navigation"
 msgstr "Toggle navigation"
 
-#: .\templates\base.html:233
+#: .\templates\base.html:269
 msgid "Icono de corazón"
 msgstr ""
 
-#: .\templates\base.html:238
+#: .\templates\base.html:274
 msgid ""
 "Sistema integral para el cuidado y gestión de mascotas, diseñado\n"
 "              con accesibilidad y usabilidad como prioridades principales."
@@ -821,35 +1596,37 @@ msgstr ""
 "Sistema integral para el cuidado y gestión de mascotas, diseñado\n"
 "              con accesibilidad y usabilidad como prioridades principales."
 
-#: .\templates\base.html:242
+#: .\templates\base.html:278
 msgid "Accesible"
 msgstr "Accesible"
 
-#: .\templates\base.html:243
+#: .\templates\base.html:279
 msgid "Intuitivo"
 msgstr "Intuitivo"
 
-#: .\templates\base.html:244
+#: .\templates\base.html:280
 msgid "Seguro"
 msgstr "Seguro"
 
-#: .\templates\base.html:248
+#: .\templates\base.html:284
 msgid "Enlaces Rápidos"
 msgstr "Enlaces Rápidos"
 
-#: .\templates\base.html:250
+#: .\templates\base.html:286
 msgid "Catálogo de Productos"
 msgstr "Catálogo de Productos"
 
-#: .\templates\base.html:251 .\templates\core\home.html:53
+#: .\templates\base.html:287 .\templates\core\home.html:53
+#: .\templates\dashboard\adopciones.html:5
+#: .\templates\dashboard\adopciones.html:15
 msgid "Centro de Adopciones"
 msgstr "Centro de Adopciones"
 
-#: .\templates\base.html:253
+#: .\templates\base.html:289
 msgid "Acerca del Proyecto"
 msgstr "Acerca del Proyecto"
 
-#: .\templates\base.html:259
+#: .\templates\base.html:295
 msgid ""
 "Este sitio cumple con las pautas WCAG 2.1 AA y está optimizado\n"
 "  para lectores de pantalla y navegación por teclado."
@@ -857,11 +1634,11 @@ msgstr ""
 "Este sitio cumple con las pautas WCAG 2.1 AA y está optimizado\n"
 "  para lectores de pantalla y navegación por teclado."
 
-#: .\templates\base.html:263
+#: .\templates\base.html:299
 msgid "Configurar Accesibilidad"
 msgstr "Configurar Accesibilidad"
 
-#: .\templates\base.html:270
+#: .\templates\base.html:306
 #, fuzzy, python-format
 #| msgid ""
 #| "© 2025 PetCare System. Diseñado con accesibilidad universal y amor por\n"
@@ -877,30 +1654,19 @@ msgstr ""
 msgid "Mi Carrito de Compras"
 msgstr ""
 
-#: .\templates\cart\cart_detail.html:16
-#, fuzzy
-#| msgid "Productos"
-msgid "Producto"
-msgstr "Productos"
-
-#: .\templates\cart\cart_detail.html:18
-msgid "Precio Unitario"
-msgstr ""
-
-#: .\templates\cart\cart_detail.html:19
-msgid "Cantidad"
-msgstr ""
-
 #: .\templates\cart\cart_detail.html:20
+#: .\templates\orders\admin_order_detail.html:38
+#: .\templates\orders\order_detail.html:46
 msgid "Subtotal"
 msgstr ""
 
-#: .\templates\cart\cart_detail.html:31 .\templates\catalog\list.html:77
+#: .\templates\cart\cart_detail.html:31 .\templates\catalog\list.html:129
 msgid "Imagen de producto no disponible"
 msgstr ""
 
 #: .\templates\cart\cart_detail.html:39 .\templates\cart\cart_detail.html:40
-#: .\templates\catalog\list.html:109
+#: .\templates\catalog\list.html:164 .\templates\dashboard\inventario.html:129
+#: .\templates\dashboard\usuarios.html:166
 msgid "Eliminar"
 msgstr ""
 
@@ -916,15 +1682,12 @@ msgstr ""
 msgid "Actualizar cantidad de"
 msgstr ""
 
-#: .\templates\cart\cart_detail.html:55 .\templates\catalog\list.html:96
-msgid "Stock:"
-msgstr ""
-
 #: .\templates\cart\cart_detail.html:63
 msgid "Total Carrito:"
 msgstr ""
 
 #: .\templates\cart\cart_detail.html:71
+#: .\templates\orders\order_detail.html:110
 msgid "Seguir Comprando"
 msgstr ""
 
@@ -942,7 +1705,7 @@ msgid ""
 "encontrar algo que te guste."
 msgstr ""
 
-#: .\templates\cart\cart_detail.html:82
+#: .\templates\cart\cart_detail.html:82 .\templates\orders\order_list.html:61
 #, fuzzy
 #| msgid "Catálogo de Productos"
 msgid "Ir al Catálogo"
@@ -979,63 +1742,138 @@ msgid "Nuevo producto"
 msgstr "Productos"
 
 #: .\templates\catalog\list.html:44
-msgid "Buscar:"
+msgid "Búsqueda Avanzada"
 msgstr ""
 
-#: .\templates\catalog\list.html:45
-msgid "Buscar por nombre, SKU..."
+#: .\templates\catalog\list.html:75
+msgid "Filtros"
 msgstr ""
 
-#: .\templates\catalog\list.html:48
-msgid "Categoría:"
-msgstr ""
-
-#: .\templates\catalog\list.html:50
-msgid "Todas"
-msgstr ""
-
-#: .\templates\catalog\list.html:61
+#: .\templates\catalog\list.html:98
 msgid "Limpiar filtros"
 msgstr ""
 
-#: .\templates\catalog\list.html:81
+#: .\templates\catalog\list.html:111
+msgid "Resultados para"
+msgstr ""
+
+#: .\templates\catalog\list.html:133 .\templates\dashboard\inventario.html:122
+#: .\templates\dashboard\usuarios.html:129
+#: .\templates\dashboard\usuarios.html:163
 #, fuzzy
 #| msgid "Intuitivo"
 msgid "Inactivo"
 msgstr "Intuitivo"
 
-#: .\templates\catalog\list.html:84 .\templates\catalog\list.html:122
-msgid "Agotado"
-msgstr ""
-
-#: .\templates\catalog\list.html:106
+#: .\templates\catalog\list.html:161 .\templates\dashboard\inventario.html:126
 msgid "Editar"
 msgstr ""
 
-#: .\templates\catalog\list.html:118
+#: .\templates\catalog\list.html:176
+msgid "Agregar a favoritos"
+msgstr ""
+
+#: .\templates\catalog\list.html:180
+msgid "En Favoritos"
+msgstr ""
+
+#: .\templates\catalog\list.html:182
+msgid "Agregar a Favoritos"
+msgstr ""
+
+#: .\templates\catalog\list.html:193
 msgid "Añadir al Carrito"
 msgstr ""
 
-#: .\templates\catalog\list.html:135
+#: .\templates\catalog\list.html:211
 #, fuzzy
 #| msgid "Soporte Disponible"
 msgid "No hay productos disponibles"
 msgstr "Soporte Disponible"
 
-#: .\templates\catalog\list.html:138
+#: .\templates\catalog\list.html:214
 msgid "No se encontraron productos que coincidan con tu búsqueda o filtro."
 msgstr ""
 
-#: .\templates\catalog\list.html:140
+#: .\templates\catalog\list.html:216
 msgid "Parece que aún no se han agregado productos al catálogo."
 msgstr ""
 
-#: .\templates\catalog\list.html:145
+#: .\templates\catalog\list.html:221
 msgid "Crear el primer producto"
 msgstr ""
 
-#: .\templates\catalog\list.html:150
+#: .\templates\catalog\list.html:226
 msgid "Limpiar Filtros"
+msgstr ""
+
+#: .\templates\catalog\list.html:236
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Paginación de productos"
+msgstr "Catálogo de Productos"
+
+#: .\templates\catalog\list.html:253
+msgid "Página"
+msgstr ""
+
+#: .\templates\catalog\list.html:253
+msgid "de"
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:71
+#, fuzzy
+#| msgid "Alto Contraste"
+msgid "reseña"
+msgstr "Alto Contraste"
+
+#: .\templates\catalog\product_detail.html:76
+msgid "Sin reseñas aún"
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:87
+msgid "Sin descripción disponible."
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:92
+#, fuzzy
+#| msgid "Soporte Disponible"
+msgid "Disponible"
+msgstr "Soporte Disponible"
+
+#: .\templates\catalog\product_detail.html:104
+msgid "Agregar al Carrito"
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:108
+#, fuzzy
+#| msgid "Productos"
+msgid "Producto Agotado"
+msgstr "Productos"
+
+#: .\templates\catalog\product_detail.html:137
+msgid "Deja tu Reseña"
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:167
+msgid "Enviar Reseña"
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:176
+msgid "Debes comprar este producto para poder dejar una reseña."
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:178
+msgid "Ya has dejado una reseña para este producto."
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:184
+msgid ""
+"Debes iniciar sesión y haber comprado este producto para dejar una reseña."
+msgstr ""
+
+#: .\templates\catalog\product_detail.html:219
+msgid "Aún no hay reseñas para este producto. ¡Sé el primero en opinar!"
 msgstr ""
 
 #: .\templates\core\home.html:12
@@ -1161,10 +1999,541 @@ msgstr "Texto Ampliable"
 msgid "Tamaños de texto ajustables hasta 200%%."
 msgstr "Tamaños de texto ajustables hasta 200%%."
 
-#~ msgid "Ingresar"
-#~ msgstr "Ingresar"
+#: .\templates\dashboard\adopciones.html:16
+msgid "Encuentra su nuevo compañero peludo"
+msgstr ""
+
+#: .\templates\dashboard\adopciones.html:26
+msgid "Buscar por nombre o raza..."
+msgstr ""
+
+#: .\templates\dashboard\adopciones.html:50
+#, fuzzy
+#| msgid "Soporte Disponible"
+msgid "Disponibles"
+msgstr "Soporte Disponible"
+
+#: .\templates\dashboard\adopciones.html:61
+msgid "En proceso"
+msgstr ""
+
+#: .\templates\dashboard\adopciones.html:63
+#: .\templates\dashboard\adopciones.html:75
+msgid "(API no provee esta data)"
+msgstr ""
+
+#: .\templates\dashboard\adopciones.html:73
+#, fuzzy
+#| msgid "Adopción"
+msgid "Adoptados"
+msgstr "Adopción"
+
+#: .\templates\dashboard\adopciones.html:104
+msgid "Ver detalles"
+msgstr ""
+
+#: .\templates\dashboard\adopciones.html:105
+msgid "Adoptar"
+msgstr ""
+
+#: .\templates\dashboard\adopciones.html:114
+msgid "No se encontraron mascotas"
+msgstr ""
+
+#: .\templates\dashboard\adopciones.html:115
+msgid ""
+"No hay mascotas que coincidan con los filtros de búsqueda actuales en la API."
+msgstr ""
+
+#: .\templates\dashboard\base.html:38
+msgid "Sistema de gestión"
+msgstr ""
+
+#: .\templates\dashboard\base.html:45
+msgid "Administrador"
+msgstr ""
+
+#: .\templates\dashboard\base.html:54
+#, fuzzy
+#| msgid "Ir al Dashboard"
+msgid "Dashboard"
+msgstr "Ir al Dashboard"
+
+#: .\templates\dashboard\base.html:62
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Inventario"
+msgstr "Catálogo de Productos"
+
+#: .\templates\dashboard\base.html:68 .\templates\dashboard\pos.html:5
+#: .\templates\dashboard\pos.html:47
+msgid "Punto de Venta"
+msgstr ""
+
+#: .\templates\dashboard\base.html:78 .\templates\dashboard\usuarios.html:5
+#: .\templates\dashboard\usuarios.html:17
+#, fuzzy
+#| msgid "Registrarse"
+msgid "Gestión de Usuarios"
+msgstr "Registrarse"
+
+#: .\templates\dashboard\base.html:83
+msgid "Asistente"
+msgstr ""
+
+#: .\templates\dashboard\base.html:93
+#, fuzzy
+#| msgid "Configurar Accesibilidad"
+msgid "Configuración"
+msgstr "Configurar Accesibilidad"
+
+#: .\templates\dashboard\base.html:100
+#, fuzzy
+#| msgid "Cerrar Sesión"
+msgid "Cerrar sesión"
+msgstr "Cerrar Sesión"
+
+#: .\templates\dashboard\index.html:6
+msgid "Resumen General"
+msgstr ""
+
+#: .\templates\dashboard\index.html:13
+msgid "Resumen general del sistema"
+msgstr ""
+
+#: .\templates\dashboard\index.html:18 .\templates\dashboard\usuarios.html:21
+msgid "Exportar Datos"
+msgstr ""
+
+#: .\templates\dashboard\index.html:22
+#, fuzzy
+#| msgid "Explorar Productos"
+msgid "Exportar Productos"
+msgstr "Explorar Productos"
+
+#: .\templates\dashboard\index.html:25
+#, fuzzy
+#| msgid "Explorar Productos"
+msgid "Exportar Pedidos"
+msgstr "Explorar Productos"
+
+#: .\templates\dashboard\index.html:28
+msgid "Exportar Usuarios"
+msgstr ""
+
+#: .\templates\dashboard\index.html:40
+msgid "Ventas del Mes"
+msgstr ""
+
+#: .\templates\dashboard\index.html:54
+#, fuzzy
+#| msgid "Productos"
+msgid "Productos Vendidos"
+msgstr "Productos"
+
+#: .\templates\dashboard\index.html:56
+msgid "Este mes"
+msgstr ""
+
+#: .\templates\dashboard\index.html:68 .\templates\dashboard\index.html:164
+#: .\templates\dashboard\inventario.html:63
+msgid "Stock Bajo"
+msgstr ""
+
+#: .\templates\dashboard\index.html:70
+msgid "Menos de 10 unidades"
+msgstr ""
+
+#: .\templates\dashboard\index.html:84
+#, fuzzy
+#| msgid "Mascotas Adoptadas"
+msgid "Total adoptadas"
+msgstr "Mascotas Adoptadas"
+
+#: .\templates\dashboard\index.html:100
+msgid "Ventas por Mes"
+msgstr ""
+
+#: .\templates\dashboard\index.html:100
+msgid "Últimos 6 meses"
+msgstr ""
+
+#: .\templates\dashboard\index.html:110
+#, fuzzy
+#| msgid "Adopción"
+msgid "Adopciones por Especie"
+msgstr "Adopción"
+
+#: .\templates\dashboard\index.html:123
+msgid "Top 10 Productos Más Vendidos"
+msgstr ""
+
+#: .\templates\dashboard\index.html:133
+msgid "Stock por Categoría"
+msgstr ""
+
+#: .\templates\dashboard\index.html:144
+msgid "Ventas Recientes"
+msgstr ""
+
+#: .\templates\dashboard\index.html:156
+msgid "No hay órdenes recientes"
+msgstr ""
+
+#: .\templates\dashboard\index.html:170
+msgid "Mínimo requerido"
+msgstr ""
+
+#: .\templates\dashboard\index.html:172
+#: .\templates\dashboard\inventario.html:114
+msgid "unidades"
+msgstr ""
+
+#: .\templates\dashboard\index.html:176
+msgid "Todos los productos tienen stock suficiente"
+msgstr ""
+
+#: .\templates\dashboard\index.html:213
+msgid "Ventas ($)"
+msgstr ""
+
+#: .\templates\dashboard\index.html:276
+#, fuzzy
+#| msgid "Soporte Disponible"
+msgid "No hay datos de adopciones disponibles"
+msgstr "Soporte Disponible"
+
+#: .\templates\dashboard\index.html:287
+msgid "Unidades Vendidas"
+msgstr ""
+
+#: .\templates\dashboard\index.html:311
+#, fuzzy
+#| msgid "Soporte Disponible"
+msgid "No hay datos de ventas disponibles"
+msgstr "Soporte Disponible"
+
+#: .\templates\dashboard\index.html:325
+msgid "Stock Total"
+msgstr ""
+
+#: .\templates\dashboard\index.html:356
+#, fuzzy
+#| msgid "Soporte Disponible"
+msgid "No hay datos de stock disponibles"
+msgstr "Soporte Disponible"
+
+#: .\templates\dashboard\inventario.html:5
+#: .\templates\dashboard\inventario.html:12
+#, fuzzy
+#| msgid "Gestión Veterinaria"
+msgid "Gestión de Inventario"
+msgstr "Gestión Veterinaria"
+
+#: .\templates\dashboard\inventario.html:13
+msgid "Administra productos, stock y categorías"
+msgstr ""
+
+#: .\templates\dashboard\inventario.html:16
+#, fuzzy
+#| msgid "Explorar Productos"
+msgid "Agregar Producto"
+msgstr "Explorar Productos"
+
+#: .\templates\dashboard\inventario.html:27
+msgid "Buscar por nombre o código de barras..."
+msgstr ""
+
+#: .\templates\dashboard\inventario.html:50
+#, fuzzy
+#| msgid "Productos"
+msgid "Total Productos"
+msgstr "Productos"
+
+#: .\templates\dashboard\inventario.html:76
+msgid "Valor Total"
+msgstr ""
+
+#: .\templates\dashboard\inventario.html:90
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Lista de Productos"
+msgstr "Catálogo de Productos"
+
+#: .\templates\dashboard\inventario.html:100
+msgid "Código"
+msgstr ""
+
+#: .\templates\dashboard\inventario.html:118
+msgid "En stock"
+msgstr ""
+
+#: .\templates\dashboard\inventario.html:137
+msgid "No se encontraron productos que coincidan con la búsqueda."
+msgstr ""
+
+#: .\templates\dashboard\pos.html:48
+msgid "Registra ventas de forma rápida y eficiente"
+msgstr ""
+
+#: .\templates\dashboard\pos.html:57
+msgid "Buscar producto por nombre o escanear código..."
+msgstr ""
+
+#: .\templates\dashboard\pos.html:93
+msgid "No se encontraron productos activos o en stock."
+msgstr ""
+
+#: .\templates\dashboard\pos.html:105
+msgid "Carrito"
+msgstr ""
+
+#: .\templates\dashboard\pos.html:111
+msgid "Carrito vacío"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:18
+msgid "Administra las cuentas de usuarios, historial de compras y actividades"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:32
+msgid "Total Usuarios"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:43
+#, fuzzy
+#| msgid "Usuarios Registrados"
+msgid "Usuarios Activos"
+msgstr "Usuarios Registrados"
+
+#: .\templates\dashboard\usuarios.html:54
+msgid "Total Pedidos"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:65
+msgid "Ingresos Totales"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:102
+#, fuzzy
+#| msgid "Registrarse"
+msgid "Lista de Usuarios"
+msgstr "Registrarse"
+
+#: .\templates\dashboard\usuarios.html:103
+#, fuzzy
+#| msgid "Usuarios Registrados"
+msgid "usuarios encontrados"
+msgstr "Usuarios Registrados"
+
+#: .\templates\dashboard\usuarios.html:109
+msgid "Buscar usuarios..."
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:134
+msgid "1 pedidos"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:134
+msgid "€76 gastado"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:165
+msgid "Desactivar"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:172
+msgid "Resumen"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:175
+msgid "Compras"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:204
+msgid "C. Postal"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:209
+#, fuzzy
+#| msgid "Intuitivo"
+msgid "Actividad"
+msgstr "Intuitivo"
+
+#: .\templates\dashboard\usuarios.html:210
+#, fuzzy
+#| msgid "Registrarse"
+msgid "Registro"
+msgstr "Registrarse"
+
+#: .\templates\dashboard\usuarios.html:211
+msgid "Último acceso"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:215
+msgid "Estadísticas"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:223
+msgid "Preferencias"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:225
+#, fuzzy
+#| msgid "Centro de Adopciones"
+msgid "Alertas adopción"
+msgstr "Centro de Adopciones"
+
+#: .\templates\dashboard\usuarios.html:226
+#, fuzzy
+#| msgid "Catálogo de Productos"
+msgid "Recomendaciones"
+msgstr "Catálogo de Productos"
+
+#: .\templates\dashboard\usuarios.html:229
+msgid "Historial de compras del usuario..."
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:240
+msgid "Selecciona un usuario"
+msgstr ""
+
+#: .\templates\dashboard\usuarios.html:241
+msgid ""
+"Elige un usuario de la lista para ver su información detallada, historial de "
+"compras y actividades."
+msgstr ""
+
+#: .\templates\orders\admin_order_detail.html:6
+#: .\templates\orders\order_detail.html:6
+msgid "Detalle de Orden"
+msgstr ""
+
+#: .\templates\orders\admin_order_detail.html:14
+#: .\templates\orders\admin_order_detail.html:130
+msgid "Cliente"
+msgstr ""
+
+#: .\templates\orders\admin_order_detail.html:19
+msgid "Volver a Pedidos"
+msgstr ""
+
+#: .\templates\orders\admin_order_detail.html:72
+msgid "Cambiar Estado"
+msgstr ""
+
+#: .\templates\orders\admin_order_detail.html:78
+msgid "Estado Actual"
+msgstr ""
+
+#: .\templates\orders\admin_order_detail.html:82
+#, fuzzy
+#| msgid "Productos"
+msgid "Nuevo Estado"
+msgstr "Productos"
+
+#: .\templates\orders\admin_order_detail.html:92
+msgid "Actualizar Estado"
+msgstr ""
+
+#: .\templates\orders\admin_order_detail.html:135
+msgid "Fecha de Registro"
+msgstr ""
+
+#: .\templates\orders\admin_order_list.html:6
+msgid "Gestión de Pedidos - Admin"
+msgstr ""
+
+#: .\templates\orders\admin_order_list.html:11
+#, fuzzy
+#| msgid "Gestión Veterinaria"
+msgid "Gestión de Pedidos"
+msgstr "Gestión Veterinaria"
+
+#: .\templates\orders\admin_order_list.html:13
+#, fuzzy
+#| msgid "Ir al Dashboard"
+msgid "Volver al Dashboard"
+msgstr "Ir al Dashboard"
+
+#: .\templates\orders\admin_order_list.html:22
+msgid "Total de Pedidos"
+msgstr ""
+
+#: .\templates\orders\admin_order_list.html:31
+msgid "Pendientes"
+msgstr ""
+
+#: .\templates\orders\admin_order_list.html:39
+#, fuzzy
+#| msgid "Alto Contraste"
+msgid "Confirmadas"
+msgstr "Alto Contraste"
+
+#: .\templates\orders\admin_order_list.html:51
+msgid "Filtrar por Estado"
+msgstr ""
+
+#: .\templates\orders\admin_order_list.html:53
+msgid "Todos los estados"
+msgstr ""
+
+#: .\templates\orders\admin_order_list.html:81
+msgid "Número"
+msgstr ""
+
+#: .\templates\orders\admin_order_list.html:121
+msgid "No hay pedidos"
+msgstr ""
+
+#: .\templates\orders\admin_order_list.html:122
+msgid "No se encontraron pedidos con los filtros seleccionados."
+msgstr ""
+
+#: .\templates\orders\checkout.html:6
+msgid "Checkout - Finalizar Compra"
+msgstr ""
+
+#: .\templates\orders\checkout.html:10
+msgid "Finalizar Compra"
+msgstr ""
+
+#: .\templates\orders\checkout.html:72
+msgid "Volver al Carrito"
+msgstr ""
+
+#: .\templates\orders\checkout.html:75
+#, fuzzy
+#| msgid "Configurar Accesibilidad"
+msgid "Confirmar Pedido"
+msgstr "Configurar Accesibilidad"
+
+#: .\templates\orders\checkout.html:87
+msgid "Resumen del Pedido"
+msgstr ""
+
+#: .\templates\orders\order_detail.html:107
+msgid "Volver a Mis Pedidos"
+msgstr ""
+
+#: .\templates\orders\order_list.html:58
+msgid "Cuando realices una compra, aparecerá aquí."
+msgstr ""
+
+#, fuzzy
+#~| msgid "Sistema Integral"
+#~ msgid "Integer"
+#~ msgstr "Sistema Integral"
 
 #, fuzzy
 #~| msgid "Sistema Integral"
 #~ msgid "Small integer"
 #~ msgstr "Sistema Integral"
+
+#, fuzzy
+#~| msgid "Sistema Integral"
+#~ msgid "Positive small integer"
+#~ msgstr "Sistema Integral"
+
+#~ msgid "Ingresar"
+#~ msgstr "Ingresar"

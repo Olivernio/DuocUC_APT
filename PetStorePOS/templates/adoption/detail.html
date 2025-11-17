@@ -87,7 +87,7 @@
         <p class="lead"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i> {{ mascota.comuna }}, {{ mascota.region }}</p>
 
         <div class="detail-section">
-          <h3>Descripción</h3>
+          <h3>{% trans "Descripción" %}</h3>
           <div>{{ mascota.desc_fisica|safe }}</div>
           <div>{{ mascota.desc_personalidad|safe }}</div>
           {% if mascota.desc_adicional %}
@@ -97,16 +97,16 @@
         </div>
 
         <div class="detail-section">
-            <h3>Salud</h3>
+            <h3>{% trans "Salud" %}</h3>
             <ul class="list-unstyled">
-                <li><strong>Esterilizado:</strong> {% if mascota.esterilizado %}Sí{% else %}No{% endif %}</li>
-                <li><strong>Vacunas al día:</strong> {% if mascota.vacunas %}Sí{% else %}No{% endif %}</li>
+                <li><strong>{% trans "Esterilizado:" %}</strong> {% if mascota.esterilizado %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</li>
+                <li><strong>{% trans "Vacunas al día:" %}</strong> {% if mascota.vacunas %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</li>
             </ul>
         </div>
         
         <div class="pet-actions">
           <a href="{{ mascota.url }}" target="_blank" class="btn btn-adopt">
-            <i class="bi bi-heart-fill" aria-hidden="true"></i> Adoptar en Huachitos.cl
+            <i class="bi bi-heart-fill" aria-hidden="true"></i> {% trans "Adoptar en Huachitos.cl" %}
             <span class="visually-hidden">({% trans "se abre en una nueva pestaña" %})</span>
           </a>
         </div>

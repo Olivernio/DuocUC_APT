@@ -86,7 +86,7 @@ class ProductSearchForm(forms.Form):
 
 
 #formulario para crear reseñas de productos
-class ReviewForm(forms.ModelForm):
+class ProductReviewForm(forms.ModelForm):
     class Meta:
         model = ProductReview
         fields = ['rating', 'comment']
@@ -111,6 +111,7 @@ class ReviewForm(forms.ModelForm):
             'rating': _('Selecciona una calificación de 1 a 5 estrellas'),
             'comment': _('Comparte tu experiencia con este producto'),
         }
+
     #Valida que la calificación esté entre 1 y 5.
     def clean_rating(self):
         rating = self.cleaned_data.get('rating')

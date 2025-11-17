@@ -14,6 +14,7 @@ from cart.models import Cart
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from catalog.models import Product
+from django.utils.text import format_lazy
 
 # Lista de formularios usados en el wizard y su orden lógico
 FORMS = [
@@ -35,32 +36,50 @@ def signout(request):
     messages.info(request, "Has cerrado sesión correctamente.")  # Mensaje opcional
     return redirect('home')
 
+# PetStorePOS/accounts/views.py
+
+# (Asegúrate de que estas importaciones están al inicio del archivo)
+from django.utils.translation import gettext_lazy as _
+from django.utils.text import format_lazy
+# ... (las otras importaciones como messages, login, authenticate, etc.)
+
 def login_view(request):
     # Si ya está autenticado, redirige a home
     if request.user.is_authenticated:
         return redirect('home')
+    
     if request.method == 'POST':
         # 1. Obtener email y contraseña del formulario
         email = request.POST.get('email')
         password = request.POST.get('password')
+        
         if not email or not password:
-            messages.error(request, 'Por favor, ingresa email y contraseña.')
+            # --- MENSAJE CORREGIDO ---
+            messages.error(request, _('Por favor, ingresa email y contraseña.'))
             return render(request, 'accounts/login.html')
+        
         try:
             # 2. Buscar el usuario por su email para obtener su username
             user_obj = User.objects.get(email=email)
             username = user_obj.username
         except User.DoesNotExist:
-            messages.error(request, 'Usuario o contraseña incorrectos.')
+            # --- MENSAJE CORREGIDO ---
+            messages.error(request, _('Usuario o contraseña incorrectos.'))
             return render(request, 'accounts/login.html')
+        
         # 3. Autenticar usando el username encontrado y la contraseña
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
             login(request, user)
-            messages.success(request, f'¡Bienvenido, {user.username}!')
+            
+            # --- MENSAJE CORREGIDO (Este ya lo tenías bien, pero lo confirmo) ---
+            messages.success(request, format_lazy(_('¡Bienvenido, {}!'), user.username))
             return redirect('home')
         else:
-            messages.error(request, 'Usuario o contraseña incorrectos.')
+            # --- MENSAJE CORREGIDO ---
+            messages.error(request, _('Usuario o contraseña incorrectos.'))
+    
     return render(request, 'accounts/login.html')
 
 # Clase wizard para el registro multi-paso
@@ -92,6 +111,10 @@ class RegistroWizard(SessionWizardView):
             recaptcha_field = ReCaptchaField()
             recaptcha_field.clean(recaptcha_value)
         except forms.ValidationError as e:
+            # --- AÑADE ESTA LÍNEA ---
+            print(f"MENSAJE DE ERROR COMPLETO DE RECAPTCHA: {e}")
+            # ---------------------
+            
             error_msg = ', '.join(e.messages) if hasattr(e, 'messages') else str(e)
             # Si es un error de timeout, dar un mensaje más amigable
             if 'timeout' in error_msg.lower() or 'duplicate' in error_msg.lower():

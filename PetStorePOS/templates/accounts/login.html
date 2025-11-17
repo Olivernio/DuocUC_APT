@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-{% load i18n %}
-{% block title %} Iniciar sesión {% endblock %}
+{% load i18n %} {% block title %} {% trans "Iniciar sesión" %} {% endblock %}
+
 {% block head-tag %}
   <link rel="stylesheet" href="{% static 'css/accounts/login.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -10,45 +10,44 @@
 {% block content %}
 <div class="container-fluid min-vh-100 d-flex align-items-center">
   <div class="row w-100">
-    <!-- Columna izquierda fondo degradado y contenido -->
     <div class="col-md-6 d-md-flex gradient-left flex-column justify-content-center px-5 position-relative">
       <div class="decor-circle decor-circle-1"></div>
       <div class="decor-circle decor-circle-2"></div>
       <div>
-        <h3 class="fw-bold mb-2"><i class="bi bi-heart fs-2"></i> PetCare System</h3>
-        <p class="mb-4 small">Área de Usuario</p>
-        <h1 class="mb-3 fw-bold">¡Bienvenido de vuelta!</h1>
-        <p class="mb-4">Accede a tu cuenta para gestionar tus adopciones, compras y formar parte de nuestra comunidad de amantes de las mascotas.</p>
+        <h3 class="fw-bold mb-2"><i class="bi bi-heart fs-2"></i> PetCare System</h3> <p class="mb-4 small">{% trans "Área de Usuario" %}</p>
+        <h1 class="mb-3 fw-bold">{% trans "¡Bienvenido de vuelta!" %}</h1>
+        <p class="mb-4">{% trans "Accede a tu cuenta para gestionar tus adopciones, compras y formar parte de nuestra comunidad de amantes de las mascotas." %}</p>
         <ul class="list-unstyled">
           <li class="mb-3 d-flex align-items-start">
             <i class="bi bi-heart fs-4 me-3" aria-hidden="true"></i>
             <div>
-              <span class="fw-bold d-block">Adopta Mascotas</span>
-              <small>Encuentra tu compañero perfecto en nuestro centro de adopciones</small>
+              <span class="fw-bold d-block">{% trans "Adopta Mascotas" %}</span>
+              <small>{% trans "Encuentra tu compañero perfecto en nuestro centro de adopciones" %}</small>
             </div>
           </li>
           <li class="mb-3 d-flex align-items-start">
             <i class="bi bi-person fs-4 me-3" aria-hidden="true"></i>
             <div>
-              <span class="fw-bold d-block">Perfil Personal</span>
-              <small>Gestiona tus datos, historial de compras y preferencias</small>
+              <span class="fw-bold d-block">{% trans "Perfil Personal" %}</span>
+              <small>{% trans "Gestiona tus datos, historial de compras y preferencias" %}</small>
             </div>
           </li>
           <li class="d-flex align-items-start">
             <i class="bi bi-lock fs-4 me-3" aria-hidden="true"></i>
             <div>
-              <span class="fw-bold d-block">Compras Seguras</span>
-              <small>Realiza pedidos de productos con total seguridad</small>
+              <span class="fw-bold d-block">{% trans "Compras Seguras" %}</span>
+              <small>{% trans "Realiza pedidos de productos con total seguridad" %}</small>
             </div>
           </li>
         </ul>
       </div>
     </div>
 
-    <!-- Columna derecha formulario -->
     <div class="col-md-6 d-flex align-items-center justify-content-center py-2">
       <div class="form-card w-100">
-        <h2 class="fw-bold mb-4 text-center">Iniciar Sesión</h2>
+        
+        <h2 class="fw-bold mb-4 text-center">{% trans "Iniciar Sesión" %}</h2>
+        
         {% for message in messages %}
           <div class="alert alert-{{ message.tags }} d-flex align-items-center" role="alert">
             <i class="bi bi-exclamation-circle me-2" aria-hidden="true"></i> {{ message }}
@@ -76,21 +75,21 @@
           </div>
 
           <div class="text-end mb-3">
-            <a href="#" class="small">¿Olvidaste tu contraseña?</a>
+            <a href="#" class="small">{% trans "¿Olvidaste tu contraseña?" %}</a>
           </div>
 
-          <button type="submit" class="btn btn-gradient w-100 mb-4">Iniciar sesión →</button>
+          <button type="submit" class="btn btn-gradient w-100 mb-4">{% trans "Iniciar sesión" %} →</button>
 
           <div class="border rounded p-3 bg-light">
-            <h6>Cuenta de Demostración</h6>
-            <p><strong>Email:</strong> maria.garcia@email.com</p>
-            <p><strong>Contraseña:</strong> password123</p>
-            <small>Usa esta cuenta para probar las funcionalidades del sistema.</small>
+            <h6>{% trans "Cuenta de Demostración" %}</h6>
+            <p><strong>{% trans "Email" %}:</strong> maria.garcia@email.com</p>
+            <p><strong>{% trans "Contraseña" %}:</strong> password123</p>
+            <small>{% trans "Usa esta cuenta para probar las funcionalidades del sistema." %}</small>
           </div>
 
           <div class="text-center mt-4">
-            <p>¿No tienes una cuenta? <a href="{% url 'accounts:registro' %}">Regístrate aquí</a></p>
-            <p>¿Problemas para acceder? <a href="#">Contacta al soporte</a></p>
+            <p>{% trans "¿No tienes una cuenta?" %} <a href="{% url 'accounts:registro' %}">{% trans "Regístrate aquí" %}</a></p>
+            <p>{% trans "¿Problemas para acceder?" %} <a href="#">{% trans "Contacta al soporte" %}</a></p>
           </div>
         </form>
       </div>
@@ -99,6 +98,7 @@
 </div>
 
 <script>
+  // Tu script no tiene texto visible, así que está perfecto como está.
   const togglePassword = document.querySelector('#togglePassword');
   const password = document.querySelector('input[name="password"]');
 
