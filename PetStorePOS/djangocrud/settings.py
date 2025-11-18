@@ -5,31 +5,12 @@ from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Chatbot Configuration - OpenAI o Perplexity
-# Puedes usar cualquiera de los dos, o ambos (el sistema elegirá automáticamente)
 
-# OpenAI Configuration
-# Para obtener tu API Key: https://platform.openai.com/api-keys
 import os
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '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')
-OPENAI_ENABLED = bool(OPENAI_API_KEY)
-
-# Perplexity Configuration
-# Para obtener tu API Key: https://www.perplexity.ai/settings/api
-# Con tu suscripción anual, deberías tener acceso a la API
-PERPLEXITY_API_KEY = os.environ.get('PERPLEXITY_API_KEY', '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')
-PERPLEXITY_ENABLED = bool(PERPLEXITY_API_KEY)
-
-# Configuración del Chatbot
-# Solo usa Perplexity (simplificado)
-# Si quieres usar OpenAI, cambia PERPLEXITY_ENABLED a False y configura OPENAI_API_KEY
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-rm$@tqv*3b9_u@20c_c6y-mp83u5!dr_kk9rx0ggjqcx(2e&p4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -156,11 +137,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# RECAPTCHA
-RECAPTCHA_PUBLIC_KEY = '6Le8tQssAAAAABLQXakchqaKAzLw1Rr7KP1G-qQ4'
-RECAPTCHA_PRIVATE_KEY = '6Le8tQssAAAAAK5MfEOXXQBCUdDyO7sacME7tVXQ'
-
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -175,7 +151,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 LOGIN_URL = "accounts:login"      # si no estás logeado y entras a una vista protegida → te manda aquí
 LOGIN_REDIRECT_URL = "home"       # adónde ir tras login exitoso
 LOGOUT_REDIRECT_URL = "home"      # adónde ir tras logout
-# Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
