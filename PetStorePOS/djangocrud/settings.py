@@ -154,3 +154,17 @@ LOGOUT_REDIRECT_URL = "home"      # adónde ir tras logout
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# RECAPTCHA
+RECAPTCHA_PUBLIC_KEY = '6Le8tQssAAAAABLQXakchqaKAzLw1Rr7KP1G-qQ4'
+RECAPTCHA_PRIVATE_KEY = '6Le8tQssAAAAAK5MfEOXXQBCUdDyO7sacME7tVXQ'
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-rm$@tqv*3b9_u@20c_c6y-mp83u5!dr_kk9rx0ggjqcx(2e&p4'
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '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')
+OPENAI_ENABLED = bool(OPENAI_API_KEY)
+
+# Perplexity Configuration
+# Para obtener tu API Key: https://www.perplexity.ai/settings/api
+# Con tu suscripción anual, deberías tener acceso a la API
+PERPLEXITY_API_KEY = os.environ.get('PERPLEXITY_API_KEY', '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')
+PERPLEXITY_ENABLED = bool(PERPLEXITY_API_KEY)
