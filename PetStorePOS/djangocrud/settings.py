@@ -29,7 +29,7 @@ PERPLEXITY_ENABLED = bool(PERPLEXITY_API_KEY)
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rm$@tqv*3b9_u@20c_c6y-mp83u5!dr_kk9rx0ggjqcx(2e&p4'
+#SECRET_KEY = 'django-insecure-rm$@tqv*3b9_u@20c_c6y-mp83u5!dr_kk9rx0ggjqcx(2e&p4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
