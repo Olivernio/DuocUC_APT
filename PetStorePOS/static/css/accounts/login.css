@@ -1,11 +1,11 @@
 body {
-  background: linear-gradient(120deg, #3a68f2 0%, #9b37ff 100%);
+  background: var(--gradient-warm);
   min-height: 100vh;
   font-family: 'Montserrat', sans-serif;
 }
 
 .gradient-left {
-  background: linear-gradient(120deg, #3a68f2 0%, #9b37ff 100%);
+  background: var(--gradient-warm);
   color: #fff;
   position: relative;
 }
@@ -18,29 +18,42 @@ body {
 }
 
 .gradient-left .decor-circle-1 {
-  width: 120px; height: 120px; top: 25px; left: 20px; background: #fff;
+  width: 120px; 
+  height: 120px; 
+  top: 25px; 
+  left: 20px; 
+  background: #fff;
 }
 .gradient-left .decor-circle-2 {
-  width: 70px; height: 70px; bottom: 60px; right: 45px; background: #d1b4ff;
+  width: 70px; 
+  height: 70px; 
+  bottom: 60px; 
+  right: 45px; 
+  background: var(--tertiary-300);
 }
 
 .form-card {
   background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 24px rgba(60,60,120,0.14);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-xl);
   padding: 2.5rem;
   max-width: 400px;
   margin: 40px auto;
+  border: 1px solid var(--neutral-200);
 }
 
 .btn-gradient {
-  background: linear-gradient(90deg, #3a68f2 20%, #9b37ff 100%);
+  background: var(--gradient-primary);
   color: #fff;
   border: none;
-  transition: filter 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+  font-weight: 600;
 }
 .btn-gradient:hover {
-  filter: brightness(1.10);
+  filter: brightness(1.05);
   color: #fff;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 

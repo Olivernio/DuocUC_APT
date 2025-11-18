@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-{% load i18n %} {% block title %} {% trans "Iniciar sesión" %} {% endblock %}
-
+{% load i18n %}
+{% block title %} {% trans "Iniciar sesión" %} {% endblock %}
 {% block head-tag %}
   <link rel="stylesheet" href="{% static 'css/accounts/login.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -10,11 +10,13 @@
 {% block content %}
 <div class="container-fluid min-vh-100 d-flex align-items-center">
   <div class="row w-100">
+    <!-- Columna izquierda fondo degradado y contenido -->
     <div class="col-md-6 d-md-flex gradient-left flex-column justify-content-center px-5 position-relative">
       <div class="decor-circle decor-circle-1"></div>
       <div class="decor-circle decor-circle-2"></div>
       <div>
-        <h3 class="fw-bold mb-2"><i class="bi bi-heart fs-2"></i> PetCare System</h3> <p class="mb-4 small">{% trans "Área de Usuario" %}</p>
+        <h3 class="fw-bold mb-2"><i class="bi bi-heart fs-2"></i> {% trans "PetCare System" %}</h3>
+        <p class="mb-4 small">{% trans "Área de Usuario" %}</p>
         <h1 class="mb-3 fw-bold">{% trans "¡Bienvenido de vuelta!" %}</h1>
         <p class="mb-4">{% trans "Accede a tu cuenta para gestionar tus adopciones, compras y formar parte de nuestra comunidad de amantes de las mascotas." %}</p>
         <ul class="list-unstyled">
@@ -43,11 +45,10 @@
       </div>
     </div>
 
+    <!-- Columna derecha formulario -->
     <div class="col-md-6 d-flex align-items-center justify-content-center py-2">
       <div class="form-card w-100">
-        
         <h2 class="fw-bold mb-4 text-center">{% trans "Iniciar Sesión" %}</h2>
-        
         {% for message in messages %}
           <div class="alert alert-{{ message.tags }} d-flex align-items-center" role="alert">
             <i class="bi bi-exclamation-circle me-2" aria-hidden="true"></i> {{ message }}
@@ -98,7 +99,6 @@
 </div>
 
 <script>
-  // Tu script no tiene texto visible, así que está perfecto como está.
   const togglePassword = document.querySelector('#togglePassword');
   const password = document.querySelector('input[name="password"]');
 

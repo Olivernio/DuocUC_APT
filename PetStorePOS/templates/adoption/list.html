@@ -22,7 +22,7 @@
         <select name="tipo" id="tipo" class="form-select form-select-lg">
           <option value="">{% trans "Todas las especies" %}</option>
           {% for key, text in especies_disponibles %}
-            {# especie.0 es la clave ("perro"), especie.1 es el texto ("Dog" o "Cachorro") #}
+            {# key es la clave ("perro"), text es el texto traducido #}
             <option value="{{ key }}" {% if key == tipo_filtrado %}selected{% endif %}>{{ text|title }}</option>
           {% endfor %}
         </select>

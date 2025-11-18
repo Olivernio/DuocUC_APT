@@ -4,6 +4,8 @@
 
 {% block dashboard_title %}{% trans "Gestión de Usuarios" %}{% endblock %}
 
+{% block dashboard_mobile_title %}{% trans "Gestión de Usuarios" %}{% endblock %}
+
 {% block dashboard_head %}
     {# --- Corregida la ruta al CSS --- #}
     <link rel="stylesheet" href="{% static 'css/dashboard/usuarios.css' %}" />
@@ -12,14 +14,16 @@
 {% block dashboard_content %}
     
     {# -------- Cabecera del Contenido -------- #}
-    <div class_ ="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="fw-bold mb-0">{% trans "Gestión de Usuarios" %}</h2>
             <p class="text-muted mb-0">{% trans "Administra las cuentas de usuarios, historial de compras y actividades" %}</p>
         </div>
-        <a href="#" class="btn btn-dark">
-            <i class="bi bi-download me-1"></i> {% trans "Exportar Datos" %}
-        </a>
+        <div class="d-flex gap-2 align-items-center flex-wrap">
+            <a href="#" class="btn btn-dark btn-sm">
+                <i class="bi bi-download me-1"></i> <span class="d-none d-sm-inline">{% trans "Exportar Datos" %}</span><span class="d-sm-none">{% trans "Exportar" %}</span>
+            </a>
+        </div>
     </div>
 
     {# -------- Tarjetas de Estadísticas Globales (de la captura) -------- #}
@@ -130,8 +134,11 @@
                                         {% endif %}
                                     </div>
                                     <small class="text-muted d-block">{{ user.email }}</small>
-                                    {# Mockup de stats - idealmente esto vendría del queryset #}
-                                    <small class="d-block mt-1">{% trans "1 pedidos" %} • {% trans "€76 gastado" %}</small>
+                                    {# Estadísticas reales del usuario #}
+                                    <small class="d-block mt-1">
+                                        {{ user.total_orders|default:0 }} {% trans "pedido" %}{{ user.total_orders|pluralize }} • 
+                                        €{{ user.total_spent|default:0|floatformat:0 }} {% trans "gastado" %}
+                                    </small>
                                 </div>
                             </div>
                         </a>
@@ -184,31 +191,31 @@
 
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="pane-resumen" role="tabpanel">
-                                <<div class="row">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <h5>{% trans "Información Personal" %}</h5>
                                         {# --- DATOS REALES DEL MODELO UserProfile --- #}
                                         <p class="mb-1">
                                             <strong class="text-muted">{% trans "Teléfono" %}:</strong> 
-                                            {{ selected_user.userprofile.phone_number|default_if_none:"No especificado" }}
+                                            {{ selected_user.userprofile.phone_number|default_if_none:_("No especificado") }}
                                         </p>
                                         <p class="mb-1">
                                             <strong class="text-muted">{% trans "Dirección" %}:</strong> 
-                                            {{ selected_user.userprofile.address|default_if_none:"No especificada" }}
+                                            {{ selected_user.userprofile.address|default_if_none:_("No especificada") }}
                                         </p>
                                         <p class="mb-1">
                                             <strong class="text-muted">{% trans "Ciudad" %}:</strong> 
-                                            {{ selected_user.userprofile.city|default_if_none:"No especificada" }}
+                                            {{ selected_user.userprofile.city|default_if_none:_("No especificada") }}
                                         </p>
                                         <p class="mb-1">
                                             <strong class="text-muted">{% trans "C. Postal" %}:</strong> 
-                                            {{ selected_user.userprofile.postal_code|default_if_none:"N/A" }}
+                                            {{ selected_user.userprofile.postal_code|default_if_none:_("N/A") }}
                                         </p>
                                     </div>
                                     <div class="col-md-6">
                                         <h5>{% trans "Actividad" %}</h5>
                                         <p class="mb-1"><strong class="text-muted">{% trans "Registro" %}:</strong> {{ selected_user.date_joined|date:"d/m/Y" }}</p>
-                                        <p class="mb-1"><strong class="text-muted">{% trans "Último acceso" %}:</strong> {{ selected_user.last_login|date:"d/m/Y"|default_if_none:"Nunca" }}</p>
+                                        <p class="mb-1"><strong class="text-muted">{% trans "Último acceso" %}:</strong> {{ selected_user.last_login|date:"d/m/Y"|default_if_none:_("Nunca") }}</p>
                                     </div>
                                 </div>
                                 <hr class="my-4">
@@ -221,12 +228,128 @@
                                 </div>
                                 <hr class="my-4">
                                 <h5>{% trans "Preferencias" %}</h5>
-                                <span class="badge {% if selected_user.userprofile.receive_newsletter %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Newsletter" %}: {% if selected_user.userprofile.receive_newsletter %}Si{% else %}No{% endif %}</span>
-                                <span class="badge {% if selected_user.userprofile.receive_adoption_alerts %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Alertas adopción" %}: {% if selected_user.userprofile.receive_adoption_alerts %}Si{% else %}No{% endif %}</span>
-                                <span class="badge {% if selected_user.userprofile.receive_product_recommendations %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Recomendaciones" %}: {% if selected_user.userprofile.receive_product_recommendations %}Si{% else %}No{% endif %}</span>
+                                <span class="badge {% if selected_user.userprofile.receive_newsletter %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Newsletter" %}: {% if selected_user.userprofile.receive_newsletter %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</span>
+                                <span class="badge {% if selected_user.userprofile.receive_adoption_alerts %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Alertas adopción" %}: {% if selected_user.userprofile.receive_adoption_alerts %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</span>
+                                <span class="badge {% if selected_user.userprofile.receive_product_recommendations %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Recomendaciones" %}: {% if selected_user.userprofile.receive_product_recommendations %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</span>
                             </div>
                             <div class="tab-pane fade" id="pane-compras" role="tabpanel">
-                                <p class="text-muted">{% trans "Historial de compras del usuario..." %}</p>
+                                {% if user_orders %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>{% trans "Número de Orden" %}</th>
+                                                    <th>{% trans "Fecha" %}</th>
+                                                    <th>{% trans "Estado" %}</th>
+                                                    <th class="text-end">{% trans "Total" %}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for order in user_orders %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="{% url 'orders:admin_order_detail' order.id %}" class="text-decoration-none">
+                                                            {{ order.order_number }}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                                                    <td>
+                                                        <span class="badge 
+                                                            {% if order.status == 'PENDING' %}bg-warning
+                                                            {% elif order.status == 'CONFIRMED' %}bg-info
+                                                            {% elif order.status == 'PROCESSING' %}bg-primary
+                                                            {% elif order.status == 'SHIPPED' %}bg-secondary
+                                                            {% elif order.status == 'DELIVERED' %}bg-success
+                                                            {% elif order.status == 'CANCELLED' %}bg-danger
+                                                            {% endif %}">
+                                                            {{ order.get_status_display }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-end fw-bold">€{{ order.total|floatformat:0 }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="text-center py-5">
+                                        <i class="bi bi-cart-x text-muted" style="font-size: 3rem;"></i>
+                                        <p class="text-muted mt-3">{% trans "Este usuario no ha realizado ninguna compra" %}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="tab-pane fade" id="pane-mascotas" role="tabpanel">
+                                {% if user_adoptions %}
+                                    <div class="list-group">
+                                        {% for adoption in user_adoptions %}
+                                        <div class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h6 class="mb-1">{{ adoption.Mascota.Nombre }}</h6>
+                                                    <p class="mb-1 text-muted">
+                                                        <small>
+                                                            <i class="bi bi-calendar me-1"></i>{{ adoption.created_at|date:"d/m/Y" }}
+                                                            {% if adoption.processed %}
+                                                                <span class="badge bg-success ms-2">{% trans "Procesada" %}</span>
+                                                            {% else %}
+                                                                <span class="badge bg-warning ms-2">{% trans "Pendiente" %}</span>
+                                                            {% endif %}
+                                                        </small>
+                                                    </p>
+                                                    {% if adoption.Mensaje %}
+                                                        <p class="mb-0 small">{{ adoption.Mensaje|truncatewords:20 }}</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div class="text-center py-5">
+                                        <i class="bi bi-heart text-muted" style="font-size: 3rem;"></i>
+                                        <p class="text-muted mt-3">{% trans "Este usuario no ha solicitado ninguna adopción" %}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="tab-pane fade" id="pane-reseñas" role="tabpanel">
+                                {% if user_reviews %}
+                                    <div class="list-group">
+                                        {% for review in user_reviews %}
+                                        <div class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-1">
+                                                        <a href="{% url 'catalog:product_detail' review.product.id %}" class="text-decoration-none">
+                                                            {{ review.product.name }}
+                                                        </a>
+                                                    </h6>
+                                                    <div class="mb-2">
+                                                        <div class="text-warning d-inline-block">
+                                                            {% for i in "12345" %}
+                                                                <i class="bi bi-star{% if forloop.counter <= review.rating %}-fill{% endif %}"></i>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <span class="badge {% if review.is_approved %}bg-success{% else %}bg-warning{% endif %} ms-2">
+                                                            {% if review.is_approved %}{% trans "Aprobada" %}{% else %}{% trans "Pendiente" %}{% endif %}
+                                                        </span>
+                                                    </div>
+                                                    {% if review.comment %}
+                                                        <p class="mb-1 small">{{ review.comment|truncatewords:30 }}</p>
+                                                    {% endif %}
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-calendar me-1"></i>{{ review.created_at|date:"d/m/Y" }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div class="text-center py-5">
+                                        <i class="bi bi-star text-muted" style="font-size: 3rem;"></i>
+                                        <p class="text-muted mt-3">{% trans "Este usuario no ha dejado ninguna reseña" %}</p>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

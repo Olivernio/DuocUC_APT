@@ -1,0 +1,112 @@
+/**
+ * Paleta de Colores - PetStorePOS
+ * Paleta elegante y moderna centrada en mascotas
+ * Inspirada en tonos cálidos, naturales y acogedores
+ */
+
+:root {
+  /* Colores Principales - Tonos cálidos y acogedores */
+  --primary-50: #FFF7ED;   /* Naranja muy claro - fondos suaves */
+  --primary-100: #FFEDD5;  /* Naranja claro - hover states */
+  --primary-200: #FED7AA;  /* Naranja medio claro */
+  --primary-300: #FDBA74;  /* Naranja medio */
+  --primary-400: #FB923C;  /* Naranja vibrante */
+  --primary-500: #F97316;  /* Naranja principal - botones, acentos */
+  --primary-600: #EA580C;  /* Naranja oscuro - hover */
+  --primary-700: #C2410C;  /* Naranja muy oscuro */
+  --primary-800: #9A3412;  /* Naranja casi marrón */
+  --primary-900: #7C2D12;  /* Marrón oscuro */
+
+  /* Colores Secundarios - Verdes naturales */
+  --secondary-50: #F0FDF4;  /* Verde muy claro */
+  --secondary-100: #DCFCE7;   /* Verde claro */
+  --secondary-200: #BBF7D0;  /* Verde medio claro */
+  --secondary-300: #86EFAC;  /* Verde menta */
+  --secondary-400: #4ADE80;  /* Verde vibrante */
+  --secondary-500: #22C55E;  /* Verde principal */
+  --secondary-600: #16A34A;  /* Verde oscuro */
+  --secondary-700: #15803D;  /* Verde muy oscuro */
+
+  /* Colores de Acento - Azules suaves */
+  --accent-50: #EFF6FF;   /* Azul muy claro */
+  --accent-100: #DBEAFE;  /* Azul claro */
+  --accent-200: #BFDBFE; /* Azul medio claro */
+  --accent-300: #93C5FD;  /* Azul cielo */
+  --accent-400: #60A5FA;  /* Azul vibrante */
+  --accent-500: #3B82F6;  /* Azul principal */
+  --accent-600: #2563EB;  /* Azul oscuro */
+  --accent-700: #1D4ED8;  /* Azul muy oscuro */
+
+  /* Colores Terciarios - Rosas suaves (para adopciones) */
+  --tertiary-50: #FDF2F8;  /* Rosa muy claro */
+  --tertiary-100: #FCE7F3; /* Rosa claro */
+  --tertiary-200: #FBCFE8; /* Rosa medio */
+  --tertiary-300: #F9A8D4; /* Rosa vibrante */
+  --tertiary-400: #F472B6; /* Rosa principal */
+  --tertiary-500: #EC4899; /* Rosa oscuro */
+  --tertiary-600: #DB2777; /* Rosa muy oscuro */
+
+  /* Colores Neutros */
+  --neutral-50: #FAFAF9;   /* Casi blanco */
+  --neutral-100: #F5F5F4;   /* Gris muy claro */
+  --neutral-200: #E7E5E4;   /* Gris claro */
+  --neutral-300: #D6D3D1;   /* Gris medio claro */
+  --neutral-400: #A8A29E;   /* Gris medio */
+  --neutral-500: #78716C;   /* Gris */
+  --neutral-600: #57534E;   /* Gris oscuro */
+  --neutral-700: #44403C;   /* Gris muy oscuro */
+  --neutral-800: #292524;   /* Casi negro */
+  --neutral-900: #1C1917;   /* Negro suave */
+
+  /* Colores de Estado */
+  --success: var(--secondary-500);
+  --success-light: var(--secondary-100);
+  --success-dark: var(--secondary-700);
+  
+  --warning: #F59E0B;  /* Ámbar */
+  --warning-light: #FEF3C7;
+  --warning-dark: #D97706;
+  
+  --error: #EF4444;     /* Rojo */
+  --error-light: #FEE2E2;
+  --error-dark: #DC2626;
+  
+  --info: var(--accent-500);
+  --info-light: var(--accent-100);
+  --info-dark: var(--accent-700);
+
+  /* Gradientes Principales */
+  --gradient-primary: linear-gradient(135deg, #F97316 0%, #FB923C 50%, #FDBA74 100%);
+  --gradient-secondary: linear-gradient(135deg, #22C55E 0%, #4ADE80 50%, #86EFAC 100%);
+  --gradient-accent: linear-gradient(135deg, #3B82F6 0%, #60A5FA 50%, #93C5FD 100%);
+  --gradient-warm: linear-gradient(135deg, #F97316 0%, #EC4899 50%, #A855F7 100%);
+  --gradient-nature: linear-gradient(135deg, #22C55E 0%, #3B82F6 50%, #8B5CF6 100%);
+  --gradient-soft: linear-gradient(135deg, #FFF7ED 0%, #F0FDF4 50%, #EFF6FF 100%);
+  --gradient-hero: linear-gradient(135deg, #FED7AA 0%, #FBCFE8 30%, #BFDBFE 100%);
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-colored: 0 10px 25px -5px rgba(249, 115, 22, 0.2);
+
+  /* Bordes */
+  --border-radius-sm: 0.375rem;
+  --border-radius: 0.5rem;
+  --border-radius-md: 0.75rem;
+  --border-radius-lg: 1rem;
+  --border-radius-xl: 1.5rem;
+  --border-radius-full: 9999px;
+}
+
+/* Modo oscuro (opcional, para futuras implementaciones) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --neutral-50: #1C1917;
+    --neutral-100: #292524;
+    --neutral-900: #FAFAF9;
+  }
+}
+

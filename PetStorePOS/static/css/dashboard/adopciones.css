@@ -1,15 +1,23 @@
 .adoption-card {
-    border: none;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    overflow: hidden; /* Para que la imagen no se salga */
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.adoption-card:hover {
+    box-shadow: var(--shadow-colored);
+    transform: translateY(-2px);
+    border-color: var(--tertiary-300);
 }
 
 .adoption-card-img-container {
     position: relative;
     width: 100%;
-    padding-top: 75%; /* Aspect ratio 4:3 */
-    background-color: #f0f0f0;
+    padding-top: 75%;
+    background: var(--primary-50);
 }
 
 .adoption-card-img-container img {
@@ -19,6 +27,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.adoption-card:hover .adoption-card-img-container img {
+    transform: scale(1.05);
 }
 
 .adoption-card-img-container .no-image-placeholder {
@@ -31,7 +44,7 @@
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    color: #ccc;
+    color: var(--neutral-300);
 }
 
 .adoption-card-img-container .species-badge {
@@ -40,11 +53,14 @@
     right: 0.75rem;
     font-size: 0.75rem;
     padding: 0.4em 0.8em;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
 }
 
 .adoption-card .tag-badge {
-    background-color: #f0f0f0;
-    color: #555;
+    background: var(--neutral-100);
+    color: var(--neutral-600);
     font-weight: 500;
     padding: 0.4em 0.75em;
+    border-radius: var(--border-radius);
 }

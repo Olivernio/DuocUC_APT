@@ -1,7 +1,7 @@
 # catalog/forms.py
 from django import forms
-from django.utils.translation import gettext_lazy as _
-from .models import Product, Category, ProductReview
+from .models import Product, ProductReview
+from orders.models import Order, OrderItem
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -18,103 +18,55 @@ class ProductForm(forms.ModelForm):
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 
-#Formulario para búsqueda avanzada de productos.
-class ProductSearchForm(forms.Form):
-    # Campo de búsqueda de texto
-    search = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': _('Buscar productos...')
-        }),
-        label=_('Buscar')
-    )
-    
-    # Filtro por categoría
-    category = forms.ChoiceField(
-        required=False,
-        choices=[('', _('Todas las categorías'))] + list(Category.choices),
-        widget=forms.Select(attrs={'class': 'form-select'}),
-        label=_('Categoría')
-    )
-    
-    # Filtro por precio mínimo
-    min_price = forms.DecimalField(
-        required=False,
-        widget=forms.NumberInput(attrs={
-            'class': 'form-control',
-            'placeholder': _('Mínimo'),
-            'step': '0.01',
-            'min': '0'
-        }),
-        label=_('Precio Mínimo')
-    )
-    
-    # Filtro por precio máximo
-    max_price = forms.DecimalField(
-        required=False,
-        widget=forms.NumberInput(attrs={
-            'class': 'form-control',
-            'placeholder': _('Máximo'),
-            'step': '0.01',
-            'min': '0'
-        }),
-        label=_('Precio Máximo')
-    )
-    
-    # Filtro por disponibilidad
-    in_stock = forms.BooleanField(
-        required=False,
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        label=_('Solo productos disponibles')
-    )
-    
-    # Ordenamiento
-    order_by = forms.ChoiceField(
-        required=False,
-        choices=[
-            ('name', _('Nombre (A-Z)')),
-            ('-name', _('Nombre (Z-A)')),
-            ('price', _('Precio (Menor a Mayor)')),
-            ('-price', _('Precio (Mayor a Menor)')),
-            ('created_at', _('Más recientes')),
-            ('-created_at', _('Más antiguos')),
-        ],
-        widget=forms.Select(attrs={'class': 'form-select'}),
-        label=_('Ordenar por')
-    )
 
-
-#formulario para crear reseñas de productos
-class ProductReviewForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
+    """
+    Formulario para crear/editar reseñas de productos.
+    """
     class Meta:
         model = ProductReview
         fields = ['rating', 'comment']
         widgets = {
             'rating': forms.NumberInput(attrs={
+                'class': 'form-control',
                 'min': 1,
                 'max': 5,
-                'class': 'form-control',
-                'placeholder': _('Calificación de 1 a 5')
+                'type': 'number'
             }),
             'comment': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 4,
-                'placeholder': _('Escribe tu opinión sobre el producto...')
-            }),
+                'placeholder': 'Escribe tu opinión sobre este producto...'
+            })
         }
         labels = {
-            'rating': _('Calificación'),
-            'comment': _('Comentario'),
-        }
-        help_texts = {
-            'rating': _('Selecciona una calificación de 1 a 5 estrellas'),
-            'comment': _('Comparte tu experiencia con este producto'),
+            'rating': 'Calificación (1-5 estrellas)',
+            'comment': 'Comentario'
         }
 
-    #Valida que la calificación esté entre 1 y 5.
-    def clean_rating(self):
-        rating = self.cleaned_data.get('rating')
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        self.product = kwargs.pop('product', None)
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        rating = cleaned_data.get('rating')
+        
         if rating and (rating < 1 or rating > 5):
-            raise forms.ValidationError(_("La calificación debe estar entre 1 y 5."))
-        return rating
+            raise forms.ValidationError("La calificación debe estar entre 1 y 5 estrellas.")
+        
+        # Validar que el usuario haya comprado el producto
+        if self.user and self.product:
+            has_purchased = OrderItem.objects.filter(
+                order__user=self.user,
+                product=self.product,
+                order__status__in=['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED']
+            ).exists()
+            
+            if not has_purchased:
+                raise forms.ValidationError(
+                    "Debes haber comprado este producto para poder dejar una reseña."
+                )
+        
+        return cleaned_data

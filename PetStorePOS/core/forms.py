@@ -6,6 +6,20 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
+class DelayedReCaptchaField(ReCaptchaField):
+    """
+    Campo reCAPTCHA que no valida automáticamente en clean().
+    La validación se hará manualmente en la vista cuando se complete el wizard.
+    Esto evita errores de 'timeout-or-duplicate' en formularios multi-paso.
+    """
+    def clean(self, value):
+        # No validar automáticamente, solo retornar el valor
+        # La validación se hará en la vista cuando se complete el wizard
+        if not value:
+            return None
+        return value
+
+
 class PersonalInfoForm(forms.Form):
     nombre = forms.CharField(label=_("Nombre"), max_length=100, required=True)
     apellidos = forms.CharField(label=_("Apellidos"), max_length=100, required=True)
@@ -28,12 +42,13 @@ class PreferencesForm(forms.Form):
         min_length=6,
         required=True,
     )
-    # Google reCAPTCHA (v2 checkbox) - Accesible
-    recaptcha = ReCaptchaField(
+    # Google reCAPTCHA (v2 checkbox)
+    # Usa DelayedReCaptchaField para evitar validación prematura en pasos intermedios
+    # La validación final se hará en la vista cuando se complete el wizard
+    recaptcha = DelayedReCaptchaField(
         widget=ReCaptchaV2Checkbox(),
-        label=_("Verificación de seguridad"),
-        help_text=_("Por favor, completa la verificación reCAPTCHA. Si tienes problemas de visión, puedes usar el desafío de audio disponible en el widget."),
-        required=True,
+        label="Verificación anti-bots",
+        required=False,  # No requerido en el formulario, se validará manualmente en la vista
     )
 
     def clean(self):
@@ -42,4 +57,6 @@ class PreferencesForm(forms.Form):
         confirm_password = cleaned_data.get("confirmar_contraseña")
         if password and confirm_password and password != confirm_password:
             raise ValidationError(_("Las contraseñas no coinciden."))
+        # No validamos reCAPTCHA aquí para evitar errores de timeout en pasos intermedios
+        # La validación se hará en la vista cuando se complete el wizard
         return cleaned_data

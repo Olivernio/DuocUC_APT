@@ -1,0 +1,33 @@
+/* Estilos para la página de checkout */
+.checkout-form .card {
+    border: none;
+    border-radius: var(--border-radius-lg);
+}
+
+.checkout-form .card-header {
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0 !important;
+}
+
+.order-summary {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.order-summary::-webkit-scrollbar {
+    width: 6px;
+}
+
+.order-summary::-webkit-scrollbar-track {
+    background: var(--neutral-100);
+    border-radius: var(--border-radius);
+}
+
+.order-summary::-webkit-scrollbar-thumb {
+    background: var(--primary-300);
+    border-radius: var(--border-radius);
+}
+
+.order-summary::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-400);
+}
+

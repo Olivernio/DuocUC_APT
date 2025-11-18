@@ -1,0 +1,186 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block dashboard_title %}{% trans "Gestión de Reseñas" %}{% endblock %}
+
+{% block dashboard_mobile_title %}{% trans "Gestión de Reseñas" %}{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-2">
+            <i class="bi bi-star-fill text-warning me-2"></i>{% trans "Gestión de Reseñas" %}
+        </h2>
+        <p class="text-muted mb-0">{% trans "Aprobar, rechazar o eliminar reseñas de productos" %}</p>
+    </div>
+    <div class="d-flex gap-2 align-items-center flex-wrap">
+        <a href="{% url 'dashboard:index' %}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i><span class="d-none d-sm-inline">{% trans "Volver al Dashboard" %}</span><span class="d-sm-none">{% trans "Dashboard" %}</span>
+        </a>
+    </div>
+</div>
+
+{# Tarjetas de Estadísticas #}
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-1">{% trans "Total de Reseñas" %}</h6>
+                        <h3 class="mb-0">{{ total_reviews }}</h3>
+                    </div>
+                    <i class="bi bi-star-fill text-primary" style="font-size: 2.5rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-1">{% trans "Pendientes" %}</h6>
+                        <h3 class="mb-0 text-warning">{{ pending_reviews }}</h3>
+                    </div>
+                    <i class="bi bi-clock-history text-warning" style="font-size: 2.5rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-1">{% trans "Aprobadas" %}</h6>
+                        <h3 class="mb-0 text-success">{{ approved_reviews }}</h3>
+                    </div>
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 2.5rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Filtros y Búsqueda #}
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-6">
+                <label for="status" class="form-label">{% trans "Filtrar por estado" %}</label>
+                <select name="status" id="status" class="form-select">
+                    <option value="all" {% if filter_status == 'all' %}selected{% endif %}>{% trans "Todas" %}</option>
+                    <option value="pending" {% if filter_status == 'pending' %}selected{% endif %}>{% trans "Pendientes" %}</option>
+                    <option value="approved" {% if filter_status == 'approved' %}selected{% endif %}>{% trans "Aprobadas" %}</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="q" class="form-label">{% trans "Buscar" %}</label>
+                <div class="input-group">
+                    <input type="text" name="q" id="q" class="form-control" placeholder="{% trans 'Producto, usuario o comentario...' %}" value="{{ search_query }}">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{# Lista de Reseñas #}
+<div class="card">
+    <div class="card-body">
+        {% if reviews %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Producto" %}</th>
+                            <th>{% trans "Usuario" %}</th>
+                            <th>{% trans "Calificación" %}</th>
+                            <th>{% trans "Comentario" %}</th>
+                            <th>{% trans "Estado" %}</th>
+                            <th>{% trans "Fecha" %}</th>
+                            <th>{% trans "Acciones" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for review in reviews %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'catalog:product_detail' review.product.id %}" class="text-decoration-none">
+                                    {{ review.product.name }}
+                                </a>
+                            </td>
+                            <td>{{ review.user.get_full_name|default:review.user.username }}</td>
+                            <td>
+                                <div class="text-warning">
+                                    {% for i in "12345" %}
+                                        <i class="bi bi-star{% if forloop.counter <= review.rating %}-fill{% endif %}"></i>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td>
+                                {% if review.comment %}
+                                    <span title="{{ review.comment }}">{{ review.comment|truncatewords:10 }}</span>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if review.is_approved %}
+                                    <span class="badge bg-success">{% trans "Aprobada" %}</span>
+                                {% else %}
+                                    <span class="badge bg-warning">{% trans "Pendiente" %}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ review.created_at|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    {% if not review.is_approved %}
+                                        <form method="post" style="display: inline;">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="review_id" value="{{ review.id }}">
+                                            <input type="hidden" name="action" value="approve">
+                                            <button type="submit" class="btn btn-success btn-sm" title="{% trans 'Aprobar' %}">
+                                                <i class="bi bi-check-circle"></i>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                    {% if review.is_approved %}
+                                        <form method="post" style="display: inline;">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="review_id" value="{{ review.id }}">
+                                            <input type="hidden" name="action" value="reject">
+                                            <button type="submit" class="btn btn-warning btn-sm" title="{% trans 'Rechazar' %}">
+                                                <i class="bi bi-x-circle"></i>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                    <form method="post" style="display: inline;" onsubmit="return confirm('{% trans '¿Estás seguro de eliminar esta reseña?' %}');">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="review_id" value="{{ review.id }}">
+                                        <input type="hidden" name="action" value="delete">
+                                        <button type="submit" class="btn btn-danger btn-sm" title="{% trans 'Eliminar' %}">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-star text-muted" style="font-size: 4rem;"></i>
+                <p class="text-muted mt-3">{% trans "No se encontraron reseñas" %}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

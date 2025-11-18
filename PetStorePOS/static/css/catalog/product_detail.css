@@ -1,0 +1,30 @@
+/* CSS Detalle de Producto - PetStorePOS */
+
+.rating-stars {
+    color: #ffc107;
+    font-size: 1.2rem;
+}
+
+.rating-stars .bi-star-fill {
+    color: #ffc107;
+}
+
+.rating-stars .bi-star {
+    color: #ddd;
+}
+
+.review-card {
+    border-left: 3px solid #0d6efd;
+    padding-left: 1rem;
+}
+
+@media (max-width: 767.98px) {
+    .rating-stars {
+        font-size: 1rem;
+    }
+    
+    .review-card {
+        padding-left: 0.5rem;
+        border-left-width: 2px;
+    }
+}

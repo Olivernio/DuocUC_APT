@@ -4,6 +4,8 @@
 
 {% block dashboard_title %}{% trans "Gestión de Inventario" %}{% endblock %}
 
+{% block dashboard_mobile_title %}{% trans "Gestión de Inventario" %}{% endblock %}
+
 {% block dashboard_content %}
     
     {# -------- Cabecera del Contenido -------- #}
@@ -12,9 +14,11 @@
             <h2 class="fw-bold mb-0">{% trans "Gestión de Inventario" %}</h2>
             <p class="text-muted mb-0">{% trans "Administra productos, stock y categorías" %}</p>
         </div>
-        <a href="{% url 'catalog:product_create' %}" class="btn btn-dark"> {# <-- Seguimos apuntando a catalog:product_create #}
-            <i class="bi bi-plus-lg me-1"></i> {% trans "Agregar Producto" %}
-        </a>
+        <div class="d-flex gap-2 align-items-center flex-wrap">
+            <a href="{% url 'catalog:product_create' %}" class="btn btn-dark btn-sm">
+                <i class="bi bi-plus-lg me-1"></i> <span class="d-none d-sm-inline">{% trans "Agregar Producto" %}</span><span class="d-sm-none">{% trans "Agregar" %}</span>
+            </a>
+        </div>
     </div>
 
     {# -------- Barra de Búsqueda y Filtro -------- #}

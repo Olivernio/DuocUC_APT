@@ -1,10 +1,15 @@
+# Vistas DjangoCRUD - PetStorePOS
+
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.conf import settings
 
 def about(request):
     return render(request, "acerca/about.html")
 
-# --- AÑADE ESTO ---
+def favicon_view(request):
+    favicon_path = settings.STATIC_URL + 'img/png/Icono1.png'
+    return HttpResponseRedirect(favicon_path)
+
 def accessibility(request):
-    # Simplemente renderiza la plantilla que crearemos en el Paso 3
     return render(request, "accessibility/accessibility.html")
-# --- FIN DE LO AÑADIDO ---

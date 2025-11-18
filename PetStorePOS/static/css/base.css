@@ -1,0 +1,62 @@
+/* CSS Base - PetStorePOS */
+
+.admin-badge-link:hover .admin-badge {
+    background-color: rgba(var(--bs-primary-rgb), 0.15) !important;
+    border-color: rgba(var(--bs-primary-rgb), 0.4) !important;
+    transform: translateY(-1px);
+}
+
+.navbar {
+    position: relative;
+    z-index: 1030;
+}
+
+.navbar .container-fluid {
+    overflow: visible !important;
+}
+
+.navbar .dropdown {
+    position: relative !important;
+}
+
+.navbar .dropdown-menu {
+    z-index: 1060 !important;
+}
+
+.navbar .d-flex.align-items-center {
+    position: relative;
+    overflow: visible !important;
+}
+
+.messages-container {
+    z-index: 1020 !important;
+}
+
+@media (max-width: 991.98px) {
+    .navbar .mx-auto {
+        flex-wrap: wrap;
+        gap: 0.5rem !important;
+        padding: 0.5rem !important;
+    }
+    
+    .navbar .mx-auto .nav-link {
+        font-size: 0.875rem;
+        padding: 0.5rem;
+    }
+    
+    .navbar .mx-auto .nav-link span {
+        display: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navbar .d-flex.align-items-center.gap-2 {
+        flex-wrap: wrap;
+        gap: 0.5rem !important;
+    }
+    
+    .navbar .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}

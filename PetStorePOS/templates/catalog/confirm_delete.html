@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Eliminar · PetStore{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Eliminar" %} · PetStore{% endblock %}
 {% block content %}
-  <h1>Eliminar producto</h1>
-  <p>¿Seguro que deseas eliminar <strong>{{ object }}</strong>?</p>
+  <h1>{% trans "Eliminar producto" %}</h1>
+  <p>{% blocktrans with object_name=object %}¿Seguro que deseas eliminar <strong>{{ object_name }}</strong>?{% endblocktrans %}</p>
   <form method="post">
     {% csrf_token %}
-    <button type="submit">Sí, eliminar</button>
-    <a href="{% url 'catalog:product_list' %}">No, volver</a>
+    <button type="submit">{% trans "Sí, eliminar" %}</button>
+    <a href="{% url 'catalog:product_list' %}">{% trans "No, volver" %}</a>
   </form>
 {% endblock %}

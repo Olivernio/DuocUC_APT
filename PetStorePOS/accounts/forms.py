@@ -7,7 +7,7 @@ from django_recaptcha.fields import ReCaptchaField
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text='Requiere un email válido.')
-    captcha = ReCaptchaField()  # <-- Corregido: ReCaptchaField
+    captcha = ReCaptchaField()
 
     class Meta:
         model = User

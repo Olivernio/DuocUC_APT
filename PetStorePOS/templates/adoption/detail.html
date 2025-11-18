@@ -3,78 +3,24 @@
 {% load i18n %}
 
 {% block head-tag %}
-  <style>
-    .detail-container {
-      margin-top: 2rem;
-      margin-bottom: 2rem;
-    }
-    .pet-image-gallery {
-      text-align: center;
-    }
-    .pet-image-gallery img {
-      max-width: 100%;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
-    .pet-details h1 {
-      font-weight: 700;
-      color: #2c3e50;
-      margin-bottom: 1rem;
-    }
-    .pet-details .badge {
-      font-size: 1rem;
-      padding: 0.5em 1em;
-    }
-    .pet-details .badge-info {
-        background-color: #155DFC;
-        color: white;
-    }
-    .detail-section {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background-color: #f8f9fa;
-      border-radius: 10px;
-    }
-    .detail-section h3 {
-      border-bottom: 2px solid #e0e0e0;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-      color: #155DFC;
-    }
-    .pet-actions {
-      margin-top: 2rem;
-      text-align: center;
-    }
-    .btn-adopt {
-      background-color: #00A63E;
-      color: white;
-      font-weight: bold;
-      padding: 0.8rem 2rem;
-      border-radius: 50px;
-      transition: background-color 0.3s;
-    }
-    .btn-adopt:hover {
-      background-color: #007a2e;
-      color: white;
-    }
-  </style>
+<link rel="stylesheet" href="{% static 'css/adoption/detail.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container detail-container">
   {% if error_message %}
     <div class="alert alert-danger text-center">
-      <h2>Error</h2>
+      <h2>{% trans "Error" %}</h2>
       <p>{{ error_message }}</p>
-      <a href="{% url 'adoption:list' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
+      <a href="{% url 'adoption:list' %}" class="btn btn-secondary mt-3">{% trans "Volver a la lista" %}</a>
     </div>
   {% elif mascota %}
     <div class="row">
       <div class="col-lg-6 pet-image-gallery">
         {% if mascota.imagenes %}
-          <img src="{{ mascota.imagenes.0.imagen }}" alt="Foto de {{ mascota.nombre }}">
+          <img src="{{ mascota.imagenes.0.imagen }}" alt="{% blocktrans with nombre=mascota.nombre %}Foto de {{ nombre }}{% endblocktrans %}" title="{{ mascota.nombre }}">
         {% else %}
-          <img src="{% static 'img/png/Icono1.png' %}" alt="Sin foto disponible">
+          <img src="{% static 'img/png/Icono1.png' %}" alt="{% trans 'Sin foto disponible' %}">
         {% endif %}
       </div>
       <div class="col-lg-6 pet-details">
@@ -99,8 +45,8 @@
         <div class="detail-section">
             <h3>{% trans "Salud" %}</h3>
             <ul class="list-unstyled">
-                <li><strong>{% trans "Esterilizado:" %}</strong> {% if mascota.esterilizado %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</li>
-                <li><strong>{% trans "Vacunas al día:" %}</strong> {% if mascota.vacunas %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</li>
+                <li><strong>{% trans "Esterilizado" %}:</strong> {% if mascota.esterilizado %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</li>
+                <li><strong>{% trans "Vacunas al día" %}:</strong> {% if mascota.vacunas %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</li>
             </ul>
         </div>
         
@@ -114,9 +60,9 @@
     </div>
   {% else %}
     <div class="alert alert-warning text-center">
-      <h2>Mascota no encontrada</h2>
-      <p>No se encontró información para la mascota solicitada.</p>
-      <a href="{% url 'adoption:list' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
+      <h2>{% trans "Mascota no encontrada" %}</h2>
+      <p>{% trans "No se encontró información para la mascota solicitada." %}</p>
+      <a href="{% url 'adoption:list' %}" class="btn btn-secondary mt-3">{% trans "Volver a la lista" %}</a>
     </div>
   {% endif %}
 </div>

@@ -17,7 +17,7 @@ class UserProfile(models.Model):
     receive_adoption_alerts = models.BooleanField(default=True)
     receive_product_recommendations = models.BooleanField(default=True)
     
-    #Productos favoritos
+    # Favoritos/Wishlist
     favorite_products = models.ManyToManyField(
         'catalog.Product',
         related_name='favorited_by',
@@ -34,36 +34,35 @@ def create_or_update_user_profile(sender, instance, **kwargs):
     UserProfile.objects.get_or_create(user=instance)
 
 
-# ----------Modelo de Notificaciones------------------
-
-#Tipos de notificaciones disponibles en el sistema.
 class NotificationType(models.TextChoices):
-
+    """Tipos de notificaciones"""
     ORDER_CREATED = "ORDER_CREATED", "Orden Creada"
-    ORDER_UPDATED = "ORDER_UPDATED", "Orden Actualizada"
+    ORDER_STATUS_CHANGED = "ORDER_STATUS_CHANGED", "Estado de Orden Cambiado"
+    REVIEW_CREATED = "REVIEW_CREATED", "Reseña Creada"
     REVIEW_APPROVED = "REVIEW_APPROVED", "Reseña Aprobada"
-    ADOPTION_APPROVED = "ADOPTION_APPROVED", "Adopción Aprobada"
     GENERAL = "GENERAL", "General"
 
-#Modelo que representa una notificación para un usuario.
+
 class Notification(models.Model):
+    """
+    Modelo para notificaciones del usuario.
+    """
     user = models.ForeignKey(
-        User, 
-        on_delete=models.CASCADE, 
+        User,
+        on_delete=models.CASCADE,
         related_name='notifications',
         verbose_name="Usuario"
     )
+    title = models.CharField("Título", max_length=200)
+    message = models.TextField("Mensaje", max_length=500)
     type = models.CharField(
-        max_length=20, 
-        choices=NotificationType.choices, 
-        default=NotificationType.GENERAL,
-        verbose_name="Tipo"
+        "Tipo",
+        max_length=50,
+        choices=NotificationType.choices,
+        default=NotificationType.GENERAL
     )
-    title = models.CharField(max_length=200, verbose_name="Título")
-    message = models.TextField(verbose_name="Mensaje")
-    is_read = models.BooleanField(default=False, verbose_name="Leída")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Creación")
-    link = models.URLField(blank=True, null=True, verbose_name="Enlace")
+    is_read = models.BooleanField("Leída", default=False)
+    created_at = models.DateTimeField("Fecha de Creación", auto_now_add=True)
     
     class Meta:
         ordering = ['-created_at']

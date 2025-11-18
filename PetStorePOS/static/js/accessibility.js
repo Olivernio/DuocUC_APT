@@ -25,32 +25,28 @@ function setAccessibilityMode(mode) {
         // Modo 'default' o normal
         localStorage.setItem('accessibilityMode', 'default');
     }
+    
+    // Aplicar tamaño de fuente guardado
+    const savedFontSize = localStorage.getItem('fontSize') || '1.0';
+    if (savedFontSize) {
+        document.documentElement.style.fontSize = savedFontSize + 'rem';
+    }
 }
 
-// ---- Asignar Eventos a los Botones ----
+// ---- Aplicar preferencias guardadas al cargar la página ----
 document.addEventListener('DOMContentLoaded', () => {
+    // Aplicar modo guardado
+    const savedMode = localStorage.getItem('accessibilityMode');
+    if (savedMode) {
+        setAccessibilityMode(savedMode);
+    }
     
-    const btnHighContrast = document.getElementById('btn-high-contrast');
-    const btnColorblind = document.getElementById('btn-colorblind'); // <-- Nuevo botón
-    const btnDefault = document.getElementById('btn-default-mode');
-
-    if (btnDefault) {
-        btnDefault.addEventListener('click', () => {
-            setAccessibilityMode('default');
-        });
+    // Aplicar tamaño de fuente guardado
+    const savedFontSize = localStorage.getItem('fontSize');
+    if (savedFontSize) {
+        document.documentElement.style.fontSize = savedFontSize + 'rem';
     }
-
-    if (btnHighContrast) {
-        btnHighContrast.addEventListener('click', () => {
-            setAccessibilityMode('high-contrast');
-        });
-    }
-
-    // --- Añade esto ---
-    if (btnColorblind) {
-        btnColorblind.addEventListener('click', () => {
-            setAccessibilityMode('colorblind-mode');
-        });
-    }
-    // --- Fin de lo añadido ---
+    
+    // Los eventos de los botones se manejan en el template accessibility.html
+    // para incluir actualización de UI y mensajes de confirmación
 });

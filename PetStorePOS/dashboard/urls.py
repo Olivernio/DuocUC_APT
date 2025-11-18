@@ -41,20 +41,22 @@ urlpatterns = [
     ),
     # --- FIN DE LA URL AÑADIDA ---
     
-    # URLs para exportación a CSV
+    # Gestión de Reseñas
     path(
-        "exportar/productos/",
-        views.export_products_csv,
-        name="export_products_csv"
+        "reseñas/",
+        login_required(user_passes_test(lambda u: u.is_staff)(views.reviews_management)),
+        name="reviews"
     ),
+    
+    # Exportación CSV
+    path("exportar/productos/", views.export_products_csv, name="export_products_csv"),
+    path("exportar/pedidos/", views.export_orders_csv, name="export_orders_csv"),
+    path("exportar/usuarios/", views.export_users_csv, name="export_users_csv"),
+    
+    # Configuración
     path(
-        "exportar/pedidos/",
-        views.export_orders_csv,
-        name="export_orders_csv"
-    ),
-    path(
-        "exportar/usuarios/",
-        views.export_users_csv,
-        name="export_users_csv"
+        "configuracion/",
+        login_required(user_passes_test(lambda u: u.is_staff)(views.configuracion)),
+        name="configuracion"
     ),
 ]

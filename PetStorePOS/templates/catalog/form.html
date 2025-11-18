@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
-{% block title %}Producto · PetStore{% endblock %}
+{% block title %}{% trans "Producto" %} · PetStore{% endblock %}
 {% block content %}
-<h3 class="fw-bold mb-3">{{ view.object|default_if_none:"Nuevo producto" }}</h3>
+<h3 class="fw-bold mb-3">{{ view.object|default_if_none:_("Nuevo producto") }}</h3>
 
 <form method="post" enctype="multipart/form-data" class="card p-3">
   {% csrf_token %}
@@ -25,8 +26,8 @@
   {% endfor %}
 
   <div class="d-flex gap-2">
-    <button class="btn btn-primary" type="submit">Guardar</button>
-    <a class="btn btn-outline-secondary" href="{% url 'catalog:product_list' %}">Cancelar</a>
+    <button class="btn btn-primary" type="submit">{% trans "Guardar" %}</button>
+    <a class="btn btn-outline-secondary" href="{% url 'catalog:product_list' %}">{% trans "Cancelar" %}</a>
   </div>
 </form>
 {% endblock %}

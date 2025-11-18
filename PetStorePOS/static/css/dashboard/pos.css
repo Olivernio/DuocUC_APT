@@ -1,0 +1,36 @@
+/* CSS Dashboard POS - PetStorePOS */
+
+.pos-product-card {
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+
+.pos-product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.07);
+}
+
+.pos-product-card .card-body {
+    padding: 1rem;
+}
+
+.pos-product-card .product-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bs-dark);
+}
+
+.pos-add-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.pos-cart-body {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

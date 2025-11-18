@@ -1,55 +1,83 @@
+"""
+Funciones helper para crear notificaciones.
+"""
 from .models import Notification, NotificationType
-from django.urls import reverse
-from orders.models import OrderStatus
 
 
-#Crea una notificacion para un usuario|Cliente
-def create_notification(user, title, message, notification_type=NotificationType.GENERAL, link=None):
+def create_notification(user, title, message, notification_type=NotificationType.GENERAL):
+    """
+    Crea una notificación para un usuario.
+    
+    Args:
+        user: Usuario que recibirá la notificación
+        title: Título de la notificación
+        message: Mensaje de la notificación
+        notification_type: Tipo de notificación (default: GENERAL)
+    
+    Returns:
+        Notification: La notificación creada
+    """
     return Notification.objects.create(
-        user=user, #Cliente que recibira la notifiacion
-        type=notification_type, #De que sera la notificacion.
-        title=title,# titulo de notificacion
-        message=message, #Mensaje de notificacion
-        link=link #Esto es realmente opcional ya que la persona al darle click tipo a un url dependera de que sera si es una notifiacion de oferta o etc.
+        user=user,
+        title=title,
+        message=message,
+        type=notification_type
     )
 
-#Crea una notificación cuando se crea una orden.
+
 def notify_order_created(user, order):
-    from django.urls import reverse
-    
-    try:
-        order_detail_url = reverse('orders:order_detail', args=[order.id])
-        full_url = f"{order_detail_url}"  # Django construirá la URL completa
-    except:
-        full_url = None
-    
+    """
+    Crea una notificación cuando se crea una orden.
+    """
     return create_notification(
         user=user,
-        title=f"Orden #{order.order_number} creada",
-        message=f"Tu orden ha sido creada exitosamente. Total: ${order.total}",
-        notification_type=NotificationType.ORDER_CREATED,
-        link=full_url
+        title="Orden Creada",
+        message=f"Tu orden #{order.order_number} ha sido creada exitosamente. Total: ${order.total}",
+        notification_type=NotificationType.ORDER_CREATED
     )
 
-#Crea una notificación cuando se actualiza el estado de una orden.
-def notify_order_updated(user, order, old_status, new_status):
 
-    try:
-        order_detail_url = reverse('orders:order_detail', args=[order.id])
-        full_url = f"{order_detail_url}"
-    except:
-        full_url = None
-    
-    # Obtener los nombres legibles de los estados 
-    status_choices = dict(OrderStatus.choices)
-    old_status_display = status_choices.get(old_status, old_status)
-    new_status_display = status_choices.get(new_status, new_status)
-    
+def notify_order_status_changed(user, order):
+    """
+    Crea una notificación cuando cambia el estado de una orden.
+    """
+    from orders.models import OrderStatus
+    status_display = dict(OrderStatus.choices).get(order.status, order.status)
     return create_notification(
         user=user,
-        title=f"Orden #{order.order_number} actualizada",
-        message=f"El estado de tu orden cambió de '{old_status_display}' a '{new_status_display}'",
-        notification_type=NotificationType.ORDER_UPDATED,
-        link=full_url
+        title="Estado de Orden Actualizado",
+        message=f"Tu orden #{order.order_number} ahora está: {status_display}",
+        notification_type=NotificationType.ORDER_STATUS_CHANGED
+    )
+
+
+def notify_review_created(user, review):
+    """
+    Crea una notificación cuando se crea una reseña (para el admin).
+    """
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    # Notificar a todos los admins
+    admins = User.objects.filter(is_staff=True)
+    notifications = []
+    for admin in admins:
+        notifications.append(create_notification(
+            user=admin,
+            title="Nueva Reseña Pendiente",
+            message=f"{user.username} ha dejado una reseña para {review.product.name}. Requiere aprobación.",
+            notification_type=NotificationType.REVIEW_CREATED
+        ))
+    return notifications
+
+
+def notify_review_approved(user, review):
+    """
+    Crea una notificación cuando se aprueba una reseña.
+    """
+    return create_notification(
+        user=user,
+        title="Reseña Aprobada",
+        message=f"Tu reseña para {review.product.name} ha sido aprobada y está visible en el sitio.",
+        notification_type=NotificationType.REVIEW_APPROVED
     )
 

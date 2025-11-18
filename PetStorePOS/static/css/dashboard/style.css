@@ -1,7 +1,9 @@
-/* Estilo para el layout del Dashboard */
+/* Dashboard CSS - PetStorePOS */
+
 .dashboard-body {
     display: flex;
-    background-color: #f8f9fa;
+    background-color: var(--neutral-50);
+    min-height: 100vh;
 }
 
 .sidebar {
@@ -10,29 +12,47 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #ffffff;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    box-shadow: var(--shadow-lg);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid var(--neutral-200);
+    z-index: 1000;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    transition: opacity 0.3s ease;
 }
 
 .sidebar-header {
     padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--neutral-200);
     margin-bottom: 1rem;
 }
 
 .sidebar-header .navbar-brand {
     font-size: 1.25rem;
-    color: #333;
+    color: var(--neutral-700);
+    font-weight: 700;
 }
 
 .sidebar-user {
     padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 0.5rem;
+    background: var(--primary-50);
+    border-radius: var(--border-radius-lg);
     margin-bottom: 1rem;
+    border: 1px solid var(--primary-100);
 }
 
 .sidebar-nav {
@@ -44,57 +64,91 @@
 }
 
 .sidebar-nav .nav-link {
-    color: #555;
+    color: var(--neutral-600);
     font-weight: 500;
     display: flex;
     align-items: center;
     padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
 }
 
 .sidebar-nav .nav-link i {
     font-size: 1.1rem;
+    margin-right: 0.5rem;
+    color: var(--neutral-500);
 }
 
 .sidebar-nav .nav-link:hover {
-    background-color: #f0f0f0;
-    color: #111;
+    background: var(--primary-50);
+    color: var(--primary-600);
+}
+
+.sidebar-nav .nav-link:hover i {
+    color: var(--primary-500);
 }
 
 .sidebar-nav .nav-link.active {
-    background-color: #eef2ff;
-    color: #435ebe;
+    background: var(--gradient-primary);
+    color: #fff;
     font-weight: 600;
+    box-shadow: var(--shadow-md);
+}
+
+.sidebar-nav .nav-link.active i {
+    color: #fff;
 }
 
 .sidebar-footer {
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--neutral-200);
     padding-top: 1rem;
     margin-top: 1rem;
 }
 
 .sidebar-footer .nav-link {
-    color: #555;
+    color: var(--neutral-600);
     font-weight: 500;
+    transition: all 0.3s ease;
 }
+
 .sidebar-footer .nav-link:hover {
-    color: #d9534f;
+    color: var(--error);
+    background: var(--error-light);
 }
 
-
-/* Contenido principal */
 .main-content {
-    margin-left: 260px; /* Mismo ancho que .sidebar */
+    margin-left: 260px;
     flex-grow: 1;
     padding: 2rem;
     width: calc(100% - 260px);
+    background: var(--neutral-50);
+    min-height: 100vh;
 }
 
-/* Estilos para las tarjetas del dashboard */
+.dashboard-mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border-bottom: 1px solid var(--neutral-200);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 .stat-card {
-    border: none;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
 }
 
 .stat-card .card-body {
@@ -108,10 +162,84 @@
     padding: 1rem;
     border-radius: 50%;
     color: white;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-md);
 }
 
 .chart-card {
-    border: none;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    background: #fff;
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+    }
+    
+    .sidebar.sidebar-open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .stat-card .stat-icon {
+        font-size: 2rem;
+        padding: 0.75rem;
+    }
+    
+    .dashboard-mobile-header {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .main-content {
+        padding: 0.75rem;
+    }
+    
+    .stat-card .card-body {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .stat-card .stat-icon {
+        align-self: flex-end;
+        font-size: 1.75rem;
+        padding: 0.5rem;
+    }
+    
+    .chart-card .card-body {
+        padding: 1rem;
+    }
+    
+    .chart-card canvas {
+        max-height: 250px !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .sidebar {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .main-content {
+        padding: 0.5rem;
+    }
+    
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+    
+    .chart-card canvas {
+        max-height: 200px !important;
+    }
 }

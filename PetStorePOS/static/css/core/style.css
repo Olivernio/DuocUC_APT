@@ -11,7 +11,10 @@
 }
 
 .logo-background {
-  background-color: red;
+  background: var(--gradient-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 1rem;
+  box-shadow: var(--shadow-md);
 }
 
 .logo {
@@ -30,15 +33,17 @@
 .metricas-div {
   border: none;
   box-shadow: none;
-  background-color: #155DFC;
+  background: var(--gradient-primary);
   color: white;
-  border-radius: 15px;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
 }
 
 .accesibilidad {
   max-width: 60%;
   text-align: start;
   .check_icon svg {
-    stroke: #00A63E;
+    stroke: var(--secondary-500);
   }
 }

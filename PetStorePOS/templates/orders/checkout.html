@@ -3,112 +3,140 @@
 {% load humanize %}
 {% load i18n %}
 
-{% block title %}{% trans "Checkout - Finalizar Compra" %}{% endblock %}
+{% block title %}{% trans "Checkout" %} · PetStore{% endblock %}
+
+{% block head-tag %}
+<link rel="stylesheet" href="{% static 'css/orders/checkout.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2 class="fw-bold mb-4">{% trans "Finalizar Compra" %}</h2>
-    
+<div class="container my-5">
     <div class="row">
-        <!-- Formulario de Checkout -->
         <div class="col-lg-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>{% trans "Información de Envío" %}</h5>
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        
-                        <!-- Dirección -->
+            <h2 class="fw-bold mb-4">{% trans "Finalizar Compra" %}</h2>
+            
+            <form method="post" class="checkout-form">
+                {% csrf_token %}
+                
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>{% trans "Dirección de Envío" %}</h5>
+                    </div>
+                    <div class="card-body">
                         <div class="mb-3">
                             <label for="{{ form.shipping_address.id_for_label }}" class="form-label">
                                 {{ form.shipping_address.label }}
                             </label>
                             {{ form.shipping_address }}
-                            {% if form.shipping_address.help_text %}
-                            <small class="form-text text-muted">{{ form.shipping_address.help_text }}</small>
-                            {% endif %}
                             {% if form.shipping_address.errors %}
-                            <div class="text-danger small">{{ form.shipping_address.errors }}</div>
+                                <div class="text-danger small">{{ form.shipping_address.errors }}</div>
                             {% endif %}
                         </div>
                         
-                        <!-- Ciudad -->
-                        <div class="mb-3">
-                            <label for="{{ form.shipping_city.id_for_label }}" class="form-label">
-                                {{ form.shipping_city.label }}
-                            </label>
-                            {{ form.shipping_city }}
-                            {% if form.shipping_city.errors %}
-                            <div class="text-danger small">{{ form.shipping_city.errors }}</div>
-                            {% endif %}
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label for="{{ form.shipping_city.id_for_label }}" class="form-label">
+                                    {{ form.shipping_city.label }}
+                                </label>
+                                {{ form.shipping_city }}
+                                {% if form.shipping_city.errors %}
+                                    <div class="text-danger small">{{ form.shipping_city.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="{{ form.shipping_postal_code.id_for_label }}" class="form-label">
+                                    {{ form.shipping_postal_code.label }}
+                                </label>
+                                {{ form.shipping_postal_code }}
+                                {% if form.shipping_postal_code.errors %}
+                                    <div class="text-danger small">{{ form.shipping_postal_code.errors }}</div>
+                                {% endif %}
+                            </div>
                         </div>
                         
-                        <!-- Código Postal -->
-                        <div class="mb-3">
-                            <label for="{{ form.shipping_postal_code.id_for_label }}" class="form-label">
-                                {{ form.shipping_postal_code.label }}
-                            </label>
-                            {{ form.shipping_postal_code }}
-                            {% if form.shipping_postal_code.errors %}
-                            <div class="text-danger small">{{ form.shipping_postal_code.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <!-- Notas -->
                         <div class="mb-3">
                             <label for="{{ form.notes.id_for_label }}" class="form-label">
                                 {{ form.notes.label }}
                             </label>
                             {{ form.notes }}
                             {% if form.notes.errors %}
-                            <div class="text-danger small">{{ form.notes.errors }}</div>
+                                <div class="text-danger small">{{ form.notes.errors }}</div>
                             {% endif %}
                         </div>
-                        
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="{% url 'cart:cart_detail' %}" class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-left me-1"></i>{% trans "Volver al Carrito" %}
-                            </a>
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="bi bi-check-circle me-1"></i>{% trans "Confirmar Pedido" %}
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                
+                {# Sección de Cupón - Solo mostrar si el formulario tiene el campo #}
+                {% if coupon_form.coupon_code %}
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="bi bi-ticket-perforated me-2"></i>{% trans "Cupón de Descuento" %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-2">
+                            <div class="col-md-8">
+                                <label for="{{ coupon_form.coupon_code.id_for_label }}" class="form-label">
+                                    {{ coupon_form.coupon_code.label }}
+                                </label>
+                                {{ coupon_form.coupon_code }}
+                                {% if coupon_form.coupon_code.errors %}
+                                    <div class="text-danger small">{{ coupon_form.coupon_code.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button type="button" class="btn btn-outline-primary w-100" id="apply-coupon-btn">
+                                    <i class="bi bi-check-lg me-1"></i>{% trans "Aplicar" %}
+                                </button>
+                            </div>
+                        </div>
+                        <div id="coupon-message" class="mt-2"></div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'cart:cart_detail' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>{% trans "Volver al Carrito" %}
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        {% trans "Confirmar Pedido" %}<i class="bi bi-check-lg ms-2"></i>
+                    </button>
+                </div>
+            </form>
         </div>
         
-        <!-- Resumen del Pedido -->
         <div class="col-lg-4">
             <div class="card shadow-sm sticky-top" style="top: 20px;">
                 <div class="card-header bg-light">
                     <h5 class="mb-0"><i class="bi bi-cart-check me-2"></i>{% trans "Resumen del Pedido" %}</h5>
                 </div>
                 <div class="card-body">
-                    <!-- Productos -->
-                    <div class="mb-3">
-                        <h6 class="text-muted">{% trans "Productos" %}</h6>
+                    <div class="order-summary">
                         {% for item in cart.items.all %}
-                        <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                            <div>
-                                <small class="fw-bold">{{ item.product.name }}</small>
-                                <br>
-                                <small class="text-muted">{{ item.quantity }} x ${{ item.product.price|floatformat:0 }}</small>
+                        <div class="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom">
+                            <div class="flex-grow-1">
+                                <div class="fw-bold">{{ item.product.name }}</div>
+                                <div class="small text-muted">{% trans "Cantidad:" %} {{ item.quantity }}</div>
                             </div>
                             <div class="text-end">
-                                <small class="fw-bold">${{ item.total_price|floatformat:0 }}</small>
+                                <div class="fw-bold">${{ item.total_price|floatformat:0 }}</div>
                             </div>
                         </div>
                         {% endfor %}
-                    </div>
-                    
-                    <!-- Total -->
-                    <div class="border-top pt-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">{% trans "Total" %}:</h5>
-                            <h4 class="mb-0 text-primary fw-bold">${{ total|floatformat:0|intcomma }}</h4>
+                        
+                        <div class="mt-3 pt-3 border-top">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>{% trans "Subtotal:" %}</span>
+                                <span>${{ subtotal|floatformat:0 }}</span>
+                            </div>
+                            <div id="discount-row" class="d-flex justify-content-between mb-2 text-success" style="display: none !important;">
+                                <span>{% trans "Descuento:" %}</span>
+                                <span id="discount-amount">-$0</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                <span class="fs-5 fw-bold">{% trans "Total:" %}</span>
+                                <span class="fs-4 fw-bold text-primary" id="final-total">${{ subtotal|floatformat:0 }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,5 +144,40 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    {% if coupon_form.coupon_code %}
+    const couponInput = document.getElementById('{{ coupon_form.coupon_code.id_for_label }}');
+    const applyBtn = document.getElementById('apply-coupon-btn');
+    const couponMessage = document.getElementById('coupon-message');
+    const discountRow = document.getElementById('discount-row');
+    const discountAmount = document.getElementById('discount-amount');
+    const finalTotal = document.getElementById('final-total');
+    const subtotal = {{ subtotal }};
+    
+    if (applyBtn && couponInput) {
+        applyBtn.addEventListener('click', function() {
+            const code = couponInput.value.trim().toUpperCase();
+            if (!code) {
+                if (couponMessage) {
+                    couponMessage.innerHTML = '<div class="alert alert-warning">{% trans "Por favor ingresa un código de cupón" %}</div>';
+                }
+                return;
+            }
+            
+            // Validar cupón (esto se validará en el servidor también)
+            if (couponMessage) {
+                couponMessage.innerHTML = '<div class="alert alert-info">{% trans "Validando cupón..." %}</div>';
+                
+                // Simulación - en producción esto se validaría con AJAX antes del submit
+                // Por ahora, el cupón se validará en el servidor al enviar el formulario
+                couponMessage.innerHTML = '<div class="alert alert-success">{% trans "Cupón aplicado. El descuento se calculará al confirmar el pedido." %}</div>';
+            }
+        });
+    }
+    {% endif %}
+});
+</script>
 {% endblock %}
 

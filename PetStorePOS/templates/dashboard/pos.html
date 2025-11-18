@@ -4,48 +4,24 @@
 
 {% block dashboard_title %}{% trans "Punto de Venta" %}{% endblock %}
 
+{% block dashboard_mobile_title %}{% trans "Punto de Venta" %}{% endblock %}
+
 {% block dashboard_head %}
-<style>
-    /* Estilos específicos para el POS */
-    .pos-product-card {
-        cursor: pointer;
-        transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
-    }
-    .pos-product-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.07);
-    }
-    .pos-product-card .card-body {
-        padding: 1rem;
-    }
-    .pos-product-card .product-price {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--bs-dark);
-    }
-    .pos-add-btn {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        font-size: 1.5rem;
-        line-height: 1;
-    }
-    .pos-cart-body {
-        min-height: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/dashboard/pos.css' %}" />
 {% endblock %}
 
 
 {% block dashboard_content %}
     
     {# -------- Cabecera del Contenido -------- #}
-    <div class="mb-4">
-        <h2 class="fw-bold mb-0">{% trans "Punto de Venta" %}</h2>
-        <p class="text-muted mb-0">{% trans "Registra ventas de forma rápida y eficiente" %}</p>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">{% trans "Punto de Venta" %}</h2>
+            <p class="text-muted mb-0">{% trans "Registra ventas de forma rápida y eficiente" %}</p>
+        </div>
+        <div class="d-flex gap-2 align-items-center flex-wrap">
+        </div>
     </div>
 
     {# -------- Barra de Búsqueda -------- #}
@@ -75,7 +51,7 @@
                                 <small class="text-muted">{{ product.sku }}</small>
                                 <div class="product-price mt-2 mb-2">${{ product.price|floatformat:0|intcomma }}</div>
                                 <span class="badge bg-secondary bg-opacity-25 text-dark-emphasis">
-                                    Stock: {{ product.stock }}
+                                    {% trans "Stock" %}: {{ product.stock }}
                                 </span>
                             </div>
                             <div class="ms-3">

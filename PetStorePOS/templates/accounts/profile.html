@@ -15,15 +15,20 @@
     {% endfor %}
     
     {# Encabezado del Perfil #}
-    <div class="d-flex align-items-center mb-4">
-        <div class="profile-avatar-circle bg-primary text-white me-3 d-flex align-items-center justify-content-center"
-             style="width:80px;height:80px;font-size:32px;font-weight:bold;border-radius:50%;">
-            {{ user.first_name|default:user.username|first|upper }}{{ user.last_name|default:""|first|upper }}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <div class="profile-avatar-circle bg-primary text-white me-3 d-flex align-items-center justify-content-center"
+                 style="width:80px;height:80px;font-size:32px;font-weight:bold;border-radius:50%;">
+                {{ user.first_name|default:user.username|first|upper }}{{ user.last_name|default:""|first|upper }}
+            </div>
+            <div>
+                <h1 class="h3 fw-bold mb-0">{% trans "Hola" %}, <span style="color:#2676FB;">{{ user.first_name|default:user.username }}</span></h1>
+                <p class="text-muted mb-0">{% trans "Gestiona tu cuenta y preferencias" %}</p>
+            </div>
         </div>
-        <div>
-            <h1 class="h3 fw-bold mb-0">{% trans "Hola" %}, <span style="color:#2676FB;">{{ user.first_name|default:user.username }}</span></h1>
-            <p class="text-muted mb-0">{% trans "Gestiona tu cuenta y preferencias" %}</p>
-        </div>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>{% trans "Volver al Inicio" %}
+        </a>
     </div>
     
     {# Tarjetas de Estadísticas #}

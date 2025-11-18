@@ -1,13 +1,10 @@
-/* PetStorePOS/static/css/accessibility.css */
+/* CSS Accesibilidad - PetStorePOS */
 
-/* :root es el <html> tag */
 :root.high-contrast {
-    /* Fondo oscuro y texto claro por defecto */
     background-color: #000000 !important;
     color: #FFFFFF !important;
 }
 
-/* Forzamos a los elementos comunes de fondo blanco a ser oscuros */
 :root.high-contrast .bg-white,
 :root.high-contrast .bg-light,
 :root.high-contrast .card,
@@ -18,7 +15,6 @@
     color: #FFFFFF !important;
 }
 
-/* Textos y enlaces */
 :root.high-contrast .text-muted,
 :root.high-contrast .text-secondary {
     color: #DDDDDD !important;
@@ -31,11 +27,10 @@
 }
 
 :root.high-contrast a {
-    color: #FFFF00 !important; /* Amarillo brillante para enlaces */
+    color: #FFFF00 !important;
     text-decoration: underline !important;
 }
 
-/* Botones */
 :root.high-contrast .btn-primary {
     background-color: #FFFF00 !important;
     color: #000000 !important;
@@ -47,60 +42,92 @@
     border-color: #FFFFFF !important;
 }
 
-/* Navbar (para que no desaparezca) */
 :root.high-contrast .navbar {
     display: block !important;
 }
 
-/* Puedes seguir añadiendo más reglas aquí para ajustar tu sitio */
-
-/* --- MODO DALTÓNICO (PROTANOPIA/DEUTERANOPIA) --- */
-
 :root.colorblind-mode a,
 :root.colorblind-mode a:hover {
-    /* Añade subrayado para que los enlaces no dependan solo del color */
     text-decoration: underline !important;
 }
 
 :root.colorblind-mode .text-primary {
-    /* Cambiamos el azul (problemático) por un tono más oscuro */
     color: #000033 !important;
 }
+
 :root.colorblind-mode .text-danger,
 :root.colorblind-mode .bi-heart.text-danger {
-    /* El rojo se cambia por un naranja oscuro, más distinguible */
-    color: #CC79A7 !important; /* Rosa */
+    color: #CC79A7 !important;
 }
 
 :root.colorblind-mode .text-success,
 :root.colorblind-mode .bi-people.text-success {
-    /* El verde se cambia por un azul claro */
-    color: #56B4E9 !important; /* Azul cielo */
+    color: #56B4E9 !important;
 }
 
-/* Insignias (Badges) */
 :root.colorblind-mode .badge-seguro {
-    background-color: #0072B2 !important; /* Azul oscuro */
+    background-color: #0072B2 !important;
     color: #FFFFFF !important;
 }
 
 :root.colorblind-mode .badge-intuitivo {
-    background-color: #E69F00 !important; /* Naranja */
+    background-color: #E69F00 !important;
     color: #000000 !important;
 }
 
 :root.colorblind-mode .badge-accesible {
-    background-color: #56B4E9 !important; /* Azul cielo */
+    background-color: #56B4E9 !important;
     color: #000000 !important;
 }
 
-/* Botones */
 :root.colorblind-mode .btn-primary {
-     background-color: #0072B2 !important; /* Azul oscuro */
+     background-color: #0072B2 !important;
      border-color: #0072B2 !important;
 }
 
 :root.colorblind-mode .btn-danger {
-    background-color: #CC79A7 !important; /* Rosa */
+    background-color: #CC79A7 !important;
      border-color: #CC79A7 !important;
+}
+
+.accessibility-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+}
+
+.accessibility-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15) !important;
+}
+
+.accessibility-card.active {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.accessibility-card.active .badge-active {
+    display: inline-block;
+}
+
+.badge-active {
+    display: none;
+}
+
+.font-size-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.font-size-control input[type="range"] {
+    flex: 1;
+}
+
+.font-size-preview {
+    min-width: 100px;
+    text-align: center;
+    padding: 0.5rem;
+    background: var(--bs-light);
+    border-radius: 0.25rem;
 }

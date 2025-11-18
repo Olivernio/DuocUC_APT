@@ -1,198 +1,179 @@
+# Dashboard Views - PetStorePOS
+
 import requests
+import json
 import csv
-from django.shortcuts import render
+from datetime import datetime
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView 
-from django.db.models import Sum, F, Value, DecimalField, Q
+from django.db.models import Sum, F, Value, DecimalField, Q, Count
 from django.db.models.functions import Coalesce 
-from django.db import models 
+from django.db import models
 from django.utils.translation import gettext_lazy as _
+import logging
+
+logger = logging.getLogger(__name__)
 from django.http import HttpResponse
 
-# --- Importaciones de Modelos ---
-from django.contrib.auth.models import User # <-- ¡IMPORTANTE! Importamos el modelo User
-from catalog.models import Product, Category
+from django.contrib.auth.models import User 
+from catalog.models import Product, Category, ProductReview
 from adoption.models import Mascota, Especies, EstadoMascota, AdoptionRequest
 from accounts.models import UserProfile
-# --- Fin de Importaciones ---
 
-
-# Vista del Dashboard Principal
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def index(request):
-    """
-    Dashboard principal con estadísticas reales calculadas desde la base de datos.
-    """
-    from datetime import datetime
-    from orders.models import Order, OrderItem, OrderStatus
+    from orders.models import Order, OrderItem
+    from django.utils import timezone
+    from datetime import timedelta
+    from django.db.models import Sum, Count, Q
+    from catalog.models import ProductReview
+    from core.utils import get_cached_or_compute, get_month_sales_stats, get_top_products, get_low_stock_products
     
-    # Obtener el primer día del mes actual
-    today = datetime.now()
-    first_day_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    # Fecha actual y hace 6 meses
+    now = timezone.now()
+    six_months_ago = now - timedelta(days=180)
     
-    # 1. VENTAS DEL MES ACTUAL (suma de todas las órdenes confirmadas/entregadas)
-    try:
-        sales_this_month = Order.objects.filter(
-            created_at__gte=first_day_month,  # Desde el primer día del mes
-            status__in=[
-                OrderStatus.CONFIRMED,
-                OrderStatus.PROCESSING,
-                OrderStatus.SHIPPED,
-                OrderStatus.DELIVERED
-            ]
+    # Ventas del mes actual (con caché)
+    current_month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    
+    def compute_month_stats():
+        return get_month_sales_stats(current_month_start)
+    
+    month_stats = get_cached_or_compute(
+        f'dashboard_month_stats_{current_month_start.strftime("%Y%m")}',
+        compute_month_stats,
+        timeout=300  # 5 minutos
+    )
+    
+    ventas_mes = month_stats['total_sales']
+    productos_vendidos = month_stats['total_items']
+    
+    # Stock bajo (con caché)
+    def compute_low_stock():
+        return get_low_stock_products(threshold=10).count()
+    
+    stock_bajo = get_cached_or_compute(
+        'dashboard_low_stock_count',
+        compute_low_stock,
+        timeout=600  # 10 minutos
+    )
+    
+    # Adopciones (solicitudes procesadas - más preciso que contar mascotas con estado "Adoptado")
+    def compute_adoptions():
+        return AdoptionRequest.objects.filter(processed=True).count()
+    
+    adopciones_count = get_cached_or_compute(
+        'dashboard_adoptions_count',
+        compute_adoptions,
+        timeout=600  # 10 minutos
+    )
+    
+    # Datos para gráficos
+    # Ventas por mes (últimos 6 meses)
+    sales_by_month = []
+    months_labels = []
+    for i in range(5, -1, -1):  # Últimos 6 meses
+        month_start = (now - timedelta(days=30*i)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        if i == 0:
+            month_end = now
+        else:
+            month_end = (month_start + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+        
+        month_sales = Order.objects.filter(
+            created_at__gte=month_start,
+            created_at__lte=month_end,
+            status__in=['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED']
         ).aggregate(total=Sum('total'))['total'] or 0
+        
+        sales_by_month.append(float(month_sales))
+        months_labels.append(month_start.strftime('%b %Y'))
+    
+    # Productos más vendidos (top 10) - optimizado con helper
+    def compute_top_products():
+        products = get_top_products(limit=10)
+        return {
+            'names': [p['product__name'] for p in products],
+            'quantities': [p['total_sold'] for p in products]
+        }
+    
+    top_products_data = get_cached_or_compute(
+        'dashboard_top_products',
+        compute_top_products,
+        timeout=600  # 10 minutos
+    )
+    
+    top_products_names = top_products_data.get('names', [])
+    top_products_quantities = top_products_data.get('quantities', [])
+    
+    # Adopciones por especie (basado en solicitudes procesadas)
+    adopciones_por_especie = AdoptionRequest.objects.filter(
+        processed=True
+    ).select_related('Mascota').values('Mascota__Especie').annotate(
+        count=Count('id')
+    )
+    
+    # Obtener el display name de cada especie
+    from adoption.models import Especies
+    especies_dict = dict(Especies.choices)
+    especies_labels = []
+    especies_counts = []
+    for a in adopciones_por_especie:
+        especie_key = a.get('Mascota__Especie', '')
+        if especie_key:
+            especies_labels.append(str(especies_dict.get(especie_key, especie_key)))
+            especies_counts.append(int(a.get('count', 0)))
+    
+    # Stock por categoría
+    stock_por_categoria = Product.objects.filter(is_active=True).values('category').annotate(
+        total_stock=Sum('stock')
+    )
+    
+    categorias_dict = dict(Category.choices)
+    categorias_labels = []
+    categorias_stock = []
+    for s in stock_por_categoria:
+        categoria_key = s.get('category', '')
+        if categoria_key:
+            categorias_labels.append(str(categorias_dict.get(categoria_key, categoria_key)))
+            categorias_stock.append(int(s.get('total_stock', 0)))
+    
+    try:
+        context = {
+            'ventas_mes': float(ventas_mes),
+            'productos_vendidos': int(productos_vendidos),
+            'stock_bajo': stock_bajo,
+            'adopciones_count': adopciones_count,
+            'sales_by_month': json.dumps(sales_by_month) if sales_by_month else '[]',
+            'months_labels': json.dumps([str(m) for m in months_labels]) if months_labels else '[]',
+            'top_products_names': json.dumps([str(n) for n in top_products_names]) if top_products_names else '[]',
+            'top_products_quantities': json.dumps([int(q) for q in top_products_quantities]) if top_products_quantities else '[]',
+            'especies_labels': json.dumps(especies_labels) if especies_labels else '[]',
+            'especies_counts': json.dumps([int(c) for c in especies_counts]) if especies_counts else '[]',
+            'categorias_labels': json.dumps(categorias_labels) if categorias_labels else '[]',
+            'categorias_stock': json.dumps(categorias_stock) if categorias_stock else '[]',
+        }
+        return render(request, "dashboard/index.html", context)
     except Exception as e:
-        # Si hay error (por ejemplo, si no existe la tabla), usar 0
-        sales_this_month = 0
-        if request.user.is_staff and request.user.is_superuser:
-            print(f"Error calculando ventas: {e}")
-    
-    # 2. PRODUCTOS VENDIDOS ESTE MES (suma de cantidades de OrderItems)
-    try:
-        products_sold_this_month = OrderItem.objects.filter(
-            order__created_at__gte=first_day_month,
-            order__status__in=[
-                OrderStatus.CONFIRMED,
-                OrderStatus.PROCESSING,
-                OrderStatus.SHIPPED,
-                OrderStatus.DELIVERED
-            ]
-        ).aggregate(total=Sum('quantity'))['total'] or 0
-    except Exception as e:
-        products_sold_this_month = 0
-        if request.user.is_staff and request.user.is_superuser:
-            print(f"Error calculando productos vendidos: {e}")
-    
-    # 3. STOCK BAJO (ya lo tenías, pero lo mantenemos)
-    stock_bajo = Product.objects.filter(stock__lte=10, is_active=True).count()
-    
-    # 4. ADOPCIONES (ya lo tenías)
-    adopciones_count = Mascota.objects.filter(Estado=EstadoMascota.Adoptado).count()
-    
-    # 5. PRODUCTOS MÁS VENDIDOS (top 5 para mostrar en el dashboard)
-    try:
-        top_products = OrderItem.objects.values(
-            'product__name',  # Nombre del producto
-            'product__sku'    # SKU del producto
-        ).annotate(
-            total_sold=Sum('quantity')  # Suma las cantidades
-        ).order_by('-total_sold')[:5]  # Ordena descendente, toma 5
-    except Exception as e:
-        top_products = []
-        if request.user.is_staff and request.user.is_superuser:
-            print(f"Error calculando top productos: {e}")
-    
-    # 6. ÓRDENES RECIENTES (últimas 5 órdenes)
-    try:
-        recent_orders = Order.objects.select_related('user').order_by('-created_at')[:5]
-    except Exception as e:
-        recent_orders = []
-        if request.user.is_staff and request.user.is_superuser:
-            print(f"Error obteniendo órdenes recientes: {e}")
-    
-    # 7. PRODUCTOS CON STOCK BAJO (lista completa, no solo el count)
-    low_stock_products = Product.objects.filter(
-        stock__lte=10,
-        is_active=True
-    ).order_by('stock')[:10]  # Los 10 con menos stock
-    
-    # 8. DATOS PARA GRÁFICOS
-    
-    # 8.1 Ventas por mes (últimos 6 meses)
-    try:
-        from datetime import timedelta
-        from django.db.models.functions import TruncMonth
-        
-        sales_by_month = []
-        months_labels = []
-        
-        for i in range(6):
-            month_date = today.replace(day=1) - timedelta(days=30*i)
-            month_start = month_date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-            if i == 0:
-                month_end = today
-            else:
-                next_month = (month_date.replace(day=28) + timedelta(days=4)).replace(day=1)
-                month_end = next_month - timedelta(days=1)
-            
-            month_sales = Order.objects.filter(
-                created_at__gte=month_start,
-                created_at__lte=month_end,
-                status__in=[
-                    OrderStatus.CONFIRMED,
-                    OrderStatus.PROCESSING,
-                    OrderStatus.SHIPPED,
-                    OrderStatus.DELIVERED
-                ]
-            ).aggregate(total=Sum('total'))['total'] or 0
-            
-            sales_by_month.append(float(month_sales))
-            months_labels.append(month_date.strftime('%b %Y'))
-        
-        # Invertir para mostrar del más antiguo al más reciente
-        sales_by_month.reverse()
-        months_labels.reverse()
-    except:
-        sales_by_month = [0] * 6
-        months_labels = [''] * 6
-    
-    # 8.2 Productos más vendidos (top 10) - datos para gráfico
-    try:
-        top_products_chart = OrderItem.objects.values(
-            'product__name'
-        ).annotate(
-            total_sold=Sum('quantity')
-        ).order_by('-total_sold')[:10]
-        
-        top_products_names = [p['product__name'] for p in top_products_chart]
-        top_products_quantities = [int(p['total_sold']) for p in top_products_chart]
-    except:
-        top_products_names = []
-        top_products_quantities = []
-    
-    # 8.3 Adopciones por especie - datos para gráfico
-    try:
-        adoptions_by_species_chart = {}
-        for especie_code, especie_name in Especies.choices:
-            count = Mascota.objects.filter(Especie=especie_code).count()
-            if count > 0:
-                adoptions_by_species_chart[str(especie_name)] = int(count)
-    except:
-        adoptions_by_species_chart = {}
-    
-    # 8.4 Stock por categoría - datos para gráfico
-    try:
-        stock_by_category = {}
-        for cat_code, cat_name in Category.choices:
-            total_stock = Product.objects.filter(
-                category=cat_code,
-                is_active=True
-            ).aggregate(total=Sum('stock'))['total'] or 0
-            if total_stock > 0:
-                stock_by_category[str(cat_name)] = int(total_stock)
-    except:
-        stock_by_category = {}
-    
-    context = {
-        'ventas_mes': sales_this_month,
-        'productos_vendidos': products_sold_this_month,
-        'stock_bajo': stock_bajo,
-        'adopciones_count': adopciones_count,
-        'top_products': top_products,
-        'recent_orders': recent_orders,
-        'low_stock_products': low_stock_products,
-        'month_name': today.strftime('%B %Y'),
-        
-        # Datos para gráficos
-        'sales_by_month': sales_by_month,
-        'months_labels': months_labels,
-        'top_products_names': top_products_names,
-        'top_products_quantities': top_products_quantities,
-        'adoptions_by_species': adoptions_by_species_chart,
-        'stock_by_category': stock_by_category,
-    }
-    return render(request, "dashboard/index.html", context)
+        logger.error(f"Error en dashboard index: {str(e)}", exc_info=True)
+        from django.contrib import messages
+        messages.error(request, f"Error al cargar el dashboard: {str(e)}")
+        context = {
+            'ventas_mes': 0,
+            'productos_vendidos': 0,
+            'stock_bajo': 0,
+            'adopciones_count': 0,
+            'sales_by_month': '[]',
+            'months_labels': '[]',
+            'top_products_names': '[]',
+            'top_products_quantities': '[]',
+            'especies_labels': '[]',
+            'especies_counts': '[]',
+            'categorias_labels': '[]',
+            'categorias_stock': '[]',
+        }
+        return render(request, "dashboard/index.html", context)
 
 
 # Vista de Inventario para el Dashboard
@@ -317,17 +298,42 @@ class DashboardUserListView(ListView):
                 models.Q(username__icontains=query) |
                 models.Q(email__icontains=query)
             )
+        
+        # Anotar estadísticas para cada usuario
+        from orders.models import Order
+        from django.db.models import Sum, Count, Q
+        
+        queryset = queryset.annotate(
+            total_orders=Count('orders', filter=Q(orders__status__in=['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED'])),
+            total_spent=Sum('orders__total', filter=Q(orders__status__in=['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED']))
+        )
+        
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_users = self.model.objects.all()
 
-        # --- Estadísticas Globales (de la captura) ---
-        context['global_total_pedidos'] = 2
-        context['global_ingresos_totales'] = 166
-        context['global_adopciones'] = 1
-        context['global_reseñas'] = 3
+        # --- Estadísticas Globales (calculadas en tiempo real) ---
+        from orders.models import Order
+        from adoption.models import AdoptionRequest
+        
+        # Total de pedidos
+        context['global_total_pedidos'] = Order.objects.count()
+        
+        # Ingresos totales (suma de todos los pedidos confirmados/completados)
+        total_revenue = Order.objects.filter(
+            status__in=['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED']
+        ).aggregate(total=Sum('total'))['total'] or 0
+        context['global_ingresos_totales'] = int(total_revenue)
+        
+        # Total de adopciones (solicitudes procesadas)
+        context['global_adopciones'] = AdoptionRequest.objects.filter(
+            processed=True
+        ).count()
+        
+        # Total de reseñas
+        context['global_reseñas'] = ProductReview.objects.count()
         
         # Estadísticas de la lista
         context['total_users'] = all_users.count()
@@ -346,12 +352,49 @@ class DashboardUserListView(ListView):
                 
                 context['selected_user'] = selected_user
                 
+                # Calcular estadísticas reales del usuario
+                from orders.models import Order, OrderItem
+                
+                # Pedidos del usuario
+                user_orders = Order.objects.filter(user=selected_user)
+                total_orders = user_orders.filter(
+                    status__in=['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED']
+                ).count()
+                
+                # Total gastado
+                total_spent = user_orders.filter(
+                    status__in=['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED']
+                ).aggregate(total=Sum('total'))['total'] or 0
+                
+                # Adopciones del usuario
+                user_adoptions = AdoptionRequest.objects.filter(
+                    email=selected_user.email,
+                    processed=True
+                ).count()
+                
+                # Reseñas del usuario
+                user_reviews = ProductReview.objects.filter(user=selected_user).count()
+                
                 context['selected_user_stats'] = {
-                    'pedidos': 1,
-                    'total_gastado': 76,
-                    'adopciones': 1,
-                    'reseñas': 2,
+                    'pedidos': total_orders,
+                    'total_gastado': int(total_spent),
+                    'adopciones': user_adoptions,
+                    'reseñas': user_reviews,
                 }
+                
+                # Datos para las pestañas
+                # Compras
+                context['user_orders'] = user_orders.select_related().order_by('-created_at')[:20]
+                
+                # Reseñas
+                context['user_reviews'] = ProductReview.objects.filter(
+                    user=selected_user
+                ).select_related('product').order_by('-created_at')
+                
+                # Mascotas (adopciones)
+                context['user_adoptions'] = AdoptionRequest.objects.filter(
+                    email=selected_user.email
+                ).select_related('Mascota').order_by('-created_at')
             except Exception as e:
                 # Si faltaba la importación, aquí es donde saltaba el error
                 print(f"ERROR al obtener el perfil del usuario: {e}") # Añadimos un print para depurar
@@ -360,35 +403,18 @@ class DashboardUserListView(ListView):
         return context
 # --- FIN DE LA VISTA DE USUARIOS ---
 
-# ============================================
-# FUNCIONES DE EXPORTACIÓN A CSV
-# ============================================
 
+# --- EXPORTACIÓN DE DATOS A CSV ---
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def export_products_csv(request):
-    """
-    Exporta todos los productos a un archivo CSV.
-    Columnas: SKU, Nombre, Categoría, Precio, Stock, Descripción, Activo
-    """
+    """Exporta todos los productos a CSV"""
     response = HttpResponse(content_type='text/csv; charset=utf-8')
-    response['Content-Disposition'] = 'attachment; filename="productos_export.csv"'
+    response['Content-Disposition'] = f'attachment; filename="productos_{datetime.now().strftime("%Y%m%d")}.csv"'
     
-    # Configurar el writer con encoding UTF-8
     writer = csv.writer(response)
+    writer.writerow(['SKU', 'Nombre', 'Categoría', 'Precio', 'Stock', 'Activo', 'Fecha Creación'])
     
-    # Escribir encabezados
-    writer.writerow([
-        'SKU',
-        'Nombre',
-        'Categoría',
-        'Precio',
-        'Stock',
-        'Descripción',
-        'Activo'
-    ])
-    
-    # Escribir datos
     products = Product.objects.all().order_by('name')
     for product in products:
         writer.writerow([
@@ -397,8 +423,8 @@ def export_products_csv(request):
             product.get_category_display(),
             product.price,
             product.stock,
-            product.description[:200] if product.description else '',  # Limitar a 200 caracteres
-            'Sí' if product.is_active else 'No'
+            'Sí' if product.is_active else 'No',
+            product.created_at.strftime('%Y-%m-%d %H:%M:%S')
         ])
     
     return response
@@ -407,30 +433,15 @@ def export_products_csv(request):
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def export_orders_csv(request):
-    """
-    Exporta todas las órdenes a un archivo CSV.
-    Columnas: Número de Orden, Usuario, Total, Estado, Fecha de Creación, Dirección de Envío
-    """
-    from orders.models import Order, OrderStatus
+    """Exporta todas las órdenes a CSV"""
+    from orders.models import Order
     
     response = HttpResponse(content_type='text/csv; charset=utf-8')
-    response['Content-Disposition'] = 'attachment; filename="pedidos_export.csv"'
+    response['Content-Disposition'] = f'attachment; filename="pedidos_{datetime.now().strftime("%Y%m%d")}.csv"'
     
     writer = csv.writer(response)
+    writer.writerow(['Número de Orden', 'Usuario', 'Email', 'Total', 'Estado', 'Fecha Creación'])
     
-    # Escribir encabezados
-    writer.writerow([
-        'Número de Orden',
-        'Usuario',
-        'Email',
-        'Total',
-        'Estado',
-        'Fecha de Creación',
-        'Ciudad de Envío',
-        'Dirección de Envío'
-    ])
-    
-    # Escribir datos
     orders = Order.objects.select_related('user').all().order_by('-created_at')
     for order in orders:
         writer.writerow([
@@ -439,9 +450,7 @@ def export_orders_csv(request):
             order.user.email,
             order.total,
             order.get_status_display(),
-            order.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-            order.shipping_city,
-            order.shipping_address
+            order.created_at.strftime('%Y-%m-%d %H:%M:%S')
         ])
     
     return response
@@ -450,39 +459,152 @@ def export_orders_csv(request):
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def export_users_csv(request):
-    """
-    Exporta todos los usuarios a un archivo CSV.
-    Columnas: Username, Email, Nombre, Apellido, Fecha de Registro, Es Staff, Es Superusuario
-    """
+    """Exporta todos los usuarios a CSV"""
     response = HttpResponse(content_type='text/csv; charset=utf-8')
-    response['Content-Disposition'] = 'attachment; filename="usuarios_export.csv"'
+    response['Content-Disposition'] = f'attachment; filename="usuarios_{datetime.now().strftime("%Y%m%d")}.csv"'
     
     writer = csv.writer(response)
+    writer.writerow(['Username', 'Email', 'Nombre', 'Apellido', 'Fecha Registro', 'Es Staff', 'Activo'])
     
-    # Escribir encabezados
-    writer.writerow([
-        'Username',
-        'Email',
-        'Nombre',
-        'Apellido',
-        'Fecha de Registro',
-        'Es Staff',
-        'Es Superusuario',
-        'Último Acceso'
-    ])
-    
-    # Escribir datos
-    users = User.objects.all().order_by('date_joined')
+    users = User.objects.all().order_by('username')
     for user in users:
         writer.writerow([
             user.username,
             user.email,
             user.first_name,
             user.last_name,
-            user.date_joined.strftime('%Y-%m-%d %H:%M:%S') if user.date_joined else '',
+            user.date_joined.strftime('%Y-%m-%d %H:%M:%S'),
             'Sí' if user.is_staff else 'No',
-            'Sí' if user.is_superuser else 'No',
-            user.last_login.strftime('%Y-%m-%d %H:%M:%S') if user.last_login else 'Nunca'
+            'Sí' if user.is_active else 'No'
         ])
     
     return response
+# --- FIN DE EXPORTACIÓN CSV ---
+
+
+# --- VISTA DE GESTIÓN DE RESEÑAS ---
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def reviews_management(request):
+    """
+    Vista para gestionar reseñas desde el dashboard.
+    Permite aprobar/rechazar reseñas pendientes.
+    """
+    from django.contrib import messages
+    from django.shortcuts import redirect
+    from accounts.utils import notify_review_approved
+    
+    # Manejar acciones POST
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        review_id = request.POST.get('review_id')
+        
+        if action and review_id:
+            try:
+                review = get_object_or_404(ProductReview, id=review_id)
+                
+                if action == 'approve':
+                    review.is_approved = True
+                    review.save()
+                    # Notificar al usuario
+                    try:
+                        notify_review_approved(review.user, review)
+                    except Exception as e:
+                        logger.warning(f"Error al notificar aprobación de reseña: {str(e)}")
+                    messages.success(request, f"Reseña de {review.user.username} aprobada exitosamente.")
+                elif action == 'reject':
+                    review.is_approved = False
+                    review.save()
+                    messages.success(request, f"Reseña de {review.user.username} rechazada.")
+                elif action == 'delete':
+                    product_name = review.product.name
+                    review.delete()
+                    messages.success(request, f"Reseña eliminada exitosamente.")
+                
+            except Exception as e:
+                messages.error(request, f"Error al procesar la acción: {str(e)}")
+        
+        return redirect('dashboard:reviews')
+    
+    # Obtener filtros
+    filter_status = request.GET.get('status', 'all')
+    search_query = request.GET.get('q', '')
+    
+    # Construir queryset
+    reviews = ProductReview.objects.select_related('product', 'user').all()
+    
+    # Aplicar filtros
+    if filter_status == 'pending':
+        reviews = reviews.filter(is_approved=False)
+    elif filter_status == 'approved':
+        reviews = reviews.filter(is_approved=True)
+    
+    # Búsqueda
+    if search_query:
+        reviews = reviews.filter(
+            Q(product__name__icontains=search_query) |
+            Q(user__username__icontains=search_query) |
+            Q(comment__icontains=search_query)
+        )
+    
+    # Ordenar por fecha (más recientes primero)
+    reviews = reviews.order_by('-created_at')
+    
+    # Estadísticas
+    total_reviews = ProductReview.objects.count()
+    pending_reviews = ProductReview.objects.filter(is_approved=False).count()
+    approved_reviews = ProductReview.objects.filter(is_approved=True).count()
+    
+    context = {
+        'reviews': reviews,
+        'total_reviews': total_reviews,
+        'pending_reviews': pending_reviews,
+        'approved_reviews': approved_reviews,
+        'filter_status': filter_status,
+        'search_query': search_query,
+    }
+    
+    return render(request, 'dashboard/reviews.html', context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def configuracion(request):
+    """
+    Vista de configuración del sistema
+    """
+    import sys
+    from django.conf import settings
+    from django import get_version as django_get_version
+    from catalog.models import Product, Category
+    from orders.models import Order
+    from accounts.models import UserProfile
+    from adoption.models import AdoptionRequest
+    
+    # Estadísticas del sistema
+    total_products = Product.objects.count()
+    total_categories = Category.objects.count()
+    total_orders = Order.objects.count()
+    total_users = UserProfile.objects.count()
+    total_adoptions = AdoptionRequest.objects.filter(processed=True).count()
+    
+    # Configuración del sistema
+    system_config = {
+        'debug_mode': settings.DEBUG,
+        'timezone': settings.TIME_ZONE,
+        'language_code': settings.LANGUAGE_CODE,
+        'allowed_languages': [lang[0] for lang in settings.LANGUAGES],
+    }
+    
+    context = {
+        'total_products': total_products,
+        'total_categories': total_categories,
+        'total_orders': total_orders,
+        'total_users': total_users,
+        'total_adoptions': total_adoptions,
+        'system_config': system_config,
+        'django_version': django_get_version(),
+        'python_version': f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+    }
+    
+    return render(request, 'dashboard/configuracion.html', context)

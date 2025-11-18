@@ -5,6 +5,25 @@ from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Chatbot Configuration - OpenAI o Perplexity
+# Puedes usar cualquiera de los dos, o ambos (el sistema elegirá automáticamente)
+
+# OpenAI Configuration
+# Para obtener tu API Key: https://platform.openai.com/api-keys
+import os
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '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')
+OPENAI_ENABLED = bool(OPENAI_API_KEY)
+
+# Perplexity Configuration
+# Para obtener tu API Key: https://www.perplexity.ai/settings/api
+# Con tu suscripción anual, deberías tener acceso a la API
+PERPLEXITY_API_KEY = os.environ.get('PERPLEXITY_API_KEY', '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')
+PERPLEXITY_ENABLED = bool(PERPLEXITY_API_KEY)
+
+# Configuración del Chatbot
+# Solo usa Perplexity (simplificado)
+# Si quieres usar OpenAI, cambia PERPLEXITY_ENABLED a False y configura OPENAI_API_KEY
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -29,14 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'core', 
-    'catalog',   
-    'accounts',     
+    'accounts',
+    'catalog',
     "django_bootstrap5",
     "adoption",
     "cart",
-    "orders", 
+    "orders",
     'widget_tweaks',
-    'django_recaptcha',   
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
-                'accounts.context_processors.notifications_context',  
+                'core.context_processors.openai_chatbot',  # OpenAI chatbot widget
             ],
         },
     },
@@ -79,6 +98,19 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+# Cache configuration
+# Usando caché en memoria para desarrollo (en producción usar Redis o Memcached)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 300,  # 5 minutos por defecto
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
+        }
     }
 }
 

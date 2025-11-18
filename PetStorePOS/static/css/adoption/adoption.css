@@ -1,30 +1,27 @@
-:root {
-  --primary-color: #155DFC;
-  --secondary-color: #00A63E;
-  --text-dark: #2c3e50;
-  --text-light: #7f8c8d;
-  --bg-light: #f8f9fa;
-  --white: #fff;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --card-hover-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
-}
-
 /* Filter section */
 .filters-container {
-  background-color: var(--white);
+  background-color: #fff;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--neutral-200);
 }
 
 .filters-container .form-select-lg {
   font-size: 1rem;
+  border-color: var(--neutral-300);
 }
 
 .filters-container .btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  background: var(--gradient-primary);
+  border: none;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.filters-container .btn-primary:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 /* Grid */
@@ -44,17 +41,18 @@
 }
 
 .huachito-card-link:hover,
-.huachito-card-link:focus { /* <-- AÑADIDO :focus */
+.huachito-card-link:focus {
   transform: translateY(-8px);
 }
 
 /* Card */
 .huachito-card {
-  background-color: var(--white);
-  border-radius: 15px;
-  box-shadow: var(--card-shadow);
+  background-color: #fff;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--neutral-200);
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -72,8 +70,10 @@
 }
 
 .huachito-card:hover,
-.huachito-card:focus-within { /* <-- AÑADIDO :focus-within */
-  box-shadow: var(--card-hover-shadow);
+.huachito-card:focus-within {
+  box-shadow: var(--shadow-colored);
+  transform: translateY(-4px);
+  border-color: var(--tertiary-300);
 }
 
 .card-img-container {
@@ -115,41 +115,42 @@
 .card-title {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--neutral-700);
   margin: 0;
 }
 
 .card-badge {
   padding: 0.3rem 0.8rem;
-  border-radius: 20px;
+  border-radius: var(--border-radius-full);
   font-size: 0.75rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: var(--white);
+  color: #fff;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
-.card-badge.perro { background-color: #3498db; }
-.card-badge.gato { background-color: #e74c3c; }
-.card-badge.conejo { background-color: #9b59b6; }
-.card-badge.roedor { background-color: #f1c40f; color: #333; }
-.card-badge.ave { background-color: #1abc9c; }
-.card-badge.otro { background-color: #95a5a6; }
+.card-badge.perro { background: var(--gradient-accent); }
+.card-badge.gato { background: var(--gradient-warm); }
+.card-badge.conejo { background: var(--gradient-secondary); }
+.card-badge.roedor { background: var(--primary-400); color: #fff; }
+.card-badge.ave { background: var(--secondary-500); }
+.card-badge.otro { background: var(--neutral-500); }
 
 .card-details {
   font-size: 0.9rem;
-  color: var(--text-light);
+  color: var(--neutral-500);
   display: flex;
   gap: 1rem;
   margin-bottom: 0.5rem;
 }
 .card-details i {
-    color: var(--primary-color);
+    color: var(--primary-500);
 }
 
 .location {
   font-size: 0.9rem;
-  color: var(--text-light);
+  color: var(--neutral-500);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -157,19 +158,22 @@
   padding-top: 1rem;
 }
 .location i {
-    color: var(--secondary-color);
+    color: var(--secondary-500);
 }
 
 .card-footer-action {
-    background-color: var(--primary-color);
-    color: var(--white);
+    background: var(--gradient-primary);
+    color: #fff;
     text-align: center;
     padding: 0.8rem;
     font-weight: 600;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .huachito-card:hover .card-footer-action {
-    background-color: var(--secondary-color);
+    background: var(--gradient-secondary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
