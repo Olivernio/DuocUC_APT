@@ -41,9 +41,78 @@
                 }
             })();
         </script>
+        
+        <style>
+        /* Ocultar la barra superior de Google */
+        body { top: 0 !important; }
+        .goog-te-banner-frame { display: none !important; }
+        
+        /* Ajustar el botón para que parezca de Bootstrap */
+        .goog-te-gadget-simple {
+            background-color: #f8f9fa !important; /* bg-light */
+            border: 1px solid #dee2e6 !important;
+            padding: 4px 8px !important;
+            border-radius: 0.375rem !important; /* Rounded de Bootstrap */
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+            font-family: inherit !important;
+        }
+        /* Quitar iconos feos de Google */
+        .goog-te-gadget-icon { display: none !important; }
+        .goog-te-menu-value span { color: #212529 !important; text-decoration: none !important; }
+        .goog-te-menu-value span:last-child { display: none !important; } /* Oculta la palabra 'Google' */
+        </style>
 
         {% block head-tag %}{% endblock %}
         {# Termina Head #}
+
+        <style>
+            /* --- SOLUCIÓN DEFINITIVA PARA OCULTAR BARRA GOOGLE (NO CERRAR) --- */
+
+            /* 1. Ocultar el iframe de la barra superior (Selector genérico) */
+            .goog-te-banner-frame {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                width: 0 !important;
+                opacity: 0 !important;
+                pointer-events: none !important; /* Evita clicks accidentales */
+            }
+
+            /* 2. También ocultar por etiqueta iframe si tiene esa clase (Doble seguridad) */
+            iframe.goog-te-banner-frame {
+                display: none !important;
+            }
+
+            /* 3. Forzar al body a subir (Anular el empuje de 40px de Google) */
+            body {
+                top: 0px !important; 
+                position: static !important; 
+            }
+
+            /* 4. Ajustar el diseño del widget de selección para que se vea bien */
+            .goog-te-gadget-simple {
+                background-color: #f8f9fa !important;
+                border: 1px solid #dee2e6 !important;
+                padding: 4px 10px !important;
+                border-radius: 20px !important;
+                font-size: 14px !important;
+                line-height: 20px !important;
+                display: inline-block !important;
+            }
+
+            /* 5. Limpiar elementos internos del widget (Iconos y textos feos) */
+            .goog-te-gadget-icon { display: none !important; }
+            .goog-te-menu-value span:nth-child(1) { display: none !important; } /* Oculta "Seleccionar idioma" a veces redundante */
+            .goog-te-menu-value span:nth-child(3) { display: none !important; } /* Oculta "Google" */
+            .goog-te-menu-value span:nth-child(5) { display: none !important; } /* Oculta otros textos */
+            
+            /* Asegurar que el texto del idioma seleccionado se vea */
+            .goog-te-menu-value {
+                color: #212529 !important;
+                margin: 0 !important;
+            }
+        </style>
     </head>
 
     <body class="bg-light">
@@ -85,21 +154,7 @@
                         <i class="bi bi-gear" aria-hidden="true"></i> {% trans "Accesibilidad" %}
                     </a>
 
-                    <form action="{% url 'set_language' %}" method="post" class="d-flex">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                        <select name="language" class="form-select form-select-sm" onchange="this.form.submit()"
-                            aria-label="{% trans 'Seleccionar idioma' %}">
-                            {% get_current_language as LANGUAGE_CODE %}
-                            {% get_available_languages as LANGUAGES %}
-                            {% get_language_info_list for LANGUAGES as languages %}
-                            {% for language in languages %}
-                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
-                                {{ language.code|upper }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </form>
+                    <div id="google_translate_element" class="me-2"></div>
 
                     {% if request.user.is_authenticated %}
                     {% get_unread_notifications_count request.user as unread_count %}
@@ -580,6 +635,57 @@
         {# Termina Chatbot #}
 
         {% block extra_js %}{% endblock %}
+
+        <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es', // Tu idioma base
+                includedLanguages: 'en,es,pt,fr,it,de', // Idiomas permitidos
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+        </script>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+        <script>
+            (function() {
+                // Función que limpia la barra
+                function removeGoogleBar() {
+                    // Buscar el iframe molesto
+                    var iframe = document.querySelector('.goog-te-banner-frame');
+                    var body = document.body;
+                    
+                    if (iframe) {
+                        iframe.style.display = 'none';
+                        iframe.style.visibility = 'hidden';
+                        iframe.style.height = '0px';
+                    }
+                    
+                    // Forzar al body a subir
+                    if (body.style.top !== '0px') {
+                        body.style.top = '0px';
+                        body.style.position = 'static';
+                    }
+                }
+
+                // Ejecutar inmediatamente
+                removeGoogleBar();
+
+                // Y ejecutar repetidamente por si Google intenta volver a ponerla (Observer)
+                var observer = new MutationObserver(function(mutations) {
+                    removeGoogleBar();
+                });
+                
+                // Vigilar cambios en el body
+                observer.observe(document.body, { 
+                    attributes: true, 
+                    childList: true, 
+                    subtree: true 
+                });
+            })();
+        </script>
+
     </body>
 
     </html>

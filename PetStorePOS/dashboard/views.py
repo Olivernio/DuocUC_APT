@@ -583,7 +583,7 @@ def configuracion(request):
     
     # Estadísticas del sistema
     total_products = Product.objects.count()
-    total_categories = Category.objects.count()
+    total_categories = len(Category.choices)
     total_orders = Order.objects.count()
     total_users = UserProfile.objects.count()
     total_adoptions = AdoptionRequest.objects.filter(processed=True).count()

@@ -22,6 +22,54 @@
     {# CSS propio para el Dashboard #}
     <link rel="stylesheet" href="{% static 'css/dashboard/style.css' %}" />
 
+    <style>
+        /* --- SOLUCIÓN DEFINITIVA PARA OCULTAR BARRA GOOGLE (NO CERRAR) --- */
+
+        /* 1. Ocultar el iframe de la barra superior (Selector genérico) */
+        .goog-te-banner-frame {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
+            opacity: 0 !important;
+            pointer-events: none !important; /* Evita clicks accidentales */
+        }
+
+        /* 2. También ocultar por etiqueta iframe si tiene esa clase (Doble seguridad) */
+        iframe.goog-te-banner-frame {
+            display: none !important;
+        }
+
+        /* 3. Forzar al body a subir (Anular el empuje de 40px de Google) */
+        body {
+            top: 0px !important; 
+            position: static !important; 
+        }
+
+        /* 4. Ajustar el diseño del widget de selección para que se vea bien */
+        .goog-te-gadget-simple {
+            background-color: #f8f9fa !important;
+            border: 1px solid #dee2e6 !important;
+            padding: 4px 10px !important;
+            border-radius: 20px !important;
+            font-size: 14px !important;
+            line-height: 20px !important;
+            display: inline-block !important;
+        }
+
+        /* 5. Limpiar elementos internos del widget (Iconos y textos feos) */
+        .goog-te-gadget-icon { display: none !important; }
+        .goog-te-menu-value span:nth-child(1) { display: none !important; } /* Oculta "Seleccionar idioma" a veces redundante */
+        .goog-te-menu-value span:nth-child(3) { display: none !important; } /* Oculta "Google" */
+        .goog-te-menu-value span:nth-child(5) { display: none !important; } /* Oculta otros textos */
+        
+        /* Asegurar que el texto del idioma seleccionado se vea */
+        .goog-te-menu-value {
+            color: #212529 !important;
+            margin: 0 !important;
+        }
+    </style>
+
     {% block dashboard_head %}{% endblock %}
   </head>
   <body class="dashboard-body">
@@ -103,28 +151,14 @@
       </ul>
 
       <div class="sidebar-footer">
+
+        <div id="google_translate_element_dash" class="mx-3"></div>
+
         {# Botón Volver al Inicio #}
         <div class="px-3 mb-2">
           <a href="{% url 'home' %}" class="nav-link">
             <i class="bi bi-house-door me-2"></i> {% trans "Volver al Inicio" %}
           </a>
-        </div>
-        {# Selector de Idioma #}
-        <div class="px-3 mb-2">
-          <form action="{% url 'set_language' %}" method="post" class="d-flex">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path }}">
-            <select name="language" class="form-select form-select-sm" onchange="this.form.submit()" aria-label="{% trans 'Seleccionar idioma' %}">
-              {% get_current_language as LANGUAGE_CODE %}
-              {% get_available_languages as LANGUAGES %}
-              {% get_language_info_list for LANGUAGES as languages %}
-              {% for language in languages %}
-                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
-                  {{ language.code|upper }}
-                </option>
-              {% endfor %}
-            </select>
-          </form>
         </div>
         <a href="{% url 'accounts:logout' %}" class="nav-link">
           <i class="bi bi-box-arrow-left me-2"></i> {% trans "Cerrar sesión" %}
@@ -177,5 +211,56 @@
     {# Termina Script Sidebar Móvil #}
     
     {% block dashboard_scripts %}{% endblock %}
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'es',
+            includedLanguages: 'en,es,pt,fr,it,de',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element_dash'); // <--- OJO: Este ID debe coincidir con el del DIV
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+      (function() {
+          // Función que limpia la barra
+          function removeGoogleBar() {
+              // Buscar el iframe molesto
+              var iframe = document.querySelector('.goog-te-banner-frame');
+              var body = document.body;
+              
+              if (iframe) {
+                  iframe.style.display = 'none';
+                  iframe.style.visibility = 'hidden';
+                  iframe.style.height = '0px';
+              }
+              
+              // Forzar al body a subir
+              if (body.style.top !== '0px') {
+                  body.style.top = '0px';
+                  body.style.position = 'static';
+              }
+          }
+
+          // Ejecutar inmediatamente
+          removeGoogleBar();
+
+          // Y ejecutar repetidamente por si Google intenta volver a ponerla (Observer)
+          var observer = new MutationObserver(function(mutations) {
+              removeGoogleBar();
+          });
+          
+          // Vigilar cambios en el body
+          observer.observe(document.body, { 
+              attributes: true, 
+              childList: true, 
+              subtree: true 
+          });
+      })();
+    </script>
+
   </body>
 </html>
