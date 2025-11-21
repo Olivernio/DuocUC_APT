@@ -1,12 +1,13 @@
 from pathlib import Path
 import os
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-import os
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -75,12 +76,26 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Configuración de PostgreSQL
+# Puedes cambiar a SQLite comentando esta sección y descomentando la de abajo
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'petstorepos'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', '123123'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+
+# Configuración alternativa para SQLite (descomentar para usar SQLite)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Cache configuration
 # Usando caché en memoria para desarrollo (en producción usar Redis o Memcached)
@@ -159,7 +174,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 RECAPTCHA_PUBLIC_KEY = '6Le8tQssAAAAABLQXakchqaKAzLw1Rr7KP1G-qQ4'
 RECAPTCHA_PRIVATE_KEY = '6Le8tQssAAAAAK5MfEOXXQBCUdDyO7sacME7tVXQ'
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rm$@tqv*3b9_u@20c_c6y-mp83u5!dr_kk9rx0ggjqcx(2e&p4'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-rm$@tqv*3b9_u@20c_c6y-mp83u5!dr_kk9rx0ggjqcx(2e&p4')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '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')
 OPENAI_ENABLED = bool(OPENAI_API_KEY)
 

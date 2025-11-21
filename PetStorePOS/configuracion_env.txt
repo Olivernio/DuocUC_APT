@@ -1,0 +1,16 @@
+# Configuración de Base de Datos PostgreSQL
+# Copia este contenido a un archivo llamado .env en la raíz del proyecto
+
+DB_NAME=petstorepos
+DB_USER=postgres
+DB_PASSWORD=123123
+DB_HOST=localhost
+DB_PORT=5432
+
+# Secret Key de Django (mantén este valor secreto en producción)
+SECRET_KEY=django-insecure-rm$@tqv*3b9_u@20c_c6y-mp83u5!dr_kk9rx0ggjqcx(2e&p4
+
+# API Keys (opcional)
+OPENAI_API_KEY=
+PERPLEXITY_API_KEY=
+
