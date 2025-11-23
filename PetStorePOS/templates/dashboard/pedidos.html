@@ -1,0 +1,166 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block dashboard_title %}{% trans "Gestión de Pedidos" %}{% endblock %}
+
+{% block dashboard_mobile_title %}{% trans "Gestión de Pedidos" %}{% endblock %}
+
+{% block dashboard_head %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/style.css' %}" />
+    <style>
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+        .table {
+            width: 100%;
+            min-width: 1000px;
+        }
+    </style>
+{% endblock %}
+
+{% block dashboard_content %}
+    
+    {# -------- Cabecera del Contenido -------- #}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">{% trans "Gestión de Pedidos" %}</h2>
+            <p class="text-muted mb-0">{% trans "Administra y gestiona todos los pedidos de la tienda" %}</p>
+        </div>
+    </div>
+
+    {# -------- Filtros -------- #}
+    <div class="card stat-card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label for="status" class="form-label">{% trans "Filtrar por Estado" %}</label>
+                    <select name="status" id="status" class="form-control" onchange="this.form.submit()">
+                        <option value="">{% trans "Todos los estados" %}</option>
+                        {% for status_code, status_name in status_choices %}
+                        <option value="{{ status_code }}" {% if status_filter == status_code %}selected{% endif %}>
+                            {% trans status_name %}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="search" class="form-label">{% trans "Buscar" %}</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                        <input type="text" name="search" id="search" class="form-control bg-light border-0" 
+                               placeholder="{% trans 'Número de orden, usuario o email' %}" 
+                               value="{{ search }}">
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-dark w-100">
+                        <i class="bi bi-search me-1"></i>{% trans "Filtrar" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    {# -------- Tabla de Pedidos -------- #}
+    {% if orders %}
+    <div class="card stat-card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">{% trans "Número" %}</th>
+                            <th style="width: 20%;">{% trans "Usuario" %}</th>
+                            <th style="width: 15%;">{% trans "Fecha" %}</th>
+                            <th style="width: 12%;">{% trans "Estado" %}</th>
+                            <th class="text-end" style="width: 15%;">{% trans "Total" %}</th>
+                            <th class="text-center" style="width: 18%;">{% trans "Acciones" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>
+                                <div class="fw-bold">{{ order.order_number }}</div>
+                                <div class="small text-muted">{% trans "Items:" %} {{ order.total_items }}</div>
+                            </td>
+                            <td>
+                                <div>{{ order.user.username }}</div>
+                                <div class="small text-muted">{{ order.user.email }}</div>
+                            </td>
+                            <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                <span class="badge 
+                                    {% if order.status == 'PENDING' %}bg-warning
+                                    {% elif order.status == 'CONFIRMED' %}bg-info
+                                    {% elif order.status == 'PROCESSING' %}bg-primary
+                                    {% elif order.status == 'SHIPPED' %}bg-secondary
+                                    {% elif order.status == 'DELIVERED' %}bg-success
+                                    {% elif order.status == 'CANCELLED' %}bg-danger
+                                    {% endif %}">
+                                    {{ order.get_status_display }}
+                                </span>
+                            </td>
+                            <td class="text-end fw-bold">${{ order.total|floatformat:0 }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'orders:admin_order_detail' order.id %}?from_dashboard=1" class="btn btn-sm btn-outline-secondary border-0">
+                                    <i class="bi bi-eye me-1"></i>{% trans "Ver" %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    {# -------- Paginación -------- #}
+    {% if page_obj.has_other_pages %}
+    <nav aria-label="{% trans 'Paginación' %}" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}">
+                    {% trans "Anterior" %}
+                </a>
+            </li>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+                <span class="page-link">{{ num }}</span>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}">{{ num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}">
+                    {% trans "Siguiente" %}
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+    
+    {% else %}
+    <div class="card stat-card">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-inbox display-1 text-muted"></i>
+            <h4 class="mt-3">{% trans "No hay pedidos" %}</h4>
+            <p class="text-muted mb-0">{% trans "No se encontraron pedidos con los filtros seleccionados." %}</p>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}
+

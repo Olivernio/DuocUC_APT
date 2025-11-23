@@ -25,7 +25,7 @@
     </div>
 
     {# -------- Barra de Búsqueda -------- #}
-    <div class_ ="card stat-card mb-4">
+    <div class="card stat-card mb-4">
         <div class="card-body">
             <form method="get">
                 <div class="input-group">
@@ -55,10 +55,12 @@
                                 </span>
                             </div>
                             <div class="ms-3">
-                                {# Este botón eventualmente llamará a una función JS para agregar al carrito #}
-                                <button class="btn btn-dark pos-add-btn d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
+                                <form action="{% url 'cart:add_to_cart' product.id %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-dark pos-add-btn d-flex align-items-center justify-content-center" title="{% trans 'Agregar al carrito' %}">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -78,17 +80,62 @@
             <div class="card stat-card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        <i class="bi bi-cart me-2"></i>{% trans "Carrito" %} (0)
+                        <i class="bi bi-cart me-2"></i>{% trans "Carrito" %} ({{ cart.total_items|default:0 }})
                     </h5>
                 </div>
                 <div class="card-body pos-cart-body">
-                    <div class="text-center">
-                        <i class="bi bi-cart-x" style="font-size: 3rem; color: #ccc;"></i>
-                        <p class="text-muted mt-2">{% trans "Carrito vacío" %}</p>
-                    </div>
+                    {% if cart and cart.items.exists %}
+                        <div class="list-group list-group-flush">
+                            {% for item in cart.items.all %}
+                            <div class="list-group-item px-0 py-2 border-bottom">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1 fw-bold">{{ item.product.name }}</h6>
+                                        <small class="text-muted">SKU: {{ item.product.sku }}</small>
+                                        <div class="mt-1">
+                                            <span class="fw-bold">${{ item.product.price|floatformat:0|intcomma }}</span>
+                                            <span class="text-muted">x {{ item.quantity }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold mb-1">${{ item.total_price|floatformat:0|intcomma }}</div>
+                                        <form action="{% url 'cart:remove_from_cart' item.id %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger border-0 p-1" title="{% trans 'Eliminar' %}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <form action="{% url 'cart:update_cart_item' item.id %}" method="post" class="d-flex align-items-center gap-2">
+                                    {% csrf_token %}
+                                    <label class="small text-muted mb-0">{% trans "Cantidad:" %}</label>
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" class="form-control form-control-sm" style="width: 70px;">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary border-0" title="{% trans 'Actualizar' %}">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                    <small class="text-muted">({% trans "Stock:" %} {{ item.product.stock }})</small>
+                                </form>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-3 pt-3 border-top">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="fw-bold fs-5">{% trans "Total:" %}</span>
+                                <span class="fw-bold fs-5">${{ cart.total_cart_price|floatformat:0|intcomma }}</span>
+                            </div>
+                            <a href="{% url 'orders:checkout' %}" class="btn btn-dark w-100">
+                                <i class="bi bi-cash-stack me-1"></i>{% trans "Procesar Venta" %}
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="text-center">
+                            <i class="bi bi-cart-x" style="font-size: 3rem; color: #ccc;"></i>
+                            <p class="text-muted mt-2">{% trans "Carrito vacío" %}</p>
+                        </div>
+                    {% endif %}
                 </div>
-                {# El footer del carrito se mostraría cuando haya items #}
-                </div>
+            </div>
         </div>
     </div>
 

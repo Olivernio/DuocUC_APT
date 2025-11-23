@@ -41,6 +41,13 @@ urlpatterns = [
     ),
     # --- FIN DE LA URL AÑADIDA ---
     
+    # Gestión de Pedidos (integrada en Dashboard)
+    path(
+        "pedidos/", 
+        login_required(user_passes_test(lambda u: u.is_staff)(views.dashboard_pedidos)), 
+        name="pedidos"
+    ),
+    
     # Gestión de Reseñas
     path(
         "reseñas/",
@@ -58,5 +65,12 @@ urlpatterns = [
         "configuracion/",
         login_required(user_passes_test(lambda u: u.is_staff)(views.configuracion)),
         name="configuracion"
+    ),
+    
+    # Accesibilidad (integrada en Dashboard)
+    path(
+        "accesibilidad/",
+        login_required(user_passes_test(lambda u: u.is_staff)(views.dashboard_accessibility)),
+        name="accesibilidad"
     ),
 ]

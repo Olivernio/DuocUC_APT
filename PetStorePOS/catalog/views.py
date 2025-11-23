@@ -64,17 +64,47 @@ class ProductCreateView(CreateView):
     form_class = ProductForm              
     template_name = "catalog/form.html"
     success_url = reverse_lazy("catalog:product_list")
+    
+    def get_success_url(self):
+        # Primero intenta obtener 'next' del POST (si viene del formulario)
+        next_url = self.request.POST.get('next')
+        # Si no está en POST, intenta del GET
+        if not next_url:
+            next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return super().get_success_url()
 
 class ProductUpdateView(UpdateView): 
     model = Product
     form_class = ProductForm
     template_name = "catalog/form.html"
     success_url = reverse_lazy("catalog:product_list")
+    
+    def get_success_url(self):
+        # Primero intenta obtener 'next' del POST (si viene del formulario)
+        next_url = self.request.POST.get('next')
+        # Si no está en POST, intenta del GET
+        if not next_url:
+            next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return super().get_success_url()
 
 class ProductDeleteView(DeleteView): 
     model = Product
     template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy("catalog:product_list")
+    
+    def get_success_url(self):
+        # Primero intenta obtener 'next' del POST (si viene del formulario)
+        next_url = self.request.POST.get('next')
+        # Si no está en POST, intenta del GET
+        if not next_url:
+            next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return super().get_success_url()
 
 class ProductDetailView(DetailView):
     model = Product

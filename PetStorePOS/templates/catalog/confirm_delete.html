@@ -6,7 +6,10 @@
   <p>{% blocktrans with object_name=object %}¿Seguro que deseas eliminar <strong>{{ object_name }}</strong>?{% endblocktrans %}</p>
   <form method="post">
     {% csrf_token %}
+    {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
     <button type="submit">{% trans "Sí, eliminar" %}</button>
-    <a href="{% url 'catalog:product_list' %}">{% trans "No, volver" %}</a>
+    <a href="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% url 'catalog:product_list' %}{% endif %}">{% trans "No, volver" %}</a>
   </form>
 {% endblock %}

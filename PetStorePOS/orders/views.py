@@ -311,8 +311,19 @@ def admin_order_detail(request, order_id):
         id=order_id
     )
     
+    # Detectar si viene del dashboard
+    from_dashboard = request.GET.get('from_dashboard', '0') == '1'
+    selected_user_id = request.GET.get('selected')
+    tab = request.GET.get('tab', 'compras')
+    
     if request.method == 'POST':
         form = OrderStatusUpdateForm(request.POST)
+        # Preservar parámetros del POST
+        if request.POST.get('selected_user_id'):
+            selected_user_id = request.POST.get('selected_user_id')
+        if request.POST.get('tab'):
+            tab = request.POST.get('tab')
+        
         if form.is_valid():
             old_status = order.status
             order.status = form.cleaned_data['status']
@@ -331,15 +342,32 @@ def admin_order_detail(request, order_id):
                     dict(OrderStatus.choices)[order.status]
                 )
             )
-            return redirect('orders:admin_order_detail', order_id=order.id)
+            # Preservar parámetros en la redirección
+            from django.urls import reverse
+            redirect_url = reverse('orders:admin_order_detail', args=[order.id])
+            if from_dashboard:
+                redirect_url += "?from_dashboard=1"
+                if selected_user_id:
+                    redirect_url += f"&selected={selected_user_id}&tab={tab}"
+            return redirect(redirect_url)
     else:
         form = OrderStatusUpdateForm(initial={'status': order.status})
     
     context = {
         'order': order,
         'form': form,
+        'from_dashboard': from_dashboard,
+        'selected_user_id': selected_user_id,
+        'tab': tab,
     }
-    return render(request, 'orders/admin_order_detail.html', context)
+    
+    # Usar template del dashboard si viene del dashboard
+    if from_dashboard:
+        template_name = 'dashboard/pedido_detail.html'
+    else:
+        template_name = 'orders/admin_order_detail.html'
+    
+    return render(request, template_name, context)
 
 
 def get_or_create_cart(request):

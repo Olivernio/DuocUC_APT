@@ -1,56 +1,30 @@
-{% extends "base.html" %}
+{% extends "dashboard/base.html" %}
 {% load static %}
 {% load humanize %}
 {% load i18n %}
-{% load breadcrumbs %}
 
-{% block title %}{% trans "Detalle de Pedido" %} · Admin{% endblock %}
+{% block dashboard_title %}{% trans "Detalle de Pedido" %}{% endblock %}
 
-{% block breadcrumbs %}
-<nav aria-label="{% trans 'Breadcrumb' %}" class="mb-3">
-  <ol class="breadcrumb mb-0">
-    {% if from_dashboard %}
-      <li class="breadcrumb-item">
-        <a href="{% url 'dashboard:index' %}" class="text-decoration-none">{% trans "Dashboard" %}</a>
-      </li>
-      {% if selected_user_id %}
-        <li class="breadcrumb-item">
-          <a href="{% url 'dashboard:usuarios' %}" class="text-decoration-none">{% trans "Gestión de Usuarios" %}</a>
-        </li>
-        <li class="breadcrumb-item">
-          <a href="{% url 'dashboard:usuarios' %}?selected={{ selected_user_id }}&tab={{ tab }}" class="text-decoration-none">{% trans "Usuario" %}</a>
-        </li>
-      {% else %}
-        <li class="breadcrumb-item">
-          <a href="{% url 'dashboard:pedidos' %}" class="text-decoration-none">{% trans "Gestión de Pedidos" %}</a>
-        </li>
-      {% endif %}
-    {% else %}
-      <li class="breadcrumb-item">
-        <a href="{% url 'orders:admin_order_list' %}" class="text-decoration-none">{% trans "Pedidos" %}</a>
-      </li>
-    {% endif %}
-    <li class="breadcrumb-item active" aria-current="page">{{ order.order_number }}</li>
-  </ol>
-</nav>
+{% block dashboard_mobile_title %}{% trans "Detalle de Pedido" %}{% endblock %}
+
+{% block dashboard_head %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/style.css' %}" />
 {% endblock %}
 
-{% block content %}
-<div class="container my-5">
+{% block dashboard_content %}
+    
+    {# -------- Cabecera del Contenido -------- #}
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">{% trans "Detalle de Pedido" %}</h2>
-        {% if from_dashboard %}
-          {% if selected_user_id %}
-            <a href="{% url 'dashboard:usuarios' %}?selected={{ selected_user_id }}&tab={{ tab }}" class="btn btn-outline-secondary">
-              <i class="bi bi-arrow-left me-1"></i>{% trans "Volver" %}
-            </a>
-          {% else %}
-            <a href="{% url 'dashboard:pedidos' %}" class="btn btn-outline-secondary">
-              <i class="bi bi-arrow-left me-1"></i>{% trans "Volver a Pedidos" %}
-            </a>
-          {% endif %}
+        <div>
+            <h2 class="fw-bold mb-0">{% trans "Detalle de Pedido" %}</h2>
+            <p class="text-muted mb-0">{{ order.order_number }}</p>
+        </div>
+        {% if selected_user_id %}
+          <a href="{% url 'dashboard:usuarios' %}?selected={{ selected_user_id }}&tab={{ tab }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>{% trans "Volver" %}
+          </a>
         {% else %}
-          <a href="{% url 'orders:admin_order_list' %}" class="btn btn-outline-secondary">
+          <a href="{% url 'dashboard:pedidos' %}" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-left me-1"></i>{% trans "Volver a Pedidos" %}
           </a>
         {% endif %}
@@ -58,8 +32,9 @@
     
     <div class="row">
         <div class="col-lg-8">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white">
+            {# Información de la Orden #}
+            <div class="card stat-card mb-4">
+                <div class="card-header">
                     <h5 class="mb-0"><i class="bi bi-receipt me-2"></i>{% trans "Información de la Orden" %}</h5>
                 </div>
                 <div class="card-body">
@@ -87,8 +62,9 @@
                 </div>
             </div>
             
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-light">
+            {# Productos #}
+            <div class="card stat-card mb-4">
+                <div class="card-header">
                     <h5 class="mb-0"><i class="bi bi-box-seam me-2"></i>{% trans "Productos" %}</h5>
                 </div>
                 <div class="card-body">
@@ -118,7 +94,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="3" class="text-end fw-bold fs-5">{% trans "Total:" %}</td>
-                                    <td class="text-end fw-bold fs-5 text-primary">${{ order.total|floatformat:0 }}</td>
+                                    <td class="text-end fw-bold fs-5">${{ order.total|floatformat:0 }}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -128,28 +104,34 @@
         </div>
         
         <div class="col-lg-4">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-warning text-dark">
+            {# Cambiar Estado #}
+            <div class="card stat-card mb-4">
+                <div class="card-header">
                     <h5 class="mb-0"><i class="bi bi-gear me-2"></i>{% trans "Cambiar Estado" %}</h5>
                 </div>
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
+                        {% if selected_user_id %}
+                          <input type="hidden" name="selected_user_id" value="{{ selected_user_id }}">
+                          <input type="hidden" name="tab" value="{{ tab }}">
+                        {% endif %}
                         <div class="mb-3">
                             <label for="{{ form.status.id_for_label }}" class="form-label">
                                 {{ form.status.label }}
                             </label>
                             {{ form.status }}
                         </div>
-                        <button type="submit" class="btn btn-warning w-100">
+                        <button type="submit" class="btn btn-dark w-100">
                             <i class="bi bi-check-lg me-1"></i>{% trans "Actualizar Estado" %}
                         </button>
                     </form>
                 </div>
             </div>
             
-            <div class="card shadow-sm">
-                <div class="card-header bg-light">
+            {# Dirección de Envío #}
+            <div class="card stat-card">
+                <div class="card-header">
                     <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>{% trans "Dirección de Envío" %}</h5>
                 </div>
                 <div class="card-body">
@@ -167,6 +149,6 @@
             </div>
         </div>
     </div>
-</div>
+
 {% endblock %}
 

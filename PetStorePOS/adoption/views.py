@@ -87,8 +87,12 @@ def mascota_detail_view(request, pet_id):
         logger.error(f"Error inesperado en mascota_detail_view: {e}", exc_info=True)
         error_message = "Ocurrió un error inesperado. Por favor, intenta más tarde."
 
+    # Detectar si viene del dashboard
+    from_dashboard = request.GET.get('from_dashboard', '0') == '1'
+    
     context = {
         "mascota": pet,
         "error_message": error_message,
+        "from_dashboard": from_dashboard,
     }
     return render(request, "adoption/detail.html", context)

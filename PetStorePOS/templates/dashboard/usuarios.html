@@ -176,21 +176,21 @@
 
                         <ul class="nav nav-tabs mb-4" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="tab-resumen" data-bs-toggle="tab" data-bs-target="#pane-resumen" type="button" role="tab">{% trans "Resumen" %}</button>
+                                <button class="nav-link {% if active_tab == 'resumen' %}active{% endif %}" id="tab-resumen" data-bs-toggle="tab" data-bs-target="#pane-resumen" type="button" role="tab">{% trans "Resumen" %}</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="tab-compras" data-bs-toggle="tab" data-bs-target="#pane-compras" type="button" role="tab">{% trans "Compras" %}</button>
+                                <button class="nav-link {% if active_tab == 'compras' %}active{% endif %}" id="tab-compras" data-bs-toggle="tab" data-bs-target="#pane-compras" type="button" role="tab">{% trans "Compras" %}</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="tab-mascotas" data-bs-toggle="tab" data-bs-target="#pane-mascotas" type="button" role="tab">{% trans "Mascotas" %}</button>
+                                <button class="nav-link {% if active_tab == 'mascotas' %}active{% endif %}" id="tab-mascotas" data-bs-toggle="tab" data-bs-target="#pane-mascotas" type="button" role="tab">{% trans "Mascotas" %}</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="tab-reseñas" data-bs-toggle="tab" data-bs-target="#pane-reseñas" type="button" role="tab">{% trans "Reseñas" %}</button>
+                                <button class="nav-link {% if active_tab == 'reseñas' %}active{% endif %}" id="tab-reseñas" data-bs-toggle="tab" data-bs-target="#pane-reseñas" type="button" role="tab">{% trans "Reseñas" %}</button>
                             </li>
                         </ul>
 
                         <div class="tab-content">
-                            <div class="tab-pane fade show active" id="pane-resumen" role="tabpanel">
+                            <div class="tab-pane fade {% if active_tab == 'resumen' %}show active{% endif %}" id="pane-resumen" role="tabpanel">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h5>{% trans "Información Personal" %}</h5>
@@ -232,7 +232,7 @@
                                 <span class="badge {% if selected_user.userprofile.receive_adoption_alerts %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Alertas adopción" %}: {% if selected_user.userprofile.receive_adoption_alerts %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</span>
                                 <span class="badge {% if selected_user.userprofile.receive_product_recommendations %}bg-primary{% else %}bg-secondary{% endif %}">{% trans "Recomendaciones" %}: {% if selected_user.userprofile.receive_product_recommendations %}{% trans "Sí" %}{% else %}{% trans "No" %}{% endif %}</span>
                             </div>
-                            <div class="tab-pane fade" id="pane-compras" role="tabpanel">
+                            <div class="tab-pane fade {% if active_tab == 'compras' %}show active{% endif %}" id="pane-compras" role="tabpanel">
                                 {% if user_orders %}
                                     <div class="table-responsive">
                                         <table class="table table-hover">
@@ -248,7 +248,7 @@
                                                 {% for order in user_orders %}
                                                 <tr>
                                                     <td>
-                                                        <a href="{% url 'orders:admin_order_detail' order.id %}" class="text-decoration-none">
+                                                        <a href="{% url 'orders:admin_order_detail' order.id %}?from_dashboard=1&selected={{ selected_user.id }}&tab=compras" class="text-decoration-none">
                                                             {{ order.order_number }}
                                                         </a>
                                                     </td>
@@ -278,7 +278,7 @@
                                     </div>
                                 {% endif %}
                             </div>
-                            <div class="tab-pane fade" id="pane-mascotas" role="tabpanel">
+                            <div class="tab-pane fade {% if active_tab == 'mascotas' %}show active{% endif %}" id="pane-mascotas" role="tabpanel">
                                 {% if user_adoptions %}
                                     <div class="list-group">
                                         {% for adoption in user_adoptions %}
@@ -311,7 +311,7 @@
                                     </div>
                                 {% endif %}
                             </div>
-                            <div class="tab-pane fade" id="pane-reseñas" role="tabpanel">
+                            <div class="tab-pane fade {% if active_tab == 'reseñas' %}show active{% endif %}" id="pane-reseñas" role="tabpanel">
                                 {% if user_reviews %}
                                     <div class="list-group">
                                         {% for review in user_reviews %}

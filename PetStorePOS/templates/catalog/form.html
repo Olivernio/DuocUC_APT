@@ -8,6 +8,9 @@
 
 <form method="post" enctype="multipart/form-data" class="card p-3">
   {% csrf_token %}
+  {% if request.GET.next %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
+  {% endif %}
   {{ form.non_field_errors }}
 
   {% for field in form %}
@@ -27,7 +30,7 @@
 
   <div class="d-flex gap-2">
     <button class="btn btn-primary" type="submit">{% trans "Guardar" %}</button>
-    <a class="btn btn-outline-secondary" href="{% url 'catalog:product_list' %}">{% trans "Cancelar" %}</a>
+    <a class="btn btn-outline-secondary" href="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% url 'catalog:product_list' %}{% endif %}">{% trans "Cancelar" %}</a>
   </div>
 </form>
 {% endblock %}

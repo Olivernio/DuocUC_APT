@@ -1,20 +1,113 @@
 /* CSS Accesibilidad - PetStorePOS */
 
+/* ============================================
+   MODO ALTO CONTRASTE - REGLAS BASE
+   ============================================ */
+
 :root.high-contrast {
     background-color: #000000 !important;
     color: #FFFFFF !important;
 }
 
-:root.high-contrast .bg-white,
-:root.high-contrast .bg-light,
-:root.high-contrast .card,
-:root.high-contrast .alert-info,
-:root.high-contrast .table {
-    background-color: #111111 !important;
-    border: 1px solid #FFFFFF;
+/* Body y elementos base */
+:root.high-contrast body,
+:root.high-contrast body.bg-light {
+    background-color: #000000 !important;
+    background: #000000 !important;
     color: #FFFFFF !important;
 }
 
+:root.high-contrast .bg-white,
+:root.high-contrast .bg-light,
+:root.high-contrast .alert-info,
+:root.high-contrast .table,
+:root.high-contrast main {
+    background-color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+/* Containers sin bordes para no interferir con diseños */
+:root.high-contrast .container,
+:root.high-contrast .container-fluid {
+    background-color: #000000 !important;
+    border: none !important;
+    color: #FFFFFF !important;
+}
+
+/* Cards generales (pero serán sobrescritas por reglas más específicas) */
+:root.high-contrast .card {
+    background-color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+/* ============================================
+   CATÁLOGO DE PRODUCTOS
+   ============================================ */
+
+/* Tarjetas de productos */
+:root.high-contrast .product-card {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .product-card:hover,
+:root.high-contrast .product-card:focus-within {
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 2px #FFFF00 !important;
+}
+
+/* Contenedor de imagen de producto */
+:root.high-contrast .product-card-img-container {
+    background-color: #000000 !important;
+    border-bottom: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .product-card-img {
+    border: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Contenido de la tarjeta de producto */
+:root.high-contrast .product-card .card-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* Nombre del producto */
+:root.high-contrast .product-card .product-name,
+:root.high-contrast .product-card .product-name a {
+    color: #FFFF00 !important;
+}
+
+/* Precio del producto */
+:root.high-contrast .product-card .product-price {
+    color: #FFFFFF !important;
+}
+
+/* Badges en tarjetas de productos */
+:root.high-contrast .product-card .badge {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #FFFF00 !important;
+}
+
+/* Formulario de filtros en catálogo */
+:root.high-contrast .bg-light.p-3.rounded.border {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .bg-light.p-3.rounded.border .form-label {
+    color: #FFFFFF !important;
+}
+
+/* Textos */
 :root.high-contrast .text-muted,
 :root.high-contrast .text-secondary {
     color: #DDDDDD !important;
@@ -22,25 +115,150 @@
 
 :root.high-contrast .text-dark,
 :root.high-contrast .text-primary,
-:root.high-contrast .product-name {
+:root.high-contrast .product-name,
+:root.high-contrast h1,
+:root.high-contrast h2,
+:root.high-contrast h3,
+:root.high-contrast h4,
+:root.high-contrast h5,
+:root.high-contrast h6,
+:root.high-contrast p,
+:root.high-contrast .lead {
     color: #FFFFFF !important;
 }
 
+/* Enlaces */
 :root.high-contrast a {
     color: #FFFF00 !important;
     text-decoration: underline !important;
 }
 
-:root.high-contrast .btn-primary {
+:root.high-contrast a:hover,
+:root.high-contrast a:focus {
+    color: #FFFFFF !important;
+    background-color: #333333 !important;
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+
+:root.high-contrast .btn-primary,
+:root.high-contrast .btn-primary:hover,
+:root.high-contrast .btn-primary:focus {
     background-color: #FFFF00 !important;
     color: #000000 !important;
     border-color: #FFFF00 !important;
+    border-width: 2px !important;
 }
 
-:root.high-contrast .btn-outline-secondary {
+:root.high-contrast .btn-secondary,
+:root.high-contrast .btn-secondary:hover,
+:root.high-contrast .btn-secondary:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+    border-width: 2px !important;
+}
+
+:root.high-contrast .btn-dark,
+:root.high-contrast .btn-dark:hover,
+:root.high-contrast .btn-dark:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+    border-width: 2px !important;
+}
+
+:root.high-contrast .btn-outline-dark,
+:root.high-contrast .btn-outline-dark:hover,
+:root.high-contrast .btn-outline-dark:focus {
+    background-color: transparent !important;
     color: #FFFFFF !important;
     border-color: #FFFFFF !important;
+    border-width: 2px !important;
 }
+
+:root.high-contrast .btn-outline-secondary,
+:root.high-contrast .btn-outline-secondary:hover,
+:root.high-contrast .btn-outline-secondary:focus {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+    border-width: 2px !important;
+}
+
+:root.high-contrast .btn-outline-primary,
+:root.high-contrast .btn-outline-primary:hover,
+:root.high-contrast .btn-outline-primary:focus {
+    background-color: transparent !important;
+    color: #FFFF00 !important;
+    border-color: #FFFF00 !important;
+    border-width: 2px !important;
+}
+
+:root.high-contrast .btn-danger,
+:root.high-contrast .btn-danger:hover,
+:root.high-contrast .btn-danger:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+    border-width: 2px !important;
+}
+
+:root.high-contrast .btn-success,
+:root.high-contrast .btn-success:hover,
+:root.high-contrast .btn-success:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+    border-width: 2px !important;
+}
+
+:root.high-contrast .btn-light,
+:root.high-contrast .btn-light:hover,
+:root.high-contrast .btn-light:focus {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+    border-width: 2px !important;
+}
+
+/* Botón de accesibilidad en footer - más específico */
+:root.high-contrast footer .btn-light,
+:root.high-contrast .footer-dark .btn-light {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+    border-width: 2px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 4px rgba(255, 255, 0, 0.3) !important;
+}
+
+:root.high-contrast footer .btn-light:hover,
+:root.high-contrast .footer-dark .btn-light:hover {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+    border-width: 2px !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4) !important;
+}
+
+:root.high-contrast footer .btn-light:focus,
+:root.high-contrast .footer-dark .btn-light:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+    border-width: 3px !important;
+    outline: 2px solid #FFFF00 !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(255, 255, 0, 0.3) !important;
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
 
 :root.high-contrast .navbar {
     background-color: #000000 !important;
@@ -54,19 +272,26 @@
 :root.high-contrast .navbar .nav-link:hover,
 :root.high-contrast .navbar .nav-link:focus {
     color: #FFFF00 !important;
+    background-color: #333333 !important;
 }
 
 :root.high-contrast .navbar .nav-link.active {
     color: #FFFF00 !important;
     background-color: #333333 !important;
+    border: 1px solid #FFFF00 !important;
 }
 
 :root.high-contrast .navbar-brand {
     color: #FFFFFF !important;
 }
 
+:root.high-contrast .navbar-brand small {
+    color: #DDDDDD !important;
+}
+
 :root.high-contrast .navbar-toggler {
     border-color: #FFFFFF !important;
+    background-color: transparent !important;
 }
 
 :root.high-contrast .navbar-toggler-icon {
@@ -74,8 +299,8 @@
 }
 
 :root.high-contrast .dropdown-menu {
-    background-color: #111111 !important;
-    border: 1px solid #FFFFFF !important;
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
 }
 
 :root.high-contrast .dropdown-item {
@@ -86,6 +311,908 @@
 :root.high-contrast .dropdown-item:focus {
     background-color: #333333 !important;
     color: #FFFF00 !important;
+}
+
+:root.high-contrast .dropdown-divider {
+    border-color: #FFFFFF !important;
+}
+
+/* ============================================
+   PÁGINA PRINCIPAL - HERO SECTION
+   ============================================ */
+
+:root.high-contrast .hero-home {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .text-gradient {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #FFFF00 !important;
+    background-clip: unset !important;
+    text-fill-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .hero-home .lead {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .hero-img {
+    border: 2px solid #FFFFFF !important;
+    box-shadow: 0 0 0 2px #FFFFFF !important;
+}
+
+/* ============================================
+   CARDS Y FEATURES
+   ============================================ */
+
+:root.high-contrast .feature-card,
+:root.high-contrast .feature-div {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .feature-card:hover,
+:root.high-contrast .feature-card:focus-within {
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 2px #FFFF00 !important;
+}
+
+:root.high-contrast .feature-icon {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .feature-card .text-secondary {
+    color: #DDDDDD !important;
+}
+
+/* ============================================
+   SECCIÓN DE MÉTRICAS
+   ============================================ */
+
+:root.high-contrast .metricas-div {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .metricas-div h2,
+:root.high-contrast .metricas-div h3,
+:root.high-contrast .metricas-div p {
+    color: #FFFFFF !important;
+}
+
+/* ============================================
+   SECCIÓN DE ACCESIBILIDAD
+   ============================================ */
+
+:root.high-contrast .accesibilidad {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .accesibilidad h2,
+:root.high-contrast .accesibilidad h4,
+:root.high-contrast .accesibilidad p {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .accesibilidad .check_icon svg {
+    stroke: #FFFF00 !important;
+    fill: none !important;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+:root.high-contrast footer,
+:root.high-contrast .footer-dark {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-top: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast footer a,
+:root.high-contrast .footer-dark a {
+    color: #FFFF00 !important;
+    text-decoration: underline !important;
+}
+
+:root.high-contrast footer a:hover,
+:root.high-contrast .footer-dark a:hover {
+    color: #FFFFFF !important;
+    background-color: #333333 !important;
+}
+
+:root.high-contrast footer h6,
+:root.high-contrast .footer-dark h6 {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast footer .text-light,
+:root.high-contrast .footer-dark .text-light {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast footer hr {
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .logo-footer {
+    background: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .logo-footer i {
+    color: #FFFF00 !important;
+}
+
+/* Regla general para TODOS los íconos en el footer - máxima prioridad */
+:root.high-contrast footer i,
+:root.high-contrast .footer-dark i,
+:root.high-contrast footer .bi,
+:root.high-contrast .footer-dark .bi {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Íconos en enlaces del footer - Asegurar visibilidad */
+:root.high-contrast footer a i,
+:root.high-contrast .footer-dark a i,
+:root.high-contrast footer a .bi,
+:root.high-contrast .footer-dark a .bi,
+:root.high-contrast footer li a i,
+:root.high-contrast .footer-dark li a i,
+:root.high-contrast footer li a .bi,
+:root.high-contrast .footer-dark li a .bi,
+:root.high-contrast footer .list-unstyled a i,
+:root.high-contrast .footer-dark .list-unstyled a i,
+:root.high-contrast footer .list-unstyled a .bi,
+:root.high-contrast .footer-dark .list-unstyled a .bi,
+:root.high-contrast footer a.text-decoration-none i,
+:root.high-contrast .footer-dark a.text-decoration-none i,
+:root.high-contrast footer a.text-decoration-none .bi,
+:root.high-contrast .footer-dark a.text-decoration-none .bi,
+:root.high-contrast footer .nav-link i,
+:root.high-contrast .footer-dark .nav-link i,
+:root.high-contrast footer .nav-link .bi,
+:root.high-contrast .footer-dark .nav-link .bi,
+:root.high-contrast footer ul.list-unstyled li a i.bi,
+:root.high-contrast .footer-dark ul.list-unstyled li a i.bi {
+    color: #FFFF00 !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 1em !important;
+    width: auto !important;
+    height: auto !important;
+    margin-right: 0.25rem !important;
+}
+
+:root.high-contrast footer a:hover i,
+:root.high-contrast .footer-dark a:hover i,
+:root.high-contrast footer a:hover .bi,
+:root.high-contrast .footer-dark a:hover .bi,
+:root.high-contrast footer li a:hover i,
+:root.high-contrast .footer-dark li a:hover i,
+:root.high-contrast footer li a:hover .bi,
+:root.high-contrast .footer-dark li a:hover .bi,
+:root.high-contrast footer a.text-decoration-none:hover i,
+:root.high-contrast .footer-dark a.text-decoration-none:hover i,
+:root.high-contrast footer a.text-decoration-none:hover .bi,
+:root.high-contrast .footer-dark a.text-decoration-none:hover .bi,
+:root.high-contrast footer .nav-link:hover i,
+:root.high-contrast .footer-dark .nav-link:hover i,
+:root.high-contrast footer .nav-link:hover .bi,
+:root.high-contrast .footer-dark .nav-link:hover .bi {
+    color: #FFFFFF !important;
+}
+
+/* Ícono en botón de accesibilidad del footer */
+:root.high-contrast footer .btn-light i,
+:root.high-contrast .footer-dark .btn-light i,
+:root.high-contrast footer .btn-light .bi,
+:root.high-contrast .footer-dark .btn-light .bi {
+    color: #000000 !important;
+    transition: color 0.3s ease, transform 0.3s ease !important;
+    display: inline-block !important;
+}
+
+:root.high-contrast footer .btn-light:hover i,
+:root.high-contrast .footer-dark .btn-light:hover i,
+:root.high-contrast footer .btn-light:hover .bi,
+:root.high-contrast .footer-dark .btn-light:hover .bi {
+    color: #000000 !important;
+    transform: rotate(15deg) scale(1.1) !important;
+}
+
+:root.high-contrast footer .btn-light:focus i,
+:root.high-contrast .footer-dark .btn-light:focus i,
+:root.high-contrast footer .btn-light:focus .bi,
+:root.high-contrast .footer-dark .btn-light:focus .bi {
+    color: #000000 !important;
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+:root.high-contrast .badge {
+    border: 1px solid #FFFFFF !important;
+}
+
+:root.high-contrast .badge-accesible {
+    background-color: #000000 !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .badge-intuitivo {
+    background-color: #000000 !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .badge-seguro {
+    background-color: #000000 !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .badge.bg-primary,
+:root.high-contrast .badge.bg-secondary,
+:root.high-contrast .badge.bg-danger,
+:root.high-contrast .badge.bg-success,
+:root.high-contrast .badge.bg-warning {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #FFFF00 !important;
+}
+
+/* ============================================
+   ICONOS
+   ============================================ */
+
+:root.high-contrast .bi,
+:root.high-contrast i {
+    color: inherit !important;
+}
+
+:root.high-contrast .bi.text-danger,
+:root.high-contrast i.text-danger {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .bi.text-primary,
+:root.high-contrast i.text-primary {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .bi.text-success,
+:root.high-contrast i.text-success {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .bi.text-secondary,
+:root.high-contrast i.text-secondary {
+    color: #DDDDDD !important;
+}
+
+/* ============================================
+   ALERTAS
+   ============================================ */
+
+:root.high-contrast .alert {
+    border: 2px solid #FFFFFF !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .alert-success {
+    border-color: #FFFFFF !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .alert-danger {
+    border-color: #FFFFFF !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .alert-warning {
+    border-color: #FFFFFF !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .alert-info {
+    border-color: #FFFFFF !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* ============================================
+   FORMULARIOS
+   ============================================ */
+
+:root.high-contrast .form-control,
+:root.high-contrast .form-select {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .form-control:focus,
+:root.high-contrast .form-select:focus {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25) !important;
+}
+
+:root.high-contrast .form-control::placeholder {
+    color: #999999 !important;
+}
+
+/* ============================================
+   TABLAS
+   ============================================ */
+
+:root.high-contrast .table {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .table th,
+:root.high-contrast .table td {
+    border-color: #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .table thead th {
+    background-color: #111111 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+/* ============================================
+   OTROS ELEMENTOS
+   ============================================ */
+
+:root.high-contrast .breadcrumb {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .breadcrumb-item a {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .breadcrumb-item.active {
+    color: #FFFFFF !important;
+}
+
+/* Separador "/" en breadcrumbs - hacerlo más visible */
+:root.high-contrast .breadcrumb-item + .breadcrumb-item::before,
+:root.high-contrast .breadcrumb .breadcrumb-item + .breadcrumb-item::before,
+:root.high-contrast ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    color: #FFFFFF !important;
+    content: "/" !important;
+    opacity: 1 !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+    padding: 0 0.5rem !important;
+    display: inline-block !important;
+    float: none !important;
+}
+
+/* Asegurar que todos los separadores sean visibles */
+:root.high-contrast .breadcrumb-item::before,
+:root.high-contrast .breadcrumb .breadcrumb-item::before,
+:root.high-contrast ol.breadcrumb .breadcrumb-item::before {
+    color: #FFFFFF !important;
+    opacity: 1 !important;
+    font-weight: bold !important;
+}
+
+/* Separadores alternativos si Bootstrap usa otros métodos */
+:root.high-contrast .breadcrumb-item:not(:first-child)::before,
+:root.high-contrast .breadcrumb .breadcrumb-item:not(:first-child)::before {
+    color: #FFFFFF !important;
+    opacity: 1 !important;
+    font-weight: bold !important;
+    content: "/" !important;
+    padding: 0 0.5rem !important;
+    display: inline-block !important;
+}
+
+:root.high-contrast .nav-center {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+/* Navbar específico de base.html */
+:root.high-contrast .navbar .bg-light {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .navbar .rounded-pill {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+/* Badges en navbar */
+:root.high-contrast .badge.bg-danger {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #FFFF00 !important;
+}
+
+:root.high-contrast .badge.bg-primary {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #FFFF00 !important;
+}
+
+/* Dropdown toggle en navbar */
+:root.high-contrast .dropdown-toggle {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .dropdown-toggle:hover,
+:root.high-contrast .dropdown-toggle:focus {
+    color: #FFFF00 !important;
+    background-color: #333333 !important;
+}
+
+/* Iconos en dropdown */
+:root.high-contrast .dropdown-item .bi.text-primary,
+:root.high-contrast .dropdown-item .bi.text-secondary {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .dropdown-item.text-danger {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .dropdown-item.text-danger:hover {
+    color: #FFFF00 !important;
+    background-color: #333333 !important;
+}
+
+:root.high-contrast .url-active a {
+    background-color: #333333 !important;
+    color: #FFFF00 !important;
+    border: 1px solid #FFFF00 !important;
+}
+
+:root.high-contrast .url-noactive a {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .url-noactive a:hover {
+    color: #FFFF00 !important;
+    background-color: #333333 !important;
+}
+
+:root.high-contrast .div-log-out {
+    background-color: #000000 !important;
+    border-color: #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .div-log-out:hover {
+    background-color: #333333 !important;
+}
+
+:root.high-contrast .div-log-out a {
+    color: #FFFFFF !important;
+}
+
+/* Chatbot */
+:root.high-contrast .chatbot-widget {
+    border: none !important;
+}
+
+:root.high-contrast .chatbot-toggle {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 0 2px #FFFFFF !important;
+}
+
+:root.high-contrast .chatbot-toggle:hover {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .chatbot-container {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 0 2px #FFFFFF !important;
+}
+
+:root.high-contrast .chatbot-header {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border-bottom: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chatbot-header h6 {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chatbot-header .btn-link {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chatbot-header .btn-link:hover {
+    color: #FFFF00 !important;
+    background-color: #333333 !important;
+}
+
+:root.high-contrast .chatbot-messages {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .bot-message .message-content {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .user-message .message-content {
+    background: #FFFF00 !important;
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .chatbot-input-container {
+    background-color: #000000 !important;
+    border-top: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .chatbot-input {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chatbot-input:focus {
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25) !important;
+}
+
+:root.high-contrast .chatbot-input::placeholder {
+    color: #999999 !important;
+}
+
+:root.high-contrast .chatbot-send-btn,
+:root.high-contrast #chatbot-send {
+    background: #FFFF00 !important;
+    background-color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+    color: #000000 !important;
+}
+
+:root.high-contrast .chatbot-send-btn:hover,
+:root.high-contrast #chatbot-send:hover {
+    background-color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+    color: #000000 !important;
+}
+
+:root.high-contrast .chatbot-loading {
+    color: #FFFFFF !important;
+}
+
+/* Google Translate */
+:root.high-contrast .goog-te-gadget-simple {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .goog-te-menu-value {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .goog-te-menu-value span {
+    color: #FFFFFF !important;
+}
+
+/* ============================================
+   PÁGINAS DE LOGIN Y REGISTRO
+   ============================================ */
+
+/* Fondo del body en login/register */
+:root.high-contrast body.gradient-bg,
+:root.high-contrast body {
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+
+/* Columna izquierda con gradiente */
+:root.high-contrast .gradient-left,
+:root.high-contrast .gradient-bg {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .gradient-left h1,
+:root.high-contrast .gradient-left h2,
+:root.high-contrast .gradient-left h3,
+:root.high-contrast .gradient-left p,
+:root.high-contrast .gradient-left span,
+:root.high-contrast .gradient-left small,
+:root.high-contrast .gradient-left li,
+:root.high-contrast .gradient-left .fw-bold,
+:root.high-contrast .gradient-left .text-white {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .gradient-left .bi,
+:root.high-contrast .gradient-left i {
+    color: #FFFF00 !important;
+}
+
+/* Círculos decorativos - ocultar o hacer visibles */
+:root.high-contrast .decor-circle {
+    display: none !important;
+}
+
+/* Formulario (form-card) */
+:root.high-contrast .form-card {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 0 2px #FFFFFF !important;
+}
+
+:root.high-contrast .form-card h2,
+:root.high-contrast .form-card h6,
+:root.high-contrast .form-card p,
+:root.high-contrast .form-card label,
+:root.high-contrast .form-card small,
+:root.high-contrast .form-card strong {
+    color: #FFFFFF !important;
+}
+
+/* Enlaces dentro del formulario */
+:root.high-contrast .form-card a,
+:root.high-contrast .form-card .small a,
+:root.high-contrast .form-card .text-muted a {
+    color: #FFFF00 !important;
+    text-decoration: underline !important;
+}
+
+:root.high-contrast .form-card a:hover,
+:root.high-contrast .form-card a:focus {
+    color: #FFFFFF !important;
+    background-color: #333333 !important;
+}
+
+/* Botón con gradiente */
+:root.high-contrast .btn-gradient,
+:root.high-contrast .btn-gradient:hover,
+:root.high-contrast .btn-gradient:focus {
+    background: #FFFF00 !important;
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+    box-shadow: 0 0 0 2px #FFFF00 !important;
+}
+
+/* Input groups */
+:root.high-contrast .input-group-text {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .input-group-text .bi,
+:root.high-contrast .input-group-text i {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .input-group .form-control {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .input-group .form-control:focus {
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25) !important;
+}
+
+:root.high-contrast .input-group .form-control::placeholder {
+    color: #999999 !important;
+}
+
+/* Botón toggle password */
+:root.high-contrast .btn-outline-secondary {
+    background-color: transparent !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .btn-outline-secondary:hover,
+:root.high-contrast .btn-outline-secondary:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .btn-outline-secondary .bi,
+:root.high-contrast .btn-outline-secondary i {
+    color: inherit !important;
+}
+
+/* Sección de cuenta demo */
+:root.high-contrast .form-card .bg-light,
+:root.high-contrast .form-card .border {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .form-card .bg-light h6,
+:root.high-contrast .form-card .bg-light p,
+:root.high-contrast .form-card .bg-light small,
+:root.high-contrast .form-card .bg-light strong {
+    color: #FFFFFF !important;
+}
+
+/* Wizard steps (registro) */
+:root.high-contrast .wizard-step {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .wizard-step.active {
+    background-color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+    color: #000000 !important;
+}
+
+:root.high-contrast .wizard-step .bi,
+:root.high-contrast .wizard-step i {
+    color: inherit !important;
+}
+
+:root.high-contrast .wizard-line {
+    background-color: #333333 !important;
+    border: 1px solid #FFFFFF !important;
+}
+
+:root.high-contrast .wizard-line.active {
+    background-color: #FFFF00 !important;
+    border: 1px solid #FFFF00 !important;
+}
+
+/* Texto muted en formularios */
+:root.high-contrast .form-card .text-muted {
+    color: #DDDDDD !important;
+}
+
+:root.high-contrast .form-card .text-muted a {
+    color: #FFFF00 !important;
+}
+
+/* Grid y contenedores adicionales */
+:root.high-contrast .grid-accesibilidad {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .row {
+    background-color: transparent !important;
+}
+
+:root.high-contrast .col,
+:root.high-contrast [class*="col-"] {
+    background-color: transparent !important;
+}
+
+/* Contenedores principales */
+:root.high-contrast .container-fluid {
+    background-color: transparent !important;
+}
+
+:root.high-contrast .min-vh-100 {
+    background-color: #000000 !important;
+}
+
+/* Invalid feedback en formularios */
+:root.high-contrast .invalid-feedback {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .is-invalid {
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .is-invalid:focus {
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25) !important;
+}
+
+/* Secciones y contenedores */
+:root.high-contrast section {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .py-5,
+:root.high-contrast .py-4,
+:root.high-contrast .my-5,
+:root.high-contrast .my-4 {
+    background-color: transparent !important;
+}
+
+/* Espaciadores y utilidades */
+:root.high-contrast .text-center h1,
+:root.high-contrast .text-center h2,
+:root.high-contrast .text-center h3,
+:root.high-contrast .text-center p {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .fs-1 {
+    color: #FFFFFF !important;
+}
+
+/* Imágenes con bordes */
+:root.high-contrast img {
+    border: 1px solid #FFFFFF !important;
+}
+
+/* Overlay de carga */
+:root.high-contrast #loading-overlay {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+:root.high-contrast #loading-overlay .spinner-border {
+    border-color: #FFFFFF !important;
+    border-right-color: transparent !important;
+}
+
+/* Asegurar que todos los textos sean visibles */
+:root.high-contrast * {
+    text-shadow: none !important;
+}
+
+/* Remover sombras que puedan interferir */
+:root.high-contrast .shadow,
+:root.high-contrast .shadow-sm,
+:root.high-contrast .shadow-md,
+:root.high-contrast .shadow-lg,
+:root.high-contrast .shadow-xl {
+    box-shadow: 0 0 0 2px #FFFFFF !important;
 }
 
 :root.colorblind-mode a,
@@ -172,4 +1299,1665 @@
     padding: 0.5rem;
     background: var(--bs-light);
     border-radius: 0.25rem;
+}
+
+/* ============================================
+   CONTROLES DE TAMAÑO DE FUENTE - MODO ALTO CONTRASTE
+   ============================================ */
+
+:root.high-contrast .font-size-preview {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    border-radius: 0.25rem !important;
+}
+
+:root.high-contrast .font-size-preview span,
+:root.high-contrast #font-size-value,
+:root.high-contrast .font-size-preview #font-size-value {
+    color: #FFFF00 !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+}
+
+:root.high-contrast .font-size-control {
+    background-color: transparent !important;
+}
+
+:root.high-contrast .font-size-control label {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .font-size-control label i {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .font-size-control input[type="range"] {
+    background-color: #000000 !important;
+}
+
+:root.high-contrast .font-size-control input[type="range"]::-webkit-slider-thumb {
+    background-color: #FFFF00 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .font-size-control input[type="range"]::-moz-range-thumb {
+    background-color: #FFFF00 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .font-size-control input[type="range"]::-ms-thumb {
+    background-color: #FFFF00 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+/* ============================================
+   CARRITO DE COMPRAS - MODO ALTO CONTRASTE
+   ============================================ */
+
+/* Contenedor de la tabla del carrito */
+:root.high-contrast .table-responsive.shadow-sm.bg-white,
+:root.high-contrast .table-responsive.bg-white {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    border-radius: 0.25rem !important;
+}
+
+/* Tabla del carrito */
+:root.high-contrast .table-responsive .table,
+:root.high-contrast .table-responsive table.table {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+/* Encabezados de la tabla */
+:root.high-contrast .table-responsive .table thead th,
+:root.high-contrast .table-responsive table.table thead th {
+    background-color: #000000 !important;
+    color: #FFFF00 !important;
+    border-color: #FFFFFF !important;
+    border-width: 2px !important;
+    font-weight: bold !important;
+}
+
+/* Filas de la tabla */
+:root.high-contrast .table-responsive .table tbody tr,
+:root.high-contrast .table-responsive table.table tbody tr {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .table-responsive .table tbody tr:hover,
+:root.high-contrast .table-responsive table.table tbody tr:hover {
+    background-color: #111111 !important;
+    border-color: #FFFF00 !important;
+}
+
+/* Celdas de la tabla */
+:root.high-contrast .table-responsive .table td,
+:root.high-contrast .table-responsive table.table td {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+/* Texto del producto */
+:root.high-contrast .table-responsive .text-dark,
+:root.high-contrast .table-responsive .fw-bold {
+    color: #FFFFFF !important;
+}
+
+/* SKU y texto secundario */
+:root.high-contrast .table-responsive .text-muted,
+:root.high-contrast .table-responsive .small.text-muted {
+    color: #DDDDDD !important;
+}
+
+/* Botón eliminar */
+:root.high-contrast .table-responsive .btn-outline-danger,
+:root.high-contrast .table-responsive .btn-outline-danger.text-danger {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .table-responsive .btn-outline-danger:hover,
+:root.high-contrast .table-responsive .btn-outline-danger:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .table-responsive .btn-outline-danger i,
+:root.high-contrast .table-responsive .btn-outline-danger .bi {
+    color: inherit !important;
+}
+
+/* Input de cantidad */
+:root.high-contrast .table-responsive .form-control,
+:root.high-contrast .table-responsive .form-control-sm {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .table-responsive .form-control:focus,
+:root.high-contrast .table-responsive .form-control-sm:focus {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25) !important;
+}
+
+/* Botón de actualizar cantidad */
+:root.high-contrast .table-responsive .btn-outline-secondary {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .table-responsive .btn-outline-secondary:hover,
+:root.high-contrast .table-responsive .btn-outline-secondary:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .table-responsive .btn-outline-secondary i,
+:root.high-contrast .table-responsive .btn-outline-secondary .bi {
+    color: inherit !important;
+}
+
+/* Imágenes de productos */
+:root.high-contrast .table-responsive img {
+    border: 2px solid #FFFFFF !important;
+    border-radius: 0.25rem !important;
+}
+
+/* Placeholder para imagen no disponible */
+:root.high-contrast .table-responsive .bg-light {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .table-responsive .bg-light i,
+:root.high-contrast .table-responsive .bg-light .bi {
+    color: #FFFF00 !important;
+}
+
+/* Pie de tabla (Total) */
+:root.high-contrast .table-responsive .table tfoot td,
+:root.high-contrast .table-responsive table.table tfoot td {
+    background-color: #000000 !important;
+    color: #FFFF00 !important;
+    border-top: 3px solid #FFFFFF !important;
+    font-weight: bold !important;
+}
+
+/* Botones de acción del carrito */
+:root.high-contrast a.btn-outline-secondary,
+:root.high-contrast .btn-outline-secondary {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast a.btn-outline-secondary:hover,
+:root.high-contrast .btn-outline-secondary:hover,
+:root.high-contrast a.btn-outline-secondary:focus,
+:root.high-contrast .btn-outline-secondary:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast a.btn-outline-secondary i,
+:root.high-contrast .btn-outline-secondary i,
+:root.high-contrast a.btn-outline-secondary .bi,
+:root.high-contrast .btn-outline-secondary .bi {
+    color: inherit !important;
+}
+
+/* Botón proceder al pago */
+:root.high-contrast .btn-primary.btn-lg {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+:root.high-contrast .btn-primary.btn-lg:hover,
+:root.high-contrast .btn-primary.btn-lg:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .btn-primary.btn-lg i,
+:root.high-contrast .btn-primary.btn-lg .bi {
+    color: #000000 !important;
+}
+
+/* Alerta de carrito vacío */
+:root.high-contrast .alert-info {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .alert-info .alert-heading {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .alert-info i,
+:root.high-contrast .alert-info .bi {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .alert-info hr {
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .alert-info .btn-primary {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+/* ============================================
+   PÁGINA DE NOTIFICACIONES - MODO ALTO CONTRASTE
+   ============================================ */
+
+/* Título de notificaciones */
+:root.high-contrast h2.fw-bold i.bi-bell-fill,
+:root.high-contrast h2 i.text-primary {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast h2.fw-bold {
+    color: #FFFFFF !important;
+}
+
+/* Subtítulo */
+:root.high-contrast .text-muted.m-0 {
+    color: #FFFFFF !important;
+}
+
+/* Lista de notificaciones */
+:root.high-contrast .list-group {
+    background-color: transparent !important;
+}
+
+/* Tarjetas de notificaciones */
+:root.high-contrast .list-group-item {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Notificaciones no leídas */
+:root.high-contrast .list-group-item.bg-light {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border-left: 4px solid #FFFF00 !important;
+    border-top: 2px solid #FFFFFF !important;
+    border-right: 2px solid #FFFFFF !important;
+    border-bottom: 2px solid #FFFFFF !important;
+}
+
+/* Título de la notificación */
+:root.high-contrast .list-group-item h6,
+:root.high-contrast .list-group-item h6.fw-bold {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .list-group-item h6.fw-bold {
+    color: #FFFF00 !important;
+}
+
+/* Mensaje de la notificación */
+:root.high-contrast .list-group-item p.text-muted,
+:root.high-contrast .list-group-item .text-muted {
+    color: #FFFFFF !important;
+}
+
+/* Fecha de la notificación */
+:root.high-contrast .list-group-item small.text-muted {
+    color: #DDDDDD !important;
+}
+
+:root.high-contrast .list-group-item small.text-muted i,
+:root.high-contrast .list-group-item small.text-muted .bi {
+    color: #FFFF00 !important;
+}
+
+/* Badge "Nueva" */
+:root.high-contrast .list-group-item .badge.bg-primary {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+/* Botón marcar como leída */
+:root.high-contrast .list-group-item .btn-outline-secondary,
+:root.high-contrast .list-group-item .btn-sm.btn-outline-secondary {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .list-group-item .btn-outline-secondary:hover,
+:root.high-contrast .list-group-item .btn-outline-secondary:focus,
+:root.high-contrast .list-group-item .btn-sm.btn-outline-secondary:hover,
+:root.high-contrast .list-group-item .btn-sm.btn-outline-secondary:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .list-group-item .btn-outline-secondary i,
+:root.high-contrast .list-group-item .btn-outline-secondary .bi {
+    color: inherit !important;
+}
+
+/* Botones de acción superiores */
+:root.high-contrast .btn-outline-primary {
+    background-color: transparent !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .btn-outline-primary:hover,
+:root.high-contrast .btn-outline-primary:focus {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .btn-outline-primary i,
+:root.high-contrast .btn-outline-primary .bi {
+    color: inherit !important;
+}
+
+/* Alerta de sin notificaciones */
+:root.high-contrast .alert-info.text-center {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .alert-info h4 {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .alert-info i.bi-bell-slash,
+:root.high-contrast .alert-info .text-muted {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .alert-info p.text-muted {
+    color: #FFFFFF !important;
+}
+
+/* ============================================
+   PÁGINA DE PERFIL/MI CUENTA - MODO ALTO CONTRASTE
+   ============================================ */
+
+/* Avatar del perfil */
+:root.high-contrast .profile-avatar-circle,
+:root.high-contrast .profile-avatar-circle.bg-primary {
+    background-color: #FFFF00 !important;
+    background: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+/* Saludo del usuario */
+:root.high-contrast h1.h3.fw-bold,
+:root.high-contrast h1.h3.fw-bold span {
+    color: #FFFFFF !important;
+}
+
+/* Tarjetas de estadísticas */
+:root.high-contrast .card.shadow-sm.border-0 {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .card.shadow-sm.border-0 .card-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .card.shadow-sm.border-0 .fw-bold {
+    color: #FFFF00 !important;
+    font-size: 22px !important;
+}
+
+:root.high-contrast .card.shadow-sm.border-0 .text-muted {
+    color: #FFFFFF !important;
+}
+
+/* Pestañas de navegación */
+:root.high-contrast .nav-tabs {
+    border-bottom: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .nav-tabs .nav-link {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+    border-bottom: none !important;
+}
+
+:root.high-contrast .nav-tabs .nav-link:hover,
+:root.high-contrast .nav-tabs .nav-link:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .nav-tabs .nav-link.active {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+    border-bottom-color: #FFFFFF !important;
+    border-width: 2px !important;
+    font-weight: bold !important;
+}
+
+:root.high-contrast .nav-tabs .nav-link i,
+:root.high-contrast .nav-tabs .nav-link .bi {
+    color: inherit !important;
+}
+
+:root.high-contrast .nav-tabs .nav-link.active i,
+:root.high-contrast .nav-tabs .nav-link.active .bi {
+    color: #000000 !important;
+}
+
+/* Tarjetas de contenido */
+:root.high-contrast .card.shadow-sm.border-0.rounded-3 {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .card.shadow-sm.border-0.rounded-3 .card-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* Títulos de sección */
+:root.high-contrast .card-body h5.fw-bold {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .card-body h5.fw-bold i.text-primary,
+:root.high-contrast .card-body h5.fw-bold .bi.text-primary {
+    color: #FFFF00 !important;
+}
+
+/* Botón editar perfil */
+:root.high-contrast .btn-success,
+:root.high-contrast .btn-sm.btn-success {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .btn-success:hover,
+:root.high-contrast .btn-success:focus,
+:root.high-contrast .btn-sm.btn-success:hover,
+:root.high-contrast .btn-sm.btn-success:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .btn-success i,
+:root.high-contrast .btn-success .bi {
+    color: #000000 !important;
+}
+
+/* Labels de formulario */
+:root.high-contrast .form-label.fw-bold {
+    color: #FFFFFF !important;
+}
+
+/* Inputs de solo lectura */
+:root.high-contrast .form-control-plaintext {
+    color: #FFFFFF !important;
+    background-color: transparent !important;
+}
+
+/* Checkboxes */
+:root.high-contrast input[type="checkbox"] {
+    width: 1.2em !important;
+    height: 1.2em !important;
+    border: 2px solid #FFFFFF !important;
+    background-color: #000000 !important;
+    accent-color: #FFFF00 !important;
+}
+
+:root.high-contrast input[type="checkbox"]:checked {
+    background-color: #FFFF00 !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast input[type="checkbox"]:disabled {
+    opacity: 0.7 !important;
+    border-color: #666666 !important;
+}
+
+/* Lista de preferencias de comunicación */
+:root.high-contrast ul[style*="list-style"] li {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast ul[style*="list-style"] li .fw-bold {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast ul[style*="list-style"] li .text-muted {
+    color: #DDDDDD !important;
+}
+
+/* Tabla de pedidos */
+:root.high-contrast .table-responsive .table.table-hover thead.table-light {
+    background-color: #000000 !important;
+}
+
+:root.high-contrast .table-responsive .table.table-hover thead.table-light th {
+    background-color: #000000 !important;
+    color: #FFFF00 !important;
+    border-color: #FFFFFF !important;
+    font-weight: bold !important;
+}
+
+:root.high-contrast .table-responsive .table.table-hover tbody tr {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .table-responsive .table.table-hover tbody tr:hover {
+    background-color: #111111 !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .table-responsive .table.table-hover tbody td {
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .table-responsive .table.table-hover tbody .text-muted {
+    color: #DDDDDD !important;
+}
+
+/* Badges de estado en pedidos */
+:root.high-contrast .badge.bg-warning,
+:root.high-contrast .badge.bg-info,
+:root.high-contrast .badge.bg-primary,
+:root.high-contrast .badge.bg-secondary,
+:root.high-contrast .badge.bg-success,
+:root.high-contrast .badge.bg-danger {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+/* Botón ver detalle */
+:root.high-contrast .btn-outline-primary {
+    background-color: transparent !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .btn-outline-primary:hover,
+:root.high-contrast .btn-outline-primary:focus {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+}
+
+/* Paginación */
+:root.high-contrast .pagination .page-link {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .pagination .page-link:hover,
+:root.high-contrast .pagination .page-link:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .pagination .page-item.active .page-link {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+}
+
+/* Tarjetas de adopciones */
+:root.high-contrast .card.border {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .card.border .card-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .card.border img {
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .card.border .bg-light {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .card.border .bg-light i,
+:root.high-contrast .card.border .bg-light .bi {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .card.border h6.fw-bold {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .card.border .text-muted {
+    color: #DDDDDD !important;
+}
+
+:root.high-contrast .card.border .text-muted i,
+:root.high-contrast .card.border .text-muted .bi {
+    color: #FFFF00 !important;
+}
+
+/* Estrellas de reseñas */
+:root.high-contrast .text-warning i,
+:root.high-contrast .text-warning .bi {
+    color: #FFFF00 !important;
+}
+
+/* Botón cancelar */
+:root.high-contrast .btn-outline-dark {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .btn-outline-dark:hover,
+:root.high-contrast .btn-outline-dark:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+/* ============================================
+   DASHBOARD - MODO ALTO CONTRASTE
+   ============================================ */
+
+/* Body del dashboard */
+:root.high-contrast .dashboard-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* Sidebar */
+:root.high-contrast .sidebar {
+    background-color: #000000 !important;
+    border-right: 2px solid #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+/* Header del sidebar */
+:root.high-contrast .sidebar-header {
+    border-bottom: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .sidebar-header .navbar-brand {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .sidebar-header .navbar-brand i {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .sidebar-header .text-muted {
+    color: #DDDDDD !important;
+}
+
+/* Usuario del sidebar */
+:root.high-contrast .sidebar-user {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .sidebar-user h6 {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .sidebar-user .text-muted {
+    color: #DDDDDD !important;
+}
+
+/* Enlaces del sidebar */
+:root.high-contrast .sidebar-nav .nav-link {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: 1px solid transparent !important;
+}
+
+:root.high-contrast .sidebar-nav .nav-link i {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .sidebar-nav .nav-link:hover {
+    background-color: #333333 !important;
+    color: #FFFF00 !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .sidebar-nav .nav-link:hover i {
+    color: #FFFF00 !important;
+}
+
+/* Enlace activo del sidebar */
+:root.high-contrast .sidebar-nav .nav-link.active {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .sidebar-nav .nav-link.active i {
+    color: #000000 !important;
+}
+
+/* Footer del sidebar */
+:root.high-contrast .sidebar-footer {
+    border-top: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .sidebar-footer .nav-link {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .sidebar-footer .nav-link:hover {
+    background-color: #333333 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .sidebar-footer .nav-link i {
+    color: inherit !important;
+}
+
+/* Contenido principal */
+:root.high-contrast .main-content {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* Header móvil */
+:root.high-contrast .dashboard-mobile-header {
+    background-color: #000000 !important;
+    border-bottom: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .dashboard-mobile-header h5 {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .dashboard-mobile-header .btn-outline-secondary {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .dashboard-mobile-header .btn-outline-secondary:hover {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+/* Tarjetas de estadísticas */
+:root.high-contrast .stat-card {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .stat-card:hover {
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 2px #FFFF00 !important;
+}
+
+:root.high-contrast .stat-card .card-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .stat-card .stat-icon {
+    background-color: #FFFF00 !important;
+    background: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+    box-shadow: none !important;
+    width: 80px !important;
+    height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+/* Responsive para stat-icon en modo alto contraste */
+@media (max-width: 991.98px) {
+    :root.high-contrast .stat-card .stat-icon {
+        width: 70px !important;
+        height: 70px !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    :root.high-contrast .stat-card .stat-icon {
+        width: 60px !important;
+        height: 60px !important;
+    }
+}
+
+/* Tarjetas de gráficos */
+:root.high-contrast .chart-card {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .chart-card .card-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* Overlay del sidebar móvil */
+:root.high-contrast .sidebar-overlay {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Títulos y textos en el dashboard */
+:root.high-contrast .main-content h1,
+:root.high-contrast .main-content h2,
+:root.high-contrast .main-content h3,
+:root.high-contrast .main-content h4,
+:root.high-contrast .main-content h5,
+:root.high-contrast .main-content h6 {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .text-muted {
+    color: #DDDDDD !important;
+}
+
+/* Tarjetas generales en dashboard */
+:root.high-contrast .main-content .card {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .main-content .card .card-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .card .card-header {
+    background-color: #000000 !important;
+    border-bottom: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+/* Tablas en dashboard */
+:root.high-contrast .main-content .table {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .table thead th {
+    background-color: #000000 !important;
+    color: #FFFF00 !important;
+    border-color: #FFFFFF !important;
+    font-weight: bold !important;
+}
+
+:root.high-contrast .main-content .table tbody tr {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .table tbody tr:hover {
+    background-color: #111111 !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .main-content .table td {
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+/* Formularios en dashboard */
+:root.high-contrast .main-content .form-control,
+:root.high-contrast .main-content .form-select {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .form-control:focus,
+:root.high-contrast .main-content .form-select:focus {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25) !important;
+}
+
+:root.high-contrast .main-content .form-label {
+    color: #FFFFFF !important;
+}
+
+/* Badges en dashboard */
+:root.high-contrast .main-content .badge {
+    border: 1px solid #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .badge.bg-primary,
+:root.high-contrast .main-content .badge.bg-success,
+:root.high-contrast .main-content .badge.bg-warning,
+:root.high-contrast .main-content .badge.bg-info,
+:root.high-contrast .main-content .badge.bg-danger,
+:root.high-contrast .main-content .badge.bg-secondary {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+/* Alertas en dashboard */
+:root.high-contrast .main-content .alert {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .alert-success {
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .alert-danger {
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .alert-warning {
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .alert-info {
+    border-color: #FFFFFF !important;
+}
+
+/* Botones en dashboard */
+:root.high-contrast .main-content .btn-primary {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .main-content .btn-primary:hover,
+:root.high-contrast .main-content .btn-primary:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .btn-secondary {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .btn-secondary:hover,
+:root.high-contrast .main-content .btn-secondary:focus {
+    background-color: #333333 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .main-content .btn-outline-primary {
+    background-color: transparent !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+:root.high-contrast .main-content .btn-outline-primary:hover,
+:root.high-contrast .main-content .btn-outline-primary:focus {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .main-content .btn-outline-secondary {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .btn-outline-secondary:hover,
+:root.high-contrast .main-content .btn-outline-secondary:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+/* Paginación en dashboard */
+:root.high-contrast .main-content .pagination .page-link {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .pagination .page-link:hover,
+:root.high-contrast .main-content .pagination .page-link:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .main-content .pagination .page-item.active .page-link {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border-color: #FFFF00 !important;
+}
+
+/* Google Translate en sidebar del dashboard */
+:root.high-contrast #google_translate_element_dash .goog-te-gadget-simple {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast #google_translate_element_dash .goog-te-menu-value {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast #google_translate_element_dash .goog-te-menu-value span {
+    color: #FFFFFF !important;
+}
+
+/* Títulos de tarjetas de gráficos */
+:root.high-contrast .main-content .card-title,
+:root.high-contrast .main-content .chart-card .card-title {
+    color: #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+/* Textos en tarjetas de estadísticas */
+:root.high-contrast .stat-card h3.fw-bold {
+    color: #FFFF00 !important;
+    font-size: 1.75rem !important;
+}
+
+:root.high-contrast .stat-card h6.text-muted {
+    color: #FFFFFF !important;
+    font-weight: normal !important;
+}
+
+:root.high-contrast .stat-card .stat-icon i {
+    color: #000000 !important;
+}
+
+/* Listas de grupo en dashboard */
+:root.high-contrast .main-content .list-group-item {
+    background-color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .list-group-item h6 {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .list-group-item .text-muted {
+    color: #DDDDDD !important;
+}
+
+:root.high-contrast .main-content .list-group-item .fw-bold {
+    color: #FFFF00 !important;
+}
+
+/* Botones de exportar */
+:root.high-contrast .main-content .btn-outline-primary,
+:root.high-contrast .main-content .btn-outline-success,
+:root.high-contrast .main-content .btn-outline-info {
+    background-color: transparent !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .btn-outline-primary:hover,
+:root.high-contrast .main-content .btn-outline-success:hover,
+:root.high-contrast .main-content .btn-outline-info:hover {
+    background-color: #FFFF00 !important;
+    border-color: #FFFF00 !important;
+    color: #000000 !important;
+}
+
+:root.high-contrast .main-content .btn-outline-primary i,
+:root.high-contrast .main-content .btn-outline-success i,
+:root.high-contrast .main-content .btn-outline-info i {
+    color: inherit !important;
+}
+
+/* Canvas de gráficos - asegurar contraste */
+:root.high-contrast .main-content canvas {
+    filter: contrast(1.2) brightness(1.1) !important;
+}
+
+/* Mejorar legibilidad de textos en tarjetas */
+:root.high-contrast .main-content h2.fw-bold {
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .main-content .text-muted.mb-0 {
+    color: #DDDDDD !important;
+}
+
+/* Listas de grupo - mejorar separación */
+:root.high-contrast .main-content .list-group-flush .list-group-item {
+    border-top: 1px solid #FFFFFF !important;
+    border-bottom: 1px solid #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .list-group-flush .list-group-item:first-child {
+    border-top: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .list-group-flush .list-group-item:last-child {
+    border-bottom: 2px solid #FFFFFF !important;
+}
+
+/* Títulos de tarjetas de gráficos */
+:root.high-contrast .main-content .card-title,
+:root.high-contrast .main-content .chart-card .card-title {
+    color: #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+/* Textos en tarjetas de estadísticas */
+:root.high-contrast .stat-card h3.fw-bold {
+    color: #FFFF00 !important;
+    font-size: 1.75rem !important;
+}
+
+:root.high-contrast .stat-card h6.text-muted {
+    color: #FFFFFF !important;
+    font-weight: normal !important;
+}
+
+:root.high-contrast .stat-card .stat-icon i {
+    color: #000000 !important;
+}
+
+/* Listas de grupo en dashboard */
+:root.high-contrast .main-content .list-group-item {
+    background-color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .list-group-item h6 {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .list-group-item .text-muted {
+    color: #DDDDDD !important;
+}
+
+:root.high-contrast .main-content .list-group-item .fw-bold {
+    color: #FFFF00 !important;
+}
+
+/* Botones de exportar */
+:root.high-contrast .main-content .btn-outline-primary,
+:root.high-contrast .main-content .btn-outline-success,
+:root.high-contrast .main-content .btn-outline-info {
+    background-color: transparent !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .main-content .btn-outline-primary:hover,
+:root.high-contrast .main-content .btn-outline-success:hover,
+:root.high-contrast .main-content .btn-outline-info:hover {
+    background-color: #FFFF00 !important;
+    border-color: #FFFF00 !important;
+    color: #000000 !important;
+}
+
+:root.high-contrast .main-content .btn-outline-primary i,
+:root.high-contrast .main-content .btn-outline-success i,
+:root.high-contrast .main-content .btn-outline-info i {
+    color: inherit !important;
+}
+
+
+/* Enlaces de las tarjetas */
+:root.high-contrast .huachito-card-link {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+:root.high-contrast .huachito-card-link:hover,
+:root.high-contrast .huachito-card-link:focus {
+    text-decoration: none !important;
+}
+
+/* Tarjetas de mascotas - MAYOR ESPECIFICIDAD */
+:root.high-contrast .huachito-card,
+:root.high-contrast .huachitos-grid .huachito-card,
+:root.high-contrast div.huachito-card,
+:root.high-contrast .huachito-card-link .huachito-card,
+:root.high-contrast a.huachito-card-link .huachito-card {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .huachito-card:hover,
+:root.high-contrast .huachito-card:focus-within,
+:root.high-contrast .huachitos-grid .huachito-card:hover,
+:root.high-contrast .huachitos-grid .huachito-card:focus-within,
+:root.high-contrast div.huachito-card:hover,
+:root.high-contrast .huachito-card-link:hover .huachito-card,
+:root.high-contrast a.huachito-card-link:hover .huachito-card {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border-color: #FFFF00 !important;
+    box-shadow: 0 0 0 2px #FFFF00 !important;
+}
+
+/* Encabezado de la tarjeta */
+:root.high-contrast .huachito-card .card-header {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* Contenedor de imagen */
+:root.high-contrast .huachito-card .card-img-container {
+    background-color: #000000 !important;
+    border-bottom: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .huachito-card .card-img-container img {
+    border: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Contenido de la tarjeta */
+:root.high-contrast .huachito-card .card-content,
+:root.high-contrast div.huachito-card .card-content,
+:root.high-contrast .huachito-card-link .huachito-card .card-content {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* Título de la tarjeta dentro de huachito-card */
+:root.high-contrast .huachito-card .card-title,
+:root.high-contrast div.huachito-card .card-title,
+:root.high-contrast .huachito-card-link .huachito-card .card-title,
+:root.high-contrast .huachito-card .card-header .card-title,
+:root.high-contrast .huachito-card .card-content .card-header .card-title {
+    color: #FFFF00 !important;
+}
+
+/* Badges de especies */
+:root.high-contrast .huachito-card .card-badge {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .huachito-card .card-badge.perro,
+:root.high-contrast .huachito-card .card-badge.gato,
+:root.high-contrast .huachito-card .card-badge.conejo,
+:root.high-contrast .huachito-card .card-badge.roedor,
+:root.high-contrast .huachito-card .card-badge.ave,
+:root.high-contrast .huachito-card .card-badge.otro {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+}
+
+/* Detalles de la tarjeta */
+:root.high-contrast .huachito-card .card-details {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .huachito-card .card-details span {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .huachito-card .card-details i {
+    color: #FFFF00 !important;
+}
+
+/* Ubicación */
+:root.high-contrast .huachito-card .location {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .huachito-card .location span {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .huachito-card .location i {
+    color: #FFFF00 !important;
+}
+
+/* Footer de la tarjeta */
+:root.high-contrast .huachito-card .card-footer-action,
+:root.high-contrast div.huachito-card .card-footer-action,
+:root.high-contrast .huachito-card-link .huachito-card .card-footer-action {
+    background-color: #FFFF00 !important;
+    background: #FFFF00 !important;
+    color: #000000 !important;
+    border-top: 2px solid #FFFF00 !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .huachito-card:hover .card-footer-action,
+:root.high-contrast .huachito-card-link:hover .huachito-card .card-footer-action,
+:root.high-contrast div.huachito-card:hover .card-footer-action {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border-top: 2px solid #FFFFFF !important;
+}
+
+/* Botón de limpiar filtros */
+:root.high-contrast .btn-outline-secondary.btn-lg {
+    background-color: transparent !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .btn-outline-secondary.btn-lg:hover,
+:root.high-contrast .btn-outline-secondary.btn-lg:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+/* ============================================
+   PÁGINA DE DETALLES DE ADOPCIÓN
+   ============================================ */
+
+/* Contenedor de detalles */
+:root.high-contrast .detail-container {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+/* Galería de imágenes */
+:root.high-contrast .pet-image-gallery {
+    background-color: #000000 !important;
+}
+
+:root.high-contrast .pet-image-gallery img {
+    border: 2px solid #FFFFFF !important;
+    box-shadow: 0 0 0 2px #FFFFFF !important;
+}
+
+/* Detalles de la mascota */
+:root.high-contrast .pet-details {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .pet-details h1 {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .pet-details .lead {
+    color: #FFFFFF !important;
+}
+
+/* Badges específicos */
+:root.high-contrast .badge-info {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #FFFF00 !important;
+}
+
+:root.high-contrast .badge.bg-secondary,
+:root.high-contrast .badge.bg-dark {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+}
+
+/* Secciones de detalles */
+:root.high-contrast .detail-section {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .detail-section h3 {
+    color: #FFFF00 !important;
+    border-bottom-color: #FFFFFF !important;
+}
+
+:root.high-contrast .detail-section ul,
+:root.high-contrast .detail-section li,
+:root.high-contrast .detail-section p,
+:root.high-contrast .detail-section strong,
+:root.high-contrast .detail-section div {
+    color: #FFFFFF !important;
+}
+
+/* Botón de adoptar */
+:root.high-contrast .btn-adopt {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .btn-adopt:hover,
+:root.high-contrast .btn-adopt:focus {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .btn-adopt i {
+    color: #000000 !important;
+}
+
+/* Acciones de mascotas */
+:root.high-contrast .pet-actions {
+    background-color: transparent !important;
+}
+
+/* ============================================
+   PÁGINA DE CONFIGURACIÓN DEL DASHBOARD
+   ============================================ */
+
+/* Tarjetas de configuración (chart-card) */
+:root.high-contrast .chart-card {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .chart-card .card-header {
+    background-color: #000000 !important;
+    border-bottom: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chart-card .card-body {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chart-card .card-title {
+    color: #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+:root.high-contrast .chart-card .card-title i {
+    color: #FFFF00 !important;
+}
+
+/* Tablas dentro de las tarjetas de configuración */
+:root.high-contrast .chart-card .table,
+:root.high-contrast .chart-card .table-borderless {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chart-card .table td {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+:root.high-contrast .chart-card .table td.fw-bold {
+    color: #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+/* Textos muted en tarjetas de configuración */
+:root.high-contrast .chart-card .text-muted {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chart-card h6.fw-bold {
+    color: #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+/* Iconos con opacidad en stat-card (página de configuración) */
+:root.high-contrast .stat-card .stat-icon.bg-primary,
+:root.high-contrast .stat-card .stat-icon.bg-info,
+:root.high-contrast .stat-card .stat-icon.bg-success,
+:root.high-contrast .stat-card .stat-icon.bg-warning,
+:root.high-contrast .stat-card .stat-icon.bg-danger,
+:root.high-contrast .stat-card .stat-icon.bg-primary.bg-opacity-10,
+:root.high-contrast .stat-card .stat-icon.bg-info.bg-opacity-10,
+:root.high-contrast .stat-card .stat-icon.bg-success.bg-opacity-10,
+:root.high-contrast .stat-card .stat-icon.bg-warning.bg-opacity-10,
+:root.high-contrast .stat-card .stat-icon.bg-danger.bg-opacity-10 {
+    background-color: #FFFF00 !important;
+    background: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+    box-shadow: none !important;
+}
+
+:root.high-contrast .stat-card .stat-icon i.text-primary,
+:root.high-contrast .stat-card .stat-icon i.text-info,
+:root.high-contrast .stat-card .stat-icon i.text-success,
+:root.high-contrast .stat-card .stat-icon i.text-warning,
+:root.high-contrast .stat-card .stat-icon i.text-danger {
+    color: #000000 !important;
+}
+
+/* Badges en tablas de configuración */
+:root.high-contrast .chart-card .badge.bg-warning,
+:root.high-contrast .chart-card .badge.bg-success,
+:root.high-contrast .chart-card .badge.bg-primary,
+:root.high-contrast .chart-card .badge.bg-secondary {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+    font-weight: bold !important;
+}
+
+/* Botones de acciones rápidas */
+:root.high-contrast .chart-card .btn-outline-primary,
+:root.high-contrast .chart-card .btn-outline-success,
+:root.high-contrast .chart-card .btn-outline-info,
+:root.high-contrast .chart-card .btn-outline-warning,
+:root.high-contrast .chart-card .btn-outline-secondary {
+    background-color: transparent !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .chart-card .btn-outline-primary:hover,
+:root.high-contrast .chart-card .btn-outline-success:hover,
+:root.high-contrast .chart-card .btn-outline-info:hover,
+:root.high-contrast .chart-card .btn-outline-warning:hover,
+:root.high-contrast .chart-card .btn-outline-secondary:hover,
+:root.high-contrast .chart-card .btn-outline-primary:focus,
+:root.high-contrast .chart-card .btn-outline-success:focus,
+:root.high-contrast .chart-card .btn-outline-info:focus,
+:root.high-contrast .chart-card .btn-outline-warning:focus,
+:root.high-contrast .chart-card .btn-outline-secondary:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .chart-card .btn-outline-primary i,
+:root.high-contrast .chart-card .btn-outline-success i,
+:root.high-contrast .chart-card .btn-outline-info i,
+:root.high-contrast .chart-card .btn-outline-warning i,
+:root.high-contrast .chart-card .btn-outline-secondary i {
+    color: inherit !important;
+}
+
+/* Botón "Volver al Dashboard" en configuración */
+:root.high-contrast .btn-outline-primary.btn-sm {
+    background-color: transparent !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .btn-outline-primary.btn-sm:hover,
+:root.high-contrast .btn-outline-primary.btn-sm:focus {
+    background-color: #333333 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .btn-outline-primary.btn-sm i {
+    color: inherit !important;
 }

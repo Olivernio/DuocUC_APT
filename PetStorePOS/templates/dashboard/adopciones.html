@@ -1,6 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% load i18n %}
 {% load static %}
+{% load adoption_filters %}
 
 {% block dashboard_title %}{% trans "Centro de Adopciones" %}{% endblock %}
 
@@ -103,11 +104,11 @@
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title fw-bold mb-1">{{ mascota.nombre }}</h5>
                     <p class="card-text text-muted small">{{ mascota.raza|default_if_none:mascota.tipo|title }} • {{ mascota.edad }}</p>
-                    <p class="card-text small flex-grow-1">{{ mascota.desc_personalidad|truncatewords:20 }}</p>
+                    <p class="card-text small flex-grow-1">{{ mascota.desc_personalidad|remove_p_tags|truncatewords:20 }}</p>
                     
                     <div class="d-flex gap-2 mt-auto pt-3 border-top">
                         {# Los botones ahora apuntan a la vista pública de 'adoption' #}
-                        <a href="{% url 'adoption:mascota_detail' mascota.id %}" class="btn btn-outline-secondary w-50">{% trans "Ver detalles" %}</a>
+                        <a href="{% url 'adoption:mascota_detail' mascota.id %}?from_dashboard=1" class="btn btn-outline-secondary w-50">{% trans "Ver detalles" %}</a>
                         <a href="{{ mascota.url }}" target="_blank" class="btn btn-dark w-50">{% trans "Adoptar" %}</a>
                     </div>
                 </div>

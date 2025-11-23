@@ -20,6 +20,7 @@ from django.contrib.auth.models import User
 from catalog.models import Product, Category, ProductReview
 from adoption.models import Mascota, Especies, EstadoMascota, AdoptionRequest
 from accounts.models import UserProfile
+from django.core.paginator import Paginator
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
@@ -280,6 +281,10 @@ class DashboardPOSView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Obtener el carrito del usuario
+        from cart.utils import get_or_create_cart
+        cart = get_or_create_cart(self.request)
+        context['cart'] = cart
         return context
 
 
@@ -312,6 +317,8 @@ class DashboardUserListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Obtener la pestaña activa desde los parámetros GET
+        context['active_tab'] = self.request.GET.get('tab', 'resumen')
         all_users = self.model.objects.all()
 
         # --- Estadísticas Globales (calculadas en tiempo real) ---
@@ -608,3 +615,54 @@ def configuracion(request):
     }
     
     return render(request, 'dashboard/configuracion.html', context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def dashboard_accessibility(request):
+    """
+    Vista de accesibilidad integrada en el Dashboard
+    """
+    return render(request, 'dashboard/accessibility.html')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def dashboard_pedidos(request):
+    """
+    Vista para gestionar pedidos dentro del Dashboard.
+    """
+    from orders.models import Order, OrderStatus
+    
+    orders = Order.objects.all().select_related('user').prefetch_related('items__product')
+    
+    # Filtros
+    status_filter = request.GET.get('status', '')
+    if status_filter:
+        orders = orders.filter(status=status_filter)
+    
+    # Búsqueda por número de orden o usuario
+    search = request.GET.get('search', '')
+    if search:
+        orders = orders.filter(
+            Q(order_number__icontains=search) |
+            Q(user__username__icontains=search) |
+            Q(user__email__icontains=search)
+        )
+    
+    # Ordenar por fecha más reciente primero
+    orders = orders.order_by('-created_at')
+    
+    # Paginación
+    paginator = Paginator(orders, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'orders': page_obj,
+        'page_obj': page_obj,
+        'status_filter': status_filter,
+        'search': search,
+        'status_choices': OrderStatus.choices,
+    }
+    return render(request, 'dashboard/pedidos.html', context)
