@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',      # <-- MOVIMOS ESTA LÍNEA HACIA ARRIBA
+    #'django.middleware.locale.LocaleMiddleware',      # <-- MOVIMOS ESTA LÍNEA HACIA ARRIBA
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -78,24 +78,24 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 
 # Configuración de PostgreSQL
 # Puedes cambiar a SQLite comentando esta sección y descomentando la de abajo
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'petstorepos'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', '123123'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': os.getenv('DB_NAME', 'petstorepos'),
+#        'USER': os.getenv('DB_USER', 'postgres'),
+#        'PASSWORD': os.getenv('DB_PASSWORD', '123123'),
+#        'HOST': os.getenv('DB_HOST', 'localhost'),
+#        'PORT': os.getenv('DB_PORT', '5432'),
+#    }
+#}
 
 # Configuración alternativa para SQLite (descomentar para usar SQLite)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Cache configuration
 # Usando caché en memoria para desarrollo (en producción usar Redis o Memcached)
@@ -143,12 +143,12 @@ LANGUAGES = [
 ]
 
 # Ruta donde Django buscará los archivos de traducción
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
-]
+# LOCALE_PATHS = [
+#     os.path.join(BASE_DIR, 'locale'),
+# ]
 
 TIME_ZONE = 'America/Santiago'
-USE_I18N = True
+USE_I18N = False
 USE_L10N = True
 USE_TZ = True
 

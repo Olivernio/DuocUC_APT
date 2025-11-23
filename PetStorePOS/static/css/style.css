@@ -248,3 +248,25 @@ footer {
   text-decoration: underline;
   transition: color 0.2s;
 }
+
+/* Forzar fondo transparente en breadcrumbs y headers que salen negros */
+.breadcrumb, .page-header {
+    background-color: transparent !important; 
+    color: var(--neutral-800) !important;
+}
+
+/* Corrección específica para contenedores que se ven negros */
+.container-fluid.bg-dark, .container.bg-dark, 
+.row.bg-dark {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+}
+
+/* Asegurar legibilidad de los enlaces en breadcrumbs */
+.breadcrumb-item a {
+    color: var(--primary-600) !important;
+    text-decoration: none;
+}
+.breadcrumb-item.active {
+    color: var(--neutral-600) !important;
+}

@@ -21,7 +21,7 @@
         class="form-card shadow-lg rounded p-4 w-100 mx-auto"
         style="max-width: 450px"
       > <h2 class="fw-bold mb-2 text-center">{% trans "Registro de Usuario" %}</h2> 
-      <p class="text-center mb-3">{% blocktrans with current_step=wizard.steps.current|add:"1" total_steps=wizard.steps.count %}Paso {{ current_step }} de {{ total_steps }} - Información Personal{% endblocktrans %}</p> 
+      <p class="text-center mb-3">{% trans "Paso 1 de 3 - Información Personal" %}</p> 
       <div
           class="wizard-progress d-flex justify-content-center align-items-center mb-4"
         > <span class="wizard-step active" aria-label="{% trans 'Paso 1: Información Personal (actual)' %}"><i class="bi bi-person" aria-hidden="true"></i></span> <span class="wizard-line"></span> <span class="wizard-step" aria-label="{% trans 'Paso 2: Datos de Contacto' %}"><i class="bi bi-geo-alt" aria-hidden="true"></i></span> <span class="wizard-line"></span> <span class="wizard-step" aria-label="{% trans 'Paso 3: Seguridad' %}"><i class="bi bi-shield-check" aria-hidden="true"></i></span> </div>
@@ -49,9 +49,14 @@
         </form>
 
         <div class="text-center mt-4">
-          <p>
+          <p class="mb-2">
             {% trans "¿Ya tienes una cuenta?" %}
-            <a href="{% url 'accounts:login' %}">{% trans "Inicia sesión aquí" %}</a> </p>
+            <a href="{% url 'accounts:login' %}" class="fw-bold">{% trans "Inicia sesión aquí" %}</a>
+          </p>
+          <div class="small text-muted">
+            <a href="#" class="text-decoration-none me-2">{% trans "¿Olvidaste tu contraseña?" %}</a> | 
+            <a href="#" class="text-decoration-none ms-2">{% trans "Contactar soporte" %}</a>
+          </div>
         </div>
       </div>
     </div>
