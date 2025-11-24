@@ -39,6 +39,67 @@
             } else if (savedMode === 'colorblind-mode') {
                 root.classList.add('colorblind-mode');
             }
+            
+            // Función para forzar fondo negro en páginas de login/register
+            function forceBlackBgForLoginPages() {
+                if (document.body.classList.contains('login-page') || document.documentElement.classList.contains('login-page')) {
+                    // Forzar body y html - eliminar TODAS las propiedades de background
+                    document.documentElement.style.setProperty('background', '#000000', 'important');
+                    document.documentElement.style.setProperty('background-color', '#000000', 'important');
+                    document.documentElement.style.setProperty('background-image', 'none', 'important');
+                    document.documentElement.style.removeProperty('background-attachment');
+                    document.documentElement.style.removeProperty('background-size');
+                    document.documentElement.style.removeProperty('background-position');
+                    document.documentElement.style.removeProperty('background-repeat');
+                    
+                    document.body.style.setProperty('background', '#000000', 'important');
+                    document.body.style.setProperty('background-color', '#000000', 'important');
+                    document.body.style.setProperty('background-image', 'none', 'important');
+                    document.body.style.removeProperty('background-attachment');
+                    document.body.style.removeProperty('background-size');
+                    document.body.style.removeProperty('background-position');
+                    document.body.style.removeProperty('background-repeat');
+                    
+                    const gradientElements = document.querySelectorAll('.gradient-left, .gradient-bg');
+                    gradientElements.forEach(el => {
+                        el.style.setProperty('background', '#000000', 'important');
+                        el.style.setProperty('background-color', '#000000', 'important');
+                        el.style.setProperty('background-image', 'none', 'important');
+                    });
+                }
+            }
+            
+            // Si está en modo alto contraste, forzar fondo negro
+            if (savedMode === 'high-contrast') {
+                forceBlackBgForLoginPages();
+                // Ejecutar múltiples veces para asegurar que se aplique después de otros scripts
+                setTimeout(forceBlackBgForLoginPages, 100);
+                setTimeout(forceBlackBgForLoginPages, 300);
+                setTimeout(forceBlackBgForLoginPages, 600);
+                setTimeout(forceBlackBgForLoginPages, 1000);
+                
+                // Verificar solo una vez más después de que carguen otros scripts
+                setTimeout(function() {
+                    if (document.body.classList.contains('login-page') || document.documentElement.classList.contains('login-page')) {
+                        forceBlackBgForLoginPages();
+                    }
+                }, 2000);
+            }
+            
+            // Observar cambios en el modo de accesibilidad
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'accessibilityMode') {
+                    const newMode = localStorage.getItem('accessibilityMode');
+                    if (newMode === 'high-contrast') {
+                        root.classList.add('high-contrast');
+                        forceBlackBgForLoginPages();
+                        setTimeout(forceBlackBgForLoginPages, 100);
+                        setTimeout(forceBlackBgForLoginPages, 300);
+                    } else {
+                        root.classList.remove('high-contrast');
+                    }
+                }
+            });
         })();
     </script>
 

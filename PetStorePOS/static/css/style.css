@@ -212,6 +212,13 @@ footer {
   color: var(--neutral-300);
 }
 
+/* En modo alto contraste, footer debe ser completamente negro */
+:root.high-contrast footer {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  background-image: none !important;
+}
+
 /* ================================================
    Footer Mejorado - Diseño Moderno
    ================================================ */
@@ -222,6 +229,18 @@ footer {
   overflow: hidden;
   width: 100%;
   max-width: 100%;
+}
+
+/* En modo alto contraste, footer debe ser completamente negro */
+:root.high-contrast .footer-dark {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+}
+
+:root.high-contrast .footer-dark::before {
+  display: none !important;
+  content: none !important;
 }
 
 /* Asegurar que el footer escape del contenedor y ocupe todo el ancho cuando está dentro de main.container */
@@ -254,6 +273,12 @@ footer.footer-dark .container-lg {
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--primary-500), transparent);
   opacity: 0.5;
+}
+
+/* En modo alto contraste, eliminar el pseudo-elemento del footer */
+:root.high-contrast .footer-dark::before {
+  display: none !important;
+  content: none !important;
 }
 
 .footer-dark .logo-footer {
