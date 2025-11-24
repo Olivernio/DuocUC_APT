@@ -5,98 +5,190 @@
 {% block head-tag %}
   <link rel="stylesheet" href="{% static 'css/accounts/login.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script>
+    // Agregar clase al body y html, y configurar fondo degradado
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('login-page');
+      document.documentElement.classList.add('login-page');
+      
+      // Configurar fondo degradado que cubra toda la página sin repetirse
+      const gradientStyle = 'linear-gradient(135deg, #F97316 0%, #EC4899 50%, #A855F7 100%)';
+      
+      // Aplicar al html
+      document.documentElement.style.background = gradientStyle;
+      document.documentElement.style.backgroundRepeat = 'no-repeat';
+      document.documentElement.style.backgroundSize = 'cover';
+      document.documentElement.style.backgroundAttachment = 'fixed';
+      document.documentElement.style.backgroundPosition = 'center center';
+      document.documentElement.style.minHeight = '100vh';
+      document.documentElement.style.height = '100%';
+      document.documentElement.style.width = '100%';
+      
+      // Aplicar al body también
+      document.body.style.background = gradientStyle;
+      document.body.style.backgroundRepeat = 'no-repeat';
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundAttachment = 'fixed';
+      document.body.style.backgroundPosition = 'center center';
+    });
+  </script>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid min-vh-100 d-flex align-items-center">
   <div class="row w-100">
     <!-- Columna izquierda fondo degradado y contenido -->
-    <div class="col-md-6 d-md-flex gradient-left flex-column justify-content-center px-5 position-relative">
+    <div class="col-md-6 d-md-flex gradient-left flex-column justify-content-center position-relative">
       <div class="decor-circle decor-circle-1"></div>
       <div class="decor-circle decor-circle-2"></div>
-      <div>
-        <h3 class="fw-bold mb-2"><i class="bi bi-heart fs-2"></i> {% trans "PetCare System" %}</h3>
-        <p class="mb-4 small">{% trans "Área de Usuario" %}</p>
-        <h1 class="mb-3 fw-bold">{% trans "¡Bienvenido de vuelta!" %}</h1>
-        <p class="mb-4">{% trans "Accede a tu cuenta para gestionar tus adopciones, compras y formar parte de nuestra comunidad de amantes de las mascotas." %}</p>
-        <ul class="list-unstyled">
-          <li class="mb-3 d-flex align-items-start">
-            <i class="bi bi-heart fs-4 me-3" aria-hidden="true"></i>
+      <div class="welcome-card position-relative" style="z-index: 10;">
+        <div class="mb-3">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-heart-fill fs-2 me-2"></i>
             <div>
-              <span class="fw-bold d-block">{% trans "Adopta Mascotas" %}</span>
-              <small>{% trans "Encuentra tu compañero perfecto en nuestro centro de adopciones" %}</small>
+              <h3 class="fw-bold mb-0">{% trans "PetCare System" %}</h3>
+              <p class="mb-0 small opacity-75">{% trans "Área de Usuario" %}</p>
             </div>
-          </li>
-          <li class="mb-3 d-flex align-items-start">
-            <i class="bi bi-person fs-4 me-3" aria-hidden="true"></i>
-            <div>
-              <span class="fw-bold d-block">{% trans "Perfil Personal" %}</span>
-              <small>{% trans "Gestiona tus datos, historial de compras y preferencias" %}</small>
-            </div>
-          </li>
-          <li class="d-flex align-items-start">
-            <i class="bi bi-lock fs-4 me-3" aria-hidden="true"></i>
-            <div>
-              <span class="fw-bold d-block">{% trans "Compras Seguras" %}</span>
-              <small>{% trans "Realiza pedidos de productos con total seguridad" %}</small>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
+        
+        <h1 class="mb-2 fw-bold">{% trans "¡Bienvenido de vuelta!" %}</h1>
+        <p class="mb-3 opacity-90">{% trans "Accede a tu cuenta para gestionar tus adopciones, compras y formar parte de nuestra comunidad de amantes de las mascotas." %}</p>
+        
+        <div class="mt-3">
+          <ul class="list-unstyled">
+            <li class="mb-3 d-flex align-items-start">
+              <div class="me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 12px; backdrop-filter: blur(10px);">
+                <i class="bi bi-heart fs-4" aria-hidden="true"></i>
+              </div>
+              <div>
+                <span class="fw-bold d-block fs-5">{% trans "Adopta Mascotas" %}</span>
+                <small class="opacity-90">{% trans "Encuentra tu compañero perfecto en nuestro centro de adopciones" %}</small>
+              </div>
+            </li>
+            <li class="mb-3 d-flex align-items-start">
+              <div class="me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 12px; backdrop-filter: blur(10px);">
+                <i class="bi bi-person fs-4" aria-hidden="true"></i>
+              </div>
+              <div>
+                <span class="fw-bold d-block fs-5">{% trans "Perfil Personal" %}</span>
+                <small class="opacity-90">{% trans "Gestiona tus datos, historial de compras y preferencias" %}</small>
+              </div>
+            </li>
+            <li class="d-flex align-items-start">
+              <div class="me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 12px; backdrop-filter: blur(10px);">
+                <i class="bi bi-shield-lock fs-4" aria-hidden="true"></i>
+              </div>
+              <div>
+                <span class="fw-bold d-block fs-5">{% trans "Compras Seguras" %}</span>
+                <small class="opacity-90">{% trans "Realiza pedidos de productos con total seguridad" %}</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-3 pt-3 border-top border-light border-opacity-25">
+          <p class="small opacity-75 mb-0">
+            <i class="bi bi-shield-check me-2"></i>
+            {% trans "Tus datos están protegidos con encriptación de nivel bancario" %}
+          </p>
+        </div>
       </div>
     </div>
 
     <!-- Columna derecha formulario -->
-    <div class="col-md-6 d-flex align-items-center justify-content-center py-2">
+    <div class="col-md-6 d-flex align-items-center justify-content-center py-4">
       <div class="form-card w-100">
-        <h2 class="fw-bold mb-4 text-center">{% trans "Iniciar Sesión" %}</h2>
+        <div class="text-center mb-4">
+          <div class="mb-3">
+            <i class="bi bi-person-circle" style="font-size: 3rem; color: var(--primary-500);"></i>
+          </div>
+          <h2 class="fw-bold mb-2">{% trans "Iniciar Sesión" %}</h2>
+          <p class="text-muted small">{% trans "Ingresa tus credenciales para continuar" %}</p>
+        </div>
+
         {% for message in messages %}
           <div class="alert alert-{{ message.tags }} d-flex align-items-center" role="alert">
-            <i class="bi bi-exclamation-circle me-2" aria-hidden="true"></i> {{ message }}
+            <i class="bi bi-{% if message.tags == 'error' or message.tags == 'danger' %}exclamation-circle{% elif message.tags == 'success' %}check-circle{% else %}info-circle{% endif %} me-2" aria-hidden="true"></i> 
+            {{ message }}
           </div>
         {% endfor %}
 
         <form method="POST" novalidate>
           {% csrf_token %}
           <div class="mb-3">
-            <label for="id_email" class="visually-hidden">{% trans "Correo electrónico" %}</label>
+            <label for="id_email" class="form-label small text-muted fw-semibold">{% trans "Correo electrónico" %}</label>
             <div class="input-group">
               <span class="input-group-text bg-light border-0" aria-hidden="true"><i class="bi bi-envelope"></i></span>
-              <input type="email" name="email" class="form-control" placeholder="{% trans 'Correo electrónico' %}" required id="id_email">
+              <input type="email" name="email" class="form-control" placeholder="{% trans 'tu@email.com' %}" required id="id_email" autocomplete="email">
             </div>
           </div>
           <div class="mb-3">
-            <label for="id_password" class="visually-hidden">{% trans "Contraseña" %}</label>
+            <label for="id_password" class="form-label small text-muted fw-semibold">{% trans "Contraseña" %}</label>
             <div class="input-group">
               <span class="input-group-text bg-light border-0" aria-hidden="true"><i class="bi bi-lock"></i></span>
-              <input type="password" name="password" class="form-control" placeholder="{% trans 'Contraseña' %}" required id="id_password">
+              <input type="password" name="password" class="form-control" placeholder="{% trans '••••••••' %}" required id="id_password" autocomplete="current-password">
               <button class="btn btn-outline-secondary" type="button" id="togglePassword" aria-label="{% trans 'Mostrar contraseña' %}">
                 <i class="bi bi-eye" aria-hidden="true"></i>
               </button>
             </div>
           </div>
 
-          <div class="text-end mb-3">
-            <a href="#" class="small">{% trans "¿Olvidaste tu contraseña?" %}</a>
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="rememberMe">
+              <label class="form-check-label small text-muted" for="rememberMe">
+                {% trans "Recordarme" %}
+              </label>
+            </div>
+            <a href="{% url 'accounts:password_reset' %}" class="small text-decoration-none">{% trans "¿Olvidaste tu contraseña?" %}</a>
           </div>
 
-          <button type="submit" class="btn btn-gradient w-100 mb-4">{% trans "Iniciar sesión" %} →</button>
+          <button type="submit" class="btn btn-gradient w-100 mb-4">
+            <span>{% trans "Iniciar sesión" %}</span>
+            <i class="bi bi-arrow-right ms-2"></i>
+          </button>
 
-          <div class="border rounded p-3 bg-light">
-            <h6>{% trans "Cuenta de Demostración" %}</h6>
-            <p><strong>{% trans "Email" %}:</strong> maria.garcia@email.com</p>
-            <p><strong>{% trans "Contraseña" %}:</strong> password123</p>
-            <small>{% trans "Usa esta cuenta para probar las funcionalidades del sistema." %}</small>
+          <div class="border rounded-3 p-3 bg-light mb-4">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-info-circle text-primary me-2"></i>
+              <h6 class="mb-0">{% trans "Cuenta de Demostración" %}</h6>
+            </div>
+            <div class="small">
+              <div class="mb-1">
+                <strong class="text-dark">{% trans "Email" %}:</strong> 
+                <code class="bg-white px-2 py-1 rounded">maria.garcia@email.com</code>
+              </div>
+              <div class="mb-2">
+                <strong class="text-dark">{% trans "Contraseña" %}:</strong> 
+                <code class="bg-white px-2 py-1 rounded">password123</code>
+              </div>
+              <p class="mb-0 text-muted" style="font-size: 0.8rem;">
+                <i class="bi bi-lightning-charge-fill text-warning me-1"></i>
+                {% trans "Usa esta cuenta para probar las funcionalidades del sistema." %}
+              </p>
+            </div>
           </div>
 
-          <div class="text-center mt-4">
-            <p>{% trans "¿No tienes una cuenta?" %} <a href="{% url 'accounts:registro' %}">{% trans "Regístrate aquí" %}</a></p>
-            <p>{% trans "¿Problemas para acceder?" %} <a href="#">{% trans "Contacta al soporte" %}</a></p>
+          <hr class="my-4">
+
+          <div class="text-center">
+            <p class="mb-2">
+              {% trans "¿No tienes una cuenta?" %} 
+              <a href="{% url 'accounts:registro' %}" class="fw-semibold">{% trans "Regístrate aquí" %}</a>
+            </p>
+            <p class="small text-muted mb-0">
+              {% trans "¿Problemas para acceder?" %} 
+              <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#supportModal">{% trans "Contacta al soporte" %}</a>
+            </p>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+{% include "includes/footer.html" %}
 
 <script>
   const togglePassword = document.querySelector('#togglePassword');
@@ -107,5 +199,75 @@
     password.setAttribute('type', type);
     this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
   });
+</script>
+
+<!-- Modal de Soporte -->
+<div class="modal fade" id="supportModal" tabindex="-1" aria-labelledby="supportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0 pb-2">
+        <h5 class="modal-title d-flex align-items-center" id="supportModalLabel">
+          <i class="bi bi-envelope-heart text-primary me-2 fs-4"></i>
+          {% trans "Contacta al Soporte" %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Cerrar' %}"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-3">{% trans "Para contactar con nuestro equipo de soporte, envíanos un correo electrónico a:" %}</p>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control text-center fw-bold fs-5" id="supportEmail" value="support@petstorepos.cl" readonly>
+          <button class="btn btn-primary" type="button" id="copyEmailBtn" onclick="copySupportEmail()">
+            <i class="bi bi-clipboard me-2"></i>{% trans "Copiar" %}
+          </button>
+        </div>
+        <div id="copySuccess" class="alert alert-success d-none" role="alert">
+          <i class="bi bi-check-circle me-2"></i>{% trans "¡Correo copiado al portapapeles!" %}
+        </div>
+        <div class="d-grid gap-2 mt-3">
+          <a href="mailto:support@petstorepos.cl?subject=Consulta%20de%20Soporte%20-%20PetStore%20POS&body=Hola%2C%0A%0A%5BDescriba%20su%20consulta%20aqu%C3%AD%5D%0A%0ASaludos%2C" class="btn btn-outline-primary">
+            <i class="bi bi-envelope me-2"></i>{% trans "Abrir cliente de correo" %}
+          </a>
+        </div>
+        <p class="small text-muted mt-3 mb-0">
+          <i class="bi bi-info-circle me-1"></i>
+          {% trans "Te responderemos lo antes posible durante nuestro horario de atención." %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function copySupportEmail() {
+  const emailInput = document.getElementById('supportEmail');
+  const copyBtn = document.getElementById('copyEmailBtn');
+  const successMsg = document.getElementById('copySuccess');
+  
+  emailInput.select();
+  emailInput.setSelectionRange(0, 99999); // Para dispositivos móviles
+  
+  try {
+    navigator.clipboard.writeText(emailInput.value).then(function() {
+      copyBtn.innerHTML = '<i class="bi bi-check me-2"></i>{% trans "¡Copiado!" %}';
+      copyBtn.classList.remove('btn-primary');
+      copyBtn.classList.add('btn-success');
+      successMsg.classList.remove('d-none');
+      
+      setTimeout(function() {
+        copyBtn.innerHTML = '<i class="bi bi-clipboard me-2"></i>{% trans "Copiar" %}';
+        copyBtn.classList.remove('btn-success');
+        copyBtn.classList.add('btn-primary');
+        successMsg.classList.add('d-none');
+      }, 3000);
+    });
+  } catch (err) {
+    // Fallback para navegadores antiguos
+    document.execCommand('copy');
+    copyBtn.innerHTML = '<i class="bi bi-check me-2"></i>{% trans "¡Copiado!" %}';
+    setTimeout(function() {
+      copyBtn.innerHTML = '<i class="bi bi-clipboard me-2"></i>{% trans "Copiar" %}';
+    }, 2000);
+  }
+}
 </script>
 {% endblock %}

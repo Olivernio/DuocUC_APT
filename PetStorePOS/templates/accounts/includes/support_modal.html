@@ -1,0 +1,83 @@
+<!-- Modal de Soporte -->
+<div class="modal fade" id="supportModal" tabindex="-1" aria-labelledby="supportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0 pb-2">
+        <h5 class="modal-title d-flex align-items-center" id="supportModalLabel">
+          <i class="bi bi-envelope-heart text-primary me-2 fs-4"></i>
+          {% trans "Contacta al Soporte" %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Cerrar' %}"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-3">{% trans "Para contactar con nuestro equipo de soporte, envíanos un correo electrónico a:" %}</p>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control text-center fw-bold fs-5" id="supportEmail" value="support@petstorepos.cl" readonly>
+          <button class="btn btn-primary" type="button" id="copyEmailBtn" onclick="copySupportEmail()">
+            <i class="bi bi-clipboard me-2"></i>{% trans "Copiar" %}
+          </button>
+        </div>
+        <div id="copySuccess" class="alert alert-success d-none" role="alert">
+          <i class="bi bi-check-circle me-2"></i>{% trans "¡Correo copiado al portapapeles!" %}
+        </div>
+        <div class="d-grid gap-2 mt-3">
+          <a href="mailto:support@petstorepos.cl?subject=Consulta%20de%20Soporte%20-%20PetStore%20POS&body=Hola%2C%0A%0A%5BDescriba%20su%20consulta%20aqu%C3%AD%5D%0A%0ASaludos%2C" class="btn btn-outline-primary">
+            <i class="bi bi-envelope me-2"></i>{% trans "Abrir cliente de correo" %}
+          </a>
+        </div>
+        <p class="small text-muted mt-3 mb-0">
+          <i class="bi bi-info-circle me-1"></i>
+          {% trans "Te responderemos lo antes posible durante nuestro horario de atención." %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function copySupportEmail() {
+  const emailInput = document.getElementById('supportEmail');
+  const copyBtn = document.getElementById('copyEmailBtn');
+  const successMsg = document.getElementById('copySuccess');
+  
+  if (!emailInput || !copyBtn || !successMsg) return;
+  
+  emailInput.select();
+  emailInput.setSelectionRange(0, 99999);
+  
+  try {
+    navigator.clipboard.writeText(emailInput.value).then(function() {
+      copyBtn.innerHTML = '<i class="bi bi-check me-2"></i>{% trans "¡Copiado!" %}';
+      copyBtn.classList.remove('btn-primary');
+      copyBtn.classList.add('btn-success');
+      successMsg.classList.remove('d-none');
+      
+      setTimeout(function() {
+        copyBtn.innerHTML = '<i class="bi bi-clipboard me-2"></i>{% trans "Copiar" %}';
+        copyBtn.classList.remove('btn-success');
+        copyBtn.classList.add('btn-primary');
+        successMsg.classList.add('d-none');
+      }, 3000);
+    });
+  } catch (err) {
+    // Fallback para navegadores antiguos
+    try {
+      document.execCommand('copy');
+      copyBtn.innerHTML = '<i class="bi bi-check me-2"></i>{% trans "¡Copiado!" %}';
+      copyBtn.classList.remove('btn-primary');
+      copyBtn.classList.add('btn-success');
+      successMsg.classList.remove('d-none');
+      
+      setTimeout(function() {
+        copyBtn.innerHTML = '<i class="bi bi-clipboard me-2"></i>{% trans "Copiar" %}';
+        copyBtn.classList.remove('btn-success');
+        copyBtn.classList.add('btn-primary');
+        successMsg.classList.add('d-none');
+      }, 3000);
+    } catch (e) {
+      alert('{% trans "No se pudo copiar el correo. Por favor, cópialo manualmente: support@petstorepos.cl" %}');
+    }
+  }
+}
+</script>
+

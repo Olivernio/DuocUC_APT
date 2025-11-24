@@ -32,6 +32,59 @@
     z-index: 1020 !important;
 }
 
+/* ============================================
+   Mejoras de Alineamiento de Botones Navbar
+   ============================================ */
+
+/* Asegurar alineamiento vertical perfecto de íconos y texto */
+.navbar .btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.375rem; /* Espaciado consistente entre ícono y texto */
+    padding: 0.375rem 0.75rem !important;
+    line-height: 1.5 !important;
+    white-space: nowrap !important;
+}
+
+.navbar .btn i {
+    font-size: 1rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar .btn span {
+    line-height: 1.5;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Ajuste específico para botones pequeños */
+.navbar .btn-sm {
+    padding: 0.25rem 0.625rem !important;
+    font-size: 0.875rem !important;
+    gap: 0.375rem !important;
+}
+
+.navbar .btn-sm i {
+    font-size: 0.95rem;
+}
+
+/* Consistencia en los nav-links del menú central */
+.navbar .nav-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem !important;
+}
+
+.navbar .nav-link i {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
 @media (max-width: 991.98px) {
     .navbar .mx-auto {
         flex-wrap: wrap;
@@ -57,6 +110,10 @@
     
     .navbar .btn-sm {
         font-size: 0.75rem;
-        padding: 0.25rem 0.5rem;
+        padding: 0.25rem 0.5rem !important;
+    }
+    
+    .navbar .btn-sm i {
+        font-size: 0.85rem;
     }
 }

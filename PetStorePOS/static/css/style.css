@@ -212,26 +212,219 @@ footer {
   color: var(--neutral-300);
 }
 
+/* ================================================
+   Footer Mejorado - Diseño Moderno
+   ================================================ */
+
+.footer-dark {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Asegurar que el footer escape del contenedor y ocupe todo el ancho cuando está dentro de main.container */
+main.container footer.footer-dark {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Asegurar que el contenido interno del footer (container-lg) también esté centrado correctamente */
+footer.footer-dark .container-lg {
+  width: 100% !important;
+  max-width: 1320px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+.footer-dark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-500), transparent);
+  opacity: 0.5;
+}
+
+.footer-dark .logo-footer {
+  transition: all 0.3s ease;
+}
+
+.footer-dark .logo-footer:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+}
+
+.footer-dark p {
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+}
+
+.footer-dark h6 {
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-dark h6::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+.footer-dark .list-unstyled {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-dark .list-unstyled li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-dark .list-unstyled li a,
+.footer-dark .nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.footer-dark .list-unstyled li a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-500);
+  transition: width 0.3s ease;
+}
+
+.footer-dark .list-unstyled li a:hover::before {
+  width: 100%;
+}
+
+.footer-dark .list-unstyled li a:hover,
+.footer-dark .nav-link:hover {
+  color: var(--primary-400);
+  transform: translateX(5px);
+}
+
+.footer-dark .list-unstyled li a i,
+.footer-dark .nav-link i {
+  transition: transform 0.3s ease;
+}
+
+.footer-dark .list-unstyled li a:hover i,
+.footer-dark .nav-link:hover i {
+  transform: scale(1.15);
+}
+
+.footer-dark .btn-light {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: none;
+  color: #212529;
+  font-weight: 600;
+  padding: 0.625rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-dark .btn-light:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.3);
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
+  color: #fff;
+}
+
+.footer-dark hr {
+  border-color: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+  margin: 2rem 0;
+}
+
+.footer-dark .text-center.small {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
 .badge-accesible {
-  background-color: var(--accent-700);
-  color: var(--accent-200);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
+
+.badge-accesible:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
 .badge-intuitivo {
-  background-color: var(--tertiary-600);
-  color: var(--tertiary-200);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
+
+.badge-intuitivo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
 .badge-seguro {
-  background-color: var(--secondary-700);
-  color: var(--secondary-200);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.badge-seguro:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .list-unstyled li a {

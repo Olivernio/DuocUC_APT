@@ -183,3 +183,24 @@ OPENAI_ENABLED = bool(OPENAI_API_KEY)
 # Con tu suscripción anual, deberías tener acceso a la API
 PERPLEXITY_API_KEY = os.environ.get('PERPLEXITY_API_KEY', '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')
 PERPLEXITY_ENABLED = bool(PERPLEXITY_API_KEY)
+
+# ============================================================================
+# EMAIL CONFIGURATION - Para recuperación de contraseña
+# ============================================================================
+# Para desarrollo: Email backend que muestra los emails en la consola
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Para producción con Gmail (comentar el EMAIL_BACKEND de arriba y descomentar esto):
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'tu_email@gmail.com')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'tu_app_password')
+# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'PetStore POS <tu_email@gmail.com>')
+
+# Email para recuperación de contraseña
+DEFAULT_FROM_EMAIL = 'PetStore POS <noreply@petstorepos.com>'
+
+# Configuración de timeouts para tokens de recuperación
+PASSWORD_RESET_TIMEOUT = 3600  # 1 hora (en segundos)

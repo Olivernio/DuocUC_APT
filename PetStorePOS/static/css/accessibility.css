@@ -978,12 +978,63 @@
     color: #FFFF00 !important;
 }
 
-/* Círculos decorativos - ocultar o hacer visibles */
-:root.high-contrast .decor-circle {
-    display: none !important;
+/* ============================================
+   PÁGINA DE LOGIN - MODO ALTO CONTRASTE
+   ============================================ */
+
+/* Fondo de la página de login - Prioridad máxima */
+:root.high-contrast body.login-page,
+:root.high-contrast html.login-page,
+:root.high-contrast body.login-page .container-fluid.min-vh-100,
+:root.high-contrast body.login-page .row,
+:root.high-contrast body.login-page .col-md-6 {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    color: #FFFFFF !important;
 }
 
-/* Formulario (form-card) */
+/* Welcome card (tarjeta izquierda) */
+:root.high-contrast .welcome-card {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 0 2px #FFFFFF !important;
+}
+
+:root.high-contrast .welcome-card h1,
+:root.high-contrast .welcome-card h2,
+:root.high-contrast .welcome-card h3,
+:root.high-contrast .welcome-card h4,
+:root.high-contrast .welcome-card h5,
+:root.high-contrast .welcome-card h6,
+:root.high-contrast .welcome-card p,
+:root.high-contrast .welcome-card span,
+:root.high-contrast .welcome-card small,
+:root.high-contrast .welcome-card li,
+:root.high-contrast .welcome-card .fw-bold,
+:root.high-contrast .welcome-card .opacity-75,
+:root.high-contrast .welcome-card .opacity-90 {
+    color: #FFFFFF !important;
+    opacity: 1 !important;
+}
+
+:root.high-contrast .welcome-card .bi,
+:root.high-contrast .welcome-card i {
+    color: #FFFF00 !important;
+}
+
+/* Iconos decorativos en welcome-card */
+:root.high-contrast .welcome-card [style*="background: rgba(255,255,255,0.15)"] {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .welcome-card [style*="background: rgba(255,255,255,0.15)"] .bi,
+:root.high-contrast .welcome-card [style*="background: rgba(255,255,255,0.15)"] i {
+    color: #FFFF00 !important;
+}
+
+/* Form card (tarjeta del formulario) */
 :root.high-contrast .form-card {
     background-color: #000000 !important;
     border: 2px solid #FFFFFF !important;
@@ -991,12 +1042,99 @@
     box-shadow: 0 0 0 2px #FFFFFF !important;
 }
 
+/* Labels en formularios */
+:root.high-contrast .form-card .form-label,
+:root.high-contrast .form-label {
+    color: #FFFFFF !important;
+}
+
+/* Checkbox y su label */
+:root.high-contrast .form-check-input {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+:root.high-contrast .form-check-input:checked {
+    background-color: #FFFF00 !important;
+    border-color: #FFFF00 !important;
+}
+
+:root.high-contrast .form-check-label {
+    color: #FFFFFF !important;
+}
+
+/* Input group text (iconos en inputs) */
+:root.high-contrast .form-card .input-group-text,
+:root.high-contrast .input-group-text.bg-light {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .form-card .input-group-text .bi,
+:root.high-contrast .input-group-text .bi {
+    color: #FFFF00 !important;
+}
+
+/* Sección de cuenta demo */
+:root.high-contrast .form-card .bg-light,
+:root.high-contrast .bg-light.border {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .form-card .bg-light h6,
+:root.high-contrast .form-card .bg-light p,
+:root.high-contrast .form-card .bg-light small,
+:root.high-contrast .form-card .bg-light strong,
+:root.high-contrast .form-card .bg-light .text-dark {
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .form-card .bg-light code {
+    background-color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    color: #FFFF00 !important;
+}
+
+:root.high-contrast .form-card .bg-light .text-primary,
+:root.high-contrast .form-card .bg-light .text-warning {
+    color: #FFFF00 !important;
+}
+
+/* Texto muted */
+:root.high-contrast .form-card .text-muted,
+:root.high-contrast .text-muted {
+    color: #DDDDDD !important;
+}
+
+/* Círculos decorativos - ocultar o hacer visibles */
+:root.high-contrast .decor-circle {
+    display: none !important;
+}
+
+/* Formulario (form-card) - Reglas mejoradas */
+:root.high-contrast .form-card {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 0 2px #FFFFFF !important;
+}
+
+:root.high-contrast .form-card h1,
 :root.high-contrast .form-card h2,
+:root.high-contrast .form-card h3,
+:root.high-contrast .form-card h4,
+:root.high-contrast .form-card h5,
 :root.high-contrast .form-card h6,
 :root.high-contrast .form-card p,
 :root.high-contrast .form-card label,
 :root.high-contrast .form-card small,
-:root.high-contrast .form-card strong {
+:root.high-contrast .form-card strong,
+:root.high-contrast .form-card span,
+:root.high-contrast .form-card div,
+:root.high-contrast .form-card .text-muted {
     color: #FFFFFF !important;
 }
 
@@ -1025,7 +1163,7 @@
     box-shadow: 0 0 0 2px #FFFF00 !important;
 }
 
-/* Input groups */
+/* Input groups - Reglas mejoradas */
 :root.high-contrast .input-group-text {
     background-color: #000000 !important;
     border: 2px solid #FFFFFF !important;
@@ -1037,18 +1175,23 @@
     color: #FFFF00 !important;
 }
 
-:root.high-contrast .input-group .form-control {
+:root.high-contrast .input-group .form-control,
+:root.high-contrast .form-control {
     background-color: #000000 !important;
     border: 2px solid #FFFFFF !important;
     color: #FFFFFF !important;
 }
 
-:root.high-contrast .input-group .form-control:focus {
+:root.high-contrast .input-group .form-control:focus,
+:root.high-contrast .form-control:focus {
+    background-color: #000000 !important;
     border-color: #FFFF00 !important;
     box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25) !important;
+    color: #FFFFFF !important;
 }
 
-:root.high-contrast .input-group .form-control::placeholder {
+:root.high-contrast .input-group .form-control::placeholder,
+:root.high-contrast .form-control::placeholder {
     color: #999999 !important;
 }
 
@@ -1121,6 +1264,19 @@
 
 :root.high-contrast .form-card .text-muted a {
     color: #FFFF00 !important;
+}
+
+/* Asegurar que todos los enlaces en login sean visibles */
+:root.high-contrast body.login-page a:not(.btn),
+:root.high-contrast body.login-page .text-decoration-none {
+    color: #FFFF00 !important;
+    text-decoration: underline !important;
+}
+
+:root.high-contrast body.login-page a:hover:not(.btn),
+:root.high-contrast body.login-page .text-decoration-none:hover {
+    color: #FFFFFF !important;
+    background-color: #333333 !important;
 }
 
 /* Grid y contenedores adicionales */

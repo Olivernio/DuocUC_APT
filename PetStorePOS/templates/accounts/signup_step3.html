@@ -5,6 +5,33 @@
 {% block head-tag %}
 <link rel="stylesheet" href="{% static 'css/accounts/register.css' %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<script>
+  // Agregar clase al body y html, y configurar fondo degradado
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.add('login-page');
+    document.documentElement.classList.add('login-page');
+    
+    // Configurar fondo degradado que cubra toda la página sin repetirse
+    const gradientStyle = 'linear-gradient(135deg, #F97316 0%, #EC4899 50%, #A855F7 100%)';
+    
+    // Aplicar al html
+    document.documentElement.style.background = gradientStyle;
+    document.documentElement.style.backgroundRepeat = 'no-repeat';
+    document.documentElement.style.backgroundSize = 'cover';
+    document.documentElement.style.backgroundAttachment = 'fixed';
+    document.documentElement.style.backgroundPosition = 'center center';
+    document.documentElement.style.minHeight = '100vh';
+    document.documentElement.style.height = '100%';
+    document.documentElement.style.width = '100%';
+    
+    // Aplicar al body también
+    document.body.style.background = gradientStyle;
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundPosition = 'center center';
+  });
+</script>
 {% endblock %}
 
 {% block content %}
@@ -164,4 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 60000);
 });
 </script>
+
+{% include "includes/footer.html" %}
 {% endblock %}

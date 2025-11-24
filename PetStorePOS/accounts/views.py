@@ -15,6 +15,16 @@ from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from catalog.models import Product
 from django.http import JsonResponse
+from django.contrib.auth.views import (
+    PasswordResetView, 
+    PasswordResetDoneView, 
+    PasswordResetConfirmView,
+    PasswordResetCompleteView
+)
+from django.urls import reverse_lazy
+from .forms import PasswordRecoveryVerificationForm, PasswordRecoveryChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django import forms
 
 FORMS = [
     ("personal", PersonalInfoForm),
@@ -282,3 +292,124 @@ def mark_all_notifications_read(request):
     except OperationalError:
         messages.error(request, "Las migraciones no se han ejecutado. Por favor ejecuta: python manage.py migrate")
         return redirect('home')
+
+
+# ============================================================================
+# VISTAS DE RECUPERACIÓN DE CONTRASEÑA
+# ============================================================================
+
+class CustomPasswordResetView(PasswordResetView):
+    """
+    Vista para solicitar el reset de contraseña.
+    El usuario ingresa su email y recibe un link para resetear.
+    """
+    template_name = 'accounts/password_reset_form.html'
+    email_template_name = 'accounts/password_reset_email.html'
+    subject_template_name = 'accounts/password_reset_subject.txt'
+    success_url = reverse_lazy('accounts:password_reset_done')
+    
+    def form_valid(self, form):
+        messages.success(
+            self.request, 
+            "Si existe una cuenta con ese email, recibirás un enlace para restablecer tu contraseña."
+        )
+        return super().form_valid(form)
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    """
+    Vista que se muestra después de solicitar el reset.
+    Confirma que se envió el email.
+    """
+    template_name = 'accounts/password_reset_done.html'
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    """
+    Vista donde el usuario ingresa su nueva contraseña.
+    Se accede a través del link recibido por email.
+    """
+    template_name = 'accounts/password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:password_reset_complete')
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Tu contraseña ha sido restablecida exitosamente.")
+        return super().form_valid(form)
+
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    """
+    Vista final que confirma que la contraseña fue cambiada.
+    """
+    template_name = 'accounts/password_reset_complete.html'
+
+
+def simple_password_recovery(request):
+    """
+    Vista simplificada de recuperación de contraseña.
+    Pide email y algo que recuerden, verifica similitud 60%+, luego permite cambiar contraseña.
+    """
+    verified_user_id = request.session.get('password_recovery_user_id')
+    verified_user = None
+    
+    if verified_user_id:
+        try:
+            verified_user = User.objects.get(pk=verified_user_id)
+        except User.DoesNotExist:
+            # Si el usuario no existe, limpiar la sesión
+            request.session.pop('password_recovery_user_id', None)
+            verified_user = None
+    
+    # Si ya está verificado, mostrar formulario de cambio de contraseña
+    if verified_user:
+        if request.method == 'POST':
+            form = PasswordRecoveryChangeForm(request.POST)
+            if form.is_valid():
+                # Validar reCAPTCHA
+                recaptcha_value = form.cleaned_data.get('recaptcha')
+                if not recaptcha_value:
+                    messages.error(request, "Por favor, completa la verificación reCAPTCHA.")
+                else:
+                    from django_recaptcha.fields import ReCaptchaField
+                    try:
+                        recaptcha_field = ReCaptchaField()
+                        recaptcha_field.clean(recaptcha_value)
+                    except forms.ValidationError as e:
+                        error_msg = ', '.join(e.messages) if hasattr(e, 'messages') else str(e)
+                        messages.error(request, f"Error en la verificación reCAPTCHA: {error_msg}")
+                    else:
+                        # Cambiar la contraseña
+                        new_password = form.cleaned_data['new_password1']
+                        verified_user.set_password(new_password)
+                        verified_user.save()
+                        
+                        # Limpiar la sesión
+                        request.session.pop('password_recovery_user_id', None)
+                        
+                        messages.success(request, "Tu contraseña ha sido restablecida exitosamente. Ahora puedes iniciar sesión.")
+                        return redirect('accounts:login')
+        else:
+            form = PasswordRecoveryChangeForm()
+        
+        return render(request, 'accounts/password_recovery.html', {
+            'form': form,
+            'verified_user': verified_user,
+            'step': 'change_password'
+        })
+    
+    # Si no está verificado, mostrar formulario de verificación
+    if request.method == 'POST':
+        form = PasswordRecoveryVerificationForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['verified_user']
+            # Guardar el usuario verificado en la sesión
+            request.session['password_recovery_user_id'] = user.pk
+            messages.success(request, f"¡Verificación exitosa! Ahora puedes cambiar tu contraseña.")
+            return redirect('accounts:password_reset')
+    else:
+        form = PasswordRecoveryVerificationForm()
+    
+    return render(request, 'accounts/password_recovery.html', {
+        'form': form,
+        'step': 'verification'
+    })
