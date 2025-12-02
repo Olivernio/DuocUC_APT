@@ -13,8 +13,6 @@ html.login-page body {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
-  height: 100% !important;
-  min-height: 100vh !important;
 }
 
 html.login-page {
@@ -32,26 +30,36 @@ body.login-page {
   background-attachment: fixed !important;
   background-position: center center !important;
   font-family: 'Montserrat', sans-serif;
-  display: flex;
-  flex-direction: column;
   position: relative;
   overflow-x: hidden;
+  overflow-y: auto;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Asegurar que el fondo degradado se extienda por toda la página */
-body.login-page .container-fluid.min-vh-100 {
-  flex: 1;
-  position: relative;
-  background: transparent !important;
-  width: 100%;
-  min-height: 100vh;
+html.login-page {
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100vh !important;
 }
 
-/* Asegurar que el main no tenga fondo que interfiera */
+/* Asegurar que el main no tenga fondo que interfiera y permita scroll */
 body.login-page main {
   background: transparent !important;
   padding: 0 !important;
+  min-height: auto !important;
+  height: auto !important;
+  flex: 0 1 auto !important;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Permitir que el contenido tenga el tamaño natural sin forzar altura mínima */
+body.login-page .container-fluid {
+  min-height: auto !important;
+  height: auto !important;
+  flex: 0 0 auto !important;
 }
 
 /* Asegurar que el footer escape del contenedor y ocupe todo el ancho en páginas de login/register */
@@ -70,6 +78,7 @@ body.login-page footer.footer-dark {
   padding-left: 0 !important;
   padding-right: 0 !important;
   box-sizing: border-box !important;
+  flex: 0 0 auto !important;
 }
 
 /* ============================================
@@ -162,7 +171,6 @@ body.login-page footer.footer-dark {
 
 .container-fluid .row .col-md-6:last-child {
   background: transparent !important;
-  min-height: 100vh;
   position: relative;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -189,6 +197,30 @@ body.login-page footer.footer-dark {
   opacity: 0.95;
 }
 
+/* Contenedor de íconos de características - centrado perfecto */
+.welcome-card .feature-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.welcome-card .feature-icon-wrapper i {
+  font-size: 1.25rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
 .gradient-left ul li {
   padding: 0.75rem 0;
   transition: transform 0.3s ease;
@@ -198,10 +230,7 @@ body.login-page footer.footer-dark {
   transform: translateX(5px);
 }
 
-.gradient-left ul li i {
-  opacity: 0.9;
-  min-width: 2rem;
-}
+/* Los íconos de características ahora se manejan con .feature-icon-wrapper */
 
 /* ============================================
    Tarjeta de Formulario
@@ -550,6 +579,12 @@ body.login-page footer.footer-dark {
   background: linear-gradient(90deg, transparent, var(--primary-500), transparent);
   opacity: 0.5;
   z-index: 11;
+}
+
+/* Eliminar pseudo-elementos del footer en modo alto contraste */
+:root.high-contrast .login-page .footer-dark::before {
+  display: none !important;
+  content: none !important;
 }
 
 .login-page .footer-dark .container-lg {

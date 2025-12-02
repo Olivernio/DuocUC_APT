@@ -415,11 +415,61 @@
    FOOTER
    ============================================ */
 
+/* Footer - UN SOLO FONDO NEGRO - ELIMINAR TODOS LOS GRADIENTES */
 :root.high-contrast footer,
-:root.high-contrast .footer-dark {
+:root.high-contrast .footer-dark,
+:root.high-contrast footer.footer-dark,
+:root.high-contrast footer[style],
+:root.high-contrast footer.footer-dark[style],
+:root.high-contrast body.login-page footer,
+:root.high-contrast html.login-page footer,
+:root.high-contrast body.login-page .footer-dark,
+:root.high-contrast html.login-page .footer-dark {
     background-color: #000000 !important;
+    background: #000000 !important;
+    background-image: none !important;
     color: #FFFFFF !important;
     border-top: 2px solid #FFFFFF !important;
+}
+
+/* Sobrescribir cualquier estilo inline en el footer */
+:root.high-contrast footer[style*="background"],
+:root.high-contrast footer.footer-dark[style*="background"],
+:root.high-contrast footer[style*="var(--neutral"],
+:root.high-contrast footer[style*="neutral-800"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+}
+
+/* Eliminar pseudo-elementos con degradado en footer - TODAS LAS VARIACIONES */
+:root.high-contrast footer::before,
+:root.high-contrast .footer-dark::before,
+:root.high-contrast footer::after,
+:root.high-contrast .footer-dark::after,
+:root.high-contrast body.login-page footer::before,
+:root.high-contrast html.login-page footer::before,
+:root.high-contrast body.login-page .footer-dark::before,
+:root.high-contrast html.login-page .footer-dark::before {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Asegurar que el container-lg dentro del footer también sea transparente */
+:root.high-contrast footer .container-lg,
+:root.high-contrast .footer-dark .container-lg {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Sobrescribir cualquier estilo inline en el footer */
+:root.high-contrast footer[style*="background"],
+:root.high-contrast footer.footer-dark[style*="background"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
 }
 
 :root.high-contrast footer a,
@@ -952,11 +1002,14 @@
     background-color: #000000 !important;
 }
 
-/* Columna izquierda con gradiente */
+/* Columna izquierda con gradiente - ELIMINAR GRADIENTE */
 :root.high-contrast .gradient-left,
-:root.high-contrast .gradient-bg {
+:root.high-contrast .gradient-bg,
+:root.high-contrast body.login-page .gradient-left,
+:root.high-contrast html.login-page .gradient-left {
     background: #000000 !important;
     background-color: #000000 !important;
+    background-image: none !important;
     color: #FFFFFF !important;
     border: 2px solid #FFFFFF !important;
 }
@@ -979,18 +1032,86 @@
 }
 
 /* ============================================
-   PÁGINA DE LOGIN - MODO ALTO CONTRASTE
+   PÁGINA DE LOGIN/REGISTER/PASSWORD RECOVERY - MODO ALTO CONTRASTE
    ============================================ */
 
-/* Fondo de la página de login - Prioridad máxima */
+/* ============================================
+   FONDO COMPLETAMENTE NEGRO - PRIORIDAD MÁXIMA
+   ============================================ */
+
+/* Body y HTML - FORZAR FONDO NEGRO - MÁXIMA PRIORIDAD */
+/* Aplicar a TODOS los body y html posibles */
+:root.high-contrast body,
+:root.high-contrast html,
 :root.high-contrast body.login-page,
 :root.high-contrast html.login-page,
-:root.high-contrast body.login-page .container-fluid.min-vh-100,
-:root.high-contrast body.login-page .row,
-:root.high-contrast body.login-page .col-md-6 {
+:root.high-contrast body.bg-light,
+:root.high-contrast body.login-page.bg-light {
     background-color: #000000 !important;
     background: #000000 !important;
+    background-image: none !important;
+    background-repeat: no-repeat !important;
+    background-size: auto !important;
+    background-attachment: scroll !important;
+    background-position: 0 0 !important;
     color: #FFFFFF !important;
+}
+
+/* Sobrescribir TODOS los estilos inline - usar atributo style */
+:root.high-contrast body[style],
+:root.high-contrast html[style],
+:root.high-contrast body[style*="background"],
+:root.high-contrast html[style*="background"],
+:root.high-contrast body.login-page[style*="background"],
+:root.high-contrast html.login-page[style*="background"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+    background-repeat: no-repeat !important;
+    background-size: auto !important;
+    background-attachment: scroll !important;
+    background-position: 0 0 !important;
+}
+
+/* Contenedores principales deben ser transparentes (el body ya es negro) */
+:root.high-contrast body.login-page .container-fluid.min-vh-100,
+:root.high-contrast body.login-page .container-fluid,
+:root.high-contrast html.login-page .container-fluid.min-vh-100,
+:root.high-contrast html.login-page .container-fluid {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+}
+
+/* Las filas y columnas deben ser transparentes */
+:root.high-contrast body.login-page .row,
+:root.high-contrast body.login-page .col-md-6,
+:root.high-contrast body.login-page .col-md-5,
+:root.high-contrast body.login-page .col-md-7,
+:root.high-contrast html.login-page .row,
+:root.high-contrast html.login-page .col-md-6,
+:root.high-contrast html.login-page .col-md-5,
+:root.high-contrast html.login-page .col-md-7 {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+}
+
+/* Los elementos con fondo deben ser negros */
+:root.high-contrast body.login-page .gradient-left,
+:root.high-contrast body.login-page .gradient-bg {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    background-image: none !important;
+}
+
+/* Eliminar cualquier gradiente o imagen de fondo */
+:root.high-contrast body.login-page::before,
+:root.high-contrast html.login-page::before,
+:root.high-contrast body.login-page::after,
+:root.high-contrast html.login-page::after {
+    display: none !important;
+    content: none !important;
 }
 
 /* Welcome card (tarjeta izquierda) */
@@ -1034,12 +1155,52 @@
     color: #FFFF00 !important;
 }
 
-/* Form card (tarjeta del formulario) */
-:root.high-contrast .form-card {
+/* Form card (tarjeta del formulario) - FORZAR FONDO NEGRO - MÁXIMA PRIORIDAD */
+:root.high-contrast .form-card,
+:root.high-contrast body.login-page .form-card,
+:root.high-contrast html.login-page .form-card,
+:root.high-contrast .form-card.shadow-lg,
+:root.high-contrast .form-card.rounded,
+:root.high-contrast .form-card.p-4,
+:root.high-contrast body.login-page .form-card.shadow-lg.rounded {
     background-color: #000000 !important;
+    background: #000000 !important;
+    background-image: none !important;
     border: 2px solid #FFFFFF !important;
     color: #FFFFFF !important;
     box-shadow: 0 0 0 2px #FFFFFF !important;
+}
+
+/* Sobrescribir cualquier estilo inline o clase que pueda poner fondo blanco */
+:root.high-contrast .form-card[style*="background"],
+:root.high-contrast .form-card.bg-white,
+:root.high-contrast body.login-page .form-card.bg-white,
+:root.high-contrast .form-card[style*="background-color"],
+:root.high-contrast .form-card[style*="background: white"],
+:root.high-contrast .form-card[style*="background: #fff"],
+:root.high-contrast .form-card[style*="background: #ffffff"] {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    background-image: none !important;
+}
+
+/* Inputs dentro de form-card - FORZAR FONDO NEGRO */
+:root.high-contrast .form-card .input-group-text,
+:root.high-contrast body.login-page .form-card .input-group-text {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .form-card .form-control,
+:root.high-contrast body.login-page .form-card .form-control,
+:root.high-contrast .form-card input,
+:root.high-contrast body.login-page .form-card input {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
 }
 
 /* Labels en formularios */
@@ -1114,14 +1275,7 @@
     display: none !important;
 }
 
-/* Formulario (form-card) - Reglas mejoradas */
-:root.high-contrast .form-card {
-    background-color: #000000 !important;
-    border: 2px solid #FFFFFF !important;
-    color: #FFFFFF !important;
-    box-shadow: 0 0 0 2px #FFFFFF !important;
-}
-
+/* Formulario (form-card) - Reglas mejoradas - TODOS LOS TEXTOS BLANCOS */
 :root.high-contrast .form-card h1,
 :root.high-contrast .form-card h2,
 :root.high-contrast .form-card h3,
@@ -1134,8 +1288,25 @@
 :root.high-contrast .form-card strong,
 :root.high-contrast .form-card span,
 :root.high-contrast .form-card div,
-:root.high-contrast .form-card .text-muted {
+:root.high-contrast .form-card .text-muted,
+:root.high-contrast .form-card .text-dark,
+:root.high-contrast .form-card .text-black {
     color: #FFFFFF !important;
+}
+
+/* Inputs dentro del form-card */
+:root.high-contrast .form-card input,
+:root.high-contrast .form-card textarea,
+:root.high-contrast .form-card select,
+:root.high-contrast .form-card .form-control {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast .form-card input::placeholder,
+:root.high-contrast .form-card textarea::placeholder {
+    color: #999999 !important;
 }
 
 /* Enlaces dentro del formulario */
@@ -1277,6 +1448,138 @@
 :root.high-contrast body.login-page .text-decoration-none:hover {
     color: #FFFFFF !important;
     background-color: #333333 !important;
+}
+
+/* ============================================
+   REGLAS ADICIONALES PARA FORZAR FONDO NEGRO
+   ============================================ */
+
+/* Sobrescribir cualquier estilo inline que ponga fondo blanco */
+:root.high-contrast [style*="background"] .form-card,
+:root.high-contrast [style*="background-color: white"],
+:root.high-contrast [style*="background-color: #fff"],
+:root.high-contrast [style*="background-color: #ffffff"],
+:root.high-contrast [style*="background: white"],
+:root.high-contrast [style*="background: #fff"],
+:root.high-contrast [style*="background: #ffffff"] {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+}
+
+/* Todos los inputs, textareas y selects */
+:root.high-contrast body.login-page input[type="text"],
+:root.high-contrast body.login-page input[type="email"],
+:root.high-contrast body.login-page input[type="password"],
+:root.high-contrast body.login-page input[type="tel"],
+:root.high-contrast body.login-page textarea,
+:root.high-contrast body.login-page select {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast body.login-page input[type="text"]:focus,
+:root.high-contrast body.login-page input[type="email"]:focus,
+:root.high-contrast body.login-page input[type="password"]:focus,
+:root.high-contrast body.login-page input[type="tel"]:focus,
+:root.high-contrast body.login-page textarea:focus,
+:root.high-contrast body.login-page select:focus {
+    background-color: #000000 !important;
+    border-color: #FFFF00 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25) !important;
+}
+
+/* Íconos dentro de inputs */
+:root.high-contrast body.login-page .input-group-text,
+:root.high-contrast body.login-page .input-group-text.bg-light,
+:root.high-contrast body.login-page .input-group-text[class*="bg-"] {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+:root.high-contrast body.login-page .input-group-text .bi,
+:root.high-contrast body.login-page .input-group-text i {
+    color: #FFFF00 !important;
+}
+
+/* Eliminar gradientes en todos los elementos de la página de login */
+:root.high-contrast body.login-page *[style*="gradient"],
+:root.high-contrast html.login-page *[style*="gradient"],
+:root.high-contrast body.login-page *[style*="var(--gradient"],
+:root.high-contrast html.login-page *[style*="var(--gradient"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+}
+
+/* ============================================
+   FORZAR FONDO NEGRO EN TODOS LOS ELEMENTOS DE AUTH PAGES
+   ============================================ */
+
+/* Asegurar que .bg-light y .bg-white dentro de form-card sean negros */
+:root.high-contrast .form-card .bg-light,
+:root.high-contrast .form-card .bg-white,
+:root.high-contrast body.login-page .form-card .bg-light,
+:root.high-contrast body.login-page .form-card .bg-white,
+:root.high-contrast html.login-page .form-card .bg-light,
+:root.high-contrast html.login-page .form-card .bg-white {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+/* Todos los textos dentro de form-card deben ser blancos - REGLA GENERAL */
+:root.high-contrast .form-card,
+:root.high-contrast .form-card h1,
+:root.high-contrast .form-card h2,
+:root.high-contrast .form-card h3,
+:root.high-contrast .form-card h4,
+:root.high-contrast .form-card h5,
+:root.high-contrast .form-card h6,
+:root.high-contrast .form-card p,
+:root.high-contrast .form-card span,
+:root.high-contrast .form-card div,
+:root.high-contrast .form-card small,
+:root.high-contrast .form-card strong,
+:root.high-contrast .form-card label {
+    color: #FFFFFF !important;
+}
+
+/* Excepto enlaces que deben ser amarillos */
+:root.high-contrast .form-card a,
+:root.high-contrast body.login-page .form-card a,
+:root.high-contrast html.login-page .form-card a {
+    color: #FFFF00 !important;
+    text-decoration: underline !important;
+}
+
+/* Íconos dentro de form-card */
+:root.high-contrast .form-card .bi,
+:root.high-contrast .form-card i,
+:root.high-contrast body.login-page .form-card .bi,
+:root.high-contrast body.login-page .form-card i,
+:root.high-contrast html.login-page .form-card .bi,
+:root.high-contrast html.login-page .form-card i {
+    color: #FFFF00 !important;
+}
+
+/* Ícono del usuario en el centro del form-card */
+:root.high-contrast .form-card .bi-person-circle,
+:root.high-contrast body.login-page .form-card .bi-person-circle,
+:root.high-contrast html.login-page .form-card .bi-person-circle {
+    color: #FFFF00 !important;
+}
+
+/* Code elements dentro de form-card */
+:root.high-contrast .form-card code,
+:root.high-contrast body.login-page .form-card code {
+    background-color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    color: #FFFF00 !important;
 }
 
 /* Grid y contenedores adicionales */

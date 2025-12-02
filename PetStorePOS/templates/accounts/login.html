@@ -11,31 +11,116 @@
       document.body.classList.add('login-page');
       document.documentElement.classList.add('login-page');
       
-      // Configurar fondo degradado que cubra toda la página sin repetirse
-      const gradientStyle = 'linear-gradient(135deg, #F97316 0%, #EC4899 50%, #A855F7 100%)';
+      // Verificar si está en modo alto contraste
+      const savedMode = localStorage.getItem('accessibilityMode');
+      const isHighContrast = document.documentElement.classList.contains('high-contrast') || savedMode === 'high-contrast';
       
-      // Aplicar al html
-      document.documentElement.style.background = gradientStyle;
-      document.documentElement.style.backgroundRepeat = 'no-repeat';
-      document.documentElement.style.backgroundSize = 'cover';
-      document.documentElement.style.backgroundAttachment = 'fixed';
-      document.documentElement.style.backgroundPosition = 'center center';
-      document.documentElement.style.minHeight = '100vh';
-      document.documentElement.style.height = '100%';
-      document.documentElement.style.width = '100%';
+      if (!isHighContrast) {
+        // Configurar fondo degradado que cubra toda la página sin repetirse
+        const gradientStyle = 'linear-gradient(135deg, #F97316 0%, #EC4899 50%, #A855F7 100%)';
+        
+        // Aplicar al html
+        document.documentElement.style.background = gradientStyle;
+        document.documentElement.style.backgroundRepeat = 'no-repeat';
+        document.documentElement.style.backgroundSize = 'cover';
+        document.documentElement.style.backgroundAttachment = 'fixed';
+        document.documentElement.style.backgroundPosition = 'center center';
+        document.documentElement.style.minHeight = '100vh';
+        document.documentElement.style.height = '100%';
+        document.documentElement.style.width = '100%';
+        
+        // Aplicar al body también
+        document.body.style.background = gradientStyle;
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundAttachment = 'fixed';
+        document.body.style.backgroundPosition = 'center center';
+      } else {
+        // En modo alto contraste, forzar fondo negro usando setProperty con important
+        document.documentElement.style.setProperty('background', '#000000', 'important');
+        document.documentElement.style.setProperty('background-color', '#000000', 'important');
+        document.documentElement.style.setProperty('background-image', 'none', 'important');
+        document.body.style.setProperty('background', '#000000', 'important');
+        document.body.style.setProperty('background-color', '#000000', 'important');
+        document.body.style.setProperty('background-image', 'none', 'important');
+        
+        // También aplicar a elementos con degradado
+        const gradientElements = document.querySelectorAll('.gradient-left, .gradient-bg');
+        gradientElements.forEach(el => {
+          el.style.setProperty('background', '#000000', 'important');
+          el.style.setProperty('background-color', '#000000', 'important');
+          el.style.setProperty('background-image', 'none', 'important');
+        });
+      }
       
-      // Aplicar al body también
-      document.body.style.background = gradientStyle;
-      document.body.style.backgroundRepeat = 'no-repeat';
-      document.body.style.backgroundSize = 'cover';
-      document.body.style.backgroundAttachment = 'fixed';
-      document.body.style.backgroundPosition = 'center center';
+      // Función para verificar y aplicar fondo negro si cambia el modo
+      let isApplyingHighContrast = false;
+      function checkAndApplyHighContrast() {
+        // Prevenir bucles infinitos
+        if (isApplyingHighContrast) return;
+        
+        const currentMode = localStorage.getItem('accessibilityMode');
+        const isHighContrastNow = document.documentElement.classList.contains('high-contrast') || currentMode === 'high-contrast';
+        
+        // Verificar si ya está aplicado el fondo negro
+        const bodyBg = document.body.style.getPropertyValue('background');
+        const htmlBg = document.documentElement.style.getPropertyValue('background');
+        const alreadyApplied = (bodyBg && bodyBg.includes('#000000')) || (htmlBg && htmlBg.includes('#000000'));
+        
+        if (isHighContrastNow && !alreadyApplied) {
+          isApplyingHighContrast = true;
+          
+          // Aplicar fondo negro a html y body
+          document.documentElement.style.setProperty('background', '#000000', 'important');
+          document.documentElement.style.setProperty('background-color', '#000000', 'important');
+          document.documentElement.style.setProperty('background-image', 'none', 'important');
+          
+          document.body.style.setProperty('background', '#000000', 'important');
+          document.body.style.setProperty('background-color', '#000000', 'important');
+          document.body.style.setProperty('background-image', 'none', 'important');
+          
+          // También aplicar a elementos con degradado
+          const gradientElements = document.querySelectorAll('.gradient-left, .gradient-bg');
+          gradientElements.forEach(el => {
+            el.style.setProperty('background', '#000000', 'important');
+            el.style.setProperty('background-color', '#000000', 'important');
+            el.style.setProperty('background-image', 'none', 'important');
+          });
+          
+          // Permitir nuevas aplicaciones después de un breve delay
+          setTimeout(function() {
+            isApplyingHighContrast = false;
+          }, 100);
+        } else if (!isHighContrastNow) {
+          isApplyingHighContrast = false;
+        }
+      }
+      
+      // Si está en modo alto contraste, aplicar inmediatamente
+      if (isHighContrast) {
+        checkAndApplyHighContrast();
+        setTimeout(checkAndApplyHighContrast, 100);
+        setTimeout(checkAndApplyHighContrast, 500);
+      }
+      
+      // Observar cambios en el modo de accesibilidad (solo storage events, no mutation observer)
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'accessibilityMode') {
+          const newMode = localStorage.getItem('accessibilityMode');
+          if (newMode === 'high-contrast') {
+            document.documentElement.classList.add('high-contrast');
+            checkAndApplyHighContrast();
+          } else {
+            document.documentElement.classList.remove('high-contrast');
+          }
+        }
+      });
     });
   </script>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid min-vh-100 d-flex align-items-center">
+<div class="container-fluid d-flex align-items-center" style="padding: 2rem 0;">
   <div class="row w-100">
     <!-- Columna izquierda fondo degradado y contenido -->
     <div class="col-md-6 d-md-flex gradient-left flex-column justify-content-center position-relative">
@@ -58,8 +143,8 @@
         <div class="mt-3">
           <ul class="list-unstyled">
             <li class="mb-3 d-flex align-items-start">
-              <div class="me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 12px; backdrop-filter: blur(10px);">
-                <i class="bi bi-heart fs-4" aria-hidden="true"></i>
+              <div class="me-3 feature-icon-wrapper">
+                <i class="bi bi-heart" aria-hidden="true"></i>
               </div>
               <div>
                 <span class="fw-bold d-block fs-5">{% trans "Adopta Mascotas" %}</span>
@@ -67,8 +152,8 @@
               </div>
             </li>
             <li class="mb-3 d-flex align-items-start">
-              <div class="me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 12px; backdrop-filter: blur(10px);">
-                <i class="bi bi-person fs-4" aria-hidden="true"></i>
+              <div class="me-3 feature-icon-wrapper">
+                <i class="bi bi-person" aria-hidden="true"></i>
               </div>
               <div>
                 <span class="fw-bold d-block fs-5">{% trans "Perfil Personal" %}</span>
@@ -76,8 +161,8 @@
               </div>
             </li>
             <li class="d-flex align-items-start">
-              <div class="me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 12px; backdrop-filter: blur(10px);">
-                <i class="bi bi-shield-lock fs-4" aria-hidden="true"></i>
+              <div class="me-3 feature-icon-wrapper">
+                <i class="bi bi-shield-lock" aria-hidden="true"></i>
               </div>
               <div>
                 <span class="fw-bold d-block fs-5">{% trans "Compras Seguras" %}</span>
@@ -87,7 +172,7 @@
           </ul>
         </div>
 
-        <div class="mt-3 pt-3 border-top border-light border-opacity-25">
+        <div class="mt-3 pt-3">
           <p class="small opacity-75 mb-0">
             <i class="bi bi-shield-check me-2"></i>
             {% trans "Tus datos están protegidos con encriptación de nivel bancario" %}
@@ -149,7 +234,7 @@
             <i class="bi bi-arrow-right ms-2"></i>
           </button>
 
-          <div class="border rounded-3 p-3 bg-light mb-4">
+          <div class="rounded-3 p-3 bg-light mb-4">
             <div class="d-flex align-items-center mb-2">
               <i class="bi bi-info-circle text-primary me-2"></i>
               <h6 class="mb-0">{% trans "Cuenta de Demostración" %}</h6>
@@ -170,8 +255,6 @@
             </div>
           </div>
 
-          <hr class="my-4">
-
           <div class="text-center">
             <p class="mb-2">
               {% trans "¿No tienes una cuenta?" %} 
@@ -188,7 +271,6 @@
   </div>
 </div>
 
-{% include "includes/footer.html" %}
 
 <script>
   const togglePassword = document.querySelector('#togglePassword');
