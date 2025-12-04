@@ -147,3 +147,64 @@
     40% { content: '..'; }
     60%, 100% { content: '...'; }
 }
+
+/* ============================================
+   MODO OSCURO - CHATBOT
+   ============================================ */
+:root.dark-mode .chatbot-toggle {
+    background: var(--dark-gradient-primary) !important;
+    box-shadow: var(--dark-shadow-orange) !important;
+}
+
+:root.dark-mode .chatbot-container {
+    background: var(--dark-bg-elevated) !important;
+    border: 1px solid var(--dark-border) !important;
+    box-shadow: var(--dark-shadow-lg) !important;
+}
+
+:root.dark-mode .chatbot-header {
+    background: var(--dark-gradient-primary) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .chatbot-messages {
+    background: var(--dark-bg-secondary) !important;
+}
+
+:root.dark-mode .bot-message .message-content {
+    background: var(--dark-bg-elevated) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .user-message .message-content {
+    background: var(--dark-gradient-primary) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .chatbot-input-container {
+    background: var(--dark-bg-elevated) !important;
+    border-top: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .chatbot-input,
+:root.dark-mode #chatbot-input {
+    background: var(--dark-bg-tertiary) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .chatbot-input:focus,
+:root.dark-mode #chatbot-input:focus {
+    border-color: var(--dark-orange-primary) !important;
+    background: var(--dark-bg-elevated) !important;
+}
+
+:root.dark-mode .chatbot-send-btn {
+    background: var(--dark-gradient-primary) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .chatbot-send-btn:hover {
+    box-shadow: var(--dark-shadow-orange) !important;
+}

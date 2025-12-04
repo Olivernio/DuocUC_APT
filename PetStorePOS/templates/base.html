@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
     <link rel="stylesheet" href="{% static 'css/accessibility.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/dark-mode.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% if OPENAI_ENABLED %}
     <link rel="stylesheet" href="{% static 'css/chatbot.css' %}" />
@@ -38,6 +39,8 @@
                 root.classList.add('high-contrast');
             } else if (savedMode === 'colorblind-mode') {
                 root.classList.add('colorblind-mode');
+            } else if (savedMode === 'dark-mode') {
+                root.classList.add('dark-mode');
             }
             
             // Función para forzar fondo negro en páginas de login/register
@@ -92,11 +95,18 @@
                     const newMode = localStorage.getItem('accessibilityMode');
                     if (newMode === 'high-contrast') {
                         root.classList.add('high-contrast');
+                        root.classList.remove('colorblind-mode', 'dark-mode');
                         forceBlackBgForLoginPages();
                         setTimeout(forceBlackBgForLoginPages, 100);
                         setTimeout(forceBlackBgForLoginPages, 300);
+                    } else if (newMode === 'colorblind-mode') {
+                        root.classList.add('colorblind-mode');
+                        root.classList.remove('high-contrast', 'dark-mode');
+                    } else if (newMode === 'dark-mode') {
+                        root.classList.add('dark-mode');
+                        root.classList.remove('high-contrast', 'colorblind-mode');
                     } else {
-                        root.classList.remove('high-contrast');
+                        root.classList.remove('high-contrast', 'colorblind-mode', 'dark-mode');
                     }
                 }
             });
@@ -157,9 +167,9 @@
         style="position: relative; z-index: 1030;">
         <div class="container-fluid" style="position: relative;">
             <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-                <img src="{% static 'img/png/Icono1.png' %}" alt="PetCare Logo" style="width: 42px" />
+                <img src="{% static 'img/png/Icono1.png' %}" alt="PetStorePOS Logo" style="width: 42px" />
                 <span class="ms-2">
-                    <span class="fw-bold">PetCare</span><br />
+                    <span class="fw-bold">PetStorePOS</span><br />
                     <small class="text-muted">Sistema Integral</small>
                 </span>
             </a>
@@ -184,6 +194,10 @@
             </div>
 
             <div class="d-flex align-items-center gap-2 ms-3">
+                <button class="btn btn-outline-secondary btn-sm d-flex align-items-center" data-dark-mode-toggle
+                    aria-label="{% trans 'Activar modo oscuro' %}" title="{% trans 'Modo Oscuro' %}">
+                    <i class="bi bi-moon me-1" aria-hidden="true"></i><span>Modo Oscuro</span>
+                </button>
                 <a class="btn btn-outline-secondary btn-sm d-flex align-items-center" href="{% url 'accessibility' %}">
                     <i class="bi bi-gear me-1" aria-hidden="true"></i><span>Accesibilidad</span>
                 </a>
@@ -211,8 +225,8 @@
                         <div class="d-flex flex-column align-items-start">
                             {% if request.user.is_staff %}
                             <span
-                                class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-2 py-0 mb-1"
-                                style="font-size: 0.65rem; font-weight: 600; color: #ffffff !important;">
+                                class="badge admin-badge rounded-pill px-2 py-0 mb-1"
+                                style="font-size: 0.65rem; font-weight: 600;">
                                 <i class="bi bi-shield-check me-1"></i>Administrador
                             </span>
                             {% endif %}
@@ -293,8 +307,8 @@
     <nav class="navbar navbar-expand-lg bg-white shadow-sm p-2 d-lg-none">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-                <img src="{% static 'img/png/Icono1.png' %}" alt="PetCare Logo" style="width: 42px" />
-                <span class="ms-2 fw-bold">PetCare</span>
+                <img src="{% static 'img/png/Icono1.png' %}" alt="PetStorePOS Logo" style="width: 42px" />
+                <span class="ms-2 fw-bold">PetStorePOS</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavMobile"
                 aria-controls="navbarNavMobile" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
@@ -312,12 +326,16 @@
                             Productos</a></li>
                     <li class="nav-item"><a
                             class="nav-link {% if request.resolver_match.app_name == 'adoption' %}active fw-bold{% endif %}"
-                            href="{% url 'adoption:list'%}"><i class="bi bi-heart me-1" aria-hidden="true"></i>{%
-                            trans "Adopción" %}</a></li>
+                            href="{% url 'adoption:list'%}"><i class="bi bi-heart me-1" aria-hidden="true"></i>{% trans "Adopción" %}</a></li>
                     <li class="nav-item"><a
                             class="nav-link {% if request.resolver_match.url_name == 'about' %}active fw-bold{% endif %}"
-                            href="{% url 'about' %}"><i class="bi bi-info-circle me-1" aria-hidden="true"></i>{%
-                            trans "Acerca de" %}</a></li>
+                            href="{% url 'about' %}"><i class="bi bi-info-circle me-1" aria-hidden="true"></i>{% trans "Acerca de" %}</a></li>
+                    <li class="nav-item">
+                        <button class="nav-link w-100 text-start border-0 bg-transparent" data-dark-mode-toggle
+                            aria-label="{% trans 'Activar modo oscuro' %}">
+                            <i class="bi bi-moon me-1" aria-hidden="true"></i>Modo Oscuro
+                        </button>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'accessibility' %}"><i class="bi bi-gear me-1"
                                 aria-hidden="true"></i>Accesibilidad</a></li>
                 </ul>
@@ -365,8 +383,8 @@
                             <div class="d-flex flex-column align-items-start">
                                 {% if request.user.is_staff %}
                                 <span
-                                    class="lbl-admin badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-2 py-0 mb-1"
-                                    style="font-size: 0.65rem; font-weight: 600; color: #ffffff !important;">
+                                    class="badge admin-badge rounded-pill px-2 py-0 mb-1"
+                                    style="font-size: 0.65rem; font-weight: 600;">
                                     <i class="bi bi-shield-check me-1"></i>Administrador
                                 </span>
                                 {% endif %}
@@ -480,7 +498,7 @@
                             <i class="bi bi-heart fs-4 text-white" role="img"
                                 aria-label="{% trans 'Icono de corazón' %}"></i>
                         </div>
-                        <span class="fs-5 fw-bold text-light">PetCare System</span>
+                        <span class="fs-5 fw-bold text-light">PetStorePOS System</span>
                     </div>
                     <p class="mb-2 small text-start">
                         {% blocktrans %}Sistema integral para el cuidado y gestión de mascotas, diseñado
@@ -515,7 +533,7 @@
             <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.25);" />
             <div class="text-center small">
                 {% now "Y" as current_year %}
-                {% blocktrans with year=current_year %}© {{ year }} PetCare System. Diseñado con accesibilidad
+                {% blocktrans with year=current_year %}© {{ year }} PetStorePOS System. Diseñado con accesibilidad
                 universal y amor por
                 las mascotas.{% endblocktrans %}
             </div>
@@ -548,7 +566,7 @@
             <div id="chatbot-messages" class="chatbot-messages">
                 <div class="chatbot-message bot-message">
                     <div class="message-content">
-                        👋 ¡Hola! Soy tu asistente virtual de PetCare. ¿En qué puedo ayudarte hoy?
+                        👋 ¡Hola! Soy tu asistente virtual de PetStorePOS. ¿En qué puedo ayudarte hoy?
                         <br><small class="text-muted">Puedo ayudarte con información sobre productos,
                             adopciones y más.</small>
                     </div>

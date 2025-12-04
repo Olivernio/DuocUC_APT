@@ -783,3 +783,146 @@ body.login-page footer.footer-dark {
   }
 }
 
+/* ============================================
+   MODO OSCURO - LOGIN PAGE
+   ============================================ */
+:root.dark-mode html.login-page,
+:root.dark-mode body.login-page {
+  background: var(--dark-bg-primary) !important;
+  background-color: var(--dark-bg-primary) !important;
+  background-image: none !important;
+}
+
+:root.dark-mode .gradient-left {
+  background: var(--dark-bg-primary) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .gradient-left h1,
+:root.dark-mode .gradient-left h3,
+:root.dark-mode .gradient-left p {
+  color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .welcome-card {
+  background: rgba(30, 30, 30, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: var(--dark-shadow-lg) !important;
+}
+
+:root.dark-mode .welcome-card .feature-icon-wrapper {
+  background: rgba(255, 107, 53, 0.2) !important;
+  color: var(--dark-orange-primary) !important;
+}
+
+:root.dark-mode .welcome-card .feature-icon-wrapper i {
+  color: var(--dark-orange-primary) !important;
+}
+
+:root.dark-mode .form-card {
+  background: var(--dark-bg-elevated) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: var(--dark-shadow-lg) !important;
+}
+
+:root.dark-mode .form-card h2 {
+  color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .form-card .input-group-text {
+  background: var(--dark-bg-tertiary) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .form-card .form-control {
+  background: var(--dark-bg-tertiary) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .form-card .form-control:focus {
+  background: var(--dark-bg-elevated) !important;
+  border-color: var(--dark-orange-primary) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .form-card .input-group:focus-within {
+  border-color: var(--dark-orange-primary) !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25) !important;
+}
+
+:root.dark-mode .form-card .btn-outline-secondary {
+  background: var(--dark-bg-tertiary) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .form-card .btn-outline-secondary:hover {
+  background: var(--dark-bg-hover) !important;
+  border-color: var(--dark-orange-primary) !important;
+  color: var(--dark-orange-primary) !important;
+}
+
+:root.dark-mode .form-card .bg-light {
+  background: var(--dark-gradient-soft) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .form-card .bg-light h6 {
+  color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .form-card .bg-light p,
+:root.dark-mode .form-card .bg-light strong {
+  color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .form-card a {
+  color: var(--dark-orange-primary) !important;
+}
+
+:root.dark-mode .form-card a:hover {
+  color: var(--dark-orange-light) !important;
+}
+
+:root.dark-mode .form-card .alert-danger {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: var(--dark-red-primary) !important;
+  color: var(--dark-red-light) !important;
+}
+
+:root.dark-mode .form-card .alert-success {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: #22c55e !important;
+  color: #4ade80 !important;
+}
+
+:root.dark-mode .login-page .footer-dark {
+  background: linear-gradient(135deg, var(--dark-bg-primary) 0%, var(--dark-bg-secondary) 50%, var(--dark-bg-tertiary) 100%) !important;
+  border-top: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .login-page .footer-dark::before {
+  background: linear-gradient(90deg, transparent, var(--dark-orange-primary), transparent) !important;
+}
+
+@media (max-width: 767.98px) {
+  :root.dark-mode .gradient-left {
+    background: rgba(13, 13, 13, 0.95) !important;
+  }
+
+  :root.dark-mode .form-card {
+    background: var(--dark-bg-elevated) !important;
+  }
+
+  :root.dark-mode .container-fluid .row .col-md-6:last-child {
+    background: var(--dark-bg-primary) !important;
+  }
+}
+

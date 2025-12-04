@@ -3,7 +3,7 @@
 /**
  * Aplica un modo de accesibilidad al sitio.
  * Guarda la preferencia en localStorage.
- * @param {string} mode - 'default', 'high-contrast', o 'colorblind-mode'
+ * @param {string} mode - 'default', 'high-contrast', 'colorblind-mode', o 'dark-mode'
  */
 function setAccessibilityMode(mode) {
     const root = document.documentElement; // El tag <html>
@@ -11,6 +11,7 @@ function setAccessibilityMode(mode) {
     // Limpia modos anteriores
     root.classList.remove('high-contrast');
     root.classList.remove('colorblind-mode');
+    root.classList.remove('dark-mode');
     
     // Aplica el modo seleccionado
     if (mode === 'high-contrast') {
@@ -52,18 +53,27 @@ function setAccessibilityMode(mode) {
             setTimeout(forceBlackBackground, 200);
             setTimeout(forceBlackBackground, 500);
             setTimeout(forceBlackBackground, 1000);
-            
-            // No usar MutationObserver aquí para evitar bucles infinitos
-            // Se maneja en los templates individuales con protección
         }
 
     } else if (mode === 'colorblind-mode') {
         root.classList.add('colorblind-mode');
         localStorage.setItem('accessibilityMode', 'colorblind-mode');
 
+    } else if (mode === 'dark-mode') {
+        root.classList.add('dark-mode');
+        localStorage.setItem('accessibilityMode', 'dark-mode');
+        
+        // Asegurar que el modo oscuro se aplique correctamente
+        document.body.style.setProperty('background-color', '#0a0a0a', 'important');
+        document.body.style.setProperty('color', '#ffffff', 'important');
+
     } else {
         // Modo 'default' o normal
+        root.classList.remove('dark-mode');
         localStorage.setItem('accessibilityMode', 'default');
+        // Restaurar estilos por defecto
+        document.body.style.removeProperty('background-color');
+        document.body.style.removeProperty('color');
     }
     
     // Aplicar tamaño de fuente guardado
@@ -73,6 +83,53 @@ function setAccessibilityMode(mode) {
     }
 }
 
+// Función helper para modo oscuro
+function setDarkMode() {
+    setAccessibilityMode('dark-mode');
+}
+
+// Función helper para desactivar modo oscuro
+function removeDarkMode() {
+    setAccessibilityMode('default');
+}
+
+// Toggle modo oscuro
+function toggleDarkMode() {
+    const root = document.documentElement;
+    const isDarkMode = root.classList.contains('dark-mode');
+    
+    if (isDarkMode) {
+        removeDarkMode();
+    } else {
+        setDarkMode();
+    }
+    
+    // Actualizar icono del botón si existe
+    updateDarkModeButton();
+}
+
+// Actualizar icono del botón de modo oscuro
+function updateDarkModeButton() {
+    const root = document.documentElement;
+    const isDarkMode = root.classList.contains('dark-mode');
+    const darkModeButtons = document.querySelectorAll('[data-dark-mode-toggle]');
+    
+    darkModeButtons.forEach(btn => {
+        const icon = btn.querySelector('i');
+        if (icon) {
+            if (isDarkMode) {
+                icon.classList.remove('bi-moon');
+                icon.classList.add('bi-sun');
+                btn.setAttribute('aria-label', 'Desactivar modo oscuro');
+            } else {
+                icon.classList.remove('bi-sun');
+                icon.classList.add('bi-moon');
+                btn.setAttribute('aria-label', 'Activar modo oscuro');
+            }
+        }
+    });
+}
+
 // ---- Aplicar preferencias guardadas al cargar la página ----
 document.addEventListener('DOMContentLoaded', () => {
     // Aplicar modo guardado
@@ -80,6 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedMode) {
         setAccessibilityMode(savedMode);
     }
+    
+    // Actualizar botones de modo oscuro
+    updateDarkModeButton();
+    
+    // Agregar event listeners a los botones de toggle
+    const darkModeButtons = document.querySelectorAll('[data-dark-mode-toggle]');
+    darkModeButtons.forEach(btn => {
+        btn.addEventListener('click', toggleDarkMode);
+    });
     
     // Aplicar tamaño de fuente guardado
     const savedFontSize = localStorage.getItem('fontSize');
@@ -124,9 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(forceBlackBg, 300);
             setTimeout(forceBlackBg, 600);
             setTimeout(forceBlackBg, 1000);
-            
-            // No usar MutationObserver ni setInterval aquí para evitar bucles infinitos
-            // Los cambios se aplican mediante setTimeout controlados solo al inicio
         }
     }
     

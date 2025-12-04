@@ -33,7 +33,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <span class="text-dark fw-bold">{{ item.product.name }}</span> 
+                        <span class="fw-bold">{{ item.product.name }}</span> 
                         <div class="small text-muted">SKU: {{ item.product.sku }}</div> 
                         <form action="{% url 'cart:remove_from_cart' item.id %}" method="post" class="mt-1"> {% csrf_token %}
                             <button type="submit" class="btn btn-sm btn-outline-danger p-1 lh-1 border-0 text-danger" aria-label="{% trans 'Eliminar' %} {{ item.product.name }} {% trans 'del carrito' %}"> 

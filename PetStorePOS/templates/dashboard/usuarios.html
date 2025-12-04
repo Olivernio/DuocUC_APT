@@ -63,10 +63,10 @@
         <div class="col-lg-2 col-md-4 col-6">
             <div class="card stat-card h-100">
                 <div class="card-body">
-                    <i class="bi bi-currency-euro fs-2 text-dark"></i>
+                    <i class="bi bi-currency-dollar fs-2 text-dark"></i>
                     <div class="mt-2">
                         <h6 class="text-muted fw-normal">{% trans "Ingresos Totales" %}</h6>
-                        <h4 class="fw-bold mb-0">€{{ global_ingresos_totales }}</h4>
+                        <h4 class="fw-bold mb-0">${{ global_ingresos_totales }}</h4>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                                     {# Estadísticas reales del usuario #}
                                     <small class="d-block mt-1">
                                         {{ user.total_orders|default:0 }} {% trans "pedido" %}{{ user.total_orders|pluralize }} • 
-                                        €{{ user.total_spent|default:0|floatformat:0 }} {% trans "gastado" %}
+                                        ${{ user.total_spent|default:0|floatformat:0 }} {% trans "gastado" %}
                                     </small>
                                 </div>
                             </div>
@@ -221,7 +221,7 @@
                                 <h5>{% trans "Estadísticas" %}</h5>
                                 <div class="row g-3">
                                     <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">{{ selected_user_stats.pedidos }}</h5><small>{% trans "Pedidos" %}</small></div></div>
-                                    <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">€{{ selected_user_stats.total_gastado }}</h5><small>{% trans "Total Gastado" %}</small></div></div>
+                                    <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">${{ selected_user_stats.total_gastado }}</h5><small>{% trans "Total Gastado" %}</small></div></div>
                                     <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">{{ selected_user_stats.adopciones }}</h5><small>{% trans "Adopciones" %}</small></div></div>
                                     <div class="col-3"><div class="card bg-light p-2 text-center"><h5 class="mb-0">{{ selected_user_stats.reseñas }}</h5><small>{% trans "Reseñas" %}</small></div></div>
                                 </div>
@@ -264,7 +264,7 @@
                                                             {{ order.get_status_display }}
                                                         </span>
                                                     </td>
-                                                    <td class="text-end fw-bold">€{{ order.total|floatformat:0 }}</td>
+                                                    <td class="text-end fw-bold">${{ order.total|floatformat:0 }}</td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>

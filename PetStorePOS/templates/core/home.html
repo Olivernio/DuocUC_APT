@@ -1,42 +1,40 @@
 {% extends "base.html" %}
 {% load static %}
-{% load i18n %} 
+{% load i18n %}
 {% block title %} {% trans "Inicio" %} · PetStore {% endblock %}
-{% block head-tag %}  <link rel="stylesheet" href="{% static 'css/core/style.css' %}"> {% endblock %}
+{% block head-tag %}
+<link rel="stylesheet" href="{% static 'css/core/style.css' %}"> {% endblock %}
 
 {% block content %}
 {# HERO #}
 <section class="hero-home py-5">
   <div class="container text-center">
     <h1 class="display-4 fw-bold mb-3">
-      {% trans "Sistema Integral para el" %} 
+      {% trans "Sistema Integral para el" %}
       <span class="text-gradient">{% trans "Cuidado de Mascotas" %}</span>
     </h1>
     <p class="lead mb-4">
       {% blocktrans %}Una plataforma completa y accesible para la gestión de tiendas de
-  mascotas, centros de adopción y cuidado veterinario, diseñada para todos
-  los usuarios.{% endblocktrans %}
+      mascotas, centros de adopción y cuidado veterinario, diseñada para todos
+      los usuarios.{% endblocktrans %}
     </p>
     <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-      <a href="{% url 'catalog:product_list' %}" class="btn btn-dark btn-lg">
+      <a href="{% url 'catalog:product_list' %}" class="btn btn-dark btn-lg btn-explorar">
         <i class="bi bi-bag" aria-hidden="true"></i>. {% trans "Explorar Productos" %}
       </a>
       <a href="{% url 'adoption:list' %}" class="btn btn-outline-dark btn-lg">
-        <i class="bi bi-heart" aria-hidden="true"></i>. {% trans "Adopción" %} 
+        <i class="bi bi-heart" aria-hidden="true"></i>. {% trans "Adopción" %}
       </a>
     </div>
     <div class="d-flex justify-content-center">
-      <img
-        alt="Gatitos"
-        class="hero-img"
-        src="https://images.unsplash.com/photo-1749135872075-2bbc4a963f02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMHBldHMlMjBkb2dzJTIwY2F0c3xlbnwxfHx8fDE3NTc5MzE3ODl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-      />
+      <img alt="Gatitos" class="hero-img"
+        src="https://images.unsplash.com/photo-1749135872075-2bbc4a963f02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMHBldHMlMjBkb2dzJTIwY2F0c3xlbnwxfHx8fDE3NTc5MzE3ODl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" />
     </div>
   </div>
 </section>
 
 {# Caracteristicas #}
-<h1 class="display-4 fw-bold mb-3 text-center card-title"> 
+<h1 class="display-4 fw-bold mb-3 text-center card-title">
   {% trans "Características Principales" %}
 </h1>
 <p class="mb-4 ms-5 text-center">
@@ -60,7 +58,7 @@
     <div class="col">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
-          <i class="bi bi-shield-check text-primary" aria-hidden="true"></i> 
+          <i class="bi bi-shield-check text-primary" aria-hidden="true"></i>
         </div>
         <h5 class="fw-bold mb-2">{% trans "Gestión Veterinaria" %}</h5>
         <p class="mb-0 text-secondary">
@@ -72,7 +70,7 @@
     <div class="">
       <div class="card feature-card h-100 text-center py-4 px-2">
         <div class="feature-icon mb-3 mx-auto">
-          <i class="bi bi-people text-success" aria-hidden="true"></i> 
+          <i class="bi bi-people text-success" aria-hidden="true"></i>
         </div>
         <h5 class="fw-bold mb-2">{% trans "Accesibilidad Universal" %}</h5>
         <p class="mb-0 text-secondary">
@@ -85,7 +83,7 @@
 </div>
 
 {# METRICAS #}
-<section class="metricas-div container text-center py-4 my-5"> 
+<section class="metricas-div container text-center py-4 my-5">
   <h2 class="mt-5">{% trans "Impacto en Números" %}</h2>
   <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 mt-5 mb-5">
     <div class="col mt-2">
@@ -93,7 +91,7 @@
       <p class="m-0">{% trans "Mascotas Adoptadas" %}</p>
     </div>
     <div class="col mt-2">
-      <h3 class="fs-1">1.200+</h3> 
+      <h3 class="fs-1">1.200+</h3>
       <p class="m-0">{% trans "Usuarios Registrados" %}</p>
     </div>
     <div class="col mt-2">
@@ -101,17 +99,18 @@
       <p class="m-0">{% trans "Satisfacción" %}</p>
     </div>
     <div class="col mt-2">
-      <h3 class="fs-1">24/7</h3> 
+      <h3 class="fs-1">24/7</h3>
       <p class="m-0">{% trans "Soporte Disponible" %}</p>
     </div>
   </div>
 </section>
 
-{# ACCESIBILIDAD #} 
+{# ACCESIBILIDAD #}
 <section class="accesibilidad container my-5 text-center">
   <h2>{% trans "Accesibilidad Universal" %}</h2>
   <p class="mb-4">
-    {% trans "Diseñado siguiendo las pautas WCAG 2.1 AA para garantizar que todas las personas puedan usar nuestro sistema sin barreras." %}
+    {% trans "Diseñado siguiendo las pautas WCAG 2.1 AA para garantizar que todas las personas puedan usar nuestro
+    sistema sin barreras." %}
   </p>
   <div class="grid-accesibilidad row row-cols-1 row-cols-sm-2 mt-5 mb-5">
     <div class="col mt-5 d-flex justify-content-start align-items-start gap-3">
@@ -193,31 +192,17 @@
     <div class="col-6 col-md-4 col-lg-3">
       <div class="card h-100">
         {% if p.image %}
-        <img
-          src="{{ p.image.url }}"
-          class="card-img-top"
-          style="height: 170px; object-fit: cover"
-          alt="{{ p.name }}"
-        />
+        <img src="{{ p.image.url }}" class="card-img-top" style="height: 170px; object-fit: cover" alt="{{ p.name }}" />
         {% else %}
-        <div
-          class="bg-light d-flex align-items-center justify-content-center"
-          style="height: 170px"
-        >
+        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 170px">
           <i class="bi bi-image text-secondary" style="font-size: 2rem"></i>
         </div>
         {% endif %}
         <div class="card-body">
-          <span class="badge bg-secondary mb-2"
-            >{{ p.get_category_display }}</span
-          >
+          <span class="badge bg-secondary mb-2">{{ p.get_category_display }}</span>
           <h6 class="card-title mb-1">{{ p.name }}</h6>
           <div class="text-primary fw-bold mb-2">${{ p.price }}</div>
-          <a
-            href="{% url 'catalog:product_update' p.pk %}"
-            class="btn btn-sm btn-outline-primary"
-            >{% trans "Ver" %}</a
-          >
+          <a href="{% url 'catalog:product_update' p.pk %}" class="btn btn-sm btn-outline-primary">{% trans "Ver" %}</a>
         </div>
       </div>
     </div>
@@ -238,7 +223,7 @@
         {% trans "Recibe noticias sobre productos, consejos y mascotas en adopción." %}
       </p>
     </div>
-    <div class="col-md-5 mt-3 mt-md-0">  
+    <div class="col-md-5 mt-3 mt-md-0">
       <form class="d-flex gap-2">
         <input type="email" class="form-control" placeholder="{% trans 'Tu correo' %}" />
         <button class="btn btn-primary" type="button">{% trans "Suscribirse" %}</button>

@@ -1,0 +1,73 @@
+INSTRUCCIONES PARA AGREGAR MODO OSCURO
+========================================
+
+El sistema de edición automática está teniendo problemas con el archivo accessibility.html.
+Aquí están las instrucciones exactas de qué cambiar manualmente:
+
+PASO 1: Cambiar las columnas de las tarjetas existentes
+---------------------------------------------------------
+En templates/accessibility/accessibility.html:
+
+Línea 35: cambiar "col-md-4" a "col-md-3"
+Línea 55: cambiar "col-md-4" a "col-md-3"  
+Línea 69: cambiar "col-md-4" a "col-md-3"
+
+PASO 2: Agregar la cuarta tarjeta de Modo Oscuro
+-------------------------------------------------
+Después de la línea 85 (después del cierre de la tercera tarjeta), 
+ANTES de la línea 86 ("</div>"), agregar este HTML:
+
+            <div class="col-md-3">
+                <div class="card h-100 shadow-sm accessibility-card" id="card-dark-mode">
+                    <div class="card-body p-4 text-center">
+                        <i class="bi bi-moon-stars-fill fs-1 text-dark mb-3" aria-hidden="true"></i>
+                        <span class="badge bg-dark text-white badge-active mb-2">
+                            <i class="bi bi-check-circle me-1"></i>{% trans "Activo" %}
+                        </span>
+                        <h5 class="fw-bold mb-3">{% trans "Modo Oscuro" %}</h5>
+                        <p class="text-secondary mb-4 small">
+                            {% blocktrans %}Interfaz oscura para reducir la fatiga visual en entornos con poca luz.{% endblocktrans %}
+                        </p>
+                        <button class="btn btn-dark w-100" id="btn-dark-mode"
+                            aria-label="{% trans 'Activar modo oscuro' %}">
+                            <i class="bi bi-moon me-2" aria-hidden="true"></i>{% trans "Activar" %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+PASO 3: Actualizar el JavaScript (parte 1)
+-------------------------------------------
+Alrededor de la línea 284, encontrarás:
+
+    const cards = {
+        'default': document.getElementById('card-default'),
+        'high-contrast': document.getElementById('card-high-contrast'),
+        'colorblind-mode': document.getElementById('card-colorblind')
+    };
+
+CAMBIARLO A:
+
+    const cards = {
+        'default': document.getElementById('card-default'),
+        'high-contrast': document.getElementById('card-high-contrast'),
+        'colorblind-mode': document.getElementById('card-colorblind'),
+        'dark-mode': document.getElementById('card-dark-mode')
+    };
+
+PASO 4: Actualizar el JavaScript (parte 2)
+-------------------------------------------
+Alrededor de la línea 340-350, después del bloque del btnColorblind, agregar:
+
+    const btnDarkMode = document.getElementById('btn-dark-mode');
+    
+    if (btnDarkMode) {
+        btnDarkMode.addEventListener('click', function() {
+            setDarkMode();
+            updateActiveCard('dark-mode');
+        });
+    }
+
+¡Eso es todo! Una vez hagas estos cambios, el Modo Oscuro aparecerá en la página de accesibilidad.
+
+Para agregarlo al navbar, te ayudaré después de que confirmes que estos cambios funcionan.

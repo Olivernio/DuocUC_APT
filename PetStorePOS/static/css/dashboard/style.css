@@ -274,3 +274,221 @@
         max-height: 200px !important;
     }
 }
+
+/* ============================================
+   MODO OSCURO - DASHBOARD
+   ============================================ */
+:root.dark-mode .dashboard-body {
+    background-color: var(--dark-bg-primary) !important;
+}
+
+:root.dark-mode .sidebar {
+    background-color: var(--dark-bg-secondary) !important;
+    border-right: 1px solid var(--dark-border) !important;
+    box-shadow: var(--dark-shadow-lg) !important;
+}
+
+:root.dark-mode .sidebar-header {
+    border-bottom: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .sidebar-header .navbar-brand {
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .sidebar-user {
+    background: var(--dark-bg-tertiary) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .sidebar-user h6 {
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .sidebar-user small {
+    color: var(--dark-text-tertiary) !important;
+}
+
+:root.dark-mode .sidebar-nav .nav-link {
+    color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .sidebar-nav .nav-link i {
+    color: var(--dark-text-tertiary) !important;
+}
+
+:root.dark-mode .sidebar-nav .nav-link:hover {
+    background-color: var(--dark-bg-hover) !important;
+    color: var(--dark-orange-primary) !important;
+}
+
+:root.dark-mode .sidebar-nav .nav-link:hover i {
+    color: var(--dark-orange-primary) !important;
+}
+
+:root.dark-mode .sidebar-nav .nav-link.active {
+    background: var(--dark-gradient-primary) !important;
+    background-color: var(--dark-orange-primary) !important;
+    color: var(--dark-text-primary) !important;
+    border-left: 5px solid var(--dark-orange-dark) !important;
+    box-shadow: var(--dark-shadow-orange) !important;
+}
+
+:root.dark-mode .sidebar-nav .nav-link.active i {
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .sidebar-footer {
+    border-top: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .sidebar-footer .nav-link {
+    color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .sidebar-footer .nav-link:hover {
+    color: var(--dark-red-primary) !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+}
+
+:root.dark-mode .main-content {
+    background-color: var(--dark-bg-primary) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .dashboard-mobile-header {
+    background-color: var(--dark-bg-secondary) !important;
+    border-bottom: 1px solid var(--dark-border) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .dashboard-mobile-header h4 {
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .stat-card {
+    background-color: var(--dark-bg-elevated) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text-primary) !important;
+    box-shadow: var(--dark-shadow) !important;
+}
+
+:root.dark-mode .stat-card:hover {
+    border-color: var(--dark-orange-primary) !important;
+    box-shadow: var(--dark-shadow-orange) !important;
+    transform: translateY(-2px) !important;
+}
+
+:root.dark-mode .stat-card .stat-icon {
+    background: var(--dark-gradient-primary) !important;
+}
+
+:root.dark-mode .chart-card {
+    background-color: var(--dark-bg-elevated) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text-primary) !important;
+    box-shadow: var(--dark-shadow) !important;
+}
+
+:root.dark-mode .sidebar-overlay {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ============================================
+   GOOGLE TRANSLATE BANNER - ESPACIADO DASHBOARD
+   ============================================ */
+
+/* Posicionar el banner de Google Translate en la parte superior */
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+iframe[src*="translate"],
+body > .goog-te-banner-frame,
+body > iframe[src*="translate.googleapis.com"] {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: none !important;
+    display: block !important;
+}
+
+/* Cuando el banner de Google Translate está visible, desplazar todo el dashboard */
+:root.translate-banner-visible {
+    --translate-banner-height: 40px;
+}
+
+:root.translate-banner-visible body {
+    padding-top: var(--translate-banner-height, 40px) !important;
+    transition: padding-top 0.3s ease !important;
+}
+
+:root.translate-banner-visible body.dashboard-body {
+    padding-top: var(--translate-banner-height, 40px) !important;
+    transition: padding-top 0.3s ease !important;
+}
+
+:root.translate-banner-visible .dashboard-body {
+    padding-top: 0 !important;
+    margin-top: var(--translate-banner-height, 40px) !important;
+    transition: margin-top 0.3s ease !important;
+}
+
+:root.translate-banner-visible .sidebar {
+    top: var(--translate-banner-height, 40px) !important;
+    height: calc(100vh - var(--translate-banner-height, 40px)) !important;
+    transition: top 0.3s ease, height 0.3s ease !important;
+}
+
+:root.translate-banner-visible .main-content {
+    margin-top: var(--translate-banner-height, 40px) !important;
+    padding-top: 2rem !important;
+    transition: margin-top 0.3s ease, padding-top 0.3s ease !important;
+}
+
+:root.translate-banner-visible .dashboard-mobile-header {
+    top: var(--translate-banner-height, 40px) !important;
+    transition: top 0.3s ease !important;
+}
+
+:root.translate-banner-visible .sidebar-overlay {
+    top: var(--translate-banner-height, 40px) !important;
+    height: calc(100vh - var(--translate-banner-height, 40px)) !important;
+    transition: top 0.3s ease, height 0.3s ease !important;
+}
+
+/* Asegurar que el contenido dentro del main-content también se desplace */
+:root.translate-banner-visible .main-content > * {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Asegurar que todos los elementos del dashboard respeten el desplazamiento */
+:root.translate-banner-visible .dashboard-body * {
+    box-sizing: border-box !important;
+}
+
+/* Asegurar que el contenido no quede oculto detrás del banner */
+:root.translate-banner-visible .sidebar,
+:root.translate-banner-visible .main-content,
+:root.translate-banner-visible .dashboard-mobile-header {
+    z-index: 9999 !important;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 991.98px) {
+    :root.translate-banner-visible .main-content {
+        margin-top: var(--translate-banner-height, 40px) !important;
+        padding-top: 1rem !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    :root.translate-banner-visible .main-content {
+        margin-top: var(--translate-banner-height, 40px) !important;
+        padding-top: 0.75rem !important;
+    }
+}

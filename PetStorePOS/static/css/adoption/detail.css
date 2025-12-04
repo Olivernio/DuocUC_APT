@@ -67,3 +67,116 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 166, 62, 0.3);
 }
+
+/* ============================================
+   MODO OSCURO - DETALLE DE ADOPCIÓN
+   ============================================ */
+:root.dark-mode .detail-container {
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .pet-image-gallery img {
+    box-shadow: var(--dark-shadow-lg) !important;
+    border: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .pet-details h1 {
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .pet-details .lead {
+    color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .pet-details .lead i {
+    color: var(--dark-orange-primary) !important;
+}
+
+:root.dark-mode .pet-details .badge-info {
+    background-color: #3b82f6 !important;
+    color: var(--dark-text-primary) !important;
+    box-shadow: var(--dark-shadow) !important;
+}
+
+:root.dark-mode .pet-details .badge.bg-secondary {
+    background-color: var(--dark-bg-tertiary) !important;
+    color: var(--dark-text-primary) !important;
+    border: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .pet-details .badge.bg-dark {
+    background-color: var(--dark-bg-elevated) !important;
+    color: var(--dark-text-primary) !important;
+    border: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .detail-section {
+    background-color: var(--dark-bg-elevated) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text-primary) !important;
+    box-shadow: var(--dark-shadow) !important;
+}
+
+:root.dark-mode .detail-section h3 {
+    color: var(--dark-orange-primary) !important;
+    border-bottom-color: var(--dark-border) !important;
+}
+
+:root.dark-mode .detail-section div,
+:root.dark-mode .detail-section p {
+    color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .detail-section strong {
+    color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .detail-section ul {
+    color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .detail-section li {
+    color: var(--dark-text-secondary) !important;
+}
+
+:root.dark-mode .detail-section hr {
+    border-color: var(--dark-border) !important;
+    opacity: 1 !important;
+}
+
+:root.dark-mode .btn-adopt {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: var(--dark-text-primary) !important;
+    box-shadow: var(--dark-shadow) !important;
+}
+
+:root.dark-mode .btn-adopt:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    color: var(--dark-text-primary) !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+:root.dark-mode .btn-outline-secondary {
+    border-color: var(--dark-border) !important;
+    color: var(--dark-text-secondary) !important;
+    background-color: transparent !important;
+}
+
+:root.dark-mode .btn-outline-secondary:hover {
+    background-color: var(--dark-bg-hover) !important;
+    border-color: var(--dark-orange-primary) !important;
+    color: var(--dark-orange-primary) !important;
+}
+
+:root.dark-mode .alert-danger {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    border-color: var(--dark-red-primary) !important;
+    color: var(--dark-red-light) !important;
+}
+
+:root.dark-mode .alert-warning {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+    border-color: #f59e0b !important;
+    color: #fbbf24 !important;
+}

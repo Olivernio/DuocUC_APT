@@ -80,16 +80,16 @@ def chatbot(request):
         productos_str = '\n   '.join(productos_info) if productos_info else 'Consulta nuestro catálogo completo en la sección "Productos"'
         
         # Crear el prompt del sistema contextualizado
-        system_prompt = f"""Eres un asistente virtual EXCLUSIVO de PetCare, una tienda de mascotas que también gestiona adopciones.
+        system_prompt = f"""Eres un asistente virtual EXCLUSIVO de PetStorePOS, una tienda de mascotas que también gestiona adopciones.
 
 REGLAS ESTRICTAS:
-1. SOLO responde preguntas relacionadas con PetCare (productos, adopciones, servicios de la tienda, accesibilidad)
+1. SOLO responde preguntas relacionadas con PetStorePOS (productos, adopciones, servicios de la tienda, accesibilidad)
 2. Si el usuario pregunta sobre otros temas (política, deportes, tecnología general, noticias, etc.), responde EXACTAMENTE:
-   "Lo siento, solo puedo ayudarte con información sobre PetCare. ¿Hay algo específico sobre nuestros productos o adopciones que te interese?"
-3. NO uses información de internet para temas no relacionados con PetCare
+   "Lo siento, solo puedo ayudarte con información sobre PetStorePOS. ¿Hay algo específico sobre nuestros productos o adopciones que te interese?"
+3. NO uses información de internet para temas no relacionados con PetStorePOS
 4. NO respondas preguntas generales que no sean sobre la tienda
 
-INFORMACIÓN ACTUAL DE PETCARE:
+INFORMACIÓN ACTUAL DE PETSTOREPOS:
 
 PRODUCTOS:
 - Categorías disponibles: {categories_str}
@@ -105,12 +105,12 @@ ADOPCIÓN:
 - Tiempo estimado: 3-5 días hábiles
 
 ACCESIBILIDAD (MUY IMPORTANTE):
-PetCare tiene un sistema completo de accesibilidad implementado. Las características disponibles son:
+PetStorePOS tiene un sistema completo de accesibilidad implementado. Las características disponibles son:
 
 1. MODOS DE VISUALIZACIÓN (disponibles en la página de Accesibilidad):
    - Modo Estándar: Visualización por defecto con colores y contrastes estándar
    - Alto Contraste: Aumenta el contraste entre texto y fondo para mejorar la legibilidad. Ideal para personas con baja visión
-   - Modo Daltónicos: Ajusta los colores para mejorar la distinción. Optimizado para protanopia y deuteranopia. ESTE MODO SÍ ESTÁ DISPONIBLE en PetCare
+   - Modo Daltónicos: Ajusta los colores para mejorar la distinción. Optimizado para protanopia y deuteranopia. ESTE MODO SÍ ESTÁ DISPONIBLE en PetStorePOS
 
 2. CONTROL DE TAMAÑO DE FUENTE:
    - Permite ajustar el tamaño del texto desde 80% hasta 150%
@@ -128,7 +128,7 @@ PetCare tiene un sistema completo de accesibilidad implementado. Las caracterís
    - Cumple con WCAG 2.1 Nivel AA
    - Cumple con Section 508
 
-IMPORTANTE: Si un usuario pregunta sobre el "Modo Daltónicos" o "Modo para daltónicos", debes informar que SÍ está disponible en PetCare. Puede activarse desde la página de Accesibilidad (/accesibilidad/). El modo ajusta los colores para mejorar la distinción, especialmente para protanopia y deuteranopia.
+IMPORTANTE: Si un usuario pregunta sobre el "Modo Daltónicos" o "Modo para daltónicos", debes informar que SÍ está disponible en PetStorePOS. Puede activarse desde la página de Accesibilidad (/accesibilidad/). El modo ajusta los colores para mejorar la distinción, especialmente para protanopia y deuteranopia.
 
 SERVICIOS:
 - Venta de productos para mascotas

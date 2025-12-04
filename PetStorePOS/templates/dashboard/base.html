@@ -24,6 +24,8 @@
     
     {# CSS de Accesibilidad (para modo alto contraste) #}
     <link rel="stylesheet" href="{% static 'css/accessibility.css' %}" />
+    {# CSS de Modo Oscuro #}
+    <link rel="stylesheet" href="{% static 'css/dark-mode.css' %}" />
 
     <style>
         /* Apariencia del selector de idioma en el sidebar del dashboard */
@@ -208,6 +210,18 @@
     {# Script para aplicar configuración de accesibilidad al cargar #}
     <script>
         (function() {
+            // Aplicar modo guardado
+            const savedMode = localStorage.getItem('accessibilityMode');
+            const root = document.documentElement;
+            
+            if (savedMode === 'high-contrast') {
+                root.classList.add('high-contrast');
+            } else if (savedMode === 'colorblind-mode') {
+                root.classList.add('colorblind-mode');
+            } else if (savedMode === 'dark-mode') {
+                root.classList.add('dark-mode');
+            }
+            
             // Aplicar fuente guardada
             var savedFontSize = localStorage.getItem('fontSize');
             if (savedFontSize) {
@@ -256,7 +270,7 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-      (function() {
+        (function () {
           function adjustTranslateSpacing() {
               var banner = document.querySelector('.goog-te-banner-frame');
               var html = document.documentElement;
@@ -275,11 +289,7 @@
           function initTranslateSpacingWatcher() {
               adjustTranslateSpacing();
               var observer = new MutationObserver(adjustTranslateSpacing);
-              observer.observe(document.body, {
-                  childList: true,
-                  subtree: true,
-                  attributes: true
-              });
+                observer.observe(document.body, { childList: true, subtree: true, attributes: true });
               window.addEventListener('resize', adjustTranslateSpacing);
               setInterval(adjustTranslateSpacing, 1000);
           }

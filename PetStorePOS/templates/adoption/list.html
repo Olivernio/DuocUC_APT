@@ -1,9 +1,10 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
 
 {% block head-tag %}
-  <link rel="stylesheet" href="{% static 'css/adoption/adoption.css' %}" />
+<link rel="stylesheet" href="{% static 'css/adoption/adoption.css' %}" />
+<link rel="stylesheet" href="{% static 'css/adoption/adoption-dark.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -11,7 +12,8 @@
   <div class="text-center mb-5">
     <h1 class="display-4">{% trans "Adopta un Compañero" %}</h1>
     <p class="lead text-muted">
-      {% trans "Encuentra a tu amigo fiel. Datos proporcionados por" %} <a href="https://huachitos.cl/" target="_blank">Huachitos.cl</a>
+      {% trans "Encuentra a tu amigo fiel. Datos proporcionados por" %} <a href="https://huachitos.cl/"
+        target="_blank">Huachitos.cl</a>
     </p>
   </div>
 
@@ -22,8 +24,8 @@
         <select name="tipo" id="tipo" class="form-select form-select-lg">
           <option value="">{% trans "Todas las especies" %}</option>
           {% for key, text in especies_disponibles %}
-            {# key es la clave ("perro"), text es el texto traducido #}
-            <option value="{{ key }}" {% if key == tipo_filtrado %}selected{% endif %}>{{ text|title }}</option>
+          {# key es la clave ("perro"), text es el texto traducido #}
+          <option value="{{ key }}" {% if key == tipo_filtrado %}selected{% endif %}>{{ text|title }}</option>
           {% endfor %}
         </select>
       </div>
@@ -37,50 +39,50 @@
   </div>
 
   {% if error_message %}
-    <div class="alert alert-danger text-center">
-        <h2><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> {% trans "Error de Conexión" %}</h2>
-        <p>{{ error_message }}</p> {# El mensaje de error de la API no se traduce #}
-    </div>
+  <div class="alert alert-danger text-center">
+    <h2><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> {% trans "Error de Conexión" %}</h2>
+    <p>{{ error_message }}</p> {# El mensaje de error de la API no se traduce #}
+  </div>
   {% endif %}
 
   <div class="huachitos-grid">
     {% for mascota in mascotas %}
-      <a href="{% url 'adoption:mascota_detail' mascota.id %}" class="huachito-card-link">
-        <div class="huachito-card" style="--animation-order: {{ forloop.counter0 }};">
-          <div class="card-img-container">
-            <img src="{{ mascota.imagen }}" alt="Foto de {{ mascota.nombre }}">
+    <a href="{% url 'adoption:mascota_detail' mascota.id %}" class="huachito-card-link">
+      <div class="huachito-card" style="--animation-order: {{ forloop.counter0 }};">
+        <div class="card-img-container">
+          <img src="{{ mascota.imagen }}" alt="Foto de {{ mascota.nombre }}">
+        </div>
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">{{ mascota.nombre }}</h3>
+            {% with mascota.tipo|lower as tipo %}
+            <span class="card-badge {{ tipo }}">{{ mascota.tipo }}</span>
+            {% endwith %}
           </div>
-          <div class="card-content">
-            <div class="card-header">
-                <h3 class="card-title">{{ mascota.nombre }}</h3>
-                {% with mascota.tipo|lower as tipo %}
-                  <span class="card-badge {{ tipo }}">{{ mascota.tipo }}</span>
-                {% endwith %}
-            </div>
-            <div class="card-details">
-              <span><i class="bi bi-tag-fill" aria-hidden="true"></i> {{ mascota.edad }}</span>
-              <span><i class="bi bi-gender-ambiguous" aria-hidden="true"></i> {{ mascota.genero|title }}</span>
-            </div>
-            <div class="location">
-              <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
-              <span>{{ mascota.comuna }}, {{ mascota.region }}</span>
-            </div>
+          <div class="card-details">
+            <span><i class="bi bi-tag-fill" aria-hidden="true"></i> {{ mascota.edad }}</span>
+            <span><i class="bi bi-gender-ambiguous" aria-hidden="true"></i> {{ mascota.genero|title }}</span>
           </div>
-          <div class="card-footer-action">
-              {% trans "Ver Detalles" %}
+          <div class="location">
+            <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
+            <span>{{ mascota.comuna }}, {{ mascota.region }}</span>
           </div>
         </div>
-      </a>
-    {% empty %}
-      {% if not error_message %}
-      <div class="alert alert-info w-100 text-center col-12">
-        {% if tipo_filtrado %}
-          {% blocktrans with tipo=tipo_filtrado|title %}No se encontraron mascotas del tipo "{{ tipo }}".{% endblocktrans %}
-        {% else %}
-          {% trans "No hay mascotas disponibles desde la API en este momento." %}
-        {% endif %}
+        <div class="card-footer-action">
+          {% trans "Ver Detalles" %}
+        </div>
       </div>
+    </a>
+    {% empty %}
+    {% if not error_message %}
+    <div class="alert alert-info w-100 text-center col-12">
+      {% if tipo_filtrado %}
+      {% blocktrans with tipo=tipo_filtrado|title %}No se encontraron mascotas del tipo "{{ tipo }}".{% endblocktrans %}
+      {% else %}
+      {% trans "No hay mascotas disponibles desde la API en este momento." %}
       {% endif %}
+    </div>
+    {% endif %}
     {% endfor %}
   </div>
 </div>

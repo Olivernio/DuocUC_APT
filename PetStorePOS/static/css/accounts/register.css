@@ -148,3 +148,46 @@ body.login-page footer.footer-dark {
 .wizard-line.active {
   background: var(--gradient-primary);
 }
+
+/* ============================================
+   MODO OSCURO - REGISTER PAGE
+   ============================================ */
+:root.dark-mode html.login-page,
+:root.dark-mode body.login-page {
+  background: var(--dark-bg-primary) !important;
+  background-color: var(--dark-bg-primary) !important;
+  background-image: none !important;
+}
+
+:root.dark-mode .gradient-left,
+:root.dark-mode .gradient-bg {
+  background: var(--dark-bg-primary) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .form-card {
+  background: var(--dark-bg-elevated) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: var(--dark-shadow-lg) !important;
+}
+
+:root.dark-mode .wizard-step {
+  background: var(--dark-bg-tertiary) !important;
+  color: var(--dark-text-tertiary) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .wizard-step.active {
+  background: var(--dark-gradient-primary) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: var(--dark-shadow-orange) !important;
+}
+
+:root.dark-mode .wizard-line {
+  background: var(--dark-bg-tertiary) !important;
+}
+
+:root.dark-mode .wizard-line.active {
+  background: var(--dark-gradient-primary) !important;
+}

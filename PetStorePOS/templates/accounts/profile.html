@@ -22,7 +22,7 @@
                 {{ user.first_name|default:user.username|first|upper }}{{ user.last_name|default:""|first|upper }}
             </div>
             <div>
-                <h1 class="h3 fw-bold mb-0">{% trans "Hola" %}, <span style="color:#2676FB;">{{ user.first_name|default:user.username }}</span></h1>
+                <h1 class="h3 fw-bold mb-0">{% trans "Hola" %}, <span class="text-primary">{{ user.first_name|default:user.username }}</span></h1>
                 <p class="text-muted mb-0">{% trans "Gestiona tu cuenta y preferencias" %}</p>
             </div>
         </div>

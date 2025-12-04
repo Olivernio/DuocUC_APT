@@ -1,0 +1,58 @@
+/* Perfect circles for accessibility features section */
+.bg-icon,
+.bg-icon.bg-primary,
+.bg-icon.bg-success,
+.bg-icon.bg-info,
+.bg-icon.bg-warning,
+.bg-icon.bg-danger,
+.bg-icon.bg-secondary {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
+    max-width: 64px !important;
+    max-height: 64px !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+    flex-shrink: 0 !important;
+}
+
+/* Solid background colors for each type */
+.bg-icon.bg-primary {
+    background: #ffa726 !important;
+}
+
+.bg-icon.bg-success {
+    background: #2ecc71 !important;
+}
+
+.bg-icon.bg-info {
+    background: #3498db !important;
+}
+
+.bg-icon.bg-warning {
+    background: #f39c12 !important;
+}
+
+.bg-icon.bg-danger {
+    background: #e74c3c !important;
+}
+
+.bg-icon.bg-secondary {
+    background: #95a5a6 !important;
+}
+
+/* Make all icons white */
+.bg-icon i {
+    color: #ffffff !important;
+    font-size: 1.5rem !important;
+    line-height: 1 !important;
+}
+
+

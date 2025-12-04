@@ -264,6 +264,11 @@ a:hover {
   color: var(--neutral-600);
 }
 
+/* Separador "/" en breadcrumbs - color gris/blanco */
+.breadcrumb-item + .breadcrumb-item::before {
+  color: #9ca3af !important; /* Gris medio */
+}
+
 /* Dropdown */
 .dropdown-menu {
   border: 1px solid var(--neutral-200);

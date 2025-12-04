@@ -85,3 +85,41 @@
     height: 120px;
   }
 }
+
+/* ============================================
+   MODO OSCURO - CATALOG LIST
+   ============================================ */
+:root.dark-mode .product-card {
+  background-color: var(--dark-bg-elevated) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: var(--dark-shadow) !important;
+}
+
+:root.dark-mode .product-card:hover,
+:root.dark-mode .product-card:focus-within {
+  box-shadow: var(--dark-shadow-orange) !important;
+  border-color: var(--dark-orange-primary) !important;
+  transform: translateY(-4px) !important;
+}
+
+:root.dark-mode .product-card-img-container {
+  background-color: var(--dark-bg-tertiary) !important;
+  border-bottom: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .product-name {
+  color: var(--dark-text-primary) !important;
+}
+
+:root.dark-mode .badge-inactive {
+  background-color: var(--dark-bg-tertiary) !important;
+  color: var(--dark-text-tertiary) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+:root.dark-mode .badge-out {
+  background-color: var(--dark-red-primary) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: var(--dark-shadow-colored) !important;
+}
